@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Save The Food</string>
+    <string name="log_in">LOG IN</string>
 </resources>
