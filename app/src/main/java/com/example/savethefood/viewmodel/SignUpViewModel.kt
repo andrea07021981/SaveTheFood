@@ -10,7 +10,7 @@ class SignUpViewModel : BaseObservable() {
 
     //TODO start from here, change user class with properties and no costructor and use databingin
     //https://kotlinlang.org/docs/reference/properties.html
-    // val user = User();
+    val user = User()
 
 
 
