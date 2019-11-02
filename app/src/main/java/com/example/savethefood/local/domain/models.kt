@@ -1,9 +1,9 @@
 package com.example.savethefood.local.domain
 
 //User
-data class User(val username: String = "",
-                 val email: String = "",
-                 val password: String = "") {
+data class User(var username: String = "",
+                 var email: String = "",
+                 var password: String = "") {
 
     constructor() : this("", "","")
 }
