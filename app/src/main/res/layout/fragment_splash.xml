@@ -8,13 +8,13 @@
     <data>
         <variable
             name="splashViewModel"
-            type="com.example.savethefood.login.SplashViewModel" />
+            type="com.example.savethefood.viewmodel.SplashViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".login.SplashFragment"
+        tools:context=".ui.SplashFragment"
         android:background="@color/colorPrimary">
 
         <ImageView

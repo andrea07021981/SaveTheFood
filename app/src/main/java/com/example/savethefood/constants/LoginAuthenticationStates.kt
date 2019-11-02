@@ -1,4 +1,4 @@
-package com.example.savethefood.login
+package com.example.savethefood.constants
 
 sealed class LoginAuthenticationStates
 

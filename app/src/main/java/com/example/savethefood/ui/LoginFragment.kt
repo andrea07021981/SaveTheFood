@@ -1,16 +1,17 @@
-package com.example.savethefood.login
+package com.example.savethefood.ui
 
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentLoginBinding
+import com.example.savethefood.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
 
@@ -31,6 +32,13 @@ class LoginFragment : Fragment() {
         databinding.loginViewModel = loginViewModel
         databinding.lifecycleOwner = this
 
+        loginViewModel.navigateToSignUpFragment.observe(this, Observer {
+            if (it == true) {
+                this.findNavController()
+                    .navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
+                loginViewModel.doneNavigationSignUp()
+            }
+        })
         return databinding.root
     }
 }

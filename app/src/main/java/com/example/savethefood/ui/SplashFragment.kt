@@ -1,4 +1,4 @@
-package com.example.savethefood.login
+package com.example.savethefood.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +12,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentSplashBinding
+import com.example.savethefood.viewmodel.SplashViewModel
 
 class SplashFragment : Fragment() {
 

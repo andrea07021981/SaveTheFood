@@ -1,4 +1,4 @@
-package com.example.savethefood.login
+package com.example.savethefood.util
 
 import android.content.res.Resources
 import android.text.Layout
