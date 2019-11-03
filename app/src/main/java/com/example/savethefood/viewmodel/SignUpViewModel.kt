@@ -7,34 +7,41 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.savethefood.local.domain.User
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.util.Patterns
 
-class SignUpViewModel : BaseObservable() {
 
-    //TODO start from here, change BaseObservable to viewmodel
+class SignUpViewModel : ViewModel() {
 
-    //https://www.journaldev.com/22561/android-mvvm-livedata-data-binding
     var user = User()
+    var userNameValue = MutableLiveData<String>()
+    var errorUserName = MutableLiveData<Boolean>()
+    var emailValue = MutableLiveData<String>()
+    var errorEmail = MutableLiveData<Boolean>()
+    var passwordValue = MutableLiveData<String>()
+    var errorPassword = MutableLiveData<Boolean>()
 
-    @Bindable
-    fun getUsername(): String {
-        return user.username
+    init {
+        userNameValue.value = ""
+        emailValue.value = ""
+        passwordValue.value = ""
     }
 
-    fun setUsername(value: String) {
-        // Avoids infinite loops.
-        if (user.username != value) {
-            user.username = value
-
-            // Notify observers of a new value.
-            //notifyPropertyChanged(BR.)
+    fun onSignUpClick(){
+        if (!checkValues()) {
+            user.apply {
+                userName = userNameValue.value.toString()
+                userEmail = emailValue.value.toString()
+                userPassword = passwordValue.value.toString()
+            }
+            //TODO save
         }
     }
 
-    init {
-
-    }
-
-    fun checkInfo(){
-
+    fun checkValues (): Boolean {
+        errorUserName.value = userNameValue.value.isNullOrEmpty()
+        errorEmail.value = !Patterns.EMAIL_ADDRESS.matcher(emailValue.value).matches()
+        errorPassword.value = passwordValue.value.isNullOrEmpty()
+        return errorUserName.value!! && errorEmail.value!! && errorPassword.value!!
     }
 }
