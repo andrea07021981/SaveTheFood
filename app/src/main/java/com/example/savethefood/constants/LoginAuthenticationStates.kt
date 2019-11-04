@@ -1,12 +1,12 @@
 package com.example.savethefood.constants
 
-sealed class LoginAuthenticationStates
+sealed class LoginAuthenticationStates(open val message: String)
 
 // Initial state, the user needs to authenticate
-object UNAUTHENTICATED : LoginAuthenticationStates()
+data class Unauthenticated(override val message: String = "Not logged in") : LoginAuthenticationStates(message)
 
 // Initial state, the user needs to authenticate
-object AUTHENTICATED : LoginAuthenticationStates()
+data class Authenticated(override val message: String = "Authentication ok") : LoginAuthenticationStates(message)
 
 // Authentication failed
-object INVALID_AUTHENTICATION : LoginAuthenticationStates()
+data class InvalidAuthentication(override val message: String = "Authentication error") : LoginAuthenticationStates(message)

@@ -56,6 +56,9 @@ dependencies {
     //Cards
     implementation 'androidx.cardview:cardview:1.0.0'
 
+    //Material
+    implementation 'com.google.android.material:material:1.0.0-beta01'
+
     // Testing
     testImplementation "junit:junit:$version_junit"
     androidTestImplementation "androidx.test.ext:junit:$version_junit_test"

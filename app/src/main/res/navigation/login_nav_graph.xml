@@ -17,6 +17,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_out_left"
             app:popExitAnim="@anim/slide_in_right" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -33,4 +36,8 @@
         tools:layout="@layout/fragment_signup"
         android:name="com.example.savethefood.ui.SignUpFragment"
         android:label="SignUpFragment" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.savethefood.ui.HomeFragment"
+        android:label="HomeFragment" />
 </navigation>

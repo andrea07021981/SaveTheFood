@@ -64,7 +64,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Username"
                     android:drawablePadding="10dp"
-                    android:drawableLeft="@drawable/email_white_24dp"/>
+                    android:drawableLeft="@drawable/email_white_24dp"
+                    android:text="@={loginViewModel.emailValue}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -91,7 +92,8 @@
                     android:hint="Password"
                     android:inputType="textPassword"
                     android:drawablePadding="10dp"
-                    android:drawableLeft="@drawable/lock_white_24dp"/>
+                    android:drawableLeft="@drawable/lock_white_24dp"
+                    android:text="@={loginViewModel.passwordValue}"/>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
@@ -108,7 +110,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:loadViewAnimation="@{loginViewModel.animationResourceButton}"/>
+            app:loadViewAnimation="@{loginViewModel.animationResourceButton}"
+            android:onClick="@{() -> loginViewModel.onSignUpClick()}"/>
 
         <LinearLayout
             android:id="@+id/constraintLayout2"

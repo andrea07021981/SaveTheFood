@@ -1,10 +1,7 @@
 package com.example.savethefood.local.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.savethefood.local.entity.UserEntity
 
 
@@ -12,10 +9,10 @@ import com.example.savethefood.local.entity.UserEntity
  * Defines methods for using the entities class with Room.
  */
 @Dao
-interface SaveTheFoodDatabaseDao {
+interface UserDatabaseDao {
 
-    @Insert
-    fun insert(user: UserEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(user: UserEntity) : Long
 
     /**
      * When updating a row with a value already set in a column,
@@ -39,5 +36,11 @@ interface SaveTheFoodDatabaseDao {
      */
     @Query("SELECT * from user_table WHERE userId = :key")
     fun getUserWithId(key: Long): LiveData<UserEntity>
+
+    /**
+     * Selects and returns the user with given email and pass.
+     */
+    @Query("SELECT * from user_table WHERE email = :userEmail AND password = :userPassword")
+    fun getUser(userEmail: String, userPassword: String): LiveData<UserEntity>?
 }
 

@@ -65,7 +65,7 @@
                 android:textColorHint="@color/colorAccent"
                 app:boxStrokeColor="@color/colorAccent"
                 app:errorEnabled="true"
-                app:hasError="@{signupViewModel.errorUserName}"
+                app:hasError="@{safeUnbox(signupViewModel.errorUserName)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -93,7 +93,7 @@
                 android:textColorHint="@color/colorAccent"
                 app:boxStrokeColor="@color/colorAccent"
                 app:errorEnabled="true"
-                app:hasError="@{signupViewModel.errorEmail}"
+                app:hasError="@{safeUnbox(signupViewModel.errorEmail)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -122,7 +122,7 @@
                 android:textColorHint="@color/colorAccent"
                 app:boxStrokeColor="@color/colorAccent"
                 app:errorEnabled="true"
-                app:hasError="@{signupViewModel.errorPassword}"
+                app:hasError="@{safeUnbox(signupViewModel.errorPassword)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layoutEmail">

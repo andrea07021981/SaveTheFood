@@ -7,13 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.savethefood.databinding.FragmentSignupBinding
 import com.example.savethefood.viewmodel.SignUpViewModel
 
 class SignUpFragment : Fragment() {
 
     private val signUpViewModel: SignUpViewModel by lazy {
-        ViewModelProviders.of(this).get(SignUpViewModel::class.java)
+        val activity = requireNotNull(this.activity)
+        ViewModelProviders.of(this, SignUpViewModel.Factory(app = activity.application)).get(SignUpViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -25,24 +27,14 @@ class SignUpFragment : Fragment() {
         databinding.signupViewModel = signUpViewModel
         databinding.lifecycleOwner = this
 
-        /*signUpViewModel.errorUserName.observe(this, Observer {
-            when (it) {
-                true -> databinding.etUsername.error = "Username is mandatory"
-                else -> databinding.etUsername.error = null
+        signUpViewModel.navigateToLoginFragment.observe(this, Observer {
+            if (it == true) {
+                this
+                    .findNavController()
+                    .popBackStack()
+                signUpViewModel.doneNavigating()
             }
         })
-        signUpViewModel.errorEmail.observe(this, Observer {
-            when (it) {
-                true -> databinding.etUsername.error = "Email is mandatory"
-                else -> databinding.etUsername.error = null
-            }
-        })
-        signUpViewModel.errorPassword.observe(this, Observer {
-            when (it) {
-                true -> databinding.etUsername.error = "Password is mandatory"
-                else -> databinding.etUsername.error = null
-            }
-        })*/
         return databinding.root
     }
 }

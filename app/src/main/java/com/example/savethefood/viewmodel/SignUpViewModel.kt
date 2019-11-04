@@ -1,17 +1,17 @@
 package com.example.savethefood.viewmodel
 
-import androidx.databinding.BaseObservable
-import androidx.databinding.Bindable
-import androidx.databinding.library.baseAdapters.BR
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
 import com.example.savethefood.local.domain.User
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.util.Patterns
+import androidx.lifecycle.*
+import com.example.savethefood.local.database.SaveTheFoodDatabase
+import com.example.savethefood.repository.UserRepository
+import kotlinx.coroutines.*
 
-
-class SignUpViewModel : ViewModel() {
+//Inherit from AndroidViewModel we don't need to use a CustomViewmodelFactory for passing the application
+class SignUpViewModel(
+    application: Application
+) : AndroidViewModel(application) {
 
     var user = User()
     var userNameValue = MutableLiveData<String>()
@@ -21,6 +21,25 @@ class SignUpViewModel : ViewModel() {
     var passwordValue = MutableLiveData<String>()
     var errorPassword = MutableLiveData<Boolean>()
 
+    private val _navigateToLoginFragment = MutableLiveData<Boolean>()
+    val navigateToLoginFragment: LiveData<Boolean>
+        get() = _navigateToLoginFragment
+
+    private val database = SaveTheFoodDatabase.getInstance(application)
+    private val userRepository = UserRepository(database)
+    private var viewModelJob = Job()
+    /**
+     * A [CoroutineScope] keeps track of all coroutines started by this ViewModel.
+     *
+     * Because we pass it [viewModelJob], any coroutine started in this scope can be cancelled
+     * by calling `viewModelJob.cancel()`
+     *
+     * By default, all coroutines started in uiScope will launch in [Dispatchers.Main] which is
+     * the main thread on Android. This is a sensible default because most coroutines started by
+     * a [ViewModel] update the UI after performing some processing.
+     */
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+
     init {
         userNameValue.value = ""
         emailValue.value = ""
@@ -29,12 +48,18 @@ class SignUpViewModel : ViewModel() {
 
     fun onSignUpClick(){
         if (!checkValues()) {
-            user.apply {
-                userName = userNameValue.value.toString()
-                userEmail = emailValue.value.toString()
-                userPassword = passwordValue.value.toString()
-            }
-            //TODO save
+            user
+                .apply {
+                    userName = userNameValue.value.toString()
+                    userEmail = emailValue.value.toString()
+                    userPassword = passwordValue.value.toString()
+                }
+                .also {
+                    uiScope.launch {
+                        userRepository.saveNewUser(user)
+                        _navigateToLoginFragment.value = true
+                    }
+                }
         }
     }
 
@@ -43,5 +68,27 @@ class SignUpViewModel : ViewModel() {
         errorEmail.value = !Patterns.EMAIL_ADDRESS.matcher(emailValue.value).matches()
         errorPassword.value = passwordValue.value.isNullOrEmpty()
         return errorUserName.value!! && errorEmail.value!! && errorPassword.value!!
+    }
+
+    fun doneNavigating() {
+        _navigateToLoginFragment.value = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
+    /**
+     * Factory for constructing DevByteViewModel with parameter
+     */
+    class Factory(val app: Application) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(SignUpViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return SignUpViewModel(app) as T
+            }
+            throw IllegalArgumentException("Unable to construct viewmodel")
+        }
     }
 }
