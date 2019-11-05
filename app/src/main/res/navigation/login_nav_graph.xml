@@ -18,8 +18,13 @@
             app:popEnterAnim="@anim/slide_out_left"
             app:popExitAnim="@anim/slide_in_right" />
         <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_loginFragment_to_home_nested_graph"
+            app:destination="@id/home_nested_graph" >
+
+            <argument
+                android:name="loggedUser"
+                app:argType="com.example.savethefood.local.domain.User" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -36,12 +41,16 @@
         tools:layout="@layout/fragment_signup"
         android:name="com.example.savethefood.ui.SignUpFragment"
         android:label="SignUpFragment" />
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.savethefood.ui.HomeFragment"
-        android:label="HomeFragment" >
-        <argument
-            android:name="loggedUser"
-            app:argType="com.example.savethefood.local.domain.User" />
-    </fragment>
+    <navigation
+        android:id="@+id/home_nested_graph"
+        app:startDestination="@id/homeFragment" >
+        <fragment
+            android:id="@+id/homeFragment"
+            android:name="com.example.savethefood.ui.HomeFragment"
+            android:label="HomeFragment">
+            <argument
+                android:name="loggedUser"
+                app:argType="com.example.savethefood.local.domain.User" />
+        </fragment>
+    </navigation>
 </navigation>

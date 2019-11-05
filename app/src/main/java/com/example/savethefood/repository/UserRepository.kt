@@ -17,11 +17,11 @@ class UserRepository(private val database: SaveTheFoodDatabase) {
         }
     }
 
-    suspend fun getUser(user: User): LiveData<User> {
+    suspend fun getUser(user: User): LiveData<User?> {
         return withContext(Dispatchers.IO) {
             val userFound = database.userDatabaseDao.getUser(user.userEmail, user.userPassword)
             Transformations.map(userFound) {
-                it.asDomainModel()
+                it?.asDomainModel()
             }
         }
     }

@@ -14,7 +14,6 @@ import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentLoginBinding
 import com.example.savethefood.viewmodel.LoginViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlin.math.log
 
 class LoginFragment : Fragment() {
 
@@ -52,7 +51,7 @@ class LoginFragment : Fragment() {
                 Log.d(TAG, "User logged with ${it.userEmail} and ${it.userPassword} ")
                 this
                     .findNavController()
-                    .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment(it))
+                    .navigate(LoginFragmentDirections.actionLoginFragmentToHomeNestedGraph(it))
             } else {
                 Snackbar.make(
                     databinding.root, // Parent view
