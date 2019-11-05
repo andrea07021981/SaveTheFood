@@ -9,22 +9,18 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="ui.HomeFragment">
+        tools:context=".ui.FoodFragment"
+        android:background="@color/colorPrimary">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/nav_host_home_container"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_nav"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:menu="@menu/home_navbar_items"/>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:text="Food"
+            android:textSize="43sp"
+            android:textColor="@android:color/white"
+            android:gravity="center"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
