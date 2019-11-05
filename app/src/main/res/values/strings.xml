@@ -2,4 +2,5 @@
     <string name="app_name">Save The Food</string>
     <string name="log_in">LOG IN</string>
     <string name="sign_up">SIGN UP</string>
+    <string name="user_login_not_found">User not found</string>
 </resources>

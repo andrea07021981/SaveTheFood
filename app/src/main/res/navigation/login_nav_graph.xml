@@ -39,5 +39,9 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.savethefood.ui.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <argument
+            android:name="loggedUser"
+            app:argType="com.example.savethefood.local.domain.User" />
+    </fragment>
 </navigation>

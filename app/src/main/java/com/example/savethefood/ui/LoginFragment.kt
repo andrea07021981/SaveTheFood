@@ -46,24 +46,19 @@ class LoginFragment : Fragment() {
                 loginViewModel.doneNavigationSignUp()
             }
         })
-        loginViewModel.autenticationState.observe(this, Observer {
-            if (it != null) {
-                Snackbar.make(
-                    databinding.root, // Parent view
-                    it.message, // Message to show
-                    Snackbar.LENGTH_SHORT // How long to display the message.
-                ).show()
-                loginViewModel.resetMessage()
-            }
-        })
 
         loginViewModel.userLogged.observe(this, Observer {
             if (it != null) {
                 Log.d(TAG, "User logged with ${it.userEmail} and ${it.userPassword} ")
                 this
                     .findNavController()
-                    .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())//TODO pass user as action param
-                loginViewModel.doneNavigationHome()
+                    .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment(it))
+            } else {
+                Snackbar.make(
+                    databinding.root, // Parent view
+                    getString(R.string.user_login_not_found), // Message to show
+                    Snackbar.LENGTH_SHORT // How long to display the message.
+                ).show()
             }
         })
         return databinding.root

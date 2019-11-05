@@ -26,6 +26,11 @@ android {
     dataBinding {
         enabled = true
     }
+
+    // Enable parcellable
+    androidExtensions {
+        experimental = true
+    }
 }
 
 dependencies {
@@ -60,7 +65,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0-beta01'
 
     // Testing
-    testImplementation "junit:junit:$version_junit"
-    androidTestImplementation "androidx.test.ext:junit:$version_junit_test"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso"
+    // Espresso
+    // Core library
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
 }

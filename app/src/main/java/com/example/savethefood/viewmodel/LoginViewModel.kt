@@ -1,6 +1,8 @@
 package com.example.savethefood.viewmodel
 
 import android.app.Application
+import android.util.Log
+import android.util.Patterns
 import androidx.lifecycle.*
 import com.example.savethefood.R
 import com.example.savethefood.constants.*
@@ -23,12 +25,8 @@ class LoginViewModel(
 
     var emailValue = MutableLiveData<String>()
     var passwordValue = MutableLiveData<String>()
-
-    private val _autenticationState = MutableLiveData<LoginAuthenticationStates>(
-        Authenticated()
-    )
-    val autenticationState: LiveData<LoginAuthenticationStates>
-        get() = _autenticationState
+    var errorPassword = MutableLiveData<Boolean>()
+    var errorEmail = MutableLiveData<Boolean>()
 
     private val _userLogged = MediatorLiveData<User>()
     val userLogged: LiveData<User>
@@ -54,30 +52,23 @@ class LoginViewModel(
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     init {
-
+        emailValue.value = ""
+        passwordValue.value = ""
     }
 
     fun onSignUpClick(){
-        if (emailValue.value.isNullOrBlank() || passwordValue.value.isNullOrEmpty()) {
-            _autenticationState.value = InvalidAuthentication()
-        } else {
+        errorEmail.value = emailValue.value.isNullOrEmpty()
+        errorPassword.value = passwordValue.value.isNullOrEmpty()
+        if (errorEmail.value == false && errorPassword.value == false) {
             uiScope.launch {
                 val userToSave = User().apply {
                     userEmail = emailValue.value.toString()
                     userPassword = passwordValue.value.toString()
                 }
                 val userRecord = userRepository.getUser(user = userToSave)
-                if (userRecord?.value == null) {
-                    _autenticationState.value = InvalidAuthentication()
-                } else {
-                    _userLogged.addSource(userRecord, _userLogged::setValue)
-                }
+                _userLogged.addSource(userRecord, _userLogged::setValue)
             }
         }
-    }
-
-    fun doneNavigationHome() {
-        _userLogged.value = null
     }
 
     fun doneNavigationSignUp() {
@@ -86,10 +77,6 @@ class LoginViewModel(
 
     fun moveToSignUp() {
         _navigateToSignUpFragment.value = true
-    }
-
-    fun resetMessage() {
-        _autenticationState.value = null
     }
 
     /**

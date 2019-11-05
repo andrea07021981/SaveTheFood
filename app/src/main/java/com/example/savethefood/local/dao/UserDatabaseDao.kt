@@ -41,6 +41,6 @@ interface UserDatabaseDao {
      * Selects and returns the user with given email and pass.
      */
     @Query("SELECT * from user_table WHERE email = :userEmail AND password = :userPassword")
-    fun getUser(userEmail: String, userPassword: String): LiveData<UserEntity>?
+    fun getUser(userEmail: String, userPassword: String): LiveData<UserEntity>
 }
 
