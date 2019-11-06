@@ -4,25 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_nested_graph"
-    app:startDestination="@id/homeFragment" >
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.savethefood.ui.HomeFragment"
-        android:label="HomeFragment">
-        <argument
-            android:name="loggedUser"
-            app:argType="com.example.savethefood.local.domain.User" />
-        <action
-            android:id="@+id/action_homeFragment_to_foodFragment"
-            app:destination="@id/foodFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_receipeFragment"
-            app:destination="@id/receipeFragment" />
-    </fragment>
+    app:startDestination="@id/foodFragment" >
     <fragment
         android:id="@+id/foodFragment"
         android:name="com.example.savethefood.ui.FoodFragment"
-        android:label="FoodFragment" />
+        android:label="FoodFragment" >
+        <action
+            android:id="@+id/action_foodFragment_to_receipeFragment"
+            app:destination="@id/receipeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/receipeFragment"
         android:name="com.example.savethefood.ui.ReceipeFragment"

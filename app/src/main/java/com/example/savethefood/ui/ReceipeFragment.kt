@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.savethefood.databinding.FragmentReceipeBinding
 
 class ReceipeFragment : Fragment() {
 
@@ -13,6 +14,8 @@ class ReceipeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        val dataBinding  = FragmentReceipeBinding.inflate(inflater)
+        dataBinding.lifecycleOwner = this
+        return dataBinding.root
     }
 }

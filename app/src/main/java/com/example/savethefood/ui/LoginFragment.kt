@@ -51,14 +51,10 @@ class LoginFragment : Fragment() {
                 Log.d(TAG, "User logged with ${it.userEmail} and ${it.userPassword} ")
                 this
                     .findNavController()
-                    .navigate(LoginFragmentDirections.actionLoginFragmentToHomeNestedGraph(it))
-            } else {
-                Snackbar.make(
-                    databinding.root, // Parent view
-                    getString(R.string.user_login_not_found), // Message to show
-                    Snackbar.LENGTH_SHORT // How long to display the message.
-                ).show()
+                    .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment(it))
+                loginViewModel.doneNavigationHome()
             }
+
         })
         return databinding.root
     }

@@ -9,22 +9,38 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/coordinatorlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context="ui.HomeFragment">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="30dp"
+            android:clickable="true"
+            android:focusable="true" />
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_home_container"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            app:navGraph="@navigation/home_nav_graph"/>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_nav"
+        <com.example.savethefood.component.CustomBottomNavigationView
+            android:id="@+id/bottom_home_nav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorAccent"
+            app:labelVisibilityMode="labeled"
             app:menu="@menu/home_navbar_items"/>
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

@@ -79,6 +79,10 @@ class LoginViewModel(
         _navigateToSignUpFragment.value = true
     }
 
+    fun doneNavigationHome() {
+        _userLogged.value = null
+    }
+
     /**
      * Factory for constructing DevByteViewModel with parameter
      */
