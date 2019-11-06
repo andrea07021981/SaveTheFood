@@ -14,12 +14,13 @@ import com.example.savethefood.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CustomBottomNavigationView : BottomNavigationView {
-
     private var mPath: Path? = null
     private var mPaint: Paint? = null
 
     /** the CURVE_CIRCLE_RADIUS represent the radius of the fab button  */
-    private val CURVE_CIRCLE_RADIUS = 128 / 2
+    private val CURVE_CIRCLE_RADIUS = 56
+
+
     // the coordinates of the first curve
     private val mFirstCurveStartPoint = Point()
     private val mFirstCurveEndPoint = Point()
@@ -31,10 +32,14 @@ class CustomBottomNavigationView : BottomNavigationView {
     private val mSecondCurveEndPoint = Point()
     private val mSecondCurveControlPoint1 = Point()
     private val mSecondCurveControlPoint2 = Point()
+
     private var mNavigationBarWidth: Int = 0
     private var mNavigationBarHeight: Int = 0
 
+
     constructor(context: Context) : super(context) {
+        // CURVE_CIRCLE_RADIUS=(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 56, context.getResources().getDisplayMetrics());
+
         init()
     }
 
@@ -54,14 +59,10 @@ class CustomBottomNavigationView : BottomNavigationView {
         mPath = Path()
         mPaint = Paint()
         mPaint!!.style = Paint.Style.FILL_AND_STROKE
-        mPaint!!.color = ContextCompat.getColor(context, android.R.color.white)
+        mPaint!!.color = Color.WHITE
         setBackgroundColor(Color.TRANSPARENT)
     }
 
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-
-    }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
@@ -69,9 +70,11 @@ class CustomBottomNavigationView : BottomNavigationView {
         // Navigation bar bounds (width & height)
         mNavigationBarWidth = width
         mNavigationBarHeight = height
+
+
         // the coordinates (x,y) of the start point before curve
         mFirstCurveStartPoint.set(
-            mNavigationBarWidth / 2 - CURVE_CIRCLE_RADIUS * 2 - CURVE_CIRCLE_RADIUS / 3,
+            mNavigationBarWidth / 2 - CURVE_CIRCLE_RADIUS * 2 - CURVE_CIRCLE_RADIUS / 1,
             0
         )
         // the coordinates (x,y) of the end point after curve
@@ -82,7 +85,7 @@ class CustomBottomNavigationView : BottomNavigationView {
         // same thing for the second curve
         mSecondCurveStartPoint = mFirstCurveEndPoint
         mSecondCurveEndPoint.set(
-            mNavigationBarWidth / 2 + CURVE_CIRCLE_RADIUS * 2 + CURVE_CIRCLE_RADIUS / 3,
+            mNavigationBarWidth / 2 + CURVE_CIRCLE_RADIUS * 2 + CURVE_CIRCLE_RADIUS / 1,
             0
         )
 
@@ -101,6 +104,7 @@ class CustomBottomNavigationView : BottomNavigationView {
             mSecondCurveStartPoint.x + CURVE_CIRCLE_RADIUS * 2 - CURVE_CIRCLE_RADIUS,
             mSecondCurveStartPoint.y
         )
+
         mSecondCurveControlPoint2.set(
             mSecondCurveEndPoint.x - (CURVE_CIRCLE_RADIUS + CURVE_CIRCLE_RADIUS / 4),
             mSecondCurveEndPoint.y
@@ -127,6 +131,7 @@ class CustomBottomNavigationView : BottomNavigationView {
         mPath!!.lineTo(0f, mNavigationBarHeight.toFloat())
         mPath!!.close()
     }
+
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
