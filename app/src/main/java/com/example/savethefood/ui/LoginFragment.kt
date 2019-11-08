@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentLoginBinding
 import com.example.savethefood.viewmodel.LoginViewModel
-import com.google.android.material.snackbar.Snackbar
 
 class LoginFragment : Fragment() {
 
@@ -45,6 +44,9 @@ class LoginFragment : Fragment() {
                 loginViewModel.doneNavigationSignUp()
             }
         })
+
+
+        //https@ //developer.android.com/guide/navigation/navigation-ui
 
         loginViewModel.userLogged.observe(this, Observer {
             if (it != null) {
