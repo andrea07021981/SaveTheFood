@@ -12,8 +12,4 @@
         tools:layout="@layout/fragment_nested" >
 
     </fragment>
-    <fragment
-        android:id="@+id/recipeFragment"
-        android:name="com.example.savethefood.ui.RecipeFragment"
-        android:label="RecipeFragment" />
 </navigation>

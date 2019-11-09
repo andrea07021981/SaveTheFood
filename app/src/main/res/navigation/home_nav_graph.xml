@@ -10,4 +10,8 @@
         android:name="com.example.savethefood.ui.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.example.savethefood.ui.RecipeFragment"
+        android:label="RecipeFragment" />
 </navigation>
