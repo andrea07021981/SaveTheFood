@@ -52,8 +52,8 @@ class LoginViewModel(
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     init {
-        emailValue.value = ""
-        passwordValue.value = ""
+        emailValue.value = "a@a.com"
+        passwordValue.value = "a"
     }
 
     fun onSignUpClick(){

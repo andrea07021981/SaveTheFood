@@ -9,38 +9,16 @@
 
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".HomeFragment"
+        android:background="@color/colorPrimary">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/nav_host_home_container"
+        <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            app:navGraph="@navigation/home_nav_graph"/>
-
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottom_home_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:backgroundTint="@color/colorAccent"
-            app:fabAlignmentMode="center"
-            app:hideOnScroll="true"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:navigationIcon="@mipmap/baseline_menu_white"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            style="@style/Widget.MaterialComponents.FloatingActionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/email_white_24dp"
-            app:layout_anchor="@id/bottom_home_bar" />
-
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            android:text="home"
+            android:id="@+id/buttonfragment"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nested_nav_graph"
+    app:startDestination="@id/nestedFragment">
+
+    <fragment
+        android:id="@+id/nestedFragment"
+        android:name="com.example.savethefood.NestedFragment"
+        android:label="fragment_nested"
+        tools:layout="@layout/fragment_nested" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.example.savethefood.ui.RecipeFragment"
+        android:label="RecipeFragment" />
+</navigation>

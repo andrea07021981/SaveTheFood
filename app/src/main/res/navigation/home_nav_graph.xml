@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home_nested_graph"
-    app:startDestination="@id/foodFragment" >
+    android:id="@+id/home_nav_graph"
+    app:startDestination="@id/homeFragment">
+
     <fragment
-        android:id="@+id/foodFragment"
-        android:name="com.example.savethefood.ui.FoodFragment"
-        android:label="FoodFragment" >
-        <action
-            android:id="@+id/action_foodFragment_to_receipeFragment"
-            app:destination="@id/receipeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/receipeFragment"
-        android:name="com.example.savethefood.ui.ReceipeFragment"
-        android:label="ReceipeFragment" />
+        android:id="@+id/homeFragment"
+        android:name="com.example.savethefood.ui.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
 </navigation>

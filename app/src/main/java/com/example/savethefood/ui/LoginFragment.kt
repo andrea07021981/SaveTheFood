@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentLoginBinding
 import com.example.savethefood.viewmodel.LoginViewModel
+import kotlinx.android.synthetic.main.fragment_signup.*
 
 class LoginFragment : Fragment() {
 
@@ -53,7 +54,7 @@ class LoginFragment : Fragment() {
                 Log.d(TAG, "User logged with ${it.userEmail} and ${it.userPassword} ")
                 this
                     .findNavController()
-                    .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment(it))
+                    .navigate(LoginFragmentDirections.actionLoginFragmentToNestedNavGraph(it))
                 loginViewModel.doneNavigationHome()
             }
 
