@@ -1,20 +1,24 @@
 package com.example.savethefood
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
-import kotlinx.android.synthetic.main.fragment_nested.*
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import androidx.transition.TransitionManager
 import com.google.android.material.navigation.NavigationView
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_nested.*
+import androidx.core.view.MenuItemCompat.getActionView
+import android.content.Context.SEARCH_SERVICE
+import androidx.core.content.ContextCompat.getSystemService
+import android.app.SearchManager
+import android.content.Context
 
 
 
@@ -22,6 +26,7 @@ class NestedFragment : Fragment() {
 
     var toolbar: Toolbar? = null
     var navigationViewTest: NavigationView? = null
+    var searchBar: LinearLayout? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +42,7 @@ class NestedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
 
         toolbar = view.findViewById(R.id.toolbar);
         val fragmentContainer = view.findViewById<View>(R.id.nested_nav_graph)
@@ -48,6 +54,21 @@ class NestedFragment : Fragment() {
         // Set up navigation menu
         navigationViewTest = view.findViewById(R.id.navigationView)
         navigationViewTest?.setupWithNavController(navController)
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_toolbar, menu)
+        val searchItem = menu.findItem(R.id.action_search)
+
+        val searchManager =
+            activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+
+        var searchView: SearchView? = null
+        if (searchItem != null) {
+            searchView = searchItem.actionView as SearchView
+        }
+        searchView?.setSearchableInfo(searchManager.getSearchableInfo(activity?.getComponentName()))
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }

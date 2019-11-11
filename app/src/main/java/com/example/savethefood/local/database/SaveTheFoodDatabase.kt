@@ -4,7 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.savethefood.local.dao.FoodDatabaseDao
 import com.example.savethefood.local.dao.UserDatabaseDao
+import com.example.savethefood.local.entity.FoodEntity
 import com.example.savethefood.local.entity.UserEntity
 
 
@@ -15,13 +19,15 @@ import com.example.savethefood.local.entity.UserEntity
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities = [UserEntity::class], version = 1, exportSchema = false)
+@Database(entities = [UserEntity::class, FoodEntity::class], version = 2, exportSchema = false)
 abstract class SaveTheFoodDatabase : RoomDatabase() {
 
     /**
      * Connects the database to the DAO.
      */
     abstract val userDatabaseDao: UserDatabaseDao
+
+    abstract val foodDatabaseDao: FoodDatabaseDao
 
     /**
      * Define a companion object, this allows us to add functions on the SaveTheFoodDatabase class.
@@ -72,13 +78,19 @@ abstract class SaveTheFoodDatabase : RoomDatabase() {
                         "save_the_food_database"
                     )
                         // Wipes and rebuilds instead of migrating if no Migration object.
-                        // Migration is not part of this lesson. You can learn more about
-                        // migration with Room in this blog post:
                         // https://medium.com/androiddevelopers/understanding-migrations-with-room-f01e04b07929
                         //.fallbackToDestructiveMigration()
+                        .addMigrations(MIGRATION_1_2)
                         .build()
                 }
                 return INSTANCE
+            }
+        }
+
+        val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS food_table (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT NOT NULL, img_url TEXT NOT NULL)")
             }
         }
     }
