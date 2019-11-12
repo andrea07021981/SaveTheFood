@@ -15,7 +15,7 @@ class SignUpFragment : Fragment() {
 
     private val signUpViewModel: SignUpViewModel by lazy {
         val activity = requireNotNull(this.activity)
-        ViewModelProviders.of(this, SignUpViewModel.Factory(app = activity.application)).get(SignUpViewModel::class.java)
+        ViewModelProviders.of(this).get(SignUpViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -27,7 +27,7 @@ class SignUpFragment : Fragment() {
         databinding.signupViewModel = signUpViewModel
         databinding.lifecycleOwner = this
 
-        signUpViewModel.navigateToLoginFragment.observe(this, Observer {
+        signUpViewModel.navigateToLoginFragment.observe(this.viewLifecycleOwner, Observer {
             if (it == true) {
                 this
                     .findNavController()

@@ -16,12 +16,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".HomeFragment"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorAccent">
 
         <ProgressBar
             android:id="@+id/loading_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_gravity="center"
             app:goneIfNotNull="@{homeViewModel.foodList}"
             app:layout_constraintBottom_toBottomOf="parent"

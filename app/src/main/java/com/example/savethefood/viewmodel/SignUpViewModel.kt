@@ -78,17 +78,4 @@ class SignUpViewModel(
         super.onCleared()
         viewModelJob.cancel()
     }
-
-    /**
-     * Factory for constructing DevByteViewModel with parameter
-     */
-    class Factory(val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SignUpViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return SignUpViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-    }
 }

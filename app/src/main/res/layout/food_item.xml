@@ -31,13 +31,14 @@
             type="com.example.savethefood.component.FoodAdapter.OnClickListener" />
     </data>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="5dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp">
+        app:cardUseCompatPadding="true"
+        app:strokeColor="@color/colorAccent"
+        app:strokeWidth="5dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="3dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -58,26 +59,25 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_end="8dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@android:color/black"
-                android:textSize="32sp"
-                android:text="@{food.foodName}"
-                />
             <ImageView
                 android:id="@+id/food_imageview"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
                 android:adjustViewBounds="false"
                 android:cropToPadding="false"
-                android:scaleType="centerCrop"
+                android:scaleType="matrix"
                 app:imageUrl="@{food.foodImgUrl}"
-                app:layout_constraintDimensionRatio="h,4:3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/food_textview"
+                app:layout_constraintDimensionRatio="h,6:3"
+                app:layout_constraintEnd_toStartOf="@+id/right_well"
+                app:layout_constraintStart_toStartOf="@+id/left_well"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
 
             <View
                 android:id="@+id/clickableOverlay"
@@ -89,6 +89,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/food_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="@{food.foodName}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/right_well"
+                app:layout_constraintStart_toStartOf="@+id/left_well" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 </layout>

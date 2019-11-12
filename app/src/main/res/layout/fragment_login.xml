@@ -135,8 +135,8 @@
                 android:layout_weight="0.5"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
-                android:gravity="center|right"
-                android:text="Don't have an account?"
+                android:gravity="center|end"
+                android:text="@string/don_t_have_an_account"
                 android:textColor="@color/colorAccent"/>
 
             <Button
@@ -145,7 +145,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
                 android:background="@android:color/transparent"
-                android:text="Sign Up!"
+                android:text="@string/sign_up_lower"
                 android:textAllCaps="true"
                 android:textColor="@color/colorAccent"
                 android:textIsSelectable="true"

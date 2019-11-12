@@ -30,7 +30,7 @@ class SplashFragment : Fragment() {
         val databinding = FragmentSplashBinding.inflate(inflater);
         databinding.splashViewModel = splashViewModel
         databinding.lifecycleOwner = this
-        splashViewModel.navigateToLogin.observe(this, Observer {
+        splashViewModel.navigateToLogin.observe(this.viewLifecycleOwner, Observer {
             if (it == true) {
                 val extras = FragmentNavigatorExtras(
                     databinding.chefImageview to "chef_imageview"
