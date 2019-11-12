@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/email_white_24dp"
-        android:title="1"/>
+        android:icon="@drawable/ic_diet"
+        android:title="Food"/>
     <item
         android:id="@+id/recipeFragment"
-        android:icon="@drawable/lock_white_24dp"
-        android:title="2"/>
+        android:icon="@drawable/ic_dish"
+        android:title="Recipes"/>
 </menu>

@@ -1,25 +1,19 @@
 package com.example.savethefood
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import androidx.transition.TransitionManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_nested.*
-import androidx.core.view.MenuItemCompat.getActionView
-import android.content.Context.SEARCH_SERVICE
-import androidx.core.content.ContextCompat.getSystemService
-import android.app.SearchManager
-import android.content.Context
-
 
 
 class NestedFragment : Fragment() {
@@ -36,6 +30,8 @@ class NestedFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_nested, container,
             false)
 
+        //TODO Use the user to update the drawer info
+        val user = NestedFragmentArgs.fromBundle(arguments!!).loggedUser
 
         return view
     }

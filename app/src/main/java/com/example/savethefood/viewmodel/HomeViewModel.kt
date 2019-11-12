@@ -1,16 +1,18 @@
 package com.example.savethefood.viewmodel
 
 import android.app.Application
+import android.content.Context
+import android.content.pm.PackageManager
 import androidx.lifecycle.*
 import com.example.savethefood.local.database.SaveTheFoodDatabase
 import com.example.savethefood.local.domain.Food
 import com.example.savethefood.local.domain.User
 import com.example.savethefood.repository.FoodRepository
+import com.google.android.gms.vision.barcode.BarcodeDetector
 import kotlinx.coroutines.*
 
 class HomeViewModel(
-    application: Application,
-    loggedUser: User
+    application: Application
 ) : AndroidViewModel(application) {
 
     private val viewModelJob = SupervisorJob()
@@ -46,6 +48,21 @@ class HomeViewModel(
         _navigateToFoodDetail.value = null
     }
 
+    fun readBarcode() {
+        //TODO BarcodeDetector
+    }
+
+    fun isAppInstalledOrNot(context: Context, applicationId: String): Boolean {
+        //applicationId e.g. com.whatsapp
+        try {
+            context.getPackageManager().getPackageInfo(applicationId, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return false;
+    }
+
     //TODO open a barcode search fo adding a new food
     fun onAddFood() {
         viewModelScope
@@ -67,11 +84,11 @@ class HomeViewModel(
     /*
      * Factory for constructing DevByteViewModel with parameter
      */
-    class Factory(val app: Application, val loggedUser: User) : ViewModelProvider.Factory {
+    class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return HomeViewModel(app, loggedUser) as T
+                return HomeViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

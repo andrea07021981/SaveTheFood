@@ -21,7 +21,7 @@ class LoginFragment : Fragment() {
 
     private val loginViewModel: LoginViewModel by lazy {
         val activity = requireNotNull(this.activity)
-        ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        ViewModelProviders.of(this, LoginViewModel.Factory(app = requireNotNull(activity).application)).get(LoginViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -11,5 +11,9 @@
         android:label="fragment_nested"
         tools:layout="@layout/fragment_nested" >
 
+        <argument
+            android:name="loggedUser"
+            app:argType="com.example.savethefood.local.domain.User" />
+
     </fragment>
 </navigation>

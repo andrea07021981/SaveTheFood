@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- Data to make available to the XML via data binding. In this case,
+         the whole ViewModel, so that we can access the LiveData,
+         click handlers, and state variables. -->
+    <data>
+
+        <variable
+            name="barcodeReaderViewModel"
+            type="com.example.savethefood.viewmodel.BarcodeReaderViewModel" />
+    </data>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtContent"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Process"
+            android:id="@+id/button"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imgview"/>
+    </LinearLayout>
+</layout>
