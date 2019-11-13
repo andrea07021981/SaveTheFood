@@ -11,6 +11,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 private const val BASE_URL = "https://api.spoonacular.com/"
+//TODO HIDE API_KEY for release
 private const val API_KEY = "f3c973b4895e42fdb658a319644cc30b"
 
 
