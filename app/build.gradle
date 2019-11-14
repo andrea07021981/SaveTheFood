@@ -98,6 +98,10 @@ dependencies {
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
 
+    //Interceptor and http loggin
+    implementation 'com.squareup.okhttp3:okhttp:4.2.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+
     // Testing
     // Espresso
     // Core library

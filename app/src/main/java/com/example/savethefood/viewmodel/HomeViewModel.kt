@@ -30,6 +30,9 @@ class HomeViewModel(
     val navigateToFoodDetail: LiveData<Food>
         get() = _navigateToFoodDetail
 
+    private var _navigateToBarcodeReader = MediatorLiveData<Boolean>()
+    val navigateToBarcodeReader: LiveData<Boolean>
+        get() = _navigateToBarcodeReader
 
     init {
         viewModelScope.launch {
@@ -41,30 +44,20 @@ class HomeViewModel(
         _navigateToFoodDetail.value = food
     }
 
-    /**
-     * After the navigation has taken place, make sure navigateToSelectedProperty is set to null
-     */
     fun doneToFoodDetail() {
         _navigateToFoodDetail.value = null
     }
 
-    fun readBarcode() {
-        //TODO BarcodeDetector
+    fun moveToBarcodeReader() {
+        _navigateToBarcodeReader.value = true
     }
 
-    fun isAppInstalledOrNot(context: Context, applicationId: String): Boolean {
-        //applicationId e.g. com.whatsapp
-        try {
-            context.getPackageManager().getPackageInfo(applicationId, PackageManager.GET_ACTIVITIES);
-            return true;
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-        }
-        return false;
+    fun doneToBarcodeReader() {
+        _navigateToBarcodeReader.value = null
     }
 
     //TODO open a barcode search fo adding a new food
-    fun onAddFood() {
+    /*fun onAddFood() {
         viewModelScope
         Food().apply {
             foodName = "Test"
@@ -75,7 +68,7 @@ class HomeViewModel(
                     foodsRepository.getFoods()
                 }
             }
-    }
+    }*/
 
     override fun onCleared() {
         super.onCleared()

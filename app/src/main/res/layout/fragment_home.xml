@@ -46,7 +46,7 @@
             android:layout_height="48dp"
             android:layout_margin="32dp"
             android:clickable="true"
-            android:onClick="@{() -> homeViewModel.onAddFood()}"
+            android:onClick="@{() -> homeViewModel.moveToBarcodeReader()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:srcCompat="@android:drawable/btn_plus" />

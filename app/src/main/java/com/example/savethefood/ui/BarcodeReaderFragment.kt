@@ -26,6 +26,6 @@ class BarcodeReaderFragment : Fragment() {
         val dataBinding = FragmentBarcodereaderBinding.inflate(inflater)
         dataBinding.lifecycleOwner = this
         dataBinding.barcodeReaderViewModel = barcodeReaderViewModel
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return dataBinding.root
     }
 }

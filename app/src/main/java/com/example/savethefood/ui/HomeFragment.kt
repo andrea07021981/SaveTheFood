@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.savethefood.R
 import com.example.savethefood.component.FoodAdapter
+import com.example.savethefood.component.SpacesItemDecoration
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.viewmodel.HomeViewModel
 import com.example.savethefood.viewmodel.LoginViewModel
@@ -39,6 +42,13 @@ class HomeFragment : Fragment() {
             if (it != null) {
                 //TODO move to detail fragment
                 homeViewModel.doneToFoodDetail()
+            }
+        })
+
+        homeViewModel.navigateToBarcodeReader.observe(this.viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBarcodeReaderFragment())
+                homeViewModel.doneToBarcodeReader()
             }
         })
         return databinding.root

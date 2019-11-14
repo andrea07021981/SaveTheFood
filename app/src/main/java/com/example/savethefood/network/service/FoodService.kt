@@ -5,10 +5,13 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.util.concurrent.TimeUnit
 
 private const val BASE_URL = "https://api.spoonacular.com/"
 //TODO HIDE API_KEY for release
@@ -23,6 +26,17 @@ private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
 
+private val okHttpClientBuilder = OkHttpClient.Builder()
+    .readTimeout(30, TimeUnit.SECONDS)
+    .writeTimeout(30, TimeUnit.SECONDS)
+    .addInterceptor(getInterceptior())
+
+private fun getInterceptior(): HttpLoggingInterceptor {
+    val logging = HttpLoggingInterceptor()
+    logging.level = HttpLoggingInterceptor.Level.BASIC
+    return logging
+}
+
 /**
  * Use the Retrofit builder to build a retrofit object using a Moshi converter with our Moshi
  * object.
@@ -31,17 +45,18 @@ private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
     .addCallAdapterFactory(CoroutineCallAdapterFactory())
     .baseUrl(BASE_URL)
+    .client(okHttpClientBuilder.build())
     .build()
 
 interface FoodService {
 
-    @GET("food/products/upc?api_key=${API_KEY}")
-    fun getFoodByUpc(@Query("upc") type: String): Deferred<NetworkFoodContainer>
+    @GET("food/products/upc")
+    fun getFoodByUpc(@Query("upc") type: String, @Query("api_key") key: String = API_KEY): Deferred<NetworkFoodContainer>
 }
 
 /**
  * A public Api object that exposes the lazy-initialized Retrofit service
  */
-object MarsApi {
+object FoodApi {
     val retrofitService : FoodService by lazy { retrofit.create(FoodService::class.java) }
 }
