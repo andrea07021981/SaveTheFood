@@ -19,37 +19,32 @@ import com.squareup.moshi.JsonClass
  *   "Foods": []
  * }
  */
-@JsonClass(generateAdapter = true)
+/*WE'LL USE IT ONLY IN CASE OF JSON ARRAY*/
+/*@JsonClass(generateAdapter = true)
 data class NetworkFoodContainer(val foods: List<NetworkFood>)
 
-/**
+*//**
  * Foods represent a devbyte that can be played.
- */
+ *//*
 @JsonClass(generateAdapter = true)
 data class NetworkFood(
-    val id: Long,
-    val title: String,
-    val generatedText: String,
-    val images: List<String>)
+    val id: Int,
+    val title: String)
 
-/**
+*//**
  * Convert Network results to database objects
- */
-fun NetworkFoodContainer.asDomainModel(): List<Food> {
-    return foods.map {
-        Food(
-            foodId = it.id,
-            foodName = it.title,
-            foodImgUrl = it.images.get(0))
-    }
+ *//*
+fun NetworkFoodContainer.asDomainModel(): Food {
+    return Food(
+            foodId = foods.id,
+            foodName = foods.title,
+            foodImgUrl = foods.title)
 }
 
-fun NetworkFoodContainer.asDatabaseModel(): Array<FoodEntity> {
-    return foods.map {
-        FoodEntity(
-            id = it.id,
-            name = it.title,
-            imgUrl = it.images.get(0)
+fun NetworkFoodContainer.asDatabaseModel(): FoodEntity {
+    return FoodEntity(
+            id = foods.id,
+            name = foods.title,
+            imgUrl = foods.title
         )
-    }.toTypedArray()
-}
+}*/

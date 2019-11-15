@@ -25,11 +25,11 @@ fun User.asDatabaseModel(): UserEntity {
 //Food
 @Parcelize
 data class Food(var foodName: String = "",
-                var foodId: Long,
+                var foodId: Int,
                 // used to map img_src from the JSON to imgSrcUrl in our class
-                @Json(name = "img_src") var foodImgUrl: String): Parcelable {
+                var foodImgUrl: String): Parcelable {
 
-    constructor() : this("", 0L,"")
+    constructor() : this("", 0,"")
 }
 
 fun Food.asDatabaseModel(): FoodEntity {

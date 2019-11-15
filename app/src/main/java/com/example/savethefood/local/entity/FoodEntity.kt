@@ -8,7 +8,7 @@ import com.example.savethefood.local.domain.User
 
 @Entity(tableName = "food_table")
 data class FoodEntity(@PrimaryKey(autoGenerate = true)
-                      var id: Long = 0L,
+                      var id: Int = 0,
 
                       @ColumnInfo(name = "name")
                       val name: String,

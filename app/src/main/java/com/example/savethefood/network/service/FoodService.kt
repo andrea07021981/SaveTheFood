@@ -1,9 +1,7 @@
 package com.example.savethefood.network.service
 
-import com.example.savethefood.network.datatransferobject.NetworkFoodContainer
+import com.example.savethefood.network.datatransferobject.NetworkFood
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.squareup.moshi.FromJson
-import com.squareup.moshi.JsonReader
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
@@ -54,7 +52,7 @@ private val retrofit = Retrofit.Builder()
 interface FoodService {
 
     @GET("food/products/upc/{upc}")
-    fun getFoodByUpc(@Path("upc") type: String, @Query("apiKey") key: String = API_KEY): Deferred<NetworkFoodContainer>
+    fun getFoodByUpc(@Path("upc") type: String, @Query("apiKey") key: String = API_KEY): Deferred<NetworkFood>
 }
 
 /**
