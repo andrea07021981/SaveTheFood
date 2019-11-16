@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
 import com.example.savethefood.component.FoodAdapter
-import com.example.savethefood.local.domain.Food
+import com.example.savethefood.local.domain.FoodDomain
 
 /**
  * Binding adapter used to hide the spinner once data is available
@@ -37,7 +37,7 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 }
 
 @BindingAdapter("listdata")
-fun bindRecycleView(recyclerView: RecyclerView, data: List<Food>?) {
+fun bindRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?) {
     val adapter = recyclerView.adapter as FoodAdapter
     adapter.submitList(data)
 }

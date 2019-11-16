@@ -7,7 +7,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.example.savethefood.local.database.SaveTheFoodDatabase
-import com.example.savethefood.local.domain.Food
+import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.local.domain.asDatabaseModel
 import com.example.savethefood.local.entity.FoodEntity
 import com.example.savethefood.local.entity.asDomainModel
@@ -36,13 +36,13 @@ class FoodRepository(private val database: SaveTheFoodDatabase) {
         }
     }
 
-    suspend fun saveNewFood(food: Food) {
+    suspend fun saveNewFood(food: FoodDomain) {
         withContext(Dispatchers.IO) {
             val newId = database.foodDatabaseDao.insert(food.asDatabaseModel())
         }
     }
 
-    suspend fun getFoods(): LiveData<List<Food>> {
+    suspend fun getFoods(): LiveData<List<FoodDomain>> {
         return withContext(Dispatchers.IO) {
             Transformations.map(database.foodDatabaseDao.getFoods()) {
                 it.asDomainModel()

@@ -6,17 +6,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.databinding.FoodItemBinding
-import com.example.savethefood.local.domain.Food
+import com.example.savethefood.local.domain.FoodDomain
 
 class FoodAdapter(
     val onClickListener: OnClickListener
-) : ListAdapter<Food, FoodAdapter.FoodViewHolder>(DiffCallback) {
+) : ListAdapter<FoodDomain, FoodAdapter.FoodViewHolder>(DiffCallback) {
 
     class FoodViewHolder private constructor(val binding: FoodItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(clickListener: OnClickListener, item: Food) {
-            binding.food = item
+        fun bind(clickListener: OnClickListener, item: FoodDomain) {
+            binding.foodDomain = item
             binding.foodCallback = clickListener
             binding.executePendingBindings()
         }
@@ -43,12 +43,12 @@ class FoodAdapter(
      * Allows the RecyclerView to determine which items have changed when the [List] of [Food]
      * has been updated.
      */
-    companion object DiffCallback : DiffUtil.ItemCallback<Food>() {
-        override fun areItemsTheSame(oldItem: Food, newItem: Food): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<FoodDomain>() {
+        override fun areItemsTheSame(oldItem: FoodDomain, newItem: FoodDomain): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: Food, newItem: Food): Boolean {
+        override fun areContentsTheSame(oldItem: FoodDomain, newItem: FoodDomain): Boolean {
             return oldItem.foodId == newItem.foodId
         }
     }
@@ -58,7 +58,7 @@ class FoodAdapter(
      * associated with the current item to the [onClick] function.
      * @param clickListener lambda that will be called with the current [Food]
      */
-    class OnClickListener(val clickListener: (food: Food) -> Unit) {
-        fun onClick(food: Food) = clickListener(food)
+    class OnClickListener(val clickListener: (food: FoodDomain) -> Unit) {
+        fun onClick(food: FoodDomain) = clickListener(food)
     }
 }

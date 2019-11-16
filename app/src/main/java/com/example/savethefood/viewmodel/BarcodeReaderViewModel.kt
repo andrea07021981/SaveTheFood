@@ -1,14 +1,12 @@
 package com.example.savethefood.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.savethefood.local.database.SaveTheFoodDatabase
-import com.example.savethefood.network.service.FoodApi
+import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.repository.FoodRepository
-import com.example.savethefood.repository.UserRepository
+import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.coroutines.*
-import java.lang.Exception
 
 class BarcodeReaderViewModel(
     application: Application
@@ -19,19 +17,34 @@ class BarcodeReaderViewModel(
     private val database = SaveTheFoodDatabase.getInstance(application)
     private val foodRepository = FoodRepository(database)
 
-    private val _getInfoByBarcode = MutableLiveData<Boolean>()
-    val getInfoByBarcode: LiveData<Boolean>
-        get() = _getInfoByBarcode
+    var barcodeValue = MutableLiveData<String>()
 
+    private val _startReadingBarcode = MutableLiveData<Boolean>()
+    val startReadingBarcode: LiveData<Boolean>
+        get() = _startReadingBarcode
+
+    init {
+        //TODO use variable for binding adapter and disable components until we get an error from barcode
+    }
     fun doneReadBarcode() {
-        _getInfoByBarcode.value = null
+        _startReadingBarcode.value = null
     }
 
     fun getInfoByBarcode() {
-        viewModelScope.launch {
-            foodRepository.getApiFoodUpc()
-        }
-        _getInfoByBarcode.value = true
+        _startReadingBarcode.value = true
+    }
+
+    fun saveFood(food: FoodDomain) {
+        //TODO start scanning
+        _startReadingBarcode.value = true
+
+        /* viewModelScope.launch {
+             foodRepository.getApiFoodUpc()
+         }*/
+    }
+
+    fun doneStartReadingBarcode() {
+        _startReadingBarcode.value = null
     }
 
     override fun onCleared() {

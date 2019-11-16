@@ -1,6 +1,6 @@
 package com.example.savethefood.network.datatransferobject
 
-import com.example.savethefood.local.domain.Food
+import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.local.entity.FoodEntity
 import com.squareup.moshi.JsonClass
 

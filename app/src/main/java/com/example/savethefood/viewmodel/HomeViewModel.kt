@@ -3,7 +3,7 @@ package com.example.savethefood.viewmodel
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.savethefood.local.database.SaveTheFoodDatabase
-import com.example.savethefood.local.domain.Food
+import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.repository.FoodRepository
 import kotlinx.coroutines.*
 
@@ -18,12 +18,12 @@ class HomeViewModel(
     private val database = SaveTheFoodDatabase.getInstance(application)
     private val foodsRepository = FoodRepository(database)
 
-    private var _foodList = MediatorLiveData<List<Food>>()
-    val foodList: LiveData<List<Food>>
+    private var _foodList = MediatorLiveData<List<FoodDomain>>()
+    val foodList: LiveData<List<FoodDomain>>
         get() = _foodList
 
-    private var _navigateToFoodDetail = MediatorLiveData<Food>()
-    val navigateToFoodDetail: LiveData<Food>
+    private var _navigateToFoodDetail = MediatorLiveData<FoodDomain>()
+    val navigateToFoodDetail: LiveData<FoodDomain>
         get() = _navigateToFoodDetail
 
     private var _navigateToBarcodeReader = MediatorLiveData<Boolean>()
@@ -36,7 +36,7 @@ class HomeViewModel(
         }
     }
 
-    fun moveToFoodDetail(food: Food) {
+    fun moveToFoodDetail(food: FoodDomain) {
         _navigateToFoodDetail.value = food
     }
 

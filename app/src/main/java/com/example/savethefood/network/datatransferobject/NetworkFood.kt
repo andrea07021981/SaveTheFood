@@ -1,6 +1,6 @@
 package com.example.savethefood.network.datatransferobject
 
-import com.example.savethefood.local.domain.Food
+import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.local.entity.FoodEntity
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -13,7 +13,7 @@ import com.squareup.moshi.JsonClass
 data class NetworkFood(
     val badges: List<String>?,
     @Json(name = "breadcrumbs") val breadCrumbs: List<String>?,
-    val generatedText: String?,
+    val generatedText: String,
     val id: Int,
     val images: List<String>,
     @Json(name = "important_badges")val importantBadges: List<String>?,
@@ -48,17 +48,18 @@ data class Nutrition(
 //**
 // Convert Network results to database objects
 //*
-fun NetworkFood.asDomainModel(): Food {
-    return Food(
+fun NetworkFood.asDomainModel(): FoodDomain {
+    return FoodDomain(
         foodId = id,
-        foodName = title,
+        foodTitle = title,
         foodImgUrl = images.first())
 }
 
 fun NetworkFood.asDatabaseModel(): FoodEntity {
     return FoodEntity(
         id = id,
-        name = title,
+        title = title,
+        description = generatedText,
         imgUrl = images.first()
     )
 }

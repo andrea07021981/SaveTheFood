@@ -5,9 +5,11 @@ import com.example.savethefood.local.entity.UserEntity
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class UserDomain(var userName: String = "",
-                var userEmail: String = "",
-                var userPassword: String = "") : Parcelable {
+data class UserDomain(
+    var userName: String = "",
+    var userEmail: String = "",
+    var userPassword: String = ""
+) : Parcelable {
 
     constructor() : this("", "","")
 }
