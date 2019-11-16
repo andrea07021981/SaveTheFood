@@ -3,7 +3,7 @@ package com.example.savethefood.local.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.savethefood.local.domain.User
+import com.example.savethefood.local.domain.UserDomain
 
 @Entity(tableName = "user_table")
 data class UserEntity(
@@ -20,8 +20,8 @@ data class UserEntity(
     var password: String
 )
 
-fun UserEntity.asDomainModel(): User {
-    return User(
+fun UserEntity.asDomainModel(): UserDomain {
+    return UserDomain(
             userName = userName,
             userEmail = email,
             userPassword = password)

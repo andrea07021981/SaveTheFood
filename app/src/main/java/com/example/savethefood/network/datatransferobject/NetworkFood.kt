@@ -9,7 +9,6 @@ import com.squareup.moshi.JsonClass
  * Convert Network results to database objects
  */
 
-//TODO search Moshi allow null values
 @JsonClass(generateAdapter = true)
 data class NetworkFood(
     val badges: List<String>?,

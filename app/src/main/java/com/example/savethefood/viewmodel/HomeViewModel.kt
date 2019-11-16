@@ -1,14 +1,10 @@
 package com.example.savethefood.viewmodel
 
 import android.app.Application
-import android.content.Context
-import android.content.pm.PackageManager
 import androidx.lifecycle.*
 import com.example.savethefood.local.database.SaveTheFoodDatabase
 import com.example.savethefood.local.domain.Food
-import com.example.savethefood.local.domain.User
 import com.example.savethefood.repository.FoodRepository
-import com.google.android.gms.vision.barcode.BarcodeDetector
 import kotlinx.coroutines.*
 
 class HomeViewModel(

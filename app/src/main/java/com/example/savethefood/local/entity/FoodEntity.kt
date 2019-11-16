@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.savethefood.local.domain.Food
-import com.example.savethefood.local.domain.User
 
 @Entity(tableName = "food_table")
 data class FoodEntity(@PrimaryKey(autoGenerate = true)

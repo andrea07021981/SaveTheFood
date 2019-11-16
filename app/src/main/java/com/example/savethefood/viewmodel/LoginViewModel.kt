@@ -1,15 +1,10 @@
 package com.example.savethefood.viewmodel
 
 import android.app.Application
-import android.util.Log
-import android.util.Patterns
 import androidx.lifecycle.*
 import com.example.savethefood.R
-import com.example.savethefood.constants.*
 import com.example.savethefood.local.database.SaveTheFoodDatabase
-import com.example.savethefood.local.domain.User
-import com.example.savethefood.local.domain.asDatabaseModel
-import com.example.savethefood.local.entity.asDomainModel
+import com.example.savethefood.local.domain.UserDomain
 import com.example.savethefood.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,8 +23,8 @@ class LoginViewModel(
     var errorPassword = MutableLiveData<Boolean>()
     var errorEmail = MutableLiveData<Boolean>()
 
-    private val _userLogged = MediatorLiveData<User>()
-    val userLogged: LiveData<User>
+    private val _userLogged = MediatorLiveData<UserDomain>()
+    val userLogged: LiveData<UserDomain>
         get() = _userLogged
 
     private val _navigateToSignUpFragment = MutableLiveData<Boolean>()
@@ -61,7 +56,7 @@ class LoginViewModel(
         errorPassword.value = passwordValue.value.isNullOrEmpty()
         if (errorEmail.value == false && errorPassword.value == false) {
             uiScope.launch {
-                val userToSave = User().apply {
+                val userToSave = UserDomain().apply {
                     userEmail = emailValue.value.toString()
                     userPassword = passwordValue.value.toString()
                 }

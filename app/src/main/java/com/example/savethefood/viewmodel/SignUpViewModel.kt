@@ -1,10 +1,10 @@
 package com.example.savethefood.viewmodel
 
 import android.app.Application
-import com.example.savethefood.local.domain.User
 import android.util.Patterns
 import androidx.lifecycle.*
 import com.example.savethefood.local.database.SaveTheFoodDatabase
+import com.example.savethefood.local.domain.UserDomain
 import com.example.savethefood.repository.UserRepository
 import kotlinx.coroutines.*
 
@@ -13,7 +13,7 @@ class SignUpViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
-    var user = User()
+    var user = UserDomain()
     var userNameValue = MutableLiveData<String>()
     var errorUserName = MutableLiveData<Boolean>()
     var emailValue = MutableLiveData<String>()
