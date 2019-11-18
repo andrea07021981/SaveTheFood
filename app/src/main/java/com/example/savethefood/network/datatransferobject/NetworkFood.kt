@@ -52,6 +52,7 @@ fun NetworkFood.asDomainModel(): FoodDomain {
     return FoodDomain(
         foodId = id,
         foodTitle = title,
+        foodDescription = generatedText,
         foodImgUrl = images.first())
 }
 

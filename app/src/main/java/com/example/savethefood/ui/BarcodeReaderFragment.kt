@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.savethefood.databinding.FragmentBarcodereaderBinding
 import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.viewmodel.BarcodeReaderViewModel
@@ -33,13 +34,21 @@ class BarcodeReaderFragment : Fragment() {
         val dataBinding = FragmentBarcodereaderBinding.inflate(inflater)
         dataBinding.lifecycleOwner = this
         dataBinding.barcodeReaderViewModel = barcodeReaderViewModel
-        dataBinding.food = FoodDomain()
+        dataBinding.food = barcodeReaderViewModel.food
+
         barcodeReaderViewModel.startReadingBarcode.observe(this.viewLifecycleOwner, Observer {
             it?.let {
                 readBarcode()
                 barcodeReaderViewModel.doneReadBarcode()
             }
         })
+        barcodeReaderViewModel.popToHome.observe(this.viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().popBackStack()
+                barcodeReaderViewModel.donePopToHome()
+            }
+        })
+
         return dataBinding.root
     }
 
@@ -54,7 +63,7 @@ class BarcodeReaderFragment : Fragment() {
         //041631000564
         result?.let {
             //TODO call a new method in vm, which gets the repository getApiFoodUpc and save. In the meantime use bindingadapger for a progress bar
-            barcodeReaderViewModel.barcodeValue.value = it.contents ?: "041631000564"
+            barcodeReaderViewModel.getApiFoodDetails(it.contents ?: "041631000564")
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
