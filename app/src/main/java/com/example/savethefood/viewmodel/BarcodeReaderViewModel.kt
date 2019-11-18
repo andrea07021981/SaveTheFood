@@ -67,10 +67,6 @@ class BarcodeReaderViewModel(
         _popToHome.value = null
     }
 
-    fun doneStartReadingBarcode() {
-        _startReadingBarcode.value = null
-    }
-
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
