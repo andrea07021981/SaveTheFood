@@ -7,6 +7,12 @@
         android:orderInCategory="100"
         android:title="Filter"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        android:icon="@drawable/lock_white_24dp"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_filter"
+        android:orderInCategory="100"
+        android:title="Filter"
+        android:icon="@drawable/ic_filter_image"
         app:showAsAction="always"/>
 </menu>
