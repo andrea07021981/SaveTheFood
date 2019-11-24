@@ -49,6 +49,7 @@ class BarcodeReaderFragment : Fragment() {
             }
         })
 
+        //TODO solve the problem of two button with the keyboard opened
         return dataBinding.root
     }
 

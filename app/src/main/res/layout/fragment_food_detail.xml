@@ -8,8 +8,8 @@
     <data>
 
         <variable
-            name="homeViewModel"
-            type="com.example.savethefood.viewmodel.HomeViewModel" />
+            name="foodDetailViewModel"
+            type="com.example.savethefood.viewmodel.FoodDetailViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

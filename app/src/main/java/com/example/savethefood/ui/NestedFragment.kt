@@ -8,12 +8,16 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_nested.*
+import kotlinx.android.synthetic.main.fragment_nested.view.*
 
 
 class NestedFragment : Fragment() {
@@ -51,11 +55,13 @@ class NestedFragment : Fragment() {
         navigationViewTest = view.findViewById(R.id.navigationView)
         navigationViewTest?.setupWithNavController(navController)
 
+        //This listener manages the nawdrawer configuration
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
             if (nd.id == nc.graph.startDestination) {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             } else {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                appbar.toolbar.visibility = View.GONE
             }
         }
     }

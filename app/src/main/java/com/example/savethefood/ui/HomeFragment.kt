@@ -40,7 +40,9 @@ class HomeFragment : Fragment() {
 
         homeViewModel.navigateToFoodDetail.observe(this.viewLifecycleOwner, Observer {
             if (it != null) {
-                //TODO move to detail fragment
+                //TODO move to detail fragment with the it (food) parameter
+                findNavController()
+                    .navigate(HomeFragmentDirections.actionHomeFragmentToFoodDetailFragment(it))
                 homeViewModel.doneToFoodDetail()
             }
 
