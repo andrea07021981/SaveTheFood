@@ -55,15 +55,17 @@ class LoginViewModel(
         errorEmail.value = emailValue.value.isNullOrEmpty()
         errorPassword.value = passwordValue.value.isNullOrEmpty()
         if (errorEmail.value == false && errorPassword.value == false) {
-            uiScope.launch {
-                val userToSave = UserDomain().apply {
-                    userEmail = emailValue.value.toString()
-                    userPassword = passwordValue.value.toString()
-                }
-                val userRecord = userRepository.getUser(user = userToSave)
-                _userLogged.addSource(userRecord, _userLogged::setValue)
-            }
+            doLogin()
         }
+    }
+
+    private fun doLogin() = uiScope.launch {
+        val userToSave = UserDomain().apply {
+            userEmail = emailValue.value.toString()
+            userPassword = passwordValue.value.toString()
+        }
+        val userRecord = userRepository.getUser(user = userToSave)
+        _userLogged.addSource(userRecord, _userLogged::setValue)
     }
 
     fun doneNavigationSignUp() {

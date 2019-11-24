@@ -46,10 +46,12 @@ class LoginFragment : Fragment() {
             }
         })
 
-
+        //TODO check it
         //https@ //developer.android.com/guide/navigation/navigation-ui
+        //Coroutines
+        //https://proandroiddev.com/kotlin-coroutines-patterns-anti-patterns-f9d12984c68e
 
-        loginViewModel.userLogged.observe(this, Observer {
+        loginViewModel.userLogged.observe(this.viewLifecycleOwner, Observer {
             if (it != null) {
                 Log.d(TAG, "User logged with ${it.userEmail} and ${it.userPassword} ")
                 this

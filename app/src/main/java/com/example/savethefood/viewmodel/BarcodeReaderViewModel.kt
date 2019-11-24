@@ -8,6 +8,7 @@ import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.local.domain.UserDomain
 import com.example.savethefood.repository.FoodRepository
 import com.google.zxing.integration.android.IntentIntegrator
+import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.*
 
 class BarcodeReaderViewModel(
@@ -49,9 +50,14 @@ class BarcodeReaderViewModel(
     fun getApiFoodDetails(barcode: String) {
         //TODO add binding for progress status
         viewModelScope.launch {
-            _food.postValue(foodRepository.getApiFoodUpc(barcode))
-            Log.d("Food title", _food.value?.foodTitle)
-            Log.d("Food description", _food.value?.foodDescription)
+            try {
+                _food.postValue(foodRepository.getApiFoodUpc(barcode))
+                Log.d("Food title", _food.value?.foodTitle)
+                Log.d("Food description", _food.value?.foodDescription)
+            } catch (error: JsonDataException) {
+                Log.d("Error retrofit", error.message)
+                null
+            }
         }
     }
 
