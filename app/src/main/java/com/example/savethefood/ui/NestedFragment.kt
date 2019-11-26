@@ -61,7 +61,8 @@ class NestedFragment : Fragment() {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             } else {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-                appbar.toolbar.visibility = View.GONE
+                //TODO change visibility of action buttons
+                //appbar.toolbar.visibility = View.GONE
             }
         }
     }
