@@ -15,6 +15,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.example.savethefood.R.id.foodDetailFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_nested.*
 import kotlinx.android.synthetic.main.fragment_nested.view.*
@@ -59,10 +60,14 @@ class NestedFragment : Fragment() {
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
             if (nd.id == nc.graph.startDestination) {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                appbar.toolbar.visibility = View.VISIBLE
+            } else if (nd.id == nc.graph.findNode(foodDetailFragment)?.id){
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                appbar.toolbar.visibility = View.GONE
             } else {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                 //TODO change visibility of action buttons
-                //appbar.toolbar.visibility = View.GONE
+                appbar.toolbar.visibility = View.VISIBLE
             }
         }
     }
