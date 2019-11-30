@@ -1,6 +1,7 @@
 package com.example.savethefood.ui
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,11 @@ class FoodDetailFragment : Fragment() {
         val application = requireNotNull(activity).application
         ViewModelProviders.of(this, FoodDetailViewModel.Factory(application = application, foodSelected = foodSelected))
             .get(FoodDetailViewModel::class.java)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = TransitionInflater.from(requireNotNull(activity)).inflateTransition(android.R.transition.move)
     }
     override fun onCreateView(
         inflater: LayoutInflater,

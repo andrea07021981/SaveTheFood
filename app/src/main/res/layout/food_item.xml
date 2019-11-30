@@ -70,6 +70,7 @@
                 android:adjustViewBounds="false"
                 android:cropToPadding="false"
                 android:scaleType="matrix"
+                android:transitionName="foodImage"
                 app:imageUrl="@{foodDomain.foodImgUrl}"
                 app:layout_constraintBottom_toTopOf="@+id/food_textview"
                 app:layout_constraintDimensionRatio="h,6:3"

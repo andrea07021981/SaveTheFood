@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,8 @@ import com.example.savethefood.viewmodel.HomeViewModel
 import com.example.savethefood.viewmodel.LoginViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.fragment_food_detail.*
+
 class HomeFragment : Fragment() {
 
     private val homeViewModel: HomeViewModel by lazy {
@@ -41,8 +44,11 @@ class HomeFragment : Fragment() {
         homeViewModel.navigateToFoodDetail.observe(this.viewLifecycleOwner, Observer {
             if (it != null) {
                 //TODO move to detail fragment with the it (food) parameter
+                val extras = FragmentNavigatorExtras(
+                    imageView to "foodImage"
+                )
                 findNavController()
-                    .navigate(HomeFragmentDirections.actionHomeFragmentToFoodDetailFragment(it))
+                    .navigate(R.id.action_homeFragment_to_foodDetailFragment, null, null, extras)
                 homeViewModel.doneToFoodDetail()
             }
 

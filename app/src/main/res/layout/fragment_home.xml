@@ -45,11 +45,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="32dp"
-            android:scaleType="fitCenter"
+            android:scaleType="center"
+            app:backgroundTint="@color/colorPrimary"
             android:clickable="true"
+            app:fabSize="auto"
             android:onClick="@{() -> homeViewModel.moveToBarcodeReader()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:srcCompat="@drawable/ic_add_primary_24dp" />
+            app:srcCompat="@mipmap/ic_name_add" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
