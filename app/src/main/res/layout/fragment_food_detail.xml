@@ -47,6 +47,7 @@
                     tools:srcCompat="@tools:sample/backgrounds/scenic"
                     app:layout_collapseMode="parallax"
                     android:transitionName="foodImage"
+                    app:imageUrl="@{foodDetailViewModel.food.foodImgUrl}"
                     />
 
                 <androidx.appcompat.widget.Toolbar

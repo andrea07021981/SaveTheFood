@@ -1,6 +1,8 @@
 package com.example.savethefood.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.savethefood.local.domain.FoodDomain
@@ -11,6 +13,13 @@ class FoodDetailViewModel(
     food: FoodDomain
 ) : ViewModel() {
 
+    private val _food = MutableLiveData<FoodDomain>()
+    val food: LiveData<FoodDomain>
+        get() = _food
+
+    init {
+        _food.value = food
+    }
 
     /**
      * Factory for constructing DevByteViewModel with parameter
