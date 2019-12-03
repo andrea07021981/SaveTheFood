@@ -43,16 +43,10 @@ class HomeFragment : Fragment() {
 
         homeViewModel.navigateToFoodDetail.observe(this.viewLifecycleOwner, Observer {
             if (it != null) {
-                //TODO move to detail fragment with the it (food) parameter
-                val extras = FragmentNavigatorExtras(
-                    imageView to "foodImage"
-                )
                 findNavController()
-                    .navigate(R.id.action_homeFragment_to_foodDetailFragment, null, null, extras)
+                    .navigate(HomeFragmentDirections.actionHomeFragmentToFoodDetailFragment(it))
                 homeViewModel.doneToFoodDetail()
             }
-
-
 
             fun ExtendString(arg: String, value: Int): String {
                 val another : String.(Int) -> String = {this + it}

@@ -17,7 +17,26 @@ data class FoodEntity(
     val description: String,
 
     @ColumnInfo(name = "img_url")
-    val imgUrl: String
+    val imgUrl: String,
+
+    @ColumnInfo(name = "likes")
+    val likes: Double?,
+
+    @ColumnInfo(name = "price")
+    val price: Double?,
+
+    @ColumnInfo(name = "calories")
+    val calories: Double?,
+
+    @ColumnInfo(name = "fat")
+    val fat: String?,
+
+    @ColumnInfo(name = "proteins")
+    val proteins: String?,
+
+    @ColumnInfo(name = "carbs")
+    val carbs: String?
+
 )
 
 fun FoodEntity.asDomainModel(): FoodDomain {
@@ -25,7 +44,13 @@ fun FoodEntity.asDomainModel(): FoodDomain {
         foodId = id,
         foodTitle = title,
         foodDescription = description,
-        foodImgUrl = imgUrl
+        foodImgUrl = imgUrl,
+        likes = likes,
+        price = price,
+        calories = calories,
+        fat = fat,
+        proteins = proteins,
+        carbs = carbs
     )
 }
 
@@ -35,7 +60,13 @@ fun List<FoodEntity>.asDomainModel(): List<FoodDomain> {
             foodId = it.id,
             foodTitle = it.title,
             foodDescription = it.description,
-            foodImgUrl = it.imgUrl
+            foodImgUrl = it.imgUrl,
+            likes = it.likes,
+            price = it.price,
+            calories = it.calories,
+            fat = it.fat,
+            proteins = it.proteins,
+            carbs = it.carbs
         )
     }
 

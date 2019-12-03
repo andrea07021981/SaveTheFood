@@ -21,10 +21,6 @@ class FoodDetailFragment : Fragment() {
             .get(FoodDetailViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        sharedElementEnterTransition = TransitionInflater.from(requireNotNull(activity)).inflateTransition(android.R.transition.move)
-    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

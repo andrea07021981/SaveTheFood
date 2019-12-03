@@ -53,7 +53,13 @@ fun NetworkFood.asDomainModel(): FoodDomain {
         foodId = id,
         foodTitle = title,
         foodDescription = generatedText,
-        foodImgUrl = images.first())
+        foodImgUrl = images.first(),
+        likes = likes,
+        price = price,
+        calories = nutrition?.calories,
+        fat = nutrition?.fat,
+        proteins = nutrition?.protein,
+        carbs = nutrition?.carbs)
 }
 
 fun NetworkFood.asDatabaseModel(): FoodEntity {
@@ -61,6 +67,12 @@ fun NetworkFood.asDatabaseModel(): FoodEntity {
         id = id,
         title = title,
         description = generatedText,
-        imgUrl = images.first()
+        imgUrl = images.first(),
+        likes = likes,
+        price = price,
+        calories = nutrition?.calories,
+        fat = nutrition?.fat,
+        proteins = nutrition?.protein,
+        carbs = nutrition?.carbs
     )
 }

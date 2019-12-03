@@ -15,10 +15,16 @@ data class FoodDomain(
     var foodDescription: String = "",
     var foodId: Int,
     // used to map img_src from the JSON to imgSrcUrl in our class
-    var foodImgUrl: String
+    var foodImgUrl: String,
+    var likes: Double?,
+    var price: Double?,
+    var calories: Double?,
+    var fat: String?,
+    var proteins: String?,
+    var carbs: String?
 ) : Parcelable {
 
-    constructor() : this("", "",0,"")
+    constructor() : this("", "",0,"", 0.0, 0.0, 0.0, "", "", "")
 }
 
 fun FoodDomain.asDatabaseModel(): FoodEntity {
@@ -26,6 +32,12 @@ fun FoodDomain.asDatabaseModel(): FoodEntity {
         id = foodId,
         title = foodTitle,
         description = foodDescription,
-        imgUrl = foodImgUrl
+        imgUrl = foodImgUrl,
+        likes = likes,
+        price = price,
+        calories = calories,
+        fat = fat,
+        proteins = proteins,
+        carbs = carbs
     )
 }
