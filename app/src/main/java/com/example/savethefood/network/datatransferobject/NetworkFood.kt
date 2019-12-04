@@ -59,7 +59,9 @@ fun NetworkFood.asDomainModel(): FoodDomain {
         calories = nutrition?.calories,
         fat = nutrition?.fat,
         proteins = nutrition?.protein,
-        carbs = nutrition?.carbs)
+        carbs = nutrition?.carbs,
+        ingredientList = ingredientList,
+        servingSize = servingSize)
 }
 
 fun NetworkFood.asDatabaseModel(): FoodEntity {
@@ -73,6 +75,8 @@ fun NetworkFood.asDatabaseModel(): FoodEntity {
         calories = nutrition?.calories,
         fat = nutrition?.fat,
         proteins = nutrition?.protein,
-        carbs = nutrition?.carbs
+        carbs = nutrition?.carbs,
+        ingredientList = ingredientList,
+        servingSize = servingSize
     )
 }

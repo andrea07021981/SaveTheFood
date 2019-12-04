@@ -35,7 +35,13 @@ data class FoodEntity(
     val proteins: String?,
 
     @ColumnInfo(name = "carbs")
-    val carbs: String?
+    val carbs: String?,
+
+    @ColumnInfo(name = "ingredients")
+    var ingredientList: String?,
+
+    @ColumnInfo(name = "serving_size")
+    var servingSize: String?
 
 )
 
@@ -50,7 +56,9 @@ fun FoodEntity.asDomainModel(): FoodDomain {
         calories = calories,
         fat = fat,
         proteins = proteins,
-        carbs = carbs
+        carbs = carbs,
+        ingredientList = ingredientList,
+        servingSize = servingSize
     )
 }
 
@@ -66,7 +74,9 @@ fun List<FoodEntity>.asDomainModel(): List<FoodDomain> {
             calories = it.calories,
             fat = it.fat,
             proteins = it.proteins,
-            carbs = it.carbs
+            carbs = it.carbs,
+            ingredientList = it.ingredientList,
+            servingSize = it.servingSize
         )
     }
 

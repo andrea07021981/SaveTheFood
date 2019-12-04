@@ -21,10 +21,13 @@ data class FoodDomain(
     var calories: Double?,
     var fat: String?,
     var proteins: String?,
-    var carbs: String?
+    var carbs: String?,
+    var ingredientList: String?,
+    var servingSize: String?
+
 ) : Parcelable {
 
-    constructor() : this("", "",0,"", 0.0, 0.0, 0.0, "", "", "")
+    constructor() : this("", "",0,"", 0.0, 0.0, 0.0, "", "", "", "", "")
 }
 
 fun FoodDomain.asDatabaseModel(): FoodEntity {
@@ -38,6 +41,8 @@ fun FoodDomain.asDatabaseModel(): FoodEntity {
         calories = calories,
         fat = fat,
         proteins = proteins,
-        carbs = carbs
+        carbs = carbs,
+        ingredientList = ingredientList,
+        servingSize = servingSize
     )
 }

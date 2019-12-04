@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Save The Food</string>
     <string name="log_in">LOG IN</string>
     <string name="sign_up">SIGN UP</string>
@@ -6,4 +6,8 @@
     <string name="sign_up_lower">Sign Up!</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="long_string">Swan Flour: This product is an awesome fit if you are searching for a healthy flour. This product has 1 ingredient (in our experience: the fewer ingredients, the better!) This product contains no ingredients that some research suggests you should avoid. One serving of this product provides 30 calories, 0g grams of fat, 0g grams of protein, and 8g grams of carbs</string>
+    <string name="format_weight">
+        <xliff:g id="name">%s</xliff:g> g
+    </string>
+
 </resources>
