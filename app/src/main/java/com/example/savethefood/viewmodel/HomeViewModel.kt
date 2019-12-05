@@ -52,20 +52,6 @@ class HomeViewModel(
         _navigateToBarcodeReader.value = null
     }
 
-    //TODO open a barcode search fo adding a new food
-    /*fun onAddFood() {
-        viewModelScope
-        Food().apply {
-            foodName = "Test"
-            foodImgUrl = "https://spoonacular.com/menuItemImages/cheeseburger.jpg" }
-            .also {
-                viewModelScope.launch {
-                    foodsRepository.saveNewFood(it)
-                    foodsRepository.getFoods()
-                }
-            }
-    }*/
-
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()

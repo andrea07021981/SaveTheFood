@@ -324,18 +324,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        tools:text="Serving size: "/>
+                        tools:text="Serving size: "
+                        android:text="@{@string/format_servingsize(foodDetailViewModel.food.servingSize)}"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        tools:text="Ingredient list: "/>
+                        tools:text="Ingredient list: "
+                        android:text="@{@string/format_ingredients(foodDetailViewModel.food.ingredientList)}"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/recipe_fab"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_margin="80dp"
@@ -347,6 +350,7 @@
             app:layout_anchorGravity="bottom|right|end"
             />
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/delete_fab"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_margin="10dp"

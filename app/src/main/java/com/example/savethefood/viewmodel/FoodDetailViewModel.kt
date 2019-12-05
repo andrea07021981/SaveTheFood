@@ -1,17 +1,30 @@
 package com.example.savethefood.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.savethefood.local.database.SaveTheFoodDatabase
 import com.example.savethefood.local.domain.FoodDomain
+import com.example.savethefood.repository.FoodRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
+import java.lang.NullPointerException
 
 class FoodDetailViewModel(
     app: Application,
     food: FoodDomain
 ) : ViewModel() {
+
+    private val viewmodelJob = Job()
+    private val viewmodelScope = CoroutineScope(viewmodelJob + Dispatchers.IO)
+    private val database = SaveTheFoodDatabase.getInstance(app)
+    private val foodsRepository = FoodRepository(database)
 
     private val _food = MutableLiveData<FoodDomain>()
     val food: LiveData<FoodDomain>
@@ -19,6 +32,16 @@ class FoodDetailViewModel(
 
     init {
         _food.value = food
+    }
+
+    fun deleteFood() {
+        viewmodelScope.launch {
+            try {
+                foodsRepository.deleteFood(_food.value)
+            } catch (e: NullPointerException) {
+                Log.e("FoodDetail", e.message)
+            }
+        }
     }
 
     /**

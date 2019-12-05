@@ -9,5 +9,10 @@
     <string name="format_weight">
         <xliff:g id="name">%s</xliff:g> g
     </string>
-
+    <string name="format_servingsize">
+        Serving size: <xliff:g id="name">%s</xliff:g>
+    </string>
+    <string name="format_ingredients">
+        Ingredients; <xliff:g id="name">%s</xliff:g>
+    </string>
 </resources>

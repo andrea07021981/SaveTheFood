@@ -32,6 +32,12 @@ interface FoodDatabaseDao {
     fun clear()
 
     /**
+     * Delete a single food
+     */
+    @Delete
+    fun deleteFood(food: FoodEntity)
+
+    /**
      * Selects and returns the user with given userId.
      */
     @Query("SELECT * from food_table WHERE id = :key")

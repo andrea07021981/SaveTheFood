@@ -57,4 +57,10 @@ class FoodRepository(private val database: SaveTheFoodDatabase) {
             }
         }
     }
+
+    suspend fun deleteFood(food: FoodDomain?) {
+        withContext(Dispatchers.IO) {
+                database.foodDatabaseDao.deleteFood(food = food!!.asDatabaseModel())
+        }
+    }
 }

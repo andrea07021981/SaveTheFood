@@ -30,6 +30,9 @@ class BarcodeReaderViewModel(
     private var _popToHome = MediatorLiveData<Boolean>()
     val popToHome: LiveData<Boolean>
         get() = _popToHome
+    private var _progressVisibility = MediatorLiveData<Boolean>()
+    val progressVisibility: LiveData<Boolean>
+        get() = _progressVisibility
     /*
     If food id has a value of 0 it means that we don't have a valid response from api.
      */
@@ -49,10 +52,9 @@ class BarcodeReaderViewModel(
     }
 
     fun getApiFoodDetails(barcode: String) {
-        //TODO add binding for progress status
         viewModelScope.launch {
             try {
-                //TODO Spinner show
+                _progressVisibility.value = true
                 _food.postValue(foodRepository.getApiFoodUpc(barcode))
                 Log.d("Food title", _food.value?.foodTitle)
                 Log.d("Food description", _food.value?.foodDescription)
@@ -62,9 +64,8 @@ class BarcodeReaderViewModel(
             } catch (generic: Exception) {
                 Log.d("Generic exception ", generic.message)
                 null
-            }
-            finally {
-                //TODO Spinner hide
+            } finally {
+                _progressVisibility.value = false
             }
         }
     }

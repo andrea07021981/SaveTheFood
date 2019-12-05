@@ -49,6 +49,13 @@ class BarcodeReaderFragment : Fragment() {
             }
         })
 
+        barcodeReaderViewModel.progressVisibility.observe(this.viewLifecycleOwner, Observer {
+            if (it) {
+                dataBinding.loadingProgressbar.visibility = View.VISIBLE
+            } else {
+                dataBinding.loadingProgressbar.visibility = View.GONE
+            }
+        })
         //TODO solve the problem of two button with the keyboard opened
         return dataBinding.root
     }
