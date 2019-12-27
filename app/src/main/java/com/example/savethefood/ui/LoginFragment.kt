@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentLoginBinding
 import com.example.savethefood.viewmodel.LoginViewModel
-import kotlinx.android.synthetic.main.fragment_signup.*
 
 class LoginFragment : Fragment() {
 
@@ -33,9 +32,9 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val databinding = FragmentLoginBinding.inflate(inflater)
-        databinding.loginViewModel = loginViewModel
-        databinding.lifecycleOwner = this
+        val dataBinding = FragmentLoginBinding.inflate(inflater)
+        dataBinding.loginViewModel = loginViewModel
+        dataBinding.lifecycleOwner = this
 
         loginViewModel.navigateToSignUpFragment.observe(this.viewLifecycleOwner, Observer {
             if (it == true) {
@@ -61,6 +60,6 @@ class LoginFragment : Fragment() {
             }
 
         })
-        return databinding.root
+        return dataBinding.root
     }
 }

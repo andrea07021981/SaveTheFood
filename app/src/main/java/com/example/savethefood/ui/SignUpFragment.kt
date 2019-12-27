@@ -23,9 +23,9 @@ class SignUpFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val databinding = FragmentSignupBinding.inflate(inflater)
-        databinding.signupViewModel = signUpViewModel
-        databinding.lifecycleOwner = this
+        val dataBinding = FragmentSignupBinding.inflate(inflater)
+        dataBinding.signupViewModel = signUpViewModel
+        dataBinding.lifecycleOwner = this
 
         signUpViewModel.navigateToLoginFragment.observe(this.viewLifecycleOwner, Observer {
             if (it == true) {
@@ -35,6 +35,6 @@ class SignUpFragment : Fragment() {
                 signUpViewModel.doneNavigating()
             }
         })
-        return databinding.root
+        return dataBinding.root
     }
 }

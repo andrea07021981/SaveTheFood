@@ -2,15 +2,12 @@ package com.example.savethefood.ui
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
 import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.viewmodel.FoodDetailViewModel
@@ -30,16 +27,16 @@ class FoodDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val databinding = FragmentFoodDetailBinding.inflate(inflater)
+        val dataBinding = FragmentFoodDetailBinding.inflate(inflater)
         foodSelected = FoodDetailFragmentArgs.fromBundle(arguments!!).foodDomain
-        databinding.lifecycleOwner = this
-        databinding.foodDetailViewModel = foodDetailViewModel
+        dataBinding.lifecycleOwner = this
+        dataBinding.foodDetailViewModel = foodDetailViewModel
 
-        databinding.recipeFab.setOnClickListener {
+        dataBinding.recipeFab.setOnClickListener {
 
         }
 
-        databinding.deleteFab.setOnClickListener {
+        dataBinding.deleteFab.setOnClickListener {
             AlertDialog.Builder(activity!!)
                 .setCancelable(false)
                 .setTitle("Attention")
@@ -52,6 +49,6 @@ class FoodDetailFragment : Fragment() {
                 .create()
                 .show()
         }
-        return databinding.root
+        return dataBinding.root
     }
 }

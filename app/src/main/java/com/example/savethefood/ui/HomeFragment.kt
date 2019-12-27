@@ -7,19 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.savethefood.R
 import com.example.savethefood.component.FoodAdapter
-import com.example.savethefood.component.SpacesItemDecoration
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.viewmodel.HomeViewModel
-import com.example.savethefood.viewmodel.LoginViewModel
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.fragment_food_detail.*
 
 class HomeFragment : Fragment() {
 
@@ -33,11 +25,11 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val databinding = FragmentHomeBinding.inflate(inflater)
-        databinding.lifecycleOwner = this
-        databinding.homeViewModel = homeViewModel
-        databinding.foodRecycleview.layoutManager = GridLayoutManager(activity, 2)
-        databinding.foodRecycleview.adapter = FoodAdapter(FoodAdapter.OnClickListener {
+        val dataBinding = FragmentHomeBinding.inflate(inflater)
+        dataBinding.lifecycleOwner = this
+        dataBinding.homeViewModel = homeViewModel
+        dataBinding.foodRecycleview.layoutManager = GridLayoutManager(activity, 2)
+        dataBinding.foodRecycleview.adapter = FoodAdapter(FoodAdapter.OnClickListener {
             homeViewModel.moveToFoodDetail(it)
         })
 
@@ -60,6 +52,6 @@ class HomeFragment : Fragment() {
                 homeViewModel.doneToBarcodeReader()
             }
         })
-        return databinding.root
+        return dataBinding.root
     }
 }

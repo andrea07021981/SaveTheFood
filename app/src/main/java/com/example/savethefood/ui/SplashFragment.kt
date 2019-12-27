@@ -26,14 +26,13 @@ class SplashFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val databinding = FragmentSplashBinding.inflate(inflater);
-        databinding.splashViewModel = splashViewModel
-        databinding.lifecycleOwner = this
+        val dataBinding = FragmentSplashBinding.inflate(inflater);
+        dataBinding.splashViewModel = splashViewModel
+        dataBinding.lifecycleOwner = this
         splashViewModel.navigateToLogin.observe(this.viewLifecycleOwner, Observer {
             if (it == true) {
                 val extras = FragmentNavigatorExtras(
-                    databinding.chefImageview to "chef_imageview"
+                    dataBinding.chefImageview to "chef_imageview"
                 )
                 this
                     .findNavController()
@@ -46,6 +45,6 @@ class SplashFragment : Fragment() {
                 splashViewModel.doneNavigating()
             }
         })
-        return databinding.root
+        return dataBinding.root
     }
 }

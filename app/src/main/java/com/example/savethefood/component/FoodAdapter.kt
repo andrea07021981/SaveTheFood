@@ -9,7 +9,7 @@ import com.example.savethefood.databinding.FoodItemBinding
 import com.example.savethefood.local.domain.FoodDomain
 
 class FoodAdapter(
-    val onClickListener: OnClickListener
+    private val onClickListener: OnClickListener
 ) : ListAdapter<FoodDomain, FoodAdapter.FoodViewHolder>(DiffCallback) {
 
     class FoodViewHolder private constructor(val binding: FoodItemBinding)
