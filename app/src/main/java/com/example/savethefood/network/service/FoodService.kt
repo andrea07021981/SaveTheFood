@@ -1,6 +1,7 @@
 package com.example.savethefood.network.service
 
 import com.example.savethefood.network.datatransferobject.NetworkFood
+import com.example.savethefood.network.datatransferobject.NetworkRecipe
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -53,6 +54,9 @@ interface FoodService {
 
     @GET("food/products/upc/{upc}")
     fun getFoodByUpc(@Path("upc") type: String, @Query("apiKey") key: String = API_KEY): Deferred<NetworkFood>
+
+    @GET("recipes/search")
+    fun getRecipes(@Query("apiKey") key: String = API_KEY): Deferred<NetworkRecipe>
 }
 
 /**

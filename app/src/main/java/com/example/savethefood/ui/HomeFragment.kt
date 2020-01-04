@@ -35,6 +35,7 @@ class HomeFragment : Fragment() {
 
         homeViewModel.navigateToFoodDetail.observe(this.viewLifecycleOwner, Observer {
             if (it != null) {
+                //TODO add animation and shared elements
                 findNavController()
                     .navigate(HomeFragmentDirections.actionHomeFragmentToFoodDetailFragment(it))
                 homeViewModel.doneToFoodDetail()

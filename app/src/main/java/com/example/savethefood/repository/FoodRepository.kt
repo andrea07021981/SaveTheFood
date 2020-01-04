@@ -22,7 +22,9 @@ import org.json.JSONException
 import java.lang.Exception
 import java.security.spec.ECField
 
-class FoodRepository(private val database: SaveTheFoodDatabase) {
+class FoodRepository(
+    private val database: SaveTheFoodDatabase
+) {
 
     // may throw Exception, with coroutineScope is possible Exception will cancell only the coroutines created in
     //This scope, without touching the outer scope

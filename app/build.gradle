@@ -101,6 +101,9 @@ dependencies {
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
 
+    // Paging library
+    implementation "androidx.paging:paging-runtime:$version_paging"
+
     //Interceptor and http loggin
     implementation 'com.squareup.okhttp3:okhttp:4.2.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'

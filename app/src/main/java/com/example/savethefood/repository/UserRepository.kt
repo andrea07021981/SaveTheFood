@@ -9,7 +9,9 @@ import com.example.savethefood.local.entity.asDomainModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class UserRepository(private val database: SaveTheFoodDatabase) {
+class UserRepository(
+    private val database: SaveTheFoodDatabase
+) {
 
     suspend fun saveNewUser(user: UserDomain) {
         withContext(Dispatchers.IO) {

@@ -16,8 +16,6 @@ import com.example.savethefood.viewmodel.BarcodeReaderViewModel
 import com.example.savethefood.viewmodel.HomeViewModel
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
-import kotlinx.android.synthetic.main.fragment_barcodereader.*
-
 
 class BarcodeReaderFragment : Fragment() {
 
