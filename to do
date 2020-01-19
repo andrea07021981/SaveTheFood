@@ -1,0 +1,11 @@
+add day of saved field for food (we need it to calculate how many days for the last point)
+
+search, add, remove recipes
+
+filter recipes search by food in fridge or other preferences
+
+share recipes
+
+notifications for food deadlines
+
+workmanager for updating days left (with alarm and notifications)

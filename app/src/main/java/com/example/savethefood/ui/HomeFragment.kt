@@ -40,11 +40,6 @@ class HomeFragment : Fragment() {
                     .navigate(HomeFragmentDirections.actionHomeFragmentToFoodDetailFragment(it))
                 homeViewModel.doneToFoodDetail()
             }
-
-            fun ExtendString(arg: String, value: Int): String {
-                val another : String.(Int) -> String = {this + it}
-                return arg.another(value)
-            }
         })
 
         homeViewModel.navigateToBarcodeReader.observe(this.viewLifecycleOwner, Observer {

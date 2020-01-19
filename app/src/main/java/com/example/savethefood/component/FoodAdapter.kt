@@ -12,8 +12,9 @@ class FoodAdapter(
     private val onClickListener: OnClickListener
 ) : ListAdapter<FoodDomain, FoodAdapter.FoodViewHolder>(DiffCallback) {
 
-    class FoodViewHolder private constructor(val binding: FoodItemBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+    class FoodViewHolder private constructor(
+        val binding: FoodItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(clickListener: OnClickListener, item: FoodDomain) {
             binding.foodDomain = item
@@ -21,13 +22,20 @@ class FoodAdapter(
             binding.executePendingBindings()
         }
 
+        //With a companion object we can get a function or a property to be tied to a class rather than to instances of it
         companion object {
-            fun from(parent: ViewGroup): FoodViewHolder {
+            val from = {parent: ViewGroup ->
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = FoodItemBinding.inflate(layoutInflater, parent, false)
+
+                FoodViewHolder(binding)
+            }
+            /*fun from(parent: ViewGroup): FoodViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = FoodItemBinding.inflate(layoutInflater, parent, false)
 
                 return FoodViewHolder(binding)
-            }
+            }*/
         }
     }
 
