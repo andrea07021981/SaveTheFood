@@ -25,7 +25,7 @@ class RecipeViewModel(
     private val recipesRepository = RecipeRepository(database)
 
     // The internal MutableLiveData that stores the status of the most recent request
-    private val _status = MutableLiveData<ApiCallStatus>()
+    private val _status = MutableLiveData<ApiCallStatus>(Done("Done"))
 
     // The external immutable LiveData for the request status
     val status: LiveData<ApiCallStatus>
@@ -36,6 +36,11 @@ class RecipeViewModel(
         get() = _recipeList
 
     init {
+        //TODO add filters for recipes (filter on action bar menu)
+        getRecipes()
+    }
+
+    private fun getRecipes() {
         viewModelScope.launch {
             try {
                 _status.value = Loading("Loading")

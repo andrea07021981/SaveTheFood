@@ -13,7 +13,7 @@ import com.example.savethefood.local.domain.RecipeResult
 import java.lang.Error
 
 
-@BindingAdapter("recipeStatus")
+@BindingAdapter("recipeApiStatus")
 fun bindStatus(statusImageView: ImageView, status: ApiCallStatus) {
     when (status){
         is Loading -> {
