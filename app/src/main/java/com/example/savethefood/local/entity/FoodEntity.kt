@@ -1,5 +1,5 @@
-package com.example.savethefood.local.entity
 
+package com.example.savethefood.local.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -45,9 +45,9 @@ data class Nutrition(
 )
 
 
-//**
-// Convert Network results to database objects
-//*
+/**
+* Convert Network results to database objects
+*/
 fun NetworkFood.asDomainModel(): FoodDomain {
     return FoodDomain(
         foodId = id,

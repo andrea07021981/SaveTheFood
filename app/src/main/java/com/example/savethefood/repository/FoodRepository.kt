@@ -26,8 +26,9 @@ class FoodRepository(
     private val database: SaveTheFoodDatabase
 ) {
 
-    // may throw Exception, with coroutineScope is possible Exception will cancell only the coroutines created in
-    //This scope, without touching the outer scope
+    /**may throw Exception, with coroutineScope is possible Exception will cancell only the coroutines created in
+    *This scope, without touching the outer scope
+    */
     @Throws(Exception::class)
     suspend fun getApiFoodUpc(barcode: String): FoodDomain? = coroutineScope{
         try {
@@ -39,12 +40,13 @@ class FoodRepository(
         }
     }
 
-    //Withcontext is a function that allows to easily change the context that will be used to run a part of the code inside a coroutine. This is a suspending function, so it means that it’ll suspend the coroutine until the code inside is executed, no matter the dispatcher that it’s used.
-    //With that, we can make our suspending functions use a different thread:
-    /*
+    /**
       This function uses the IO dispatcher to ensure the database insert database operation
      * happens on the IO dispatcher. By switching to the IO dispatcher using `withContext` this
      * function is now safe to call from any thread including the Main thread.
+     * ----------------------------------------------------------------------------
+     * Withcontext is a function that allows to easily change the context that will be used to run a part of the code inside a coroutine. This is a suspending function, so it means that it’ll suspend the coroutine until the code inside is executed, no matter the dispatcher that it’s used.
+     * With that, we can make our suspending functions use a different thread:
      */
     suspend fun saveNewFood(food: FoodDomain) {
         withContext(Dispatchers.IO) {
