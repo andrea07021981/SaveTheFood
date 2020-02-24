@@ -18,16 +18,6 @@
         tools:context=".ui.HomeFragment"
         android:background="@color/colorAccent">
 
-        <ProgressBar
-            android:id="@+id/loading_spinner"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center"
-            app:goneIfNotNull="@{homeViewModel.foodList}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/food_recycleview"
@@ -39,6 +29,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:listdata="@{homeViewModel.foodList}"
             tools:listitem="@layout/food_item"/>
+
+        <ProgressBar
+            android:id="@+id/loading_spinner"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            app:goneIfNotNull="@{homeViewModel.foodList}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addfood_fab"

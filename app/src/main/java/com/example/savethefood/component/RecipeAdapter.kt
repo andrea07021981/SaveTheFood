@@ -14,14 +14,14 @@ class RecipeAdapter(
 ) : ListAdapter<RecipeResult, RecipeAdapter.RecipeViewHolder>(DiffCallback){
 
 
-    Used thi effect
+    /*Used thi effect
     //https://github.com/animeshroydev/ReclyclerViewGridAnimation/blob/master/app/src/main/java/developer/roy/animesh/reclyclerviewgridanimation/MainActivity.java
 
     //This for shared elements
     https://www.youtube.com/watch?v=BF4yvhpMPcg
 
     //Itemview example for recipe
-    https://stackoverflow.com/questions/57129839/firebase-database-getchildrencount-android
+    https://stackoverflow.com/questions/57129839/firebase-database-getchildrencount-android*/
     
 
     class RecipeViewHolder private constructor(
