@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
-            android:elevation="@dimen/cardview_compat_inset_shadow"
+            app:cardElevation="10dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/button"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,9 +64,9 @@
                     android:singleLine="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"
+                    android:hint="@string/email"
                     android:drawablePadding="10dp"
-                    android:drawableLeft="@drawable/email_white_24dp"
+                    android:drawableStart="@drawable/email_white_24dp"
                     android:text="@={loginViewModel.emailValue}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,10 +93,10 @@
                     android:imeOptions="actionDone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:inputType="textPassword"
                     android:drawablePadding="10dp"
-                    android:drawableLeft="@drawable/lock_white_24dp"
+                    android:drawableStart="@drawable/lock_white_24dp"
                     android:text="@={loginViewModel.passwordValue}"/>
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -144,10 +144,9 @@
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="0.5"
-                android:background="@android:color/transparent"
                 android:text="@string/sign_up_lower"
                 android:textAllCaps="true"
-                android:textColor="@color/colorAccent"
+                style="@style/button"
                 android:textIsSelectable="true"
                 android:textSize="18sp"
                 android:textStyle="bold"

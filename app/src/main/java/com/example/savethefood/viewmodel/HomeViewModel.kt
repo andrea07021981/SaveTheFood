@@ -2,6 +2,7 @@ package com.example.savethefood.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.savethefood.R
 import com.example.savethefood.local.database.SaveTheFoodDatabase
 import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.repository.FoodRepository
@@ -11,6 +12,7 @@ class HomeViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
+    val animationResourceButton = R.anim.bounce
     private val viewModelJob = SupervisorJob()
 
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)

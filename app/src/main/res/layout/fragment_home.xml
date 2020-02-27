@@ -25,10 +25,12 @@
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:listdata="@{homeViewModel.foodList}"
-            tools:listitem="@layout/food_item"/>
+            tools:listitem="@layout/food_item" />
 
         <ProgressBar
             android:id="@+id/loading_spinner"
@@ -49,10 +51,12 @@
             android:scaleType="center"
             app:backgroundTint="@color/colorPrimary"
             android:clickable="true"
+            app:loadViewAnimation="@{homeViewModel.animationResourceButton}"
             app:fabSize="auto"
             android:onClick="@{() -> homeViewModel.moveToBarcodeReader()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:srcCompat="@mipmap/ic_name_add" />
+            app:srcCompat="@mipmap/ic_name_add"
+            android:focusable="true" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
