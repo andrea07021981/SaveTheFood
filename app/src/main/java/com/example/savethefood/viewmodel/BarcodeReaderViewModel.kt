@@ -60,10 +60,8 @@ class BarcodeReaderViewModel(
                 Log.d("Food description", _food.value?.foodDescription)
             } catch (error: JsonDataException) {
                 Log.d("Error retrofit json ", error.message)
-                null
             } catch (generic: Exception) {
                 Log.d("Generic exception ", generic.message)
-                null
             } finally {
                 _progressVisibility.value = false
             }
