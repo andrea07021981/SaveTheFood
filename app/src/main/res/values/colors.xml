@@ -3,6 +3,6 @@
     <color name="colorPrimary">#28354a</color>
     <color name="colorPrimaryDark">#FF10161B</color>
     <color name="colorAccent">#afb6c0</color>
-
-    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#00FFFFFF</color>
+    <color name="colorAccentSmooth">#52AFB6C0</color>
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#31FFFFFF</color>
 </resources>

@@ -17,7 +17,7 @@
         tools:context=".ui.SplashFragment"
         android:background="@color/colorPrimary">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/chef_imageview"
             android:layout_width="120dp"
             android:layout_height="120dp"
@@ -28,13 +28,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/food" />
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
-            app:cardElevation="10dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:elevation="@dimen/cardview_compat_inset_shadow"
             android:orientation="vertical"
+            app:cardElevation="10dp"
             app:layout_constraintBottom_toTopOf="@+id/button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.59"
@@ -42,66 +46,74 @@
             app:layout_constraintTop_toBottomOf="@+id/chef_imageview"
             app:loadViewAnimation="@{loginViewModel.animationResourceView}">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutEmail"
-                app:boxStrokeColor="@color/colorAccent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:textColorHint="@color/colorAccent"
-                app:errorEnabled="true"
-                app:hasError="@{safeUnbox(loginViewModel.errorEmail)}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etEmail"
-                    android:textColor="@color/colorAccent"
-                    android:singleLine="true"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutEmail"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/email"
-                    android:drawablePadding="10dp"
-                    android:drawableStart="@drawable/email_white_24dp"
-                    android:text="@={loginViewModel.emailValue}"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColorHint="@color/colorAccent"
+                    app:boxStrokeColor="@color/colorAccent"
+                    app:errorEnabled="true"
+                    app:hasError="@{safeUnbox(loginViewModel.errorEmail)}"
+                    app:layout_constraintBottom_toTopOf="@+id/layoutPassword"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutPassword"
-                app:boxStrokeColor="@color/colorAccent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:textColorHint="@color/colorAccent"
-                app:errorEnabled="true"
-                app:hasError="@{safeUnbox(loginViewModel.errorPassword)}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layoutEmail">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/email_white_24dp"
+                        android:drawablePadding="10dp"
+                        android:hint="@string/email"
+                        android:singleLine="true"
+                        android:text="@={loginViewModel.emailValue}"
+                        android:textColor="@color/colorAccent" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPassword"
-                    android:textColor="@color/colorAccent"
-                    android:singleLine="true"
-                    android:imeOptions="actionDone"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layoutPassword"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:drawablePadding="10dp"
-                    android:drawableStart="@drawable/lock_white_24dp"
-                    android:text="@={loginViewModel.passwordValue}"/>
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="32dp"
+                    android:textColorHint="@color/colorAccent"
+                    app:boxStrokeColor="@color/colorAccent"
+                    app:errorEnabled="true"
+                    app:hasError="@{safeUnbox(loginViewModel.errorPassword)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layoutEmail">
 
-        <Button
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/lock_white_24dp"
+                        android:drawablePadding="10dp"
+                        android:hint="@string/password"
+                        android:imeOptions="actionDone"
+                        android:inputType="textPassword"
+                        android:singleLine="true"
+                        android:text="@={loginViewModel.passwordValue}"
+                        android:textColor="@color/colorAccent" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button"
             style="@style/button"
             android:layout_width="0dp"
@@ -109,6 +121,9 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
+            android:elevation="2dp"
+            android:translationZ="20dp"
+            android:stateListAnimator="@null"
             android:text="@string/log_in"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +132,7 @@
             app:loadViewAnimation="@{loginViewModel.animationResourceButton}"
             android:onClick="@{() -> loginViewModel.onSignUpClick()}"/>
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -139,7 +154,7 @@
                 android:text="@string/don_t_have_an_account"
                 android:textColor="@color/colorAccent"/>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/button2"
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
@@ -151,6 +166,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:onClick="@{() -> loginViewModel.moveToSignUp()}"/>
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
