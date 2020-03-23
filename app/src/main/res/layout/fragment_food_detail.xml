@@ -87,6 +87,7 @@
                         android:textStyle="bold"
                         android:lineSpacingExtra="8dp"
                         tools:text="Swan Flour"
+                        android:transitionName="foodTitle"
                         android:text="@{foodDetailViewModel.food.foodTitle}"
                         android:padding="16dp"
                         />

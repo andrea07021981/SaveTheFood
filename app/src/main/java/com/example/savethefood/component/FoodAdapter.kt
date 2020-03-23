@@ -27,7 +27,6 @@ class FoodAdapter(
             val from = {parent: ViewGroup ->
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = FoodItemBinding.inflate(layoutInflater, parent, false)
-
                 FoodViewHolder(binding)
             }
             /*fun from(parent: ViewGroup): FoodViewHolder {

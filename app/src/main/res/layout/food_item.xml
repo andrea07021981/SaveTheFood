@@ -97,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:text="@{foodDomain.foodTitle}"
+                android:transitionName="foodTitle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/right_well"
                 app:layout_constraintStart_toStartOf="@+id/left_well" />

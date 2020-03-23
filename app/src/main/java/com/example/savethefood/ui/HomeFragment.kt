@@ -4,11 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.savethefood.R
 import com.example.savethefood.component.FoodAdapter
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.viewmodel.HomeViewModel
@@ -24,7 +29,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ) : View? {
         val dataBinding = FragmentHomeBinding.inflate(inflater)
         dataBinding.lifecycleOwner = this
         dataBinding.homeViewModel = homeViewModel
@@ -35,9 +40,16 @@ class HomeFragment : Fragment() {
 
         homeViewModel.navigateToFoodDetail.observe(this.viewLifecycleOwner, Observer {
             if (it != null) {
-                //TODO add animation and shared elements
+                val foodImageView =
+                    dataBinding.foodRecycleview.findViewById<ImageView>(R.id.food_imageview)
+                val foodTextview =
+                    dataBinding.foodRecycleview.findViewById<TextView>(R.id.food_textview)
+                val extras = FragmentNavigatorExtras(
+                    foodImageView to "foodImage",
+                    foodTextview to "foodTitle")
+                var bundle = bundleOf("foodDomain" to it)
                 findNavController()
-                    .navigate(HomeFragmentDirections.actionHomeFragmentToFoodDetailFragment(it))
+                    .navigate(R.id.foodDetailFragment, bundle, null, extras)
                 homeViewModel.doneToFoodDetail()
             }
         })
