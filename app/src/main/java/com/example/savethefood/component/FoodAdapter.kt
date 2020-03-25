@@ -1,6 +1,7 @@
 package com.example.savethefood.component
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -12,13 +13,14 @@ class FoodAdapter(
     private val onClickListener: OnClickListener
 ) : ListAdapter<FoodDomain, FoodAdapter.FoodViewHolder>(DiffCallback) {
 
+    lateinit var test: View
     class FoodViewHolder private constructor(
         val binding: FoodItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(clickListener: OnClickListener, item: FoodDomain) {
             binding.foodDomain = item
             binding.foodCallback = clickListener
+            //TODO remove listener in xml and create a listener here, we need the reference for the view to share the elements
             binding.executePendingBindings()
         }
 

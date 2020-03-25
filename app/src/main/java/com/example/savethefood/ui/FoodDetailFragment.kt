@@ -2,13 +2,14 @@ package com.example.savethefood.ui
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.ActivityNavigator
+import androidx.transition.TransitionInflater
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
 import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.viewmodel.FoodDetailViewModel
@@ -32,7 +33,7 @@ class FoodDetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ) : View? {
         val dataBinding = FragmentFoodDetailBinding.inflate(inflater)
         foodSelected = FoodDetailFragmentArgs.fromBundle(arguments!!).foodDomain
         dataBinding.lifecycleOwner = this
@@ -56,5 +57,10 @@ class FoodDetailFragment : Fragment() {
                 .show()
         }
         return dataBinding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ActivityNavigator.applyPopAnimationsToPendingTransition(requireNotNull(activity))
     }
 }

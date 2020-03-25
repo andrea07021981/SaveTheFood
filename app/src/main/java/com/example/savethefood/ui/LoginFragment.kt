@@ -16,8 +16,6 @@ import com.example.savethefood.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
 
-    private val TAG = LoginFragment::class.java.name
-
     private val loginViewModel: LoginViewModel by lazy {
         val activity = requireNotNull(this.activity)
         ViewModelProviders.of(this, LoginViewModel.Factory(app = activity.application)).get(LoginViewModel::class.java)
@@ -52,7 +50,7 @@ class LoginFragment : Fragment() {
 
         loginViewModel.userLogged.observe(this.viewLifecycleOwner, Observer {
             if (it != null) {
-                Log.d(TAG, "User logged with ${it.userEmail} and ${it.userPassword} ")
+                Log.d(Companion.TAG, "User logged with ${it.userEmail} and ${it.userPassword} ")
                 this
                     .findNavController()
                     .navigate(LoginFragmentDirections.actionLoginFragmentToNestedNavGraph(it))
@@ -61,5 +59,9 @@ class LoginFragment : Fragment() {
 
         })
         return dataBinding.root
+    }
+
+    companion object {
+        private val TAG = LoginFragment::class.java.name
     }
 }

@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.transition.TransitionInflater
 import com.example.savethefood.R
 import com.example.savethefood.component.FoodAdapter
 import com.example.savethefood.databinding.FragmentHomeBinding
@@ -25,6 +26,11 @@ class HomeFragment : Fragment() {
         ViewModelProviders.of(this, HomeViewModel.Factory(activity.application)).get(HomeViewModel::class.java)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
