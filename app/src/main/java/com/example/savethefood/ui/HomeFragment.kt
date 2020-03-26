@@ -53,7 +53,7 @@ class HomeFragment : Fragment() {
                 val extras = FragmentNavigatorExtras(
                     foodImageView to "foodImage",
                     foodTextview to "foodTitle")
-                var bundle = bundleOf("foodDomain" to it)
+                val bundle = bundleOf("foodDomain" to it)
                 findNavController()
                     .navigate(R.id.foodDetailFragment, bundle, null, extras)
                 homeViewModel.doneToFoodDetail()

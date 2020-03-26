@@ -20,7 +20,6 @@ class FoodAdapter(
         fun bind(clickListener: OnClickListener, item: FoodDomain) {
             binding.foodDomain = item
             binding.foodCallback = clickListener
-            //TODO remove listener in xml and create a listener here, we need the reference for the view to share the elements
             binding.executePendingBindings()
         }
 
