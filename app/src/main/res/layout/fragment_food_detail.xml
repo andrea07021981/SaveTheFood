@@ -12,6 +12,11 @@
             type="com.example.savethefood.viewmodel.FoodDetailViewModel" />
     </data>
 
+<androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -403,4 +408,5 @@
             app:layout_anchorGravity="bottom|right|end"
             />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

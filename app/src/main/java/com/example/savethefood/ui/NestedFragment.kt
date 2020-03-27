@@ -58,16 +58,20 @@ class NestedFragment : Fragment() {
 
         //This listener manages the nawdrawer configuration
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
-            if (nd.id == nc.graph.startDestination) {
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-                appbar.toolbar.visibility = View.VISIBLE
-            } else if (nd.id == nc.graph.findNode(foodDetailFragment)?.id){
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-                appbar.toolbar.visibility = View.GONE
-            } else {
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-                //TODO change visibility of action buttons
-                appbar.toolbar.visibility = View.VISIBLE
+            when (nd.id) {
+                nc.graph.startDestination -> {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                    appbar.toolbar.visibility = View.VISIBLE
+                }
+                nc.graph.findNode(foodDetailFragment)?.id -> {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                    appbar.toolbar.visibility = View.GONE
+                }
+                else -> {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                    //TODO change visibility of action buttons
+                    appbar.toolbar.visibility = View.VISIBLE
+                }
             }
         }
     }
@@ -83,7 +87,7 @@ class NestedFragment : Fragment() {
         if (searchItem != null) {
             searchView = searchItem.actionView as SearchView
         }
-        searchView?.setSearchableInfo(searchManager.getSearchableInfo(activity?.getComponentName()))
+        searchView?.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
 
         super.onCreateOptionsMenu(menu, inflater)
     }
