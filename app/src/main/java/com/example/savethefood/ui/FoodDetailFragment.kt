@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.ActivityNavigator
@@ -14,6 +15,7 @@ import androidx.transition.TransitionInflater
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
 import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.viewmodel.FoodDetailViewModel
+import com.google.android.material.appbar.CollapsingToolbarLayout
 
 class FoodDetailFragment : Fragment() {
 
@@ -40,7 +42,6 @@ class FoodDetailFragment : Fragment() {
         dataBinding.lifecycleOwner = this
         dataBinding.foodDetailViewModel = foodDetailViewModel
 
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         dataBinding.recipeFab.setOnClickListener {
 
         }

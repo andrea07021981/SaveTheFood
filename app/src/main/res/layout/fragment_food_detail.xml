@@ -41,7 +41,7 @@
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginStart="48dp"
                 app:expandedTitleMarginEnd="64dp"
-                >
+                app:title="@{foodDetailViewModel.food.foodTitle}">
 
                 <ImageView
                     android:id="@+id/mainbackdrop"
