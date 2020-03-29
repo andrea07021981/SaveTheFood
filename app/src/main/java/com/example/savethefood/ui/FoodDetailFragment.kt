@@ -19,29 +19,34 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 
 class FoodDetailFragment : Fragment() {
 
-    lateinit var foodSelected: FoodDomain
-
     private val foodDetailViewModel: FoodDetailViewModel by lazy {
         val application = requireNotNull(activity).application
         ViewModelProviders.of(this, FoodDetailViewModel.Factory(application = application, foodSelected = foodSelected))
             .get(FoodDetailViewModel::class.java)
     }
 
+    private lateinit var foodSelected: FoodDomain
+    private lateinit var dataBinding: FragmentFoodDetailBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) : View? {
-        val dataBinding = FragmentFoodDetailBinding.inflate(inflater)
+        dataBinding = FragmentFoodDetailBinding.inflate(inflater)
         foodSelected = FoodDetailFragmentArgs.fromBundle(arguments!!).foodDomain
         dataBinding.lifecycleOwner = this
         dataBinding.foodDetailViewModel = foodDetailViewModel
+        return dataBinding.root
+    }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         dataBinding.recipeFab.setOnClickListener {
 
         }
@@ -51,15 +56,14 @@ class FoodDetailFragment : Fragment() {
                 .setCancelable(false)
                 .setTitle("Attention")
                 .setMessage("Would you like to delete ${foodDetailViewModel.food.value?.foodTitle}")
-                .setPositiveButton("OK", DialogInterface.OnClickListener { dialogInterface, i ->
+                .setPositiveButton("OK") { dialogInterface, _ ->
                     foodDetailViewModel.deleteFood()
                     dialogInterface.dismiss()
-                })
-                .setNegativeButton("Cancel", DialogInterface.OnClickListener { dialogInterface, i -> dialogInterface.dismiss() })
+                }
+                .setNegativeButton("Cancel") { dialogInterface, _ -> dialogInterface.dismiss() }
                 .create()
                 .show()
         }
-        return dataBinding.root
     }
 
     override fun onDestroy() {

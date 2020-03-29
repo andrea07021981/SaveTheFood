@@ -13,6 +13,8 @@ class HomeViewModel(
 ) : AndroidViewModel(application) {
 
     val animationResourceButton = R.anim.bounce
+
+    //Supervisor prevent a crash. If one on the children fails, it keeps working.
     private val viewModelJob = SupervisorJob()
 
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)

@@ -21,14 +21,21 @@ class SplashFragment : Fragment() {
         ViewModelProviders.of(this).get(SplashViewModel::class.java)
     }
 
+    private lateinit var dataBinding: FragmentSplashBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = FragmentSplashBinding.inflate(inflater);
+        dataBinding = FragmentSplashBinding.inflate(inflater);
         dataBinding.splashViewModel = splashViewModel
         dataBinding.lifecycleOwner = this
+        return dataBinding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         splashViewModel.navigateToLogin.observe(this.viewLifecycleOwner, Observer {
             if (it == true) {
                 val extras = FragmentNavigatorExtras(
@@ -45,6 +52,5 @@ class SplashFragment : Fragment() {
                 splashViewModel.doneNavigating()
             }
         })
-        return dataBinding.root
     }
 }

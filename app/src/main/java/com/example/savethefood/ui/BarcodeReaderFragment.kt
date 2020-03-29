@@ -24,16 +24,22 @@ class BarcodeReaderFragment : Fragment() {
         ViewModelProviders.of(this, BarcodeReaderViewModel.Factory(activity.application)).get(BarcodeReaderViewModel::class.java)
     }
 
+    private lateinit var dataBinding: FragmentBarcodereaderBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = FragmentBarcodereaderBinding.inflate(inflater)
+        dataBinding = FragmentBarcodereaderBinding.inflate(inflater)
         dataBinding.lifecycleOwner = this
         dataBinding.barcodeReaderViewModel = barcodeReaderViewModel
         dataBinding.food = barcodeReaderViewModel.food
+        return dataBinding.root
+    }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         barcodeReaderViewModel.startReadingBarcode.observe(this.viewLifecycleOwner, Observer {
             it?.let {
                 readBarcode()
@@ -55,7 +61,6 @@ class BarcodeReaderFragment : Fragment() {
             }
         })
         //TODO solve the problem of two button with the keyboard opened
-        return dataBinding.root
     }
 
     private fun readBarcode() {
@@ -63,7 +68,7 @@ class BarcodeReaderFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        var result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        val result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
 
         //TODO forced value, emulator can't read barcode
         //041631000564

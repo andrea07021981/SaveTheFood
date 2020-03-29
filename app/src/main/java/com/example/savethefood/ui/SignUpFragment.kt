@@ -18,14 +18,21 @@ class SignUpFragment : Fragment() {
         ViewModelProviders.of(this).get(SignUpViewModel::class.java)
     }
 
+    private lateinit var dataBinding: FragmentSignupBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = FragmentSignupBinding.inflate(inflater)
+        dataBinding = FragmentSignupBinding.inflate(inflater)
         dataBinding.signupViewModel = signUpViewModel
         dataBinding.lifecycleOwner = this
+        return dataBinding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         signUpViewModel.navigateToLoginFragment.observe(this.viewLifecycleOwner, Observer {
             if (it == true) {
@@ -35,6 +42,5 @@ class SignUpFragment : Fragment() {
                 signUpViewModel.doneNavigating()
             }
         })
-        return dataBinding.root
     }
 }

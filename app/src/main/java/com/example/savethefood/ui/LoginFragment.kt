@@ -16,23 +16,35 @@ import com.example.savethefood.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
 
+    companion object {
+        private val TAG = LoginFragment::class.java.name
+    }
+
     private val loginViewModel: LoginViewModel by lazy {
         val activity = requireNotNull(this.activity)
         ViewModelProviders.of(this, LoginViewModel.Factory(app = activity.application)).get(LoginViewModel::class.java)
     }
 
+    private lateinit var dataBinding: FragmentLoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(R.transition.custommove)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = FragmentLoginBinding.inflate(inflater)
+        dataBinding = FragmentLoginBinding.inflate(inflater)
         dataBinding.loginViewModel = loginViewModel
         dataBinding.lifecycleOwner = this
+        return dataBinding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         loginViewModel.navigateToSignUpFragment.observe(this.viewLifecycleOwner, Observer {
             if (it == true) {
@@ -58,10 +70,5 @@ class LoginFragment : Fragment() {
             }
 
         })
-        return dataBinding.root
-    }
-
-    companion object {
-        private val TAG = LoginFragment::class.java.name
     }
 }

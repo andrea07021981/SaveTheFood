@@ -26,6 +26,8 @@ class HomeFragment : Fragment() {
         ViewModelProviders.of(this, HomeViewModel.Factory(activity.application)).get(HomeViewModel::class.java)
     }
 
+    private lateinit var dataBinding: FragmentHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition =
@@ -36,10 +38,21 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) : View? {
-        val dataBinding = FragmentHomeBinding.inflate(inflater)
+        dataBinding = FragmentHomeBinding.inflate(inflater)
         dataBinding.lifecycleOwner = this
         dataBinding.homeViewModel = homeViewModel
         dataBinding.foodRecycleview.layoutManager = GridLayoutManager(activity, 2)
+        return dataBinding.root
+    }
+
+    /**
+     * Called when the fragment's activity has been created and this
+     * fragment's view hierarchy instantiated.  It can be used to do final
+     * initialization once these pieces are in place, such as retrieving
+     * views or restoring state.
+     */
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         dataBinding.foodRecycleview.adapter = FoodAdapter(FoodAdapter.OnClickListener {
             homeViewModel.moveToFoodDetail(it)
         })
@@ -66,6 +79,5 @@ class HomeFragment : Fragment() {
                 homeViewModel.doneToBarcodeReader()
             }
         })
-        return dataBinding.root
     }
 }

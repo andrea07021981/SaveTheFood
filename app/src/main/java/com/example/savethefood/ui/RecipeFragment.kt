@@ -20,18 +20,24 @@ class RecipeFragment : Fragment() {
         ViewModelProviders.of(this, RecipeViewModel.Factory(activity.application)).get(RecipeViewModel::class.java)
     }
 
+    private lateinit var dataBinding: FragmentReceipeBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding  = FragmentReceipeBinding.inflate(inflater)
+        dataBinding  = FragmentReceipeBinding.inflate(inflater)
         dataBinding.lifecycleOwner = this
         dataBinding.recipeViewModel = recipeViewModel
         dataBinding.recipeRecycleview.layoutManager = LinearLayoutManager(activity)
+        return dataBinding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         dataBinding.recipeRecycleview.adapter = RecipeAdapter(RecipeAdapter.OnClickListener {
             //TODO open recipe details
         })
-        return dataBinding.root
     }
 }
