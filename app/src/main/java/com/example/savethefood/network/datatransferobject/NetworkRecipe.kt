@@ -26,7 +26,7 @@ data class Result(
     val title: String
 )
 
-fun NetworkRecipe.AsDomainModel() : RecipeDomain {
+fun NetworkRecipe.asDomainModel() : RecipeDomain {
     return RecipeDomain(
         baseUri = baseUri,
         expires = expires,
@@ -37,6 +37,7 @@ fun NetworkRecipe.AsDomainModel() : RecipeDomain {
         results = results.map {
             RecipeResult(
                 it.id,
+                baseUri,
                 it.image,
                 it.imageUrls.first(),
                 it.readyInMinutes,
