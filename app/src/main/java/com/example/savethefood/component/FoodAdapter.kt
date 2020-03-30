@@ -18,9 +18,11 @@ class FoodAdapter(
         val binding: FoodItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(clickListener: OnClickListener, item: FoodDomain) {
-            binding.foodDomain = item
-            binding.foodCallback = clickListener
-            binding.executePendingBindings()
+            with(binding) {
+                foodDomain = item
+                foodCallback = clickListener
+                executePendingBindings()
+            }
         }
 
         //With a companion object we can get a function or a property to be tied to a class rather than to instances of it

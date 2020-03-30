@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.databinding.RecipeItemBinding
-import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.local.domain.RecipeResult
 
 class RecipeAdapter(
@@ -29,9 +28,11 @@ class RecipeAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(clickListener: OnClickListener, item: RecipeResult) {
-            binding.recipeItem = item
-            binding.recipeCallback = clickListener
-            binding.executePendingBindings()
+            with(binding) {
+                recipeItem = item
+                recipeCallback = clickListener
+                executePendingBindings()
+            }
         }
 
         companion object {

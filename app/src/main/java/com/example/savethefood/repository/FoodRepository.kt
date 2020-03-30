@@ -13,7 +13,7 @@ import com.example.savethefood.local.entity.FoodEntity
 import com.example.savethefood.local.entity.asDomainModel
 import com.example.savethefood.network.datatransferobject.asDatabaseModel
 import com.example.savethefood.network.datatransferobject.asDomainModel
-import com.example.savethefood.network.service.FoodApi
+import com.example.savethefood.network.service.ApiClient
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -32,7 +32,7 @@ class FoodRepository(
     @Throws(Exception::class)
     suspend fun getApiFoodUpc(barcode: String): FoodDomain? = coroutineScope{
         try {
-            val foodData = FoodApi.retrofitService.getFoodByUpc(barcode).await()
+            val foodData = ApiClient.retrofitService.getFoodByUpc(barcode).await()
             Log.d("JSON RESULT", foodData.id.toString())
             foodData.asDomainModel()
         } catch (e: Exception) {

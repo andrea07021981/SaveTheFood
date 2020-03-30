@@ -3,7 +3,7 @@ package com.example.savethefood.repository
 import com.example.savethefood.local.database.SaveTheFoodDatabase
 import com.example.savethefood.local.domain.RecipeDomain
 import com.example.savethefood.network.datatransferobject.asDomainModel
-import com.example.savethefood.network.service.FoodApi
+import com.example.savethefood.network.service.ApiClient
 import kotlinx.coroutines.coroutineScope
 import java.lang.Exception
 
@@ -14,7 +14,7 @@ class RecipeRepository(
     @Throws(Exception::class)
     suspend fun getRecipes(): RecipeDomain = coroutineScope {
         try {
-            val recipes = FoodApi.retrofitService.getRecipes().await()
+            val recipes = ApiClient.retrofitService.getRecipes().await()
             recipes.asDomainModel()
         } catch (error: Exception) {
             throw Exception(error)
