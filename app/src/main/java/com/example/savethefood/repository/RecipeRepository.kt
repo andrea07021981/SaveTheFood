@@ -20,4 +20,7 @@ class RecipeRepository(
             throw Exception(error)
         }
     }
+
+    /*@Throws(Exception::class)
+    suspend fun getRecipeInfo(val id: Int): RecipeDomain*/
 }
