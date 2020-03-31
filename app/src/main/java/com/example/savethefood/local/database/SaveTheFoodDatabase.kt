@@ -7,8 +7,13 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.savethefood.local.dao.FoodDatabaseDao
+import com.example.savethefood.local.dao.RecipeDatabaseDao
+import com.example.savethefood.local.dao.RecipeInfoDatabaseDao
 import com.example.savethefood.local.dao.UserDatabaseDao
+import com.example.savethefood.local.domain.RecipeDomain
 import com.example.savethefood.local.entity.FoodEntity
+import com.example.savethefood.local.entity.RecipeEntity
+import com.example.savethefood.local.entity.RecipeInfoEntity
 import com.example.savethefood.local.entity.UserEntity
 
 
@@ -19,7 +24,7 @@ import com.example.savethefood.local.entity.UserEntity
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities = [UserEntity::class, FoodEntity::class], version = 2, exportSchema = false)
+@Database(entities = [UserEntity::class, FoodEntity::class, RecipeEntity::class, RecipeInfoEntity::class], version = 2, exportSchema = false)
 abstract class SaveTheFoodDatabase : RoomDatabase() {
 
     /**
@@ -28,6 +33,10 @@ abstract class SaveTheFoodDatabase : RoomDatabase() {
     abstract val userDatabaseDao: UserDatabaseDao
 
     abstract val foodDatabaseDao: FoodDatabaseDao
+
+    abstract val recipeDatabaseDao: RecipeDatabaseDao
+
+    abstract val recipeInfoDatabaseDao: RecipeInfoDatabaseDao
 
     /**
      * Define a companion object, this allows us to add functions on the SaveTheFoodDatabase class.
