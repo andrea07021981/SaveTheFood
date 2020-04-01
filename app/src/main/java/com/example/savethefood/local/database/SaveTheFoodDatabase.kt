@@ -96,10 +96,20 @@ abstract class SaveTheFoodDatabase : RoomDatabase() {
             }
         }
 
-        val MIGRATION_1_2 = object : Migration(1, 2) {
+        private val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL(
                     "CREATE TABLE IF NOT EXISTS food_table (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT NOT NULL, img_url TEXT NOT NULL)")
+            }
+        }
+
+        private val MIGRATION_1_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS recipe_info_table " +
+                            "(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                            "name TEXT NOT NULL, " +
+                            "img_url TEXT NOT NULL)")
             }
         }
     }

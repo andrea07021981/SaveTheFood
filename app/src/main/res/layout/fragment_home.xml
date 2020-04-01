@@ -50,13 +50,14 @@
             android:layout_margin="32dp"
             android:scaleType="center"
             app:backgroundTint="@color/colorPrimary"
+            app:tint="@color/colorAccent"
             android:clickable="true"
             app:loadViewAnimation="@{homeViewModel.animationResourceButton}"
             app:fabSize="auto"
             android:onClick="@{() -> homeViewModel.moveToBarcodeReader()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:srcCompat="@mipmap/ic_name_add"
+            app:srcCompat="@drawable/ic_food_add"
             android:focusable="true" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

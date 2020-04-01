@@ -60,6 +60,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:focusedByDefault="false"
+                app:hintTextColor="@color/colorAccent"
                 android:textColorHint="@color/colorAccent"
                 app:boxStrokeColor="@color/colorAccent"
                 app:errorEnabled="true"
@@ -71,7 +72,7 @@
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/lock_white_24dp"
+                    android:drawableStart="@drawable/lock_white_24dp"
                     android:drawablePadding="10dp"
                     android:hint="Title"
                     android:enabled="@{barcodeReaderViewModel.validBarcode}"
@@ -90,6 +91,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:focusedByDefault="false"
+                app:hintTextColor="@color/colorAccent"
                 android:textColorHint="@color/colorAccent"
                 app:boxStrokeColor="@color/colorAccent"
                 app:errorEnabled="true"
@@ -101,7 +103,7 @@
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/email_white_24dp"
+                    android:drawableStart="@drawable/email_white_24dp"
                     android:drawablePadding="10dp"
                     android:hint="Description"
                     android:enabled="@{barcodeReaderViewModel.validBarcode}"
@@ -111,7 +113,7 @@
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/scan_button"
             style="@style/button"
             android:layout_width="wrap_content"
@@ -120,12 +122,15 @@
             android:layout_marginBottom="32dp"
             android:onClick="@{() -> barcodeReaderViewModel.getInfoByBarcode()}"
             android:text="Scan"
+            android:elevation="2dp"
+            android:translationZ="20dp"
+            android:stateListAnimator="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/save_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/save_button"
             style="@style/button"
             android:layout_width="wrap_content"
@@ -134,6 +139,9 @@
             android:layout_marginBottom="32dp"
             android:onClick="@{() -> barcodeReaderViewModel.saveFood(food)}"
             android:text="Save"
+            android:elevation="2dp"
+            android:translationZ="20dp"
+            android:stateListAnimator="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
