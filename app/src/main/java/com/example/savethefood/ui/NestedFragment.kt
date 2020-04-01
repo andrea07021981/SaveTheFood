@@ -1,4 +1,4 @@
-package com.example.savethefood
+package com.example.savethefood.ui
 
 import android.app.SearchManager
 import android.content.Context
@@ -15,6 +15,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.example.savethefood.R
 import com.example.savethefood.R.id.foodDetailFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_nested.*
@@ -32,7 +33,8 @@ class NestedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(R.layout.fragment_nested, container,
+        val view: View = inflater.inflate(
+            R.layout.fragment_nested, container,
             false)
 
         //TODO Use the user to update the drawer info

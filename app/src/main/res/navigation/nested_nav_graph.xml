@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nestedFragment"
-        android:name="com.example.savethefood.NestedFragment"
+        android:name="com.example.savethefood.ui.NestedFragment"
         android:label="fragment_nested"
         tools:layout="@layout/fragment_nested" >
 
