@@ -20,7 +20,12 @@
     <fragment
         android:id="@+id/recipeFragment"
         android:name="com.example.savethefood.ui.RecipeFragment"
-        android:label="RecipeFragment" />
+        android:label="RecipeFragment"
+        tools:layout="@layout/fragment_receipe">
+        <action
+            android:id="@+id/action_recipeFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/barcodeReaderFragment"
         android:name="com.example.savethefood.ui.BarcodeReaderFragment"
@@ -34,5 +39,14 @@
         <argument
             android:name="foodDomain"
             app:argType="com.example.savethefood.local.domain.FoodDomain" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="com.example.savethefood.ui.RecipeDetailFragment"
+        android:label="RecipeDetailFragment"
+        tools:layout="@layout/fragment_recipe_detail">
+        <argument
+            android:name="recipeResult"
+            app:argType="com.example.savethefood.local.domain.RecipeResult" />
     </fragment>
 </navigation>

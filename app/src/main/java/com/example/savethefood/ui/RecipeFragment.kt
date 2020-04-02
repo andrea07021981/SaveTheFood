@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.LinearLayout
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.savethefood.R
 import com.example.savethefood.component.RecipeAdapter
 import com.example.savethefood.databinding.FragmentReceipeBinding
 import com.example.savethefood.viewmodel.RecipeViewModel
@@ -37,7 +41,16 @@ class RecipeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         dataBinding.recipeRecycleview.adapter = RecipeAdapter(RecipeAdapter.OnClickListener {
-            //TODO open recipe details
+            recipeViewModel.moveToRecipeDetail(it)
+        })
+
+        recipeViewModel.navigateToRecipeDetail.observe(this.viewLifecycleOwner, Observer {
+            it.let {
+                val bundle = bundleOf("recipeResult" to it)
+                findNavController()
+                    .navigate(R.id.recipeDetailFragment, bundle, null, null)
+                recipeViewModel.doneToRecipeDetail()
+            }
         })
     }
 }

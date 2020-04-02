@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.savethefood.databinding.FragmentRecipeDetailBinding
+import com.example.savethefood.local.domain.RecipeResult
 import com.example.savethefood.viewmodel.RecipeDetailViewModel
 
 class RecipeDetailFragment : Fragment() {
@@ -15,11 +16,11 @@ class RecipeDetailFragment : Fragment() {
         val application = requireNotNull(activity).application
         ViewModelProvider(requireNotNull(activity,
             {
-                RecipeDetailViewModel.Factory(app = application, id = recipeId)
+                RecipeDetailViewModel.Factory(app = application, recipe = recipeSelected)
             })).get(RecipeDetailViewModel::class.java)
     }
 
-    private var recipeId: Int = 0
+    private lateinit var recipeSelected: RecipeResult
     private lateinit var dataBinding: FragmentRecipeDetailBinding
 
     override fun onCreateView(
@@ -28,6 +29,7 @@ class RecipeDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         dataBinding = FragmentRecipeDetailBinding.inflate(inflater)
+        recipeSelected = RecipeDetailFragmentArgs.fromBundle(requireArguments()).recipeResult
         dataBinding.lifecycleOwner = this
         dataBinding.recipeDetailViewModel = recipeDetailViewModel
         return dataBinding.root

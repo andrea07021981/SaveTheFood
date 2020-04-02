@@ -8,6 +8,7 @@ import com.example.savethefood.constants.Error
 import com.example.savethefood.constants.Loading
 import com.example.savethefood.local.database.SaveTheFoodDatabase
 import com.example.savethefood.local.domain.RecipeInfoDomain
+import com.example.savethefood.local.domain.RecipeResult
 import com.example.savethefood.repository.RecipeRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class RecipeDetailViewModel(
     application: Application,
-    recipeId: Int
+    recipe: RecipeResult
 ) : AndroidViewModel(application) {
 
     private val viewModelJob = Job()
@@ -34,18 +35,18 @@ class RecipeDetailViewModel(
         get() = _status
 
     private var _recipeDetail = MediatorLiveData<RecipeInfoDomain>()
-    val recipeList: LiveData<RecipeInfoDomain>
+    val recipeDetail: LiveData<RecipeInfoDomain>
         get() = _recipeDetail
 
     init {
-        getRecipeDetails(recipeId)
+        getRecipeDetails(recipe)
     }
 
-    private fun getRecipeDetails(id: Int) {
+    private fun getRecipeDetails(recipe: RecipeResult) {
         viewModelScope.launch {
             try {
                 _status.value = Loading("Loading")
-                val recipe = recipesRepository.getRecipeInfo(id)
+                val recipe = recipesRepository.getRecipeInfo(recipe.id)
                 _recipeDetail.value = recipe
                 _status.value = Done("Done")
             } catch (e: Exception) {
@@ -55,12 +56,12 @@ class RecipeDetailViewModel(
         }
     }
 
-    class Factory(val app: Application, val id: Int) : ViewModelProvider.Factory {
+    class Factory(val app: Application, val recipe: RecipeResult) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(RecipeDetailViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return RecipeDetailViewModel(app, id) as T
+                return RecipeDetailViewModel(app, recipe) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

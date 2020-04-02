@@ -35,6 +35,10 @@ class RecipeViewModel(
     val recipeList: LiveData<RecipeDomain>
         get() = _recipeList
 
+    private var _navigateToRecipeDetail = MediatorLiveData<RecipeResult>()
+    val navigateToRecipeDetail: LiveData<RecipeResult>
+        get() = _navigateToRecipeDetail
+
     init {
         //TODO add filters for recipes (filter on action bar menu)
         getRecipes()
@@ -52,6 +56,14 @@ class RecipeViewModel(
                 _recipeList.value = null
             }
         }
+    }
+
+    fun moveToRecipeDetail(recipe: RecipeResult) {
+        _navigateToRecipeDetail.value = recipe
+    }
+
+    fun doneToRecipeDetail() {
+        _navigateToRecipeDetail.value = null
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
