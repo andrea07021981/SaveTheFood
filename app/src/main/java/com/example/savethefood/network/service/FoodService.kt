@@ -2,6 +2,7 @@ package com.example.savethefood.network.service
 
 import com.example.savethefood.network.datatransferobject.NetworkFood
 import com.example.savethefood.network.datatransferobject.NetworkRecipe
+import com.example.savethefood.network.datatransferobject.NetworkRecipeInfo
 import com.example.savethefood.network.service.ApiEndPoint.BASE_URL
 import com.example.savethefood.network.service.ApiKey.API_KEY
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -26,5 +27,5 @@ interface FoodService {
     fun getRecipes(@Query("apiKey") key: String = API_KEY): Deferred<NetworkRecipe>
 
     @GET("recipes/search")
-    fun getRecipeInfo(@Query("id") id: Int, @Query("apiKey") key: String = API_KEY): Deferred<NetworkRecipe>
+    fun getRecipeInfo(@Query("id") id: Int, @Query("apiKey") key: String = API_KEY): Deferred<NetworkRecipeInfo>
 }

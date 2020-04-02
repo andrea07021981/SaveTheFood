@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="foodDetailViewModel"
-            type="com.example.savethefood.viewmodel.FoodDetailViewModel" />
+            name="recipeDetailViewModel"
+            type="com.example.savethefood.viewmodel.RecipeDetailViewModel" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout

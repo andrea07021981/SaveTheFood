@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.ActivityNavigator
 import androidx.transition.TransitionInflater
@@ -21,7 +22,10 @@ class FoodDetailFragment : Fragment() {
 
     private val foodDetailViewModel: FoodDetailViewModel by lazy {
         val application = requireNotNull(activity).application
-        ViewModelProviders.of(this, FoodDetailViewModel.Factory(application = application, foodSelected = foodSelected))
+        ViewModelProvider(requireNotNull(activity,
+            {
+                FoodDetailViewModel.Factory(application = application, foodSelected = foodSelected)
+            }))
             .get(FoodDetailViewModel::class.java)
     }
 
@@ -39,7 +43,7 @@ class FoodDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ) : View? {
         dataBinding = FragmentFoodDetailBinding.inflate(inflater)
-        foodSelected = FoodDetailFragmentArgs.fromBundle(arguments!!).foodDomain
+        foodSelected = FoodDetailFragmentArgs.fromBundle(requireArguments()).foodDomain
         dataBinding.lifecycleOwner = this
         dataBinding.foodDetailViewModel = foodDetailViewModel
         return dataBinding.root
@@ -52,7 +56,7 @@ class FoodDetailFragment : Fragment() {
         }
 
         dataBinding.deleteFab.setOnClickListener {
-            AlertDialog.Builder(activity!!)
+            AlertDialog.Builder(requireActivity())
                 .setCancelable(false)
                 .setTitle("Attention")
                 .setMessage("Would you like to delete ${foodDetailViewModel.food.value?.foodTitle}")
