@@ -1,5 +1,8 @@
 package com.example.savethefood.network.datatransferobject
 
+import com.example.savethefood.local.domain.AnalyzedInstructionDomain
+import com.example.savethefood.local.domain.EquipmentDomain
+import com.example.savethefood.local.domain.StepDomain
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
@@ -44,10 +47,21 @@ data class NetworkRecipeInfo(
 )
 
 @JsonClass(generateAdapter = true)
+data class AnalyzedInstructionContainer(val analyzedInstructions: List<AnalyzedInstruction>)
+@JsonClass(generateAdapter = true)
 data class AnalyzedInstruction(
     val name: String,
     val steps: List<Step>
 )
+
+fun AnalyzedInstructionContainer.asDomainModel(): List<AnalyzedInstructionDomain> {
+    return analyzedInstructions.map {
+        AnalyzedInstructionDomain(
+            instructionName = it.name,
+            instructionSteps = listOf()
+        )
+    }
+}
 
 @JsonClass(generateAdapter = true)
 data class Equipment(
@@ -118,3 +132,66 @@ data class Us(
 @JsonClass(generateAdapter = true)
 class WinePairing(
 )
+
+/**
+ * Convert Network results to domain objects
+ */
+
+/*fun AnalyzedInstruction.asDomainModel(): List<AnalyzedInstructionDomain> {
+    return AnalyzedInstructionDomain(
+        instructionName = name,
+        instructionSteps = steps
+    )
+}
+
+fun Step.asDomainModel(): List<StepDomain> {
+    return step.map {
+        StepDomain(
+            stepEquipment =  it.
+        )
+    }
+
+}
+
+/*
+fun NetworkRecipeInfo.asDomainModel(): RecipeInfoDomain {
+    return RecipeInfoDomain(
+        recipeAggregateLikes = aggregateLikes,
+    val recipeAnalyzedInstructions: List<AnalyzedInstructionDomain>,
+    val recipeCheap: Boolean,
+    val recipeCookingMinutes: Int,
+    val recipeCreditsText: String,
+    val recipeCuisines: List<String>,
+    val recipeCairyFree: Boolean,
+    val recipeDiets: List<String>,
+    val recipeDishTypes: List<String>,
+    val recipeExtendedIngredients: List<ExtendedIngredientDomain>,
+    val recipeGaps: String,
+    val recipeGlutenFree: Boolean,
+    val recipeHealthScore: Double,
+    val recipeId: Int,
+    val recipeImage: String,
+    val recipeImageType: String,
+    val recipeInstructions: String,
+    val recipeLowFodmap: Boolean,
+    val recipeOccasions: List<String>,
+    val recipeOriginalId: Int,
+    val recipePreparationMinutes: Int,
+    val recipePricePerServing: Double,
+    val recipeReadyInMinutes: Int,
+    val recipeRecipeServings: Int,
+    val recipeSourceName: String,
+    val recipeSourceUrl: String,
+    val recipeSpoonacularScore: Double,
+    val recipeSpoonacularSourceUrl: String,
+    val recipeSummary: String,
+    val recipeSustainable: Boolean,
+    val recipeTitle: String,
+    val recipeVegan: Boolean,
+    val recipeVegetarian: Boolean,
+    val recipeVeryHealthy: Boolean,
+    val recipeVeryPopular: Boolean,
+    val recipeWeightWatcherSmartPoints: Int,
+    val recipeWinePairing: WinePairingDomain
+    )
+}*/
