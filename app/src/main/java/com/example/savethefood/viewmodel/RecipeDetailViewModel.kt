@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class RecipeDetailViewModel(
     application: Application,
-    recipe: RecipeResult
+    recipeResult: RecipeResult
 ) : AndroidViewModel(application) {
 
     private val viewModelJob = Job()
@@ -39,14 +39,14 @@ class RecipeDetailViewModel(
         get() = _recipeDetail
 
     init {
-        getRecipeDetails(recipe)
+        getRecipeDetails()
     }
 
-    private fun getRecipeDetails(recipe: RecipeResult) {
+    private fun getRecipeDetails() {
         viewModelScope.launch {
             try {
                 _status.value = Loading("Loading")
-                val recipe = recipesRepository.getRecipeInfo(recipe.id)
+                val recipe = recipesRepository.getRecipeInfo(0)
                 _recipeDetail.value = recipe
                 _status.value = Done("Done")
             } catch (e: Exception) {
@@ -56,12 +56,12 @@ class RecipeDetailViewModel(
         }
     }
 
-    class Factory(val app: Application, val recipe: RecipeResult) : ViewModelProvider.Factory {
+    class Factory(val application: Application, val recipeResult: RecipeResult) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(RecipeDetailViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return RecipeDetailViewModel(app, recipe) as T
+                return RecipeDetailViewModel(application = application, recipeResult = recipeResult) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

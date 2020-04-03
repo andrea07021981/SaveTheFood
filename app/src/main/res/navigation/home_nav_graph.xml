@@ -44,9 +44,5 @@
         android:id="@+id/recipeDetailFragment"
         android:name="com.example.savethefood.ui.RecipeDetailFragment"
         android:label="RecipeDetailFragment"
-        tools:layout="@layout/fragment_recipe_detail">
-        <argument
-            android:name="recipeResult"
-            app:argType="com.example.savethefood.local.domain.RecipeResult" />
-    </fragment>
+        tools:layout="@layout/fragment_recipe_detail"/>
 </navigation>

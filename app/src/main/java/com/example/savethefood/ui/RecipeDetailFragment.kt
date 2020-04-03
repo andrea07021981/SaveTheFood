@@ -6,18 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.example.savethefood.databinding.FragmentRecipeDetailBinding
+import com.example.savethefood.local.domain.RecipeDomain
 import com.example.savethefood.local.domain.RecipeResult
 import com.example.savethefood.viewmodel.RecipeDetailViewModel
+import com.example.savethefood.viewmodel.RecipeViewModel
 
 class RecipeDetailFragment : Fragment() {
 
     private val recipeDetailViewModel: RecipeDetailViewModel by lazy {
         val application = requireNotNull(activity).application
-        ViewModelProvider(requireNotNull(activity,
-            {
-                RecipeDetailViewModel.Factory(app = application, recipe = recipeSelected)
-            })).get(RecipeDetailViewModel::class.java)
+        ViewModelProvider(requireNotNull(activity), RecipeDetailViewModel.Factory(application = application, recipeResult = recipeSelected))
+            .get(RecipeDetailViewModel::class.java)
     }
 
     private lateinit var recipeSelected: RecipeResult
@@ -29,7 +30,7 @@ class RecipeDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         dataBinding = FragmentRecipeDetailBinding.inflate(inflater)
-        recipeSelected = RecipeDetailFragmentArgs.fromBundle(requireArguments()).recipeResult
+        recipeSelected = RecipeResult(1, "", "", "", 3, 3, "")
         dataBinding.lifecycleOwner = this
         dataBinding.recipeDetailViewModel = recipeDetailViewModel
         return dataBinding.root
