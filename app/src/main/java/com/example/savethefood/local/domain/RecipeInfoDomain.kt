@@ -13,7 +13,7 @@ data class RecipeInfoDomain(
     val recipeCookingMinutes: Int,
     val recipeCreditsText: String,
     val recipeCuisines: List<String>,
-    val recipeCairyFree: Boolean,
+    val recipeDairyFree: Boolean,
     val recipeDiets: List<String>,
     val recipeDishTypes: List<String>,
     val recipeExtendedIngredients: List<ExtendedIngredientDomain>,
@@ -26,7 +26,7 @@ data class RecipeInfoDomain(
     val recipeInstructions: String,
     val recipeLowFodmap: Boolean,
     val recipeOccasions: List<String>,
-    val recipeOriginalId: Int,
+    val recipeOriginalId: Int?,
     val recipePreparationMinutes: Int,
     val recipePricePerServing: Double,
     val recipeReadyInMinutes: Int,
@@ -61,19 +61,19 @@ data class EquipmentDomain(
 
 @Parcelize
 data class ExtendedIngredientDomain(
-    val ExIngredientAisle: String,
-    val ExIngredientAmount: Double,
-    val ExIngredientConsistency: String,
-    val ExIngredientId: Int,
-    val ExIngredientImage: String,
-    val ExIngredientMeasures: MeasuresDomain,
-    val ExIngredientMeta: List<String>,
-    val ExIngredientMetaInformation: List<String>,
-    val ExIngredientName: String,
-    val ExIngredientOriginal: String,
-    val ExIngredientOriginalName: String,
-    val ExIngredientOriginalString: String,
-    val ExIngredientUnit: String
+    val exIngredientAisle: String,
+    val exIngredientAmount: Double,
+    val exIngredientConsistency: String,
+    val exIngredientId: Int,
+    val exIngredientImage: String,
+    val exIngredientMeasures: MeasuresDomain,
+    val exIngredientMeta: List<String>,
+    val exIngredientMetaInformation: List<String>,
+    val exIngredientName: String,
+    val exIngredientOriginal: String,
+    val exIngredientOriginalName: String,
+    val exIngredientOriginalString: String,
+    val exIngredientUnit: String
 ) : Parcelable
 
 @Parcelize
@@ -106,7 +106,7 @@ data class MetricDomain(
 data class StepDomain(
     val stepEquipment: List<EquipmentDomain>,
     val stepIngredients: List<IngredientsDomain>,
-    val stepLength: LengthDomain,
+    val stepLength: LengthDomain?,
     val stepNumber: Int,
     val stepStep: String
 ) : Parcelable

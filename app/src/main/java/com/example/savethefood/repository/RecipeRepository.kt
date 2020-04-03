@@ -27,7 +27,7 @@ class RecipeRepository(
         try {
             //TODO Try to get data from db, if not present call api
             val recipe = ApiClient.retrofitService.getRecipeInfo(id).await()
-            recipe as RecipeInfoDomain
+            recipe.asDomainModel()
         } catch (error: Exception) {
             throw Exception(error)
         }

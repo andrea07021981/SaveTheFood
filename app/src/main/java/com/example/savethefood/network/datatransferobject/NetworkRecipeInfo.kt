@@ -1,8 +1,6 @@
 package com.example.savethefood.network.datatransferobject
 
-import com.example.savethefood.local.domain.AnalyzedInstructionDomain
-import com.example.savethefood.local.domain.EquipmentDomain
-import com.example.savethefood.local.domain.StepDomain
+import com.example.savethefood.local.domain.*
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
@@ -25,7 +23,7 @@ data class NetworkRecipeInfo(
     val imageType: String,
     val instructions: String,
     val lowFodmap: Boolean,
-    val occasions: List<Any>,
+    val occasions: List<String>,
     val originalId: Int?,
     val preparationMinutes: Int,
     val pricePerServing: Double,
@@ -46,26 +44,75 @@ data class NetworkRecipeInfo(
     val winePairing: WinePairing
 )
 
+fun NetworkRecipeInfo.asDomainModel(): RecipeInfoDomain {
+    return RecipeInfoDomain(
+        recipeAggregateLikes = aggregateLikes,
+        recipeAnalyzedInstructions = analyzedInstructions.map { it.asDomainModel() },
+        recipeCheap = cheap,
+        recipeCookingMinutes = cookingMinutes,
+        recipeCreditsText = creditsText,
+        recipeCuisines = cuisines.map { it.toString() },
+        recipeDairyFree = dairyFree,
+        recipeDiets = diets,
+        recipeDishTypes = dishTypes,
+        recipeExtendedIngredients = extendedIngredients.map { it.asDomainModel() },
+        recipeGaps = gaps,
+        recipeGlutenFree = glutenFree,
+        recipeHealthScore = healthScore,
+        recipeId = id,
+        recipeImage = image,
+        recipeImageType = imageType,
+        recipeInstructions = instructions,
+        recipeLowFodmap = lowFodmap,
+        recipeOccasions = occasions,
+        recipeOriginalId = originalId,
+        recipePreparationMinutes = preparationMinutes,
+        recipePricePerServing = pricePerServing,
+        recipeReadyInMinutes = readyInMinutes,
+        recipeRecipeServings = servings,
+        recipeSourceName = sourceName,
+        recipeSourceUrl = sourceUrl,
+        recipeSpoonacularScore = spoonacularScore,
+        recipeSpoonacularSourceUrl = sourceUrl,
+        recipeSummary = summary,
+        recipeSustainable = sustainable,
+        recipeTitle = title,
+        recipeVegan = vegan,
+        recipeVegetarian = vegetarian,
+        recipeVeryHealthy = veryHealthy,
+        recipeVeryPopular = veryPopular,
+        recipeWeightWatcherSmartPoints = weightWatcherSmartPoints,
+        recipeWinePairing = winePairing.asDomainModel()
+    )
+}
+
 @JsonClass(generateAdapter = true)
 data class AnalyzedInstruction(
     val name: String,
     val steps: List<Step>
 )
-/*
-fun AnalyzedInstruction.asDomainModel(): List<AnalyzedInstructionDomain> {
-    return analyzedInstructions.map {
-        AnalyzedInstructionDomain(
-            instructionName = it.name,
-            instructionSteps = listOf()
-        )
-    }
-}*/
+
+fun AnalyzedInstruction.asDomainModel(): AnalyzedInstructionDomain {
+    return AnalyzedInstructionDomain(
+        instructionName = name,
+        instructionSteps = listOf()
+    )
+}
+
 @JsonClass(generateAdapter = true)
 data class Equipment(
     val id: Int,
     val image: String,
     val name: String
 )
+
+fun Equipment.asDomainModel(): EquipmentDomain {
+    return EquipmentDomain(
+        equipmentId = id,
+        equipmentImage = image,
+        equipmentName = name
+    )
+}
 
 @JsonClass(generateAdapter = true)
 data class ExtendedIngredient(
@@ -84,12 +131,37 @@ data class ExtendedIngredient(
     val unit: String
 )
 
+fun ExtendedIngredient.asDomainModel(): ExtendedIngredientDomain {
+    return ExtendedIngredientDomain(
+        exIngredientAisle = aisle,
+        exIngredientAmount = amount,
+        exIngredientConsistency = consistency,
+        exIngredientId = id,
+        exIngredientImage = image,
+        exIngredientMeasures = measures.asDomainModel(),
+        exIngredientMeta = meta,
+        exIngredientMetaInformation = metaInformation,
+        exIngredientName = name,
+        exIngredientOriginal = original,
+        exIngredientOriginalName = originalName,
+        exIngredientOriginalString = originalString,
+        exIngredientUnit = unit
+    )
+}
+
 @JsonClass(generateAdapter = true)
 data class Ingredients(
     val id: Int,
     val image: String,
     val name: String
 )
+fun Ingredients.asDomainModel(): IngredientsDomain {
+    return IngredientsDomain(
+        ingredientId = id,
+        ingredientImage = image,
+        ingredientName = name
+    )
+}
 
 @JsonClass(generateAdapter = true)
 data class Length(
@@ -97,11 +169,25 @@ data class Length(
     val unit: String
 )
 
+fun Length.asDomainModel(): LengthDomain {
+    return LengthDomain(
+        lengthNumber = number,
+        lengthUnit = unit
+    )
+}
+
 @JsonClass(generateAdapter = true)
 data class Measures(
     val metric: Metric,
     val us: Us
 )
+
+fun Measures.asDomainModel(): MeasuresDomain {
+    return MeasuresDomain(
+        measureMetric = metric.asDomainModel(),
+        measureUs = us.asDomainModel()
+    )
+}
 
 @JsonClass(generateAdapter = true)
 data class Metric(
@@ -109,6 +195,13 @@ data class Metric(
     val unitLong: String,
     val unitShort: String
 )
+fun Metric.asDomainModel(): MetricDomain {
+    return MetricDomain(
+        metricAmount = amount,
+        metricUnitLong = unitLong,
+        metricUnitShort = unitShort
+    )
+}
 
 @JsonClass(generateAdapter = true)
 data class Step(
@@ -119,17 +212,37 @@ data class Step(
     val step: String
 )
 
+fun Step.asDomainModel(): StepDomain {
+    return StepDomain(
+        stepEquipment = equipment.map { it.asDomainModel() },
+        stepIngredients = ingredients.map { it.asDomainModel() },
+        stepLength = length?.asDomainModel(),
+        stepNumber = number,
+        stepStep = step
+    )
+}
+
 @JsonClass(generateAdapter = true)
 data class Us(
     val amount: Double,
     val unitLong: String,
     val unitShort: String
 )
+fun Us.asDomainModel(): UsDomain {
+    return UsDomain(
+        amount = amount,
+        unitLong = unitLong,
+        unitShort = unitShort
+    )
+}
 
 @JsonClass(generateAdapter = true)
 class WinePairing(
 )
 
+fun WinePairing.asDomainModel(): WinePairingDomain {
+    return WinePairingDomain()
+}
 /**
  * Convert Network results to domain objects
  */
