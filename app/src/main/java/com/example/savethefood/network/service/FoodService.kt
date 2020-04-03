@@ -23,8 +23,13 @@ interface FoodService {
     @GET("food/products/upc/{upc}")
     fun getFoodByUpc(@Path("upc") type: String, @Query("apiKey") key: String = API_KEY): Deferred<NetworkFood>
 
+    /**
+     * New direct method added in retrofit 2.6. No need enqueue and retrofit with deferred
+     * it's the same as PlantApi.retrofitService.postCommand(plantId = plantDomain.plantId, commandType = commandType).await().asDomainModel()
+     * and retrofit methid deferred
+     */
     @GET("recipes/search")
-    fun getRecipes(@Query("apiKey") key: String = API_KEY): Deferred<NetworkRecipe>
+    suspend fun getRecipes(@Query("apiKey") key: String = API_KEY): NetworkRecipe
 
     @GET("recipes/{id}/information")
     fun getRecipeInfo(@Path("id") id: Int, @Query("includeNutrition") includeNutrition: Boolean = false, @Query("apiKey") key: String = API_KEY): Deferred<NetworkRecipeInfo>

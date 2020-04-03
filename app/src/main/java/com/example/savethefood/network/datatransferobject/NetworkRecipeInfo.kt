@@ -26,7 +26,7 @@ data class NetworkRecipeInfo(
     val instructions: String,
     val lowFodmap: Boolean,
     val occasions: List<Any>,
-    val originalId: Any,
+    val originalId: Int?,
     val preparationMinutes: Int,
     val pricePerServing: Double,
     val readyInMinutes: Int,
@@ -47,22 +47,19 @@ data class NetworkRecipeInfo(
 )
 
 @JsonClass(generateAdapter = true)
-data class AnalyzedInstructionContainer(val analyzedInstructions: List<AnalyzedInstruction>)
-@JsonClass(generateAdapter = true)
 data class AnalyzedInstruction(
     val name: String,
     val steps: List<Step>
 )
-
-fun AnalyzedInstructionContainer.asDomainModel(): List<AnalyzedInstructionDomain> {
+/*
+fun AnalyzedInstruction.asDomainModel(): List<AnalyzedInstructionDomain> {
     return analyzedInstructions.map {
         AnalyzedInstructionDomain(
             instructionName = it.name,
             instructionSteps = listOf()
         )
     }
-}
-
+}*/
 @JsonClass(generateAdapter = true)
 data class Equipment(
     val id: Int,
@@ -117,7 +114,7 @@ data class Metric(
 data class Step(
     val equipment: List<Equipment>,
     val ingredients: List<Ingredients>,
-    val length: Length,
+    val length: Length?,
     val number: Int,
     val step: String
 )

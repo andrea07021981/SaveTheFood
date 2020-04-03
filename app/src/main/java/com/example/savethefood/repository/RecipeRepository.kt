@@ -15,7 +15,7 @@ class RecipeRepository(
     @Throws(Exception::class)
     suspend fun getRecipes(): RecipeDomain = coroutineScope {
         try {
-            val recipes = ApiClient.retrofitService.getRecipes().await()
+            val recipes = ApiClient.retrofitService.getRecipes()
             recipes.asDomainModel()
         } catch (error: Exception) {
             throw Exception(error)
