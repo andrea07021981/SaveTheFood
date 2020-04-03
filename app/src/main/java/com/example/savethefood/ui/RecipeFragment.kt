@@ -46,9 +46,9 @@ class RecipeFragment : Fragment() {
 
         recipeViewModel.navigateToRecipeDetail.observe(this.viewLifecycleOwner, Observer {
             it?.let {
-                //val bundle = bundleOf("recipeResult" to it)
+                val bundle = bundleOf("recipeResult" to it)
                 findNavController()
-                    .navigate(R.id.recipeDetailFragment, null, null, null)
+                    .navigate(R.id.recipeDetailFragment, bundle, null, null)
                 recipeViewModel.doneToRecipeDetail()
             }
         })

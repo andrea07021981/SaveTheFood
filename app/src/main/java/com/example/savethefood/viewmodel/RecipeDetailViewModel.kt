@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 class RecipeDetailViewModel(
     application: Application,
     recipeResult: RecipeResult
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     private val viewModelJob = Job()
 
@@ -39,14 +39,14 @@ class RecipeDetailViewModel(
         get() = _recipeDetail
 
     init {
-        getRecipeDetails()
+        getRecipeDetails(recipeResult)
     }
 
-    private fun getRecipeDetails() {
+    private fun getRecipeDetails(recipeResult: RecipeResult) {
         viewModelScope.launch {
             try {
                 _status.value = Loading("Loading")
-                val recipe = recipesRepository.getRecipeInfo(0)
+                val recipe = recipesRepository.getRecipeInfo(recipeResult.id)
                 _recipeDetail.value = recipe
                 _status.value = Done("Done")
             } catch (e: Exception) {

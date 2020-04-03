@@ -17,6 +17,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.savethefood.R
 import com.example.savethefood.R.id.foodDetailFragment
+import com.example.savethefood.R.id.recipeDetailFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_nested.*
 import kotlinx.android.synthetic.main.fragment_nested.view.*
@@ -65,7 +66,8 @@ class NestedFragment : Fragment() {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                     appbar.toolbar.visibility = View.VISIBLE
                 }
-                nc.graph.findNode(foodDetailFragment)?.id -> {
+                nc.graph.findNode(foodDetailFragment)?.id,
+                nc.graph.findNode(recipeDetailFragment)?.id -> {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                     appbar.toolbar.visibility = View.GONE
                 }
