@@ -36,7 +36,7 @@
                     app:layout_scrollFlags="scroll|exitUntilCollapsed"
                     android:fitsSystemWindows="true"
                     app:contentScrim="?attr/colorPrimary"
-                    app:expandedTitleMarginStart="48dp"
+                    app:expandedTitleMarginStart="28dp"
                     app:expandedTitleMarginEnd="64dp"
                     app:title="@{recipeDetailViewModel.recipeDetail.recipeSourceName}">
 
@@ -57,6 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:navigationIcon="?attr/homeAsUpIndicator"
                         app:layout_collapseMode="pin"
                         />
                 </com.google.android.material.appbar.CollapsingToolbarLayout>

@@ -38,6 +38,10 @@ class RecipeDetailViewModel(
     val recipeDetail: LiveData<RecipeInfoDomain>
         get() = _recipeDetail
 
+    private var _navigateToRecipeList = MediatorLiveData<Boolean>()
+    val navigateToRecipeList: LiveData<Boolean>
+        get() = _navigateToRecipeList
+
     init {
         getRecipeDetails(recipeResult)
     }
@@ -54,6 +58,14 @@ class RecipeDetailViewModel(
                 _recipeDetail.value = null
             }
         }
+    }
+
+    fun backToRecipeList() {
+        _navigateToRecipeList.value = true
+    }
+
+    fun doneBackToRecipeList() {
+        _navigateToRecipeList.value = null
     }
 
     class Factory(val application: Application, val recipeResult: RecipeResult) : ViewModelProvider.Factory {

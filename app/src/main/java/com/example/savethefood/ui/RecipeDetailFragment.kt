@@ -5,14 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.example.savethefood.databinding.FragmentRecipeDetailBinding
 import com.example.savethefood.local.domain.RecipeDomain
 import com.example.savethefood.local.domain.RecipeResult
 import com.example.savethefood.viewmodel.FoodDetailViewModel
 import com.example.savethefood.viewmodel.RecipeDetailViewModel
 import com.example.savethefood.viewmodel.RecipeViewModel
+import kotlinx.android.synthetic.main.fragment_nested.*
 
 class RecipeDetailFragment : Fragment() {
 
@@ -34,6 +37,18 @@ class RecipeDetailFragment : Fragment() {
         recipeSelected = RecipeDetailFragmentArgs.fromBundle(requireArguments()).recipeResult
         dataBinding.lifecycleOwner = this
         dataBinding.recipeDetailViewModel = recipeDetailViewModel
+
+        dataBinding.maintoolbar.setNavigationOnClickListener {
+            recipeDetailViewModel.backToRecipeList()
+        }
+
+        recipeDetailViewModel.navigateToRecipeList.observe(this.viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController()
+                    .popBackStack()
+                recipeDetailViewModel.doneBackToRecipeList()
+            }
+        })
         return dataBinding.root
     }
 
