@@ -21,4 +21,11 @@
     <string name="username">Username</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--SPECIAL FORMATTING-->
+    <!-- Date format in hour minute-->
+    <string name="format__date">
+        <xliff:g id="hour">%1$d</xliff:g>:
+        <xliff:g id="minute">%2$d</xliff:g></string>
+    <string name="time">Time</string>
 </resources>

@@ -2,6 +2,8 @@ package com.example.savethefood.util
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,8 +14,9 @@ import com.example.savethefood.component.RecipeAdapter
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.Done
 import com.example.savethefood.constants.Loading
+import com.example.savethefood.local.domain.RecipeInfoDomain
 import com.example.savethefood.local.domain.RecipeResult
-import java.lang.Error
+import kotlin.math.min
 
 
 @BindingAdapter("recipeApiStatus")
@@ -60,5 +63,33 @@ fun bindRecipeImage(imgView: ImageView, recipeResult: RecipeResult?) {
                     .placeholder(R.drawable.loading_animation)
                     .error(R.drawable.ic_broken_image))
             .into(imgView)
+    }
+}
+
+/**
+ *  set the starts 0 out of 100
+ */
+@BindingAdapter("setStartsValue")
+fun AppCompatRatingBar.setStartsValue(recipe: RecipeInfoDomain?) {
+    numStars = when(recipe?.recipeSpoonacularScore?.toInt()) {
+        in 0..20 -> 1
+        in 21..40 -> 2
+        in 41..60 -> 3
+        in 61..80 -> 4
+        in 81..100 ->5
+        else -> 0
+    }
+}
+
+/**
+ *  Format the minutes
+ */
+@BindingAdapter("formattedText")
+fun TextView.formattedText(minutes: Int?) {
+    text = minutes?.let {
+        String.format(context.getString(
+            R.string.format__date,
+            it.div(60),
+            it.rem(60)))
     }
 }

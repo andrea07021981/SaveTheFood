@@ -66,35 +66,35 @@
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                >
+                android:background="@color/colorPrimary"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:elevation="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="-3dp"
+                    android:elevation="16dp"
                     app:cardCornerRadius="15dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="300sp"
                         android:orientation="vertical"
-                        android:padding="20sp">
+                        android:paddingStart="20sp"
+                        android:paddingEnd="20sp">
 
                         <TextView
                             android:id="@+id/name_textview"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
                             android:gravity="start"
                             android:lineSpacingExtra="8dp"
-                            android:padding="16dp"
                             android:text="@{recipeDetailViewModel.recipeDetail.recipeTitle}"
-                            android:textSize="20sp"
+                            android:textSize="16sp"
                             android:textStyle="bold"
                             android:transitionName="foodTitle"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/imageButton"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toStartOf="parent"
@@ -106,17 +106,141 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="32dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="24dp"
                             android:layout_marginEnd="3dp"
-                            android:layout_marginBottom="16dp"
                             android:backgroundTint="@color/zxing_transparent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.5"
                             app:layout_constraintStart_toEndOf="@+id/name_textview"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/ic_heart_selected" />
 
+                        <androidx.appcompat.widget.AppCompatRatingBar
+                            android:id="@+id/ratingBar"
+                            style="@style/Widget.AppCompat.RatingBar.Small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20sp"
+                            android:layout_marginTop="16dp"
+                            android:rating="3"
+                            android:stepSize="1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/name_textview"
+                            app:setStartsValue="@{recipeDetailViewModel.recipeDetail}" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardView10"
+                            android:layout_width="100dp"
+                            android:layout_height="80dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintEnd_toStartOf="@+id/cardView11"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ratingBar">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/colorPrimary"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical"
+                                android:padding="2dp">
+
+                                <com.ekn.gruzer.gaugelibrary.ArcGauge
+                                    android:id="@+id/halfGaugeTime"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.6"
+                                    android:background="@android:color/white" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.4"
+                                    android:background="@android:color/white"
+                                    android:gravity="center_horizontal"
+                                    app:formattedText="@{recipeDetailViewModel.recipeDetail.recipePreparationMinutes}"
+                                    tools:text="00.00" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardView11"
+                            android:layout_width="100dp"
+                            android:layout_height="80dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/cardView12"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/cardView10"
+                            app:layout_constraintTop_toBottomOf="@+id/ratingBar">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/colorPrimary"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical"
+                                android:padding="2dp">
+
+                                <com.ekn.gruzer.gaugelibrary.ArcGauge
+                                    android:id="@+id/halfGaugeHealth"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.6"
+                                    android:background="@android:color/white" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.4"
+                                    android:background="@android:color/white"
+                                    android:gravity="center_horizontal"
+                                    app:formattedText="@{recipeDetailViewModel.recipeDetail.recipePreparationMinutes}"
+                                    tools:text="00.00" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardView12"
+                            android:layout_width="100dp"
+                            android:layout_height="80dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="16dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/cardView11"
+                            app:layout_constraintTop_toBottomOf="@+id/ratingBar">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/colorPrimary"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical"
+                                android:padding="2dp">
+
+                                <com.ekn.gruzer.gaugelibrary.ArcGauge
+                                    android:id="@+id/halfGaugePrice"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.6"
+                                    android:background="@android:color/white" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.4"
+                                    android:background="@android:color/white"
+                                    android:gravity="center_horizontal"
+                                    app:formattedText="@{recipeDetailViewModel.recipeDetail.recipePreparationMinutes}"
+                                    tools:text="00.00" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
             </androidx.core.widget.NestedScrollView>
