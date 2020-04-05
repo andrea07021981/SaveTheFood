@@ -2,6 +2,7 @@ package com.example.savethefood.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.savethefood.R
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.Done
 import com.example.savethefood.constants.Error
@@ -19,6 +20,9 @@ class RecipeDetailViewModel(
     application: Application,
     recipeResult: RecipeResult
 ) : ViewModel() {
+
+
+    //TODO ADD CHECK STATUS OF SAVED RECIPE AND BIND IT
 
     private val viewModelJob = Job()
 
@@ -54,7 +58,7 @@ class RecipeDetailViewModel(
                 _recipeDetail.value = recipe
                 _status.value = Done("Done")
             } catch (e: Exception) {
-                _status.value = Error(e.message.let { toString() })
+                _status.value = Error(toString())
                 _recipeDetail.value = null
             }
         }
@@ -68,6 +72,9 @@ class RecipeDetailViewModel(
         _navigateToRecipeList.value = null
     }
 
+    fun onCookNow(recipe: RecipeInfoDomain) {
+
+    }
     class Factory(val application: Application, val recipeResult: RecipeResult) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
