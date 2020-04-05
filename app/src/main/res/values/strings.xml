@@ -25,7 +25,12 @@
     <!--SPECIAL FORMATTING-->
     <!-- Date format in hour minute-->
     <string name="format__date">
-        <xliff:g id="hour">%1$d</xliff:g>:
-        <xliff:g id="minute">%2$d</xliff:g></string>
+        <xliff:g id="hour">%1$d</xliff:g>
+        :<xliff:g id="minute">%2$d</xliff:g> min</string>
     <string name="time">Time</string>
+    <string name="health">Health</string>
+    <string name="price">Price</string>
+
+    <!--TODO USE CURRENCY-->
+    <string name="format_price"><xliff:g id="price">%.2f</xliff:g> $</string>
 </resources>

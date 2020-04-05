@@ -69,8 +69,8 @@ fun bindRecipeImage(imgView: ImageView, recipeResult: RecipeResult?) {
 /**
  *  set the starts 0 out of 100
  */
-@BindingAdapter("setStartsValue")
-fun AppCompatRatingBar.setStartsValue(recipe: RecipeInfoDomain?) {
+@BindingAdapter("starsValue")
+fun AppCompatRatingBar.starsValue(recipe: RecipeInfoDomain?) {
     numStars = when(recipe?.recipeSpoonacularScore?.toInt()) {
         in 0..20 -> 1
         in 21..40 -> 2
@@ -78,6 +78,21 @@ fun AppCompatRatingBar.setStartsValue(recipe: RecipeInfoDomain?) {
         in 61..80 -> 4
         in 81..100 ->5
         else -> 0
+    }
+}
+
+/**
+ *  set the health 0 out of 100
+ */
+@BindingAdapter("healthValue")
+fun TextView.healthValue(recipe: RecipeInfoDomain?) {
+    text = when(recipe?.recipeHealthScore?.toInt()) {
+        in 0..20 -> "POOR"
+        in 21..40 -> "AVERAGE"
+        in 41..60 -> "GOOD"
+        in 61..80 -> "VERY GOOD"
+        in 81..100 -> "EXCELLENT"
+        else -> "NONE"
     }
 }
 

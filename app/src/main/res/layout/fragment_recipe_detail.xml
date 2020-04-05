@@ -125,7 +125,7 @@
                             android:stepSize="1"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/name_textview"
-                            app:setStartsValue="@{recipeDetailViewModel.recipeDetail}" />
+                            app:starsValue="@{recipeDetailViewModel.recipeDetail}" />
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardView10"
@@ -145,21 +145,26 @@
                                 android:background="@color/colorPrimary"
                                 android:gravity="center_vertical"
                                 android:orientation="vertical"
-                                android:padding="2dp">
-
-                                <com.ekn.gruzer.gaugelibrary.ArcGauge
-                                    android:id="@+id/halfGaugeTime"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="0.6"
-                                    android:background="@android:color/white" />
+                                android:padding="1dp">
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_weight="0.4"
+                                    android:layout_weight="0.5"
                                     android:background="@android:color/white"
-                                    android:gravity="center_horizontal"
+                                    android:gravity="center"
+                                    android:textSize="12sp"
+                                    android:text="@string/time"
+                                    tools:text="Time" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.5"
+                                    android:background="@android:color/white"
+                                    android:gravity="center"
+                                    android:textStyle="bold"
+                                    android:textSize="15sp"
                                     app:formattedText="@{recipeDetailViewModel.recipeDetail.recipePreparationMinutes}"
                                     tools:text="00.00" />
                             </LinearLayout>
@@ -182,25 +187,29 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@color/colorPrimary"
-                                android:gravity="center_vertical"
+                                android:gravity="center"
                                 android:orientation="vertical"
-                                android:padding="2dp">
-
-                                <com.ekn.gruzer.gaugelibrary.ArcGauge
-                                    android:id="@+id/halfGaugeHealth"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="0.6"
-                                    android:background="@android:color/white" />
+                                android:padding="1dp">
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_weight="0.4"
+                                    android:layout_weight="0.5"
                                     android:background="@android:color/white"
-                                    android:gravity="center_horizontal"
-                                    app:formattedText="@{recipeDetailViewModel.recipeDetail.recipePreparationMinutes}"
-                                    tools:text="00.00" />
+                                    android:gravity="center"
+                                    android:textSize="12sp"
+                                    android:text="@string/health" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.5"
+                                    android:background="@android:color/white"
+                                    android:gravity="center"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
+                                    app:healthValue="@{recipeDetailViewModel.recipeDetail}"
+                                    tools:text="AVERAGE" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
 
@@ -222,22 +231,26 @@
                                 android:background="@color/colorPrimary"
                                 android:gravity="center_vertical"
                                 android:orientation="vertical"
-                                android:padding="2dp">
-
-                                <com.ekn.gruzer.gaugelibrary.ArcGauge
-                                    android:id="@+id/halfGaugePrice"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="0dp"
-                                    android:layout_weight="0.6"
-                                    android:background="@android:color/white" />
+                                android:padding="1dp">
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:layout_weight="0.4"
+                                    android:layout_weight="0.5"
                                     android:background="@android:color/white"
-                                    android:gravity="center_horizontal"
-                                    app:formattedText="@{recipeDetailViewModel.recipeDetail.recipePreparationMinutes}"
+                                    android:gravity="center"
+                                    android:textSize="12sp"
+                                    android:text="@string/price" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="0.5"
+                                    android:background="@android:color/white"
+                                    android:gravity="center"
+                                    android:textSize="15sp"
+                                    android:textStyle="bold"
+                                    android:text="@{@string/format_price(recipeDetailViewModel.recipeDetail.recipePricePerServing)}"
                                     tools:text="00.00" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
