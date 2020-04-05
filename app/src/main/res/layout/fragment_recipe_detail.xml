@@ -9,6 +9,10 @@
             type="com.example.savethefood.viewmodel.RecipeDetailViewModel" />
     </data>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
@@ -299,5 +303,12 @@
             </androidx.core.widget.NestedScrollView>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.drawerlayout.widget.DrawerLayout>
-
+        <ImageView
+            android:id="@+id/status_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/loading_animation"
+            android:visibility="visible"
+            app:recipeApiStatus="@{recipeDetailViewModel.status}"/>
+    </RelativeLayout>
 </layout>
