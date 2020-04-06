@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.savethefood.R
@@ -22,7 +23,7 @@ class LoginFragment : Fragment() {
 
     private val loginViewModel: LoginViewModel by lazy {
         val activity = requireNotNull(this.activity)
-        ViewModelProviders.of(this, LoginViewModel.Factory(app = activity.application)).get(LoginViewModel::class.java)
+        ViewModelProvider(this, LoginViewModel.Factory(app = activity.application)).get(LoginViewModel::class.java)
     }
 
     private lateinit var dataBinding: FragmentLoginBinding

@@ -21,7 +21,7 @@ class RecipeDetailFragment : Fragment() {
 
     private val recipeDetailViewModel: RecipeDetailViewModel by lazy {
         val application = requireNotNull(activity).application
-        ViewModelProviders.of(this, RecipeDetailViewModel.Factory(application = application, recipeResult = recipeSelected))
+        ViewModelProvider(this, RecipeDetailViewModel.Factory(application = application, recipeResult = recipeSelected))
             .get(RecipeDetailViewModel::class.java)
     }
 

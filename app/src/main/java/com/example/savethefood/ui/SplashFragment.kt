@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -17,8 +18,7 @@ import com.example.savethefood.viewmodel.SplashViewModel
 class SplashFragment : Fragment() {
 
     private val splashViewModel: SplashViewModel by lazy {
-        val application = requireNotNull(this.activity).application
-        ViewModelProviders.of(this).get(SplashViewModel::class.java)
+        ViewModelProvider(this).get(SplashViewModel::class.java)
     }
 
     private lateinit var dataBinding: FragmentSplashBinding

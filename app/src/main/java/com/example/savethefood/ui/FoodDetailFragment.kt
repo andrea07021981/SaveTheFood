@@ -22,7 +22,7 @@ class FoodDetailFragment : Fragment() {
 
     private val foodDetailViewModel: FoodDetailViewModel by lazy {
         val application = requireNotNull(activity).application
-        ViewModelProviders.of(this, FoodDetailViewModel.Factory(application = application, foodSelected = foodSelected))
+        ViewModelProvider(this, FoodDetailViewModel.Factory(application = application, foodSelected = foodSelected))
             .get(FoodDetailViewModel::class.java)
     }
 

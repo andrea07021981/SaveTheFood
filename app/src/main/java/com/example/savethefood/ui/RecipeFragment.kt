@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +22,7 @@ class RecipeFragment : Fragment() {
 
     private val recipeViewModel: RecipeViewModel by lazy {
         val activity = requireNotNull(this.activity)
-        ViewModelProviders.of(this, RecipeViewModel.Factory(activity.application)).get(RecipeViewModel::class.java)
+        ViewModelProvider(this, RecipeViewModel.Factory(activity.application)).get(RecipeViewModel::class.java)
     }
 
     private lateinit var dataBinding: FragmentReceipeBinding
