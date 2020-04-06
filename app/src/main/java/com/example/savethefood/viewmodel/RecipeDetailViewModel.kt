@@ -15,6 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.net.ResponseCache
 
 class RecipeDetailViewModel(
     application: Application,
@@ -46,6 +47,10 @@ class RecipeDetailViewModel(
     val navigateToRecipeList: LiveData<Boolean>
         get() = _navigateToRecipeList
 
+    private var _navigateToRecipeCooking = MediatorLiveData<RecipeInfoDomain>()
+    val navigateToRecipeCooking: LiveData<RecipeInfoDomain>
+        get() = _navigateToRecipeCooking
+
     init {
         getRecipeDetails(recipeResult)
     }
@@ -72,9 +77,18 @@ class RecipeDetailViewModel(
         _navigateToRecipeList.value = null
     }
 
-    fun onCookNow(recipe: RecipeInfoDomain) {
-
+    fun moveToCookDetail(recipe: RecipeInfoDomain) {
+        _navigateToRecipeCooking.value = recipe
     }
+
+    fun doneToCookDetail() {
+        _navigateToRecipeCooking.value = null
+    }
+
+    fun saveRecipe(recipe: RecipeInfoDomain) {
+        //TODO SAVE IN LOCAL THE RECIPE, ADD A LIVE DATA AND DATABINDIG FOR HEART ICON
+    }
+
     class Factory(val application: Application, val recipeResult: RecipeResult) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
