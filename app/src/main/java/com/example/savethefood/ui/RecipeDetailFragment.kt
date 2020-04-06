@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.savethefood.component.IngredientAdapter
 import com.example.savethefood.databinding.FragmentRecipeDetailBinding
 import com.example.savethefood.local.domain.RecipeDomain
 import com.example.savethefood.local.domain.RecipeResult
@@ -38,6 +41,10 @@ class RecipeDetailFragment : Fragment() {
         dataBinding.lifecycleOwner = this
         dataBinding.recipeDetailViewModel = recipeDetailViewModel
 
+        dataBinding.ingredientRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        dataBinding.ingredientRecyclerView.adapter = IngredientAdapter(IngredientAdapter.OnIngredientClickListener {
+
+        })
         dataBinding.maintoolbar.setNavigationOnClickListener {
             recipeDetailViewModel.backToRecipeList()
         }

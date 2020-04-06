@@ -11,10 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
+import com.example.savethefood.component.IngredientAdapter
 import com.example.savethefood.component.RecipeAdapter
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.Done
 import com.example.savethefood.constants.Loading
+import com.example.savethefood.constants.UrlImagesPath
+import com.example.savethefood.local.domain.ExtendedIngredientDomain
 import com.example.savethefood.local.domain.RecipeInfoDomain
 import com.example.savethefood.local.domain.RecipeResult
 import kotlin.math.min
@@ -44,6 +47,12 @@ fun bindRecycleView(recyclerView: RecyclerView, data: List<RecipeResult>?) {
     adapter.submitList(data)
 }
 
+@BindingAdapter("listIngredients")
+fun bindIngredientsRecycleView(recyclerView: RecyclerView, data: List<ExtendedIngredientDomain>?) {
+    val adapter = recyclerView.adapter as IngredientAdapter
+    adapter.submitList(data)
+}
+
 /**
  * Uses the Glide library to load an image by URL into an [ImageView]
  */
@@ -65,6 +74,26 @@ fun bindRecipeImage(imgView: ImageView, recipeResult: RecipeResult?) {
                     .error(R.drawable.ic_broken_image))
             .into(imgView)
     }
+}
+
+/**
+ * Uses the Glide library to load an image by URL into an [ImageView]
+ */
+@BindingAdapter("imageIngredientUrl")
+fun bindIngredientImage(imgView: ImageView, imgUrl: String?) {
+    val imgUri = UrlImagesPath.INGREDIENTS
+        .plus(imgUrl)
+        .toUri()
+        .buildUpon()
+        .scheme("https")
+        .build()
+    Glide.with(imgView.context)
+        .load(imgUri)
+        .apply(
+            RequestOptions()
+                .placeholder(R.drawable.loading_animation)
+                .error(R.drawable.ic_broken_image))
+        .into(imgView)
 }
 
 /**

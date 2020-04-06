@@ -262,14 +262,14 @@
                             android:id="@+id/textView2"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="35dp"
                             android:text="@string/about_recipe"
                             android:textSize="20sp"
                             android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.425"
+                            app:layout_constraintHorizontal_bias="0.4"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+                            app:layout_constraintTop_toBottomOf="@+id/ingredient_recyclerView" />
 
                         <TextView
                             android:id="@+id/textView4"
@@ -290,23 +290,27 @@
                             android:layout_marginStart="32dp"
                             android:layout_marginTop="24dp"
                             android:layout_marginEnd="32dp"
+                            android:layout_marginBottom="32dp"
                             android:elevation="2dp"
                             android:onClick="@{() -> recipeDetailViewModel.onCookNow(recipeDetailViewModel.recipeDetail)}"
                             android:stateListAnimator="@null"
                             android:text="@string/cook_now"
                             android:translationZ="20dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerView"
+                            android:id="@+id/ingredient_recyclerView"
                             android:layout_width="0dp"
-                            android:layout_height="30dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/cardView11" />
+                            app:layout_constraintTop_toBottomOf="@+id/cardView11"
+                            app:listIngredients="@{recipeDetailViewModel.recipeDetail.recipeExtendedIngredients}"
+                            tools:listitem="@layout/ingredient_item" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
@@ -319,6 +323,7 @@
             android:layout_height="match_parent"
             android:src="@drawable/loading_animation"
             android:visibility="visible"
-            app:recipeApiStatus="@{recipeDetailViewModel.status}"/>
+            app:recipeApiStatus="@{recipeDetailViewModel.status}"
+            android:contentDescription="@string/progress_bar" />
     </RelativeLayout>
 </layout>
