@@ -22,7 +22,6 @@ class RecipeDetailViewModel(
     recipeResult: RecipeResult
 ) : ViewModel() {
 
-
     //TODO ADD CHECK STATUS OF SAVED RECIPE AND BIND IT
 
     private val viewModelJob = Job()

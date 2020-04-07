@@ -48,5 +48,17 @@
         <argument
             android:name="recipeResult"
             app:argType="com.example.savethefood.local.domain.RecipeResult" />
+        <action
+            android:id="@+id/action_recipeDetailFragment_to_recipeCookFragment"
+            app:destination="@id/recipeCookFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeCookFragment"
+        android:name="com.example.savethefood.ui.RecipeCookFragment"
+        android:label="RecipeCookFragment"
+        tools:layout="@layout/fragment_recipe_cook">
+        <argument
+            android:name="recipeInfoDomain"
+            app:argType="com.example.savethefood.local.domain.RecipeInfoDomain" />
     </fragment>
 </navigation>
