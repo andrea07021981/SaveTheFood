@@ -58,7 +58,10 @@ class RecipeDetailFragment : Fragment() {
         })
 
         recipeDetailViewModel.navigateToRecipeCooking.observe(this.viewLifecycleOwner, Observer {
-            //TODO START COOKING
+            it?.let {
+                findNavController()
+                    .navigate(RecipeDetailFragmentDirections.actionRecipeDetailFragmentToRecipeCookFragment(it))
+            }
         })
         return dataBinding.root
     }

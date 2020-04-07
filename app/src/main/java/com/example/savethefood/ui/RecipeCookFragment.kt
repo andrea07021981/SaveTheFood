@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.savethefood.component.StepCookAdapter
 import com.example.savethefood.databinding.FragmentRecipeCookBinding
 import com.example.savethefood.local.domain.RecipeInfoDomain
 import com.example.savethefood.viewmodel.RecipeCookViewModel
@@ -31,6 +33,9 @@ class RecipeCookFragment : Fragment() {
         dataBinding.lifecycleOwner = this
         dataBinding.recipeCookViewModel = recipeCookViewModel
 
+        dataBinding.stepRecycleView.layoutManager = LinearLayoutManager(activity)
+        dataBinding.stepRecycleView.adapter = StepCookAdapter(StepCookAdapter.OnStepClickListener {
+        })
         return dataBinding.root
     }
 
