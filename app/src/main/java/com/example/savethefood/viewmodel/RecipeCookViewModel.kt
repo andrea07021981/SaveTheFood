@@ -1,14 +1,25 @@
 package com.example.savethefood.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.savethefood.local.domain.RecipeInfoDomain
+import com.example.savethefood.local.domain.StepDomain
 
 class RecipeCookViewModel(
     application: Application,
     recipe: RecipeInfoDomain
 ) : ViewModel(){
+
+    private var _recipeInfoDomain = MutableLiveData<RecipeInfoDomain>()
+    val recipeInfoDomain: LiveData<RecipeInfoDomain>
+        get() = _recipeInfoDomain
+
+    init {
+        _recipeInfoDomain.value = recipe
+    }
 
     class Factory(
         private val application: Application,

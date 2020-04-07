@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
 import com.example.savethefood.component.IngredientAdapter
 import com.example.savethefood.component.RecipeAdapter
+import com.example.savethefood.component.StepCookAdapter
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.Done
 import com.example.savethefood.constants.Loading
@@ -20,6 +21,7 @@ import com.example.savethefood.constants.UrlImagesPath
 import com.example.savethefood.local.domain.ExtendedIngredientDomain
 import com.example.savethefood.local.domain.RecipeInfoDomain
 import com.example.savethefood.local.domain.RecipeResult
+import com.example.savethefood.local.domain.StepDomain
 import kotlin.math.min
 
 
@@ -53,6 +55,12 @@ fun bindIngredientsRecycleView(recyclerView: RecyclerView, data: List<ExtendedIn
     adapter.submitList(data)
 }
 
+@BindingAdapter("listSteps")
+fun bindStepsRecycleView(recyclerView: RecyclerView, data: RecipeInfoDomain) {
+    val adapter = recyclerView.adapter as StepCookAdapter
+    //TODO check if there's always one recipeAnalyzedInstructions
+    adapter.submitList(data.recipeAnalyzedInstructions[0].instructionSteps)
+}
 /**
  * Uses the Glide library to load an image by URL into an [ImageView]
  */

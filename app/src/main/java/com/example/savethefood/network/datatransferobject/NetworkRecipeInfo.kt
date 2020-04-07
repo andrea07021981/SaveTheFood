@@ -95,7 +95,7 @@ data class AnalyzedInstruction(
 fun AnalyzedInstruction.asDomainModel(): AnalyzedInstructionDomain {
     return AnalyzedInstructionDomain(
         instructionName = name,
-        instructionSteps = listOf()
+        instructionSteps = steps.map { it.asDomainModel() }
     )
 }
 
