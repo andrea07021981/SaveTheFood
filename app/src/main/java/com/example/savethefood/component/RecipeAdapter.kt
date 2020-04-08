@@ -71,7 +71,9 @@ class RecipeAdapter(
      * associated with the current item to the [onClick] function.
      * @param clickListener lambda that will be called with the current [Food]
      */
-    class OnClickListener(val clickListener: (recipe: RecipeResult) -> Unit) {
+    class OnClickListener(
+        val clickListener: (recipe: RecipeResult) -> Unit
+    ) {
         fun onClick(recipe: RecipeResult) = clickListener(recipe)
     }
 }

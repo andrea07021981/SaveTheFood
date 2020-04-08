@@ -63,7 +63,9 @@ class IngredientAdapter(
      * associated with the current item to the [onClick] function.
      * @param clickListener lambda that will be called with the current [Food]
      */
-    class OnIngredientClickListener(val clickListener: (ingredient: ExtendedIngredientDomain) -> Unit) {
+    class OnIngredientClickListener(
+        val clickListener: (ingredient: ExtendedIngredientDomain) -> Unit
+    ) {
         fun onClick(ingredient: ExtendedIngredientDomain) = clickListener(ingredient)
     }
 }

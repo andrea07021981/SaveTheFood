@@ -47,7 +47,9 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:alpha="0.4"
                 android:scaleType="centerCrop"
+                android:transitionName="recipeImage"
                 app:imageRecipeUrl="@{recipeItem}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -55,8 +57,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
-                android:transitionName="recipeImage"
-                android:alpha="0.4"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
