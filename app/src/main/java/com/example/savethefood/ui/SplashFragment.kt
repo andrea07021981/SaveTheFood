@@ -27,7 +27,7 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ) : View? {
         dataBinding = FragmentSplashBinding.inflate(inflater);
         dataBinding.splashViewModel = splashViewModel
         dataBinding.lifecycleOwner = this

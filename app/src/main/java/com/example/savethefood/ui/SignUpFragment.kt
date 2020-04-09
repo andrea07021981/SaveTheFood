@@ -24,7 +24,7 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ) : View? {
         dataBinding = FragmentSignupBinding.inflate(inflater)
         dataBinding.signupViewModel = signUpViewModel
         dataBinding.lifecycleOwner = this

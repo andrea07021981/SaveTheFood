@@ -37,7 +37,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ) : View? {
         dataBinding = FragmentLoginBinding.inflate(inflater)
         dataBinding.loginViewModel = loginViewModel
         dataBinding.lifecycleOwner = this

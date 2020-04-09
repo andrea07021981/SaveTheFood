@@ -33,7 +33,7 @@ class NestedFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ) : View? {
         val view: View = inflater.inflate(
             R.layout.fragment_nested, container,
             false)

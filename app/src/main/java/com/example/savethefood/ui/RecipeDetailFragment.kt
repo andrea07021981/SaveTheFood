@@ -35,7 +35,7 @@ class RecipeDetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ) : View? {
         dataBinding = FragmentRecipeDetailBinding.inflate(inflater)
         recipeSelected = RecipeDetailFragmentArgs.fromBundle(requireArguments()).recipeResult
         dataBinding.lifecycleOwner = this
@@ -61,6 +61,7 @@ class RecipeDetailFragment : Fragment() {
             it?.let {
                 findNavController()
                     .navigate(RecipeDetailFragmentDirections.actionRecipeDetailFragmentToRecipeCookFragment(it))
+                recipeDetailViewModel.doneToCookDetail()
             }
         })
         return dataBinding.root

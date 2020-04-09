@@ -27,7 +27,7 @@ class RecipeCookFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ) : View? {
         dataBinding = FragmentRecipeCookBinding.inflate(inflater)
         recipeInfoSelected = RecipeCookFragmentArgs.fromBundle(requireArguments()).recipeInfoDomain
         dataBinding.lifecycleOwner = this

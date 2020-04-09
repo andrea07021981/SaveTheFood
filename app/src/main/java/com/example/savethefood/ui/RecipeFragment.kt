@@ -29,7 +29,7 @@ class RecipeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ) : View? {
         dataBinding  = FragmentReceipeBinding.inflate(inflater)
         dataBinding.lifecycleOwner = this
         dataBinding.recipeViewModel = recipeViewModel
