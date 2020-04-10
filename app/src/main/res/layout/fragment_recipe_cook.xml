@@ -10,7 +10,7 @@
             name="recipeCookViewModel"
             type="com.example.savethefood.viewmodel.RecipeCookViewModel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -22,11 +22,8 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_gravity="center"
             app:listSteps="@{recipeCookViewModel.recipeInfoDomain}"
             tools:listitem="@layout/step_cook_item"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>
