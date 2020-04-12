@@ -43,7 +43,7 @@ class RecipeDetailFragment : Fragment() {
 
         dataBinding.ingredientRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         dataBinding.ingredientRecyclerView.adapter = IngredientAdapter(IngredientAdapter.OnIngredientClickListener {
-            //TODO OPEN ALER DIALOG WITH CUSTOM LAYOUT INGREDIENT DETAILG
+            //TODO OPEN ALER DIALOG WITH CUSTOM LAYOUT INGREDIENT DETAIL
         })
         dataBinding.maintoolbar.setNavigationOnClickListener {
             recipeDetailViewModel.backToRecipeList()

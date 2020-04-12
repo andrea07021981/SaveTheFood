@@ -60,7 +60,6 @@ class BarcodeReaderFragment : Fragment() {
                 dataBinding.loadingProgressbar.visibility = View.GONE
             }
         })
-        //TODO solve the problem of two button with the keyboard opened
     }
 
     private fun readBarcode() {
