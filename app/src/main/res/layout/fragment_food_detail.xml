@@ -374,6 +374,7 @@
                         android:textSize="15sp"
                         android:gravity="center_horizontal"
                         android:textStyle="bold"
+                        android:lineHeight="20dp"
                         android:lineSpacingExtra="8dp"
                         android:padding="16dp"
                         tools:text="@string/long_string"
