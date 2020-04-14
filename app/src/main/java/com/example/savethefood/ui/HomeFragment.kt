@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.SearchView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,7 +19,9 @@ import androidx.transition.TransitionInflater
 import com.example.savethefood.R
 import com.example.savethefood.component.FoodAdapter
 import com.example.savethefood.databinding.FragmentHomeBinding
+import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.viewmodel.HomeViewModel
+import kotlinx.android.synthetic.main.fragment_nested.*
 
 class HomeFragment : Fragment() {
 
@@ -46,6 +48,48 @@ class HomeFragment : Fragment() {
         dataBinding.lifecycleOwner = this
         dataBinding.homeViewModel = homeViewModel
         dataBinding.foodRecycleview.layoutManager = GridLayoutManager(activity, 2)
+
+        val filteredUsers = ArrayList<FoodDomain?>()
+        val findItem = (activity as AppCompatActivity).toolbar.menu.findItem(R.id.action_search)
+        val searchView = findItem.actionView as SearchView
+        //making the searchview consume all the toolbar when open
+        searchView.maxWidth= Int.MAX_VALUE
+
+        searchView.queryHint = "Search View Hint"
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                //action while typing
+                if (newText.isEmpty()){
+
+
+                }else{
+                    filteredUsers.clear()
+                    dataBinding.homeViewModel.foodList.value?.let {
+                            for (food in it){
+                                if (food.foodTitle.toLowerCase().contains(newText.toLowerCase())){
+                                    filteredUsers.add(food)
+                                }
+                            }
+                    }
+                    /*if (filteredUsers.isEmpty()){
+                        //showing the empty textview when the list is empty
+                        tvEmpty.visibility= View.VISIBLE
+                    }*/
+
+                    dataBinding.homeViewModel.updateDataList(filteredUsers)
+                }
+
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                //action when type Enter
+                return false
+            }
+
+        })
         return dataBinding.root
     }
 

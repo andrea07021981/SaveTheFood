@@ -13,6 +13,8 @@ class FoodAdapter(
     private val onClickListener: OnClickListener
 ) : ListAdapter<FoodDomain, FoodAdapter.FoodViewHolder>(DiffCallback) {
 
+    var _dataList = ArrayList<FoodDomain>()
+
     class FoodViewHolder private constructor(
         val binding: FoodItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
