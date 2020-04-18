@@ -58,8 +58,8 @@ class RecipeFragment : Fragment() {
 
                 }else{
                     filteredUsers.clear()
-                    dataBinding.recipeViewModel?.recipeListResult?.value!!.let {
-                        for (recipe in it){
+                    dataBinding.recipeViewModel?.recipeList?.value!!.results.let {
+                        for (recipe in it!!){
                             if (recipe!!.title.toLowerCase().contains(newText.toLowerCase())){
                                 filteredUsers.add(recipe)
                             }
