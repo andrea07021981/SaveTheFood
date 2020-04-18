@@ -48,48 +48,6 @@ class HomeFragment : Fragment() {
         dataBinding.lifecycleOwner = this
         dataBinding.homeViewModel = homeViewModel
         dataBinding.foodRecycleview.layoutManager = GridLayoutManager(activity, 2)
-
-        val filteredUsers = ArrayList<FoodDomain?>()
-        val findItem = (activity as AppCompatActivity).toolbar.menu.findItem(R.id.action_search)
-        val searchView = findItem.actionView as SearchView
-        //making the searchview consume all the toolbar when open
-        searchView.maxWidth= Int.MAX_VALUE
-
-        searchView.queryHint = "Search View Hint"
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                //action while typing
-                if (newText.isEmpty()){
-
-
-                }else{
-                    filteredUsers.clear()
-                    dataBinding.homeViewModel.foodList.value?.let {
-                            for (food in it){
-                                if (food.foodTitle.toLowerCase().contains(newText.toLowerCase())){
-                                    filteredUsers.add(food)
-                                }
-                            }
-                    }
-                    /*if (filteredUsers.isEmpty()){
-                        //showing the empty textview when the list is empty
-                        tvEmpty.visibility= View.VISIBLE
-                    }*/
-
-                    dataBinding.homeViewModel.updateDataList(filteredUsers)
-                }
-
-                return false
-            }
-
-            override fun onQueryTextSubmit(query: String): Boolean {
-                //action when type Enter
-                return false
-            }
-
-        })
         return dataBinding.root
     }
 
