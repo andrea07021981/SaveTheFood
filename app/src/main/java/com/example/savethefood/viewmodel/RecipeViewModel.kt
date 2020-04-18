@@ -8,6 +8,7 @@ import com.example.savethefood.constants.Done
 import com.example.savethefood.constants.Loading
 import com.example.savethefood.constants.Error
 import com.example.savethefood.local.database.SaveTheFoodDatabase
+import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.local.domain.RecipeDomain
 import com.example.savethefood.local.domain.RecipeResult
 import com.example.savethefood.repository.RecipeRepository
@@ -35,6 +36,10 @@ class RecipeViewModel(
     val recipeList: LiveData<RecipeDomain>
         get() = _recipeList
 
+    private var _recipeListResult = MediatorLiveData<List<RecipeResult?>>()
+    val recipeListResult: LiveData<List<RecipeResult?>>
+        get() = _recipeListResult
+
     private var _navigateToRecipeDetail = MediatorLiveData<RecipeResult>()
     val navigateToRecipeDetail: LiveData<RecipeResult>
         get() = _navigateToRecipeDetail
@@ -50,6 +55,7 @@ class RecipeViewModel(
                 _status.value = Loading("Loading")
                 val recipes = recipesRepository.getRecipes()
                 _recipeList.value = recipes
+                _recipeListResult.value = recipes.results
                 _status.value = Done("Done")
             } catch (e: Exception) {
                 _status.value = Error(e.message.let { toString() })
@@ -64,6 +70,10 @@ class RecipeViewModel(
 
     fun doneToRecipeDetail() {
         _navigateToRecipeDetail.value = null
+    }
+
+    public fun updateDataList(list: ArrayList<RecipeResult?>) {
+        _recipeListResult.value = list
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {

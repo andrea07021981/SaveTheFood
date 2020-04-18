@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_nested.view.*
 
 class NestedFragment : Fragment() {
 
+    private lateinit var navController: NavController
     var toolbar: Toolbar? = null
     var navigationViewTest: NavigationView? = null
     var searchBar: LinearLayout? = null
@@ -50,7 +51,7 @@ class NestedFragment : Fragment() {
 
         toolbar = view.findViewById(R.id.toolbar);
         val fragmentContainer = view.findViewById<View>(R.id.nested_nav_graph)
-        val navController = Navigation.findNavController(fragmentContainer)
+        navController = Navigation.findNavController(fragmentContainer)
         // Set up ActionBar
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
@@ -80,6 +81,31 @@ class NestedFragment : Fragment() {
         }
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
+            when (nd.id) {
+                nc.graph.startDestination -> {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                    appbar.toolbar.visibility = View.VISIBLE
+                    //TODO hide for now
+                    appbar.toolbar.menu.findItem(R.id.action_search).isVisible = false
+                    appbar.toolbar.menu.findItem(R.id.action_filter).isVisible = false
+                }
+                nc.graph.findNode(foodDetailFragment)?.id,
+                nc.graph.findNode(recipeDetailFragment)?.id -> {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                    appbar.toolbar.visibility = View.GONE
+                }
+                else -> {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                    appbar.toolbar.visibility = View.VISIBLE
+                    appbar.toolbar.menu.findItem(R.id.action_search).isVisible = true
+                    appbar.toolbar.menu.findItem(R.id.action_filter).isVisible = true
+                }
+            }
+        }
+        super.onPrepareOptionsMenu(menu)
+    }
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_toolbar, menu)
         val searchItem = menu.findItem(R.id.action_search)

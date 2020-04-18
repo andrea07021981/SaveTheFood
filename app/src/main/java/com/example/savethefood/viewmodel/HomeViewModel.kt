@@ -40,10 +40,6 @@ class HomeViewModel(
         }
     }
 
-    public fun updateDataList(list: ArrayList<FoodDomain?>) {
-        _foodList.value = list as List<FoodDomain>
-    }
-
     fun moveToFoodDetail(food: FoodDomain) {
         _navigateToFoodDetail.value = food
     }
