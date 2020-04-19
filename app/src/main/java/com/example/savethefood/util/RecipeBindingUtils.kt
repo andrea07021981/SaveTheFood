@@ -11,17 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
-import com.example.savethefood.component.IngredientAdapter
-import com.example.savethefood.component.RecipeAdapter
-import com.example.savethefood.component.StepCookAdapter
+import com.example.savethefood.component.*
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.Done
 import com.example.savethefood.constants.Loading
 import com.example.savethefood.constants.UrlImagesPath
-import com.example.savethefood.local.domain.ExtendedIngredientDomain
-import com.example.savethefood.local.domain.RecipeInfoDomain
-import com.example.savethefood.local.domain.RecipeResult
-import com.example.savethefood.local.domain.StepDomain
+import com.example.savethefood.local.domain.*
 import kotlin.math.min
 
 
@@ -46,6 +41,18 @@ fun bindStatus(statusImageView: ImageView, status: ApiCallStatus) {
 @BindingAdapter("listdata")
 fun bindRecycleView(recyclerView: RecyclerView, data: List<RecipeResult>?) {
     val adapter = recyclerView.adapter as RecipeAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("listIngredientsInstruction")
+fun bindIngredientInstructionsRecycleView(recyclerView: RecyclerView, data: List<IngredientsDomain>?) {
+    val adapter = recyclerView.adapter as IngredientInstructionAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("listEquipmentsInstruction")
+fun bindEquipmentInstructionsRecycleView(recyclerView: RecyclerView, data: List<EquipmentDomain>?) {
+    val adapter = recyclerView.adapter as EquipmentInstructionAdapter
     adapter.submitList(data)
 }
 

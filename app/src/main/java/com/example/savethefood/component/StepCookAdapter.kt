@@ -3,6 +3,7 @@ package com.example.savethefood.component
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.databinding.StepCookItemBinding
@@ -13,13 +14,28 @@ class StepCookAdapter(
 ) : ListAdapter<StepDomain, StepCookAdapter.StepCookViewHolder>(DiffCallback) {
 
     class StepCookViewHolder private constructor(
-        val binding: StepCookItemBinding
+        val binding: StepCookItemBinding,
+        val parent: ViewGroup
     ) : RecyclerView.ViewHolder(binding.root) {
+
+        private val viewPool = RecyclerView.RecycledViewPool()
 
         fun bind(clickListener: OnStepClickListener, item: StepDomain) {
             with(binding) {
                 stepItem = item
                 stepCallback = clickListener
+                val ingredientManager = LinearLayoutManager(this.ingredientsRecyclerView.context, LinearLayoutManager.HORIZONTAL, false)
+                this.ingredientsRecyclerView.apply {
+                    layoutManager = ingredientManager
+                    adapter = IngredientInstructionAdapter()
+                    setRecycledViewPool(viewPool)
+                }
+                val equipmentManager = LinearLayoutManager(this.equipmentsRecyclerView.context, LinearLayoutManager.HORIZONTAL, false)
+                this.equipmentsRecyclerView.apply {
+                    layoutManager = equipmentManager
+                    adapter = EquipmentInstructionAdapter()
+                    setRecycledViewPool(viewPool)
+                }
                 executePendingBindings()
             }
         }
@@ -28,7 +44,7 @@ class StepCookAdapter(
             val from = { parent: ViewGroup ->
                 val layoutInflate = LayoutInflater.from(parent.context)
                 val binding = StepCookItemBinding.inflate(layoutInflate, parent, false)
-                StepCookViewHolder(binding)
+                StepCookViewHolder(binding, parent)
             }
         }
     }
