@@ -46,29 +46,20 @@ class RecipeFragment : Fragment() {
         val searchView = findItem?.actionView as SearchView
         //making the searchview consume all the toolbar when open
         searchView.maxWidth= Int.MAX_VALUE
-
-        searchView.queryHint = "Search View Hint"
-
+        searchView.queryHint = "Search Recipes"
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
             override fun onQueryTextChange(newText: String): Boolean {
                 //action while typing
-                if (newText.isEmpty()){
-
-
-                }else{
+                if (newText.isNotEmpty()){
                     filteredUsers.clear()
                     dataBinding.recipeViewModel?.recipeList?.value!!.results.let {
                         for (recipe in it!!){
-                            if (recipe!!.title.toLowerCase().contains(newText.toLowerCase())){
+                            if (recipe.title.toLowerCase().contains(newText.toLowerCase())){
                                 filteredUsers.add(recipe)
                             }
                         }
                     }
-                    /*if (filteredUsers.isEmpty()){
-                        //showing the empty textview when the list is empty
-                        tvEmpty.visibility= View.VISIBLE
-                    }*/
 
                     dataBinding.recipeViewModel?.updateDataList(filteredUsers)
                 }
@@ -98,6 +89,10 @@ class RecipeFragment : Fragment() {
                     .navigate(R.id.recipeDetailFragment, bundle, null, null)
                 recipeViewModel.doneToRecipeDetail()
             }
+        })
+
+        recipeViewModel.recipeListResult.observe(this.viewLifecycleOwner, Observer {
+            (dataBinding.recipeRecycleview.adapter as RecipeAdapter).notifyDataSetChanged()
         })
     }
 }

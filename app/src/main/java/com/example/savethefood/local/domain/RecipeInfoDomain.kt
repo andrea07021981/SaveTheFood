@@ -34,7 +34,7 @@ data class RecipeInfoDomain(
     val recipeSourceName: String,
     val recipeSourceUrl: String,
     val recipeSpoonacularScore: Double,
-    val recipeSpoonacularSourceUrl: String,
+    val recipeSpoonacularSourceUrl: String?,
     val recipeSummary: String,
     val recipeSustainable: Boolean,
     val recipeTitle: String,

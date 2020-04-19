@@ -17,7 +17,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.net.ResponseCache
 
-class RecipeDetailViewModel(
+class
+RecipeDetailViewModel(
     application: Application,
     recipeResult: RecipeResult
 ) : ViewModel() {
