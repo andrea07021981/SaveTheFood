@@ -27,7 +27,8 @@
             app:destination="@id/recipeDetailFragment" />
         <argument
             android:name="foodName"
-            app:argType="string" />
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/barcodeReaderFragment"

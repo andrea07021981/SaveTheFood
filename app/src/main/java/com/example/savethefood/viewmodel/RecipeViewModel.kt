@@ -14,7 +14,7 @@ import kotlinx.coroutines.*
 
 class RecipeViewModel(
     application: Application,
-    foodId: String?
+    foodName: String?
 ) : AndroidViewModel(application) {
 
     private val viewModelJob = SupervisorJob()
@@ -44,7 +44,7 @@ class RecipeViewModel(
         get() = _navigateToRecipeDetail
 
     init {
-        getRecipes(foodId)
+        getRecipes(foodName)
     }
 
     private fun getRecipes(food: String?) {
@@ -74,11 +74,11 @@ class RecipeViewModel(
         _recipeListResult.value = list
     }
 
-    class Factory(val app: Application, val foodId: String?) : ViewModelProvider.Factory {
+    class Factory(val app: Application, val foodName: String?) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(RecipeViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return RecipeViewModel(app, foodId) as T
+                return RecipeViewModel(app, foodName) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

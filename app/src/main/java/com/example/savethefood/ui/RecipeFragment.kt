@@ -24,10 +24,10 @@ import kotlinx.android.synthetic.main.fragment_nested.*
 
 class RecipeFragment : Fragment() {
 
-    private var foodId: Int? = null
+    private var foodName: String? = null
     private val recipeViewModel: RecipeViewModel by lazy {
         val activity = requireNotNull(this.activity)
-        ViewModelProvider(this, RecipeViewModel.Factory(activity.application, foodId = foodId)).get(RecipeViewModel::class.java)
+        ViewModelProvider(this, RecipeViewModel.Factory(activity.application, foodName = foodName)).get(RecipeViewModel::class.java)
     }
 
     private lateinit var dataBinding: FragmentReceipeBinding
@@ -37,7 +37,7 @@ class RecipeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) : View? {
-        foodId = RecipeFragmentArgs.fromBundle(requireArguments()).foodId
+        if (arguments?.isEmpty == false) foodName = RecipeFragmentArgs.fromBundle(requireArguments()).foodName
         dataBinding  = FragmentReceipeBinding.inflate(inflater)
         dataBinding.lifecycleOwner = this
         dataBinding.recipeViewModel = recipeViewModel

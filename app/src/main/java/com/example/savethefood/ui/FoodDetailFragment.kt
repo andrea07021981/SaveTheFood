@@ -55,8 +55,8 @@ class FoodDetailFragment : Fragment() {
         }
 
         dataBinding.foodDetailViewModel!!.navigateToRecipeSearch.observe(this.viewLifecycleOwner, Observer {
-            it.let {
-                findNavController().navigate(FoodDetailFragmentDirections.actionFoodDetailFragmentToRecipeFragment(it.foodId))
+            it?.let {
+                findNavController().navigate(FoodDetailFragmentDirections.actionFoodDetailFragmentToRecipeFragment(it.foodTitle))
                 foodDetailViewModel.doneRecipeSearch()
             }
         })
