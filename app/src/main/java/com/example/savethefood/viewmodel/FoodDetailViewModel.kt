@@ -2,12 +2,10 @@ package com.example.savethefood.viewmodel
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.example.savethefood.local.database.SaveTheFoodDatabase
 import com.example.savethefood.local.domain.FoodDomain
+import com.example.savethefood.local.domain.RecipeInfoDomain
 import com.example.savethefood.repository.FoodRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +28,10 @@ class FoodDetailViewModel(
     val food: LiveData<FoodDomain>
         get() = _food
 
+    private var _navigateToRecipeSearch = MutableLiveData<FoodDomain>()
+    val navigateToRecipeSearch: LiveData<FoodDomain>
+        get() = _navigateToRecipeSearch
+
     init {
         _food.value = food
     }
@@ -42,6 +44,14 @@ class FoodDetailViewModel(
                 Log.e("FoodDetail", e.message)
             }
         }
+    }
+
+    fun moveToRecipeSearch(recipe: FoodDomain) {
+        _navigateToRecipeSearch.value = recipe
+    }
+
+    fun doneRecipeSearch() {
+        _navigateToRecipeSearch.value = null
     }
 
     /**

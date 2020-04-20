@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_recipeFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment" />
+        <argument
+            android:name="foodName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/barcodeReaderFragment"
@@ -39,6 +42,9 @@
         <argument
             android:name="foodDomain"
             app:argType="com.example.savethefood.local.domain.FoodDomain" />
+        <action
+            android:id="@+id/action_foodDetailFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"

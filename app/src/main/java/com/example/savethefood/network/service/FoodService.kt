@@ -31,6 +31,9 @@ interface FoodService {
     @GET("recipes/search")
     suspend fun getRecipes(@Query("apiKey") key: String = API_KEY): NetworkRecipe
 
+    @GET("recipes/findByIngredients")
+    suspend fun getRecipesByIngredient(@Query("ingredients") ingredients: String?, @Query("apiKey") key: String = API_KEY): NetworkRecipe
+
     @GET("recipes/{id}/information")
     fun getRecipeInfo(@Path("id") id: Int, @Query("apiKey") key: String = API_KEY): Deferred<NetworkRecipeInfo>
 }

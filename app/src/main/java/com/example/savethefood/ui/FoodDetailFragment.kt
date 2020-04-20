@@ -9,9 +9,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.ActivityNavigator
+import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
 import com.example.savethefood.local.domain.FoodDomain
@@ -49,9 +51,15 @@ class FoodDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         dataBinding.recipeFab.setOnClickListener {
-
+            foodDetailViewModel.moveToRecipeSearch(foodSelected)
         }
 
+        dataBinding.foodDetailViewModel!!.navigateToRecipeSearch.observe(this.viewLifecycleOwner, Observer {
+            it.let {
+                findNavController().navigate(FoodDetailFragmentDirections.actionFoodDetailFragmentToRecipeFragment(it.foodId))
+                foodDetailViewModel.doneRecipeSearch()
+            }
+        })
         dataBinding.deleteFab.setOnClickListener {
             AlertDialog.Builder(requireActivity())
                 .setCancelable(false)
@@ -65,6 +73,7 @@ class FoodDetailFragment : Fragment() {
                 .create()
                 .show()
         }
+
     }
 
     override fun onDestroy() {
