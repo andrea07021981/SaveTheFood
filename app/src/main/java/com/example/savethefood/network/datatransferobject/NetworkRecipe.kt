@@ -20,7 +20,7 @@ data class NetworkRecipe(
 data class Result(
     val id: Int,
     val image: String,
-    val imageUrls: List<String>,
+    val sourceUrl: String?,
     val readyInMinutes: Int,
     val servings: Int,
     val title: String
@@ -39,7 +39,7 @@ fun NetworkRecipe.asDomainModel() : RecipeDomain {
                 it.id,
                 baseUri,
                 it.image,
-                it.imageUrls.first(),
+                it.sourceUrl,
                 it.readyInMinutes,
                 it.servings,
                 it.title) },

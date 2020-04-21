@@ -9,7 +9,7 @@ data class RecipeResult(
     val id: Int,
     val baseDomainUrl: String,
     val image: String,
-    val imageUrls: String,
+    val sourceUrl: String?,
     val readyInMinutes: Int,
     val servings: Int,
     val title: String

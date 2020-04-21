@@ -6,6 +6,7 @@
         android:id="@+id/action_search"
         android:orderInCategory="100"
         android:title="Filter"
+        android:enabled="false"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always"/>
 

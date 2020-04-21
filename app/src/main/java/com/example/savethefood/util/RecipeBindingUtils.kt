@@ -29,10 +29,14 @@ fun bindStatus(statusImageView: ImageView, status: ApiCallStatus) {
         }
         is Error -> {
             statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.loading_animation)
+            statusImageView.setImageResource(R.drawable.ic_broken_image)
         }
         is Done -> {
             statusImageView.visibility = View.GONE
+        }
+        else ->{
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.ic_broken_image)
         }
     }
 }
