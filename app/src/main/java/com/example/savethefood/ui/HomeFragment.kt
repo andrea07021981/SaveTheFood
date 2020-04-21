@@ -1,5 +1,6 @@
 package com.example.savethefood.ui
 
+import android.app.ActivityOptions
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,8 +43,6 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) : View? {
-        //TODO replace top with bottom app bar and fab animation
-        //https://medium.com/over-engineering/hands-on-with-material-components-for-android-bottom-app-bar-28835a1feb82
         dataBinding = FragmentHomeBinding.inflate(inflater)
         dataBinding.lifecycleOwner = this
         dataBinding.homeViewModel = homeViewModel
