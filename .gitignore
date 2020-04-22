@@ -12,4 +12,4 @@
 /captures
 .externalNativeBuild
 .cxx
-/com/example/savethefood/network/service/ApiKey
+/com/example/savethefood/network/service/ApiKey.kt
