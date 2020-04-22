@@ -15,7 +15,6 @@ class SplashViewModel : ViewModel() {
         get() = _navigateToLogin
 
     init {
-        //TODO load all stuff and update variable which move to next fragment in nav
         val timer = object: CountDownTimer(1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {}
 
