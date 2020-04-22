@@ -5,8 +5,6 @@
     <!-- Data to make available to the XML via data binding. In this case,
          the whole ViewModel, so that we can access the LiveData,
          click handlers, and state variables.
-
-          //TODO try to use this one and load the food inside the vm
           type="LiveData&lt;com.example.savethefood.local.domain.FoodDomain>"
 
           -->
