@@ -20,4 +20,5 @@ I've build one activity app with some navigation levels. I worked with Jetpack c
 
 <img align="left" width="350" height="600" src="recipedetail2.png">
 
+<img align="left" width="350" height="600" src="cookdetail.png">
 
