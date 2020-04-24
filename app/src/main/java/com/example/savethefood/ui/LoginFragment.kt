@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -68,6 +69,12 @@ class LoginFragment : Fragment() {
                     .findNavController()
                     .navigate(LoginFragmentDirections.actionLoginFragmentToNestedNavGraph(it))
                 loginViewModel.doneNavigationHome()
+            } else if (loginViewModel.isUserRetrieved()) {
+                Toast.makeText(
+                    context,
+                    "Login Error",
+                    Toast.LENGTH_SHORT).show()
+                loginViewModel.loginFailed()
             }
 
         })

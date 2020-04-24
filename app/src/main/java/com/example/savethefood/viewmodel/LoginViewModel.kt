@@ -27,6 +27,8 @@ class LoginViewModel(
     val userLogged: LiveData<UserDomain>
         get() = _userLogged
 
+    private var userRetrieved = false
+
     private val _navigateToSignUpFragment = MutableLiveData<Boolean>()
     val navigateToSignUpFragment: LiveData<Boolean>
         get() = _navigateToSignUpFragment
@@ -65,6 +67,7 @@ class LoginViewModel(
             userPassword = passwordValue.value.toString()
         }
         val userRecord = userRepository.getUser(user = userToSave)
+        userRetrieved = true
         _userLogged.addSource(userRecord, _userLogged::setValue)
     }
 
@@ -78,7 +81,14 @@ class LoginViewModel(
 
     fun doneNavigationHome() {
         _userLogged.value = null
+        loginFailed()
     }
+
+    fun loginFailed() {
+        userRetrieved = false
+    }
+
+    fun isUserRetrieved() = userRetrieved
 
     override fun onCleared() {
         super.onCleared()
