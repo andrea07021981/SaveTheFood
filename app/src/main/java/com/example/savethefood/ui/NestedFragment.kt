@@ -85,7 +85,8 @@ class NestedFragment : Fragment() {
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
             when (nd.id) {
                 nc.graph.startDestination,
-                nc.graph.findNode(R.id.recipeCookFragment)?.id-> {
+                nc.graph.findNode(R.id.recipeCookFragment)?.id,
+                nc.graph.findNode(R.id.barcodeReaderFragment)?.id -> {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                     appbar.toolbar.visibility = View.VISIBLE
                     //TODO hide for now
