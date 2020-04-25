@@ -5,19 +5,19 @@ IMPORTANT: Create a free api key here and change it in file ApiKey ----> https:/
 
 
 
-<img align="left" width="300" height="500" src="home.png">
+<img align="left" width="300" height="500" src="images/home.png">
 
-<img align="left" width="300" height="500" src="nav.png">
+<img align="left" width="300" height="500" src="images/nav.png">
 
-<img align="left" width="300" height="500" src="barcode.png">
+<img align="left" width="300" height="500" src="images/barcode.png">
 
-<img align="left" width="300" height="500" src="food detail.png">
+<img align="left" width="300" height="500" src="images/food detail.png">
 
-<img align="left" width="300" height="500" src="recipelist.png">
+<img align="left" width="300" height="500" src="images/recipelist.png">
 
-<img align="left" width="300" height="500" src="recipedetail.png">
+<img align="left" width="300" height="500" src="images/recipedetail.png">
 
-<img align="left" width="300" height="500" src="recipedetail2.png">
+<img align="left" width="300" height="500" src="images/recipedetail2.png">
 
-<img align="left" width="300" height="500" src="cookdetail.png">
+<img align="left" width="300" height="500" src="images/cookdetail.png">
 
