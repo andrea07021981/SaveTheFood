@@ -5,6 +5,8 @@ IMPORTANT: Create a free api key here and change it in file ApiKey ----> https:/
 
 
 
+<img align="left" width="300" height="500" src="images/login.png">
+<img align="left" width="300" height="500" src="images/signup.png">
 <img align="left" width="300" height="500" src="images/home.png">
 
 <img align="left" width="300" height="500" src="images/nav.png">
