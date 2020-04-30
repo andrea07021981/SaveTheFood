@@ -16,7 +16,7 @@ class RecipeRepository(
     suspend fun getRecipes(foodFilter: String?): RecipeDomain = coroutineScope {
         try {
             val recipes = if (foodFilter.isNullOrEmpty()) ApiClient.retrofitService.getRecipes() else ApiClient.retrofitService.getRecipesByIngredient(foodFilter)
-            recipes.asDomainModel()
+            return@coroutineScope recipes.asDomainModel()
         } catch (error: Exception) {
             throw Exception(error)
         }
@@ -27,7 +27,7 @@ class RecipeRepository(
         try {
             //TODO Try to get data from db, if not present call api
             val recipe = ApiClient.retrofitService.getRecipeInfo(id).await()
-            recipe.asDomainModel()
+            return@coroutineScope recipe.asDomainModel()
         } catch (error: Exception) {
             throw Exception(error)
         }

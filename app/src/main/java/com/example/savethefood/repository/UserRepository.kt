@@ -22,7 +22,7 @@ class UserRepository(
     suspend fun getUser(user: UserDomain): LiveData<UserDomain?> {
         return withContext(Dispatchers.IO) {
             val userFound = database.userDatabaseDao.getUser(user.userEmail, user.userPassword)
-            Transformations.map(userFound) {
+            return@withContext Transformations.map(userFound) {
                 it?.asDomainModel()
             }
         }

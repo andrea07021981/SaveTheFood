@@ -34,7 +34,7 @@ class FoodRepository(
         try {
             val foodData = ApiClient.retrofitService.getFoodByUpc(barcode).await()
             Log.d("JSON RESULT", foodData.id.toString())
-            foodData.asDomainModel()
+            return@coroutineScope foodData.asDomainModel()
         } catch (e: Exception) {
             throw Exception(e)
         }
