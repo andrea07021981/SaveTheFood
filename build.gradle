@@ -21,6 +21,8 @@ buildscript {
         version_recyclerview = "1.1.0"
         version_glide = "4.8.0"
         version_paging = "2.1.2"
+        androidXTestExtKotlinRunnerVersion = '1.1.1'
+        espressoVersion = '3.2.0-beta01'
     }
     repositories {
         google()
