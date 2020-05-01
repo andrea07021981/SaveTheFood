@@ -3,9 +3,9 @@ package com.example.savethefood.viewmodel
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.savethefood.R
-import com.example.savethefood.local.database.SaveTheFoodDatabase
-import com.example.savethefood.local.domain.FoodDomain
-import com.example.savethefood.repository.FoodRepository
+import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
+import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.source.repository.FoodRepository
 import kotlinx.coroutines.*
 
 class HomeViewModel(
@@ -20,7 +20,8 @@ class HomeViewModel(
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val database = SaveTheFoodDatabase.getInstance(application)
-    private val foodsRepository = FoodRepository(database)
+    private val foodsRepository =
+        FoodRepository(database)
 
     private var _foodList = MediatorLiveData<List<FoodDomain>>()
     val foodList: LiveData<List<FoodDomain>>

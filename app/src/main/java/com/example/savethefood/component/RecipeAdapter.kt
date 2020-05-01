@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.databinding.RecipeItemBinding
-import com.example.savethefood.local.domain.RecipeResult
+import com.example.savethefood.data.domain.RecipeResult
 
 class RecipeAdapter(
     private val onClickListener: OnClickListener

@@ -6,10 +6,10 @@ import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.Done
 import com.example.savethefood.constants.Loading
 import com.example.savethefood.constants.Error
-import com.example.savethefood.local.database.SaveTheFoodDatabase
-import com.example.savethefood.local.domain.RecipeDomain
-import com.example.savethefood.local.domain.RecipeResult
-import com.example.savethefood.repository.RecipeRepository
+import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
+import com.example.savethefood.data.domain.RecipeDomain
+import com.example.savethefood.data.domain.RecipeResult
+import com.example.savethefood.data.source.repository.RecipeRepository
 import kotlinx.coroutines.*
 
 class RecipeViewModel(
@@ -22,7 +22,8 @@ class RecipeViewModel(
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val database = SaveTheFoodDatabase.getInstance(application)
-    private val recipesRepository = RecipeRepository(database)
+    private val recipesRepository =
+        RecipeRepository(database)
 
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<ApiCallStatus>(Done("Done"))

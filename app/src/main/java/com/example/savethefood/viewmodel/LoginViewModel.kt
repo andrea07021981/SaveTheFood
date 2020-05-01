@@ -3,9 +3,9 @@ package com.example.savethefood.viewmodel
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.savethefood.R
-import com.example.savethefood.local.database.SaveTheFoodDatabase
-import com.example.savethefood.local.domain.UserDomain
-import com.example.savethefood.repository.UserRepository
+import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
+import com.example.savethefood.data.domain.UserDomain
+import com.example.savethefood.data.source.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -34,7 +34,8 @@ class LoginViewModel(
         get() = _navigateToSignUpFragment
 
     private val database = SaveTheFoodDatabase.getInstance(application)
-    private val userRepository = UserRepository(database)
+    private val userRepository =
+        UserRepository(database)
     private var viewModelJob = Job()
     /**
      * A [CoroutineScope] keeps track of all coroutines started by this ViewModel.
@@ -62,7 +63,8 @@ class LoginViewModel(
     }
 
     private fun doLogin() = uiScope.launch {
-        val userToSave = UserDomain().apply {
+        val userToSave = UserDomain()
+            .apply {
             userEmail = emailValue.value.toString()
             userPassword = passwordValue.value.toString()
         }

@@ -42,7 +42,7 @@
         tools:layout="@layout/fragment_food_detail">
         <argument
             android:name="foodDomain"
-            app:argType="com.example.savethefood.local.domain.FoodDomain" />
+            app:argType="com.example.savethefood.data.domain.FoodDomain" />
         <action
             android:id="@+id/action_foodDetailFragment_to_recipeFragment"
             app:destination="@id/recipeFragment" />
@@ -54,7 +54,7 @@
         tools:layout="@layout/fragment_recipe_detail">
         <argument
             android:name="recipeResult"
-            app:argType="com.example.savethefood.local.domain.RecipeResult" />
+            app:argType="com.example.savethefood.data.domain.RecipeResult" />
         <action
             android:id="@+id/action_recipeDetailFragment_to_recipeCookFragment"
             app:destination="@id/recipeCookFragment" />
@@ -66,6 +66,6 @@
         tools:layout="@layout/fragment_recipe_cook">
         <argument
             android:name="recipeInfoDomain"
-            app:argType="com.example.savethefood.local.domain.RecipeInfoDomain" />
+            app:argType="com.example.savethefood.data.domain.RecipeInfoDomain" />
     </fragment>
 </navigation>

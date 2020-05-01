@@ -1,14 +1,11 @@
 package com.example.savethefood.ui
 
-import android.app.ActivityOptions
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.SearchView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -20,9 +17,7 @@ import androidx.transition.TransitionInflater
 import com.example.savethefood.R
 import com.example.savethefood.component.FoodAdapter
 import com.example.savethefood.databinding.FragmentHomeBinding
-import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.viewmodel.HomeViewModel
-import kotlinx.android.synthetic.main.fragment_nested.*
 
 class HomeFragment : Fragment() {
 

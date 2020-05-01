@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.databinding.IngredientInstructionItemBinding
-import com.example.savethefood.local.domain.ExtendedIngredientDomain
-import com.example.savethefood.local.domain.IngredientsDomain
+import com.example.savethefood.data.domain.IngredientsDomain
 
 class IngredientInstructionAdapter : ListAdapter<IngredientsDomain, IngredientInstructionAdapter.IngredientInstructionViewHolder>(DiffCallback) {
 

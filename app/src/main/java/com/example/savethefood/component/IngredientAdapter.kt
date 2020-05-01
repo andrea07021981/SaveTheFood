@@ -6,10 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.databinding.IngredientItemBinding
-import com.example.savethefood.local.domain.ExtendedIngredientDomain
-import com.example.savethefood.local.domain.RecipeInfoDomain
-import com.example.savethefood.local.domain.RecipeResult
-import java.util.zip.Inflater
+import com.example.savethefood.data.domain.ExtendedIngredientDomain
 
 class IngredientAdapter(
     private val onClickListener: OnIngredientClickListener

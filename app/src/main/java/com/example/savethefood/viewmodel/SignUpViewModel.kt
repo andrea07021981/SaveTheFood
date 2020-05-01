@@ -3,9 +3,9 @@ package com.example.savethefood.viewmodel
 import android.app.Application
 import android.util.Patterns
 import androidx.lifecycle.*
-import com.example.savethefood.local.database.SaveTheFoodDatabase
-import com.example.savethefood.local.domain.UserDomain
-import com.example.savethefood.repository.UserRepository
+import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
+import com.example.savethefood.data.domain.UserDomain
+import com.example.savethefood.data.source.repository.UserRepository
 import kotlinx.coroutines.*
 
 //Inherit from AndroidViewModel we don't need to use a CustomViewmodelFactory for passing the application
@@ -26,7 +26,8 @@ class SignUpViewModel(
         get() = _navigateToLoginFragment
 
     private val database = SaveTheFoodDatabase.getInstance(application)
-    private val userRepository = UserRepository(database)
+    private val userRepository =
+        UserRepository(database)
     private var viewModelJob = Job()
     /**
      * A [CoroutineScope] keeps track of all coroutines started by this ViewModel.

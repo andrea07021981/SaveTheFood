@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.databinding.StepCookItemBinding
-import com.example.savethefood.local.domain.StepDomain
+import com.example.savethefood.data.domain.StepDomain
 
 class StepCookAdapter(
     private val onClickListener: OnStepClickListener

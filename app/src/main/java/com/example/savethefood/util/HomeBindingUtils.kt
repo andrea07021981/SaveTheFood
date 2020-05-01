@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
 import com.example.savethefood.component.FoodAdapter
-import com.example.savethefood.local.domain.FoodDomain
+import com.example.savethefood.data.domain.FoodDomain
 
 /**
  * Binding adapter used to hide the spinner once data is available

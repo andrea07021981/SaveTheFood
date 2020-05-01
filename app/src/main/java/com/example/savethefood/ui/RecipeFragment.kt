@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils.loadLayoutAnimation
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
@@ -16,9 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.R
 import com.example.savethefood.component.RecipeAdapter
 import com.example.savethefood.databinding.FragmentReceipeBinding
-import com.example.savethefood.local.domain.FoodDomain
-import com.example.savethefood.local.domain.RecipeDomain
-import com.example.savethefood.local.domain.RecipeResult
+import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.viewmodel.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_nested.*
 

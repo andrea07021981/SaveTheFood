@@ -7,7 +7,7 @@
 
         <variable
             name="ingredientItem"
-            type="com.example.savethefood.local.domain.ExtendedIngredientDomain" />
+            type="com.example.savethefood.data.domain.ExtendedIngredientDomain" />
 
         <variable
             name="ingredientCallback"

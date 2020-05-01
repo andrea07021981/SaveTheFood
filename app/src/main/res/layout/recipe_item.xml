@@ -24,7 +24,7 @@
 
         <variable
             name="recipeItem"
-            type="com.example.savethefood.local.domain.RecipeResult" />
+            type="com.example.savethefood.data.domain.RecipeResult" />
 
         <variable
             name="recipeCallback"

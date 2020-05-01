@@ -7,13 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.example.savethefood.databinding.FragmentBarcodereaderBinding
-import com.example.savethefood.local.domain.FoodDomain
 import com.example.savethefood.viewmodel.BarcodeReaderViewModel
-import com.example.savethefood.viewmodel.HomeViewModel
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
 
@@ -34,7 +31,7 @@ class BarcodeReaderFragment : Fragment() {
         dataBinding = FragmentBarcodereaderBinding.inflate(inflater)
         dataBinding.lifecycleOwner = this
         dataBinding.barcodeReaderViewModel = barcodeReaderViewModel
-        dataBinding.food = barcodeReaderViewModel.food
+        dataBinding.food = barcodeReaderViewModel.food.value
         return dataBinding.root
     }
 

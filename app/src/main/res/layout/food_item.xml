@@ -24,7 +24,7 @@
 
         <variable
             name="foodDomain"
-            type="com.example.savethefood.local.domain.FoodDomain" />
+            type="com.example.savethefood.data.domain.FoodDomain" />
 
         <variable
             name="foodCallback"

@@ -2,20 +2,18 @@ package com.example.savethefood.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.savethefood.R
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.Done
 import com.example.savethefood.constants.Error
 import com.example.savethefood.constants.Loading
-import com.example.savethefood.local.database.SaveTheFoodDatabase
-import com.example.savethefood.local.domain.RecipeInfoDomain
-import com.example.savethefood.local.domain.RecipeResult
-import com.example.savethefood.repository.RecipeRepository
+import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
+import com.example.savethefood.data.domain.RecipeInfoDomain
+import com.example.savethefood.data.domain.RecipeResult
+import com.example.savethefood.data.source.repository.RecipeRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.net.ResponseCache
 
 class
 RecipeDetailViewModel(
@@ -30,7 +28,8 @@ RecipeDetailViewModel(
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val database = SaveTheFoodDatabase.getInstance(application)
-    private val recipesRepository = RecipeRepository(database)
+    private val recipesRepository =
+        RecipeRepository(database)
 
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<ApiCallStatus>(Done("Done"))

@@ -24,7 +24,7 @@
 
             <argument
                 android:name="loggedUser"
-                app:argType="com.example.savethefood.local.domain.UserDomain" />
+                app:argType="com.example.savethefood.data.domain.UserDomain" />
         </action>
     </fragment>
     <fragment

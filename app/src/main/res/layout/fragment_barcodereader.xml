@@ -5,14 +5,14 @@
     <!-- Data to make available to the XML via data binding. In this case,
          the whole ViewModel, so that we can access the LiveData,
          click handlers, and state variables.
-          type="LiveData&lt;com.example.savethefood.local.domain.FoodDomain>"
+          type="LiveData&lt;com.example.savethefood.data.source.FoodDomain>"
 
           -->
     <data>
         <import type="androidx.lifecycle.LiveData" />
         <variable
             name="food"
-            type="LiveData&lt;com.example.savethefood.local.domain.FoodDomain>"/>
+            type="com.example.savethefood.data.domain.FoodDomain"/>
 
         <variable
             name="barcodeReaderViewModel"

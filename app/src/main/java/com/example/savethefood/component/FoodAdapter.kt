@@ -1,13 +1,12 @@
 package com.example.savethefood.component
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.databinding.FoodItemBinding
-import com.example.savethefood.local.domain.FoodDomain
+import com.example.savethefood.data.domain.FoodDomain
 
 class FoodAdapter(
     private val onClickListener: OnClickListener

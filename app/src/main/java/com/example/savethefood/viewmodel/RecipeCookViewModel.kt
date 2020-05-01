@@ -5,8 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.savethefood.local.domain.RecipeInfoDomain
-import com.example.savethefood.local.domain.StepDomain
+import com.example.savethefood.data.domain.RecipeInfoDomain
 
 class RecipeCookViewModel(
     application: Application,

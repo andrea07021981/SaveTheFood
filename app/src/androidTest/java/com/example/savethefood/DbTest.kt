@@ -1,18 +1,14 @@
 package com.example.savethefood
 
 
-import android.service.autofill.Validators.not
 import androidx.room.Room
 import androidx.test.InstrumentationRegistry
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.savethefood.local.database.SaveTheFoodDatabase
-import com.example.savethefood.local.domain.UserDomain
-import com.example.savethefood.local.domain.asDatabaseModel
+import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
+import com.example.savethefood.data.domain.UserDomain
+import com.example.savethefood.data.domain.asDatabaseModel
 import junit.framework.Assert.assertEquals
 import org.junit.After
-import org.junit.Assert
-import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

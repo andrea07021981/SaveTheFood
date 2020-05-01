@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.component.StepCookAdapter
 import com.example.savethefood.databinding.FragmentRecipeCookBinding
-import com.example.savethefood.local.domain.RecipeInfoDomain
+import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.viewmodel.RecipeCookViewModel
 
 class RecipeCookFragment : Fragment() {

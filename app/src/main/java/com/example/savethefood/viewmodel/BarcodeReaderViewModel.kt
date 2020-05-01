@@ -3,11 +3,9 @@ package com.example.savethefood.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.savethefood.local.database.SaveTheFoodDatabase
-import com.example.savethefood.local.domain.FoodDomain
-import com.example.savethefood.local.domain.UserDomain
-import com.example.savethefood.repository.FoodRepository
-import com.google.zxing.integration.android.IntentIntegrator
+import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
+import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.source.repository.FoodRepository
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.*
 import java.lang.Exception
@@ -19,7 +17,8 @@ class BarcodeReaderViewModel(
     private val viewModelJob = Job()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
     private val database = SaveTheFoodDatabase.getInstance(application)
-    private val foodRepository = FoodRepository(database)
+    private val foodRepository =
+        FoodRepository(database)
 
     private val _food = MutableLiveData<FoodDomain>()
     val food: LiveData<FoodDomain>
@@ -41,7 +40,8 @@ class BarcodeReaderViewModel(
     }
 
     init {
-        _food.value = FoodDomain()
+        _food.value =
+            FoodDomain()
     }
     fun doneReadBarcode() {
         _startReadingBarcode.value = null

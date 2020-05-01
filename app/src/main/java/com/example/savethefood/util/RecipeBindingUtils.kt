@@ -2,7 +2,6 @@ package com.example.savethefood.util
 
 import android.view.View
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.core.net.toUri
@@ -16,9 +15,7 @@ import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.Done
 import com.example.savethefood.constants.Loading
 import com.example.savethefood.constants.UrlImagesPath
-import com.example.savethefood.local.domain.*
-import kotlin.math.min
-
+import com.example.savethefood.data.domain.*
 
 @BindingAdapter("recipeApiStatus")
 fun bindStatus(statusImageView: ImageView, status: ApiCallStatus) {
