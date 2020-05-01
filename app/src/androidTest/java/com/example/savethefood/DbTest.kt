@@ -14,6 +14,7 @@ import org.junit.After
 import org.junit.Assert
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
+import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
 
@@ -29,6 +30,7 @@ abstract class DbTest {
                 .build()
     }
 
+    @Test
     fun insert_user_done() {
         val user = UserDomain().apply {
             userName = "Username"
@@ -36,7 +38,7 @@ abstract class DbTest {
             userPassword = "password"
         }.asDatabaseModel()
         val newId = appDatabase.userDatabaseDao.insert(user)
-        assertNotEquals(newId, 0)
+        assertEquals(newId, 0)
     }
 
     @After
