@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -17,9 +18,7 @@ import com.example.savethefood.viewmodel.SplashViewModel
 
 class SplashFragment : Fragment() {
 
-    private val splashViewModel: SplashViewModel by lazy {
-        ViewModelProvider(this).get(SplashViewModel::class.java)
-    }
+    private val splashViewModel by viewModels<SplashViewModel>()
 
     private lateinit var dataBinding: FragmentSplashBinding
 
@@ -36,8 +35,8 @@ class SplashFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        splashViewModel.navigateToLogin.observe(this.viewLifecycleOwner, Observer {
-            if (it == true) {
+        splashViewModel.loginEvent.observe(this.viewLifecycleOwner, Observer {
+            it.let {
                 val extras = FragmentNavigatorExtras(
                     dataBinding.chefImageview to "chef_imageview"
                 )
@@ -49,7 +48,6 @@ class SplashFragment : Fragment() {
                             .setPopUpTo(R.id.splashFragment,
                                 true).build(),
                         extras)
-                splashViewModel.doneNavigating()
             }
         })
     }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.component.StepCookAdapter
@@ -14,10 +15,9 @@ import com.example.savethefood.viewmodel.RecipeCookViewModel
 
 class RecipeCookFragment : Fragment() {
 
-    private val recipeCookViewModel: RecipeCookViewModel by lazy {
+    private val recipeCookViewModel by viewModels<RecipeCookViewModel> {
         val application = requireNotNull(activity).application
-        ViewModelProvider(this, RecipeCookViewModel.Factory(application = application, recipe = recipeInfoSelected))
-            .get(RecipeCookViewModel::class.java)
+        RecipeCookViewModel.Factory(application = application, recipe = recipeInfoSelected)
     }
 
     private lateinit var recipeInfoSelected: RecipeInfoDomain

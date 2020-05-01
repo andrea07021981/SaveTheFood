@@ -2,6 +2,7 @@ package com.example.savethefood.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.savethefood.Event
 import com.example.savethefood.R
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
@@ -27,13 +28,13 @@ class HomeViewModel(
     val foodList: LiveData<List<FoodDomain>>
         get() = _foodList
 
-    private var _navigateToFoodDetail = MediatorLiveData<FoodDomain>()
-    val navigateToFoodDetail: LiveData<FoodDomain>
-        get() = _navigateToFoodDetail
+    private val _detailFoodEvent = MutableLiveData<Event<FoodDomain>>()
+    val detailFoodEvent: LiveData<Event<FoodDomain>>
+        get() = _detailFoodEvent
 
-    private var _navigateToBarcodeReader = MediatorLiveData<Boolean>()
-    val navigateToBarcodeReader: LiveData<Boolean>
-        get() = _navigateToBarcodeReader
+    private val _barcodeFoodEvent = MutableLiveData<Event<Unit>>()
+    val barcodeFoodEvent: LiveData<Event<Unit>>
+        get() = _barcodeFoodEvent
 
     init {
         viewModelScope.launch {
@@ -42,19 +43,11 @@ class HomeViewModel(
     }
 
     fun moveToFoodDetail(food: FoodDomain) {
-        _navigateToFoodDetail.value = food
-    }
-
-    fun doneToFoodDetail() {
-        _navigateToFoodDetail.value = null
+        _detailFoodEvent.value = Event(food)
     }
 
     fun moveToBarcodeReader() {
-        _navigateToBarcodeReader.value = true
-    }
-
-    fun doneToBarcodeReader() {
-        _navigateToBarcodeReader.value = null
+        _barcodeFoodEvent.value = Event(Unit)
     }
 
     override fun onCleared() {

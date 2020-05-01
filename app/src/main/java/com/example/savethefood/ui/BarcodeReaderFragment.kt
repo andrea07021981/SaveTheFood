@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.example.savethefood.EventObserver
 import com.example.savethefood.databinding.FragmentBarcodereaderBinding
 import com.example.savethefood.viewmodel.BarcodeReaderViewModel
 import com.google.zxing.integration.android.IntentIntegrator
@@ -16,9 +17,9 @@ import com.google.zxing.integration.android.IntentResult
 
 class BarcodeReaderFragment : Fragment() {
 
-    private val barcodeReaderViewModel: BarcodeReaderViewModel by lazy {
+    private val barcodeReaderViewModel by viewModels<BarcodeReaderViewModel> {
         val activity = requireNotNull(this.activity)
-        ViewModelProviders.of(this, BarcodeReaderViewModel.Factory(activity.application)).get(BarcodeReaderViewModel::class.java)
+        BarcodeReaderViewModel.Factory(activity.application)
     }
 
     private lateinit var dataBinding: FragmentBarcodereaderBinding
@@ -37,16 +38,12 @@ class BarcodeReaderFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        barcodeReaderViewModel.startReadingBarcode.observe(this.viewLifecycleOwner, Observer {
-            it?.let {
-                readBarcode()
-                barcodeReaderViewModel.doneReadBarcode()
-            }
+        barcodeReaderViewModel.readBarcodeEvent.observe(this.viewLifecycleOwner, EventObserver {
+            readBarcode()
         })
-        barcodeReaderViewModel.popToHome.observe(this.viewLifecycleOwner, Observer {
-            it?.let {
+        barcodeReaderViewModel.goHomeEvent.observe(this.viewLifecycleOwner, EventObserver {
+            it.let {
                 findNavController().popBackStack()
-                barcodeReaderViewModel.donePopToHome()
             }
         })
 

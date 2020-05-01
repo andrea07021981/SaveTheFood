@@ -10,12 +10,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
+import com.example.savethefood.EventObserver
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.viewmodel.FoodDetailViewModel
 
 class FoodDetailFragment : Fragment() {
+
+    private val args: FoodDetailFragmentArgs by navArgs()
 
     private val foodDetailViewModel: FoodDetailViewModel by lazy {
         val application = requireNotNull(activity).application
@@ -37,7 +41,7 @@ class FoodDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ) : View? {
         dataBinding = FragmentFoodDetailBinding.inflate(inflater)
-        foodSelected = FoodDetailFragmentArgs.fromBundle(requireArguments()).foodDomain
+        foodSelected = args.foodDomain
         dataBinding.lifecycleOwner = this
         dataBinding.foodDetailViewModel = foodDetailViewModel
         return dataBinding.root
@@ -49,10 +53,9 @@ class FoodDetailFragment : Fragment() {
             foodDetailViewModel.moveToRecipeSearch(foodSelected)
         }
 
-        dataBinding.foodDetailViewModel!!.navigateToRecipeSearch.observe(this.viewLifecycleOwner, Observer {
-            it?.let {
+        dataBinding.foodDetailViewModel!!.recipeFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
+            it.let {
                 findNavController().navigate(FoodDetailFragmentDirections.actionFoodDetailFragmentToRecipeFragment(it.foodTitle))
-                foodDetailViewModel.doneRecipeSearch()
             }
         })
         dataBinding.deleteFab.setOnClickListener {
@@ -68,7 +71,6 @@ class FoodDetailFragment : Fragment() {
                 .create()
                 .show()
         }
-
     }
 
     override fun onDestroy() {

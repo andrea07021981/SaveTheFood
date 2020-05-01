@@ -3,6 +3,7 @@ package com.example.savethefood.viewmodel
 import android.app.Application
 import android.util.Patterns
 import androidx.lifecycle.*
+import com.example.savethefood.Event
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.repository.UserRepository
@@ -21,9 +22,9 @@ class SignUpViewModel(
     var passwordValue = MutableLiveData<String>()
     var errorPassword = MutableLiveData<Boolean>()
 
-    private val _navigateToLoginFragment = MutableLiveData<Boolean>()
-    val navigateToLoginFragment: LiveData<Boolean>
-        get() = _navigateToLoginFragment
+    private val _loginEvent = MutableLiveData<Event<Unit>>()
+    val loginEvent: LiveData<Event<Unit>>
+        get() = _loginEvent
 
     private val database = SaveTheFoodDatabase.getInstance(application)
     private val userRepository =
@@ -58,21 +59,17 @@ class SignUpViewModel(
                 .also {
                     uiScope.launch {
                         userRepository.saveNewUser(user)
-                        _navigateToLoginFragment.value = true
+                        _loginEvent.value = Event(Unit)
                     }
                 }
         }
     }
 
-    fun checkValues (): Boolean {
+    private fun checkValues (): Boolean {
         errorUserName.value = userNameValue.value.isNullOrEmpty()
         errorEmail.value = !Patterns.EMAIL_ADDRESS.matcher(emailValue.value).matches()
         errorPassword.value = passwordValue.value.isNullOrEmpty()
         return errorUserName.value!! && errorEmail.value!! && errorPassword.value!!
-    }
-
-    fun doneNavigating() {
-        _navigateToLoginFragment.value = null
     }
 
     override fun onCleared() {

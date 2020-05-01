@@ -5,18 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.example.savethefood.EventObserver
 import com.example.savethefood.databinding.FragmentSignupBinding
 import com.example.savethefood.viewmodel.SignUpViewModel
 
 class SignUpFragment : Fragment() {
 
-    private val signUpViewModel: SignUpViewModel by lazy {
-        ViewModelProvider(this).get(SignUpViewModel::class.java)
-    }
+    //We can use by viewModels when the VM is not shared with other fragments
+    private val signUpViewModel by viewModels<SignUpViewModel>()
 
     private lateinit var dataBinding: FragmentSignupBinding
 
@@ -34,12 +35,11 @@ class SignUpFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        signUpViewModel.navigateToLoginFragment.observe(this.viewLifecycleOwner, Observer {
-            if (it == true) {
+        signUpViewModel.loginEvent.observe(this.viewLifecycleOwner, EventObserver {
+            it.let {
                 this
                     .findNavController()
                     .popBackStack()
-                signUpViewModel.doneNavigating()
             }
         })
     }

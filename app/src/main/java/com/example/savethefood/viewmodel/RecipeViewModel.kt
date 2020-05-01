@@ -2,6 +2,7 @@ package com.example.savethefood.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.savethefood.Event
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.Done
 import com.example.savethefood.constants.Loading
@@ -40,9 +41,9 @@ class RecipeViewModel(
     val recipeListResult: LiveData<List<RecipeResult?>>
         get() = _recipeListResult
 
-    private var _navigateToRecipeDetail = MediatorLiveData<RecipeResult>()
-    val navigateToRecipeDetail: LiveData<RecipeResult>
-        get() = _navigateToRecipeDetail
+    private val _recipeDetailEvent = MutableLiveData<Event<RecipeResult>>()
+    val recipeDetailEvent: LiveData<Event<RecipeResult>>
+        get() = _recipeDetailEvent
 
     init {
         getRecipes(foodName)
@@ -64,14 +65,10 @@ class RecipeViewModel(
     }
 
     fun moveToRecipeDetail(recipe: RecipeResult) {
-        _navigateToRecipeDetail.value = recipe
+        _recipeDetailEvent.value = Event(recipe)
     }
 
-    fun doneToRecipeDetail() {
-        _navigateToRecipeDetail.value = null
-    }
-
-    public fun updateDataList(list: ArrayList<RecipeResult?>) {
+    fun updateDataList(list: ArrayList<RecipeResult?>) {
         _recipeListResult.value = list
     }
 

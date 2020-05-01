@@ -8,12 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.TransitionInflater
+import com.example.savethefood.EventObserver
 import com.example.savethefood.R
 import com.example.savethefood.component.FoodAdapter
 import com.example.savethefood.databinding.FragmentHomeBinding
@@ -21,9 +23,9 @@ import com.example.savethefood.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
 
-    private val homeViewModel: HomeViewModel by lazy {
+    private val homeViewModel by viewModels<HomeViewModel>{
         val activity = requireNotNull(this.activity)
-        ViewModelProvider(this, HomeViewModel.Factory(activity.application)).get(HomeViewModel::class.java)
+        HomeViewModel.Factory(activity.application)
     }
 
     private lateinit var dataBinding: FragmentHomeBinding
@@ -57,8 +59,8 @@ class HomeFragment : Fragment() {
             homeViewModel.moveToFoodDetail(it)
         })
 
-        homeViewModel.navigateToFoodDetail.observe(this.viewLifecycleOwner, Observer {
-            if (it != null) {
+        homeViewModel.detailFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
+            it.let {
                 val foodImageView =
                     dataBinding.foodRecycleview.findViewById<ImageView>(R.id.food_imageview)
                 val foodTextview =
@@ -69,14 +71,12 @@ class HomeFragment : Fragment() {
                 val bundle = bundleOf("foodDomain" to it)
                 findNavController()
                     .navigate(R.id.foodDetailFragment, bundle, null, extras)
-                homeViewModel.doneToFoodDetail()
             }
         })
 
-        homeViewModel.navigateToBarcodeReader.observe(this.viewLifecycleOwner, Observer {
-            it?.let {
+        homeViewModel.barcodeFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
+            it.let {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBarcodeReaderFragment())
-                homeViewModel.doneToBarcodeReader()
             }
         })
     }

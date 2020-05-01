@@ -2,6 +2,7 @@ package com.example.savethefood.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.savethefood.Event
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.Done
 import com.example.savethefood.constants.Error
@@ -28,8 +29,7 @@ RecipeDetailViewModel(
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val database = SaveTheFoodDatabase.getInstance(application)
-    private val recipesRepository =
-        RecipeRepository(database)
+    private val recipesRepository = RecipeRepository(database)
 
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<ApiCallStatus>(Done("Done"))
@@ -42,13 +42,13 @@ RecipeDetailViewModel(
     val recipeDetail: LiveData<RecipeInfoDomain>
         get() = _recipeDetail
 
-    private var _navigateToRecipeList = MediatorLiveData<Boolean>()
-    val navigateToRecipeList: LiveData<Boolean>
-        get() = _navigateToRecipeList
+    private val _recipeListEvent = MutableLiveData<Event<Unit>>()
+    val recipeListEvent: LiveData<Event<Unit>>
+        get() = _recipeListEvent
 
-    private var _navigateToRecipeCooking = MediatorLiveData<RecipeInfoDomain>()
-    val navigateToRecipeCooking: LiveData<RecipeInfoDomain>
-        get() = _navigateToRecipeCooking
+    private val _recipeCookingtEvent = MutableLiveData<Event<RecipeInfoDomain>>()
+    val recipeCookingtEvent: LiveData<Event<RecipeInfoDomain>>
+        get() = _recipeCookingtEvent
 
     init {
         getRecipeDetails(recipeResult)
@@ -69,19 +69,11 @@ RecipeDetailViewModel(
     }
 
     fun backToRecipeList() {
-        _navigateToRecipeList.value = true
-    }
-
-    fun doneBackToRecipeList() {
-        _navigateToRecipeList.value = null
+        _recipeListEvent.value = Event(Unit)
     }
 
     fun moveToCookDetail(recipe: RecipeInfoDomain) {
-        _navigateToRecipeCooking.value = recipe
-    }
-
-    fun doneToCookDetail() {
-        _navigateToRecipeCooking.value = null
+        _recipeCookingtEvent.value = Event(recipe)
     }
 
     fun saveRecipe(recipe: RecipeInfoDomain) {

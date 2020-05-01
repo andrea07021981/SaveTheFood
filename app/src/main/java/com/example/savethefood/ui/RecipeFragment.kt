@@ -8,10 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.savethefood.EventObserver
 import com.example.savethefood.R
 import com.example.savethefood.component.RecipeAdapter
 import com.example.savethefood.databinding.FragmentReceipeBinding
@@ -22,9 +24,9 @@ import kotlinx.android.synthetic.main.fragment_nested.*
 class RecipeFragment : Fragment() {
 
     private var foodName: String? = null
-    private val recipeViewModel: RecipeViewModel by lazy {
+    private val recipeViewModel by viewModels<RecipeViewModel> {
         val activity = requireNotNull(this.activity)
-        ViewModelProvider(this, RecipeViewModel.Factory(activity.application, foodName = foodName)).get(RecipeViewModel::class.java)
+        RecipeViewModel.Factory(activity.application, foodName = foodName)
     }
 
     private lateinit var dataBinding: FragmentReceipeBinding
@@ -81,12 +83,11 @@ class RecipeFragment : Fragment() {
             recipeViewModel.moveToRecipeDetail(it)
         })
 
-        recipeViewModel.navigateToRecipeDetail.observe(this.viewLifecycleOwner, Observer {
-            it?.let {
+        recipeViewModel.recipeDetailEvent.observe(this.viewLifecycleOwner, EventObserver {
+            it.let {
                 val bundle = bundleOf("recipeResult" to it)
                 findNavController()
                     .navigate(R.id.recipeDetailFragment, bundle, null, null)
-                recipeViewModel.doneToRecipeDetail()
             }
         })
 

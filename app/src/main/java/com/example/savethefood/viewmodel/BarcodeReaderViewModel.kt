@@ -3,6 +3,7 @@ package com.example.savethefood.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.savethefood.Event
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.repository.FoodRepository
@@ -23,12 +24,12 @@ class BarcodeReaderViewModel(
     private val _food = MutableLiveData<FoodDomain>()
     val food: LiveData<FoodDomain>
         get() = _food
-    private val _startReadingBarcode = MutableLiveData<Boolean>()
-    val startReadingBarcode: LiveData<Boolean>
-        get() = _startReadingBarcode
-    private var _popToHome = MediatorLiveData<Boolean>()
-    val popToHome: LiveData<Boolean>
-        get() = _popToHome
+    private val _readBarcodeEvent = MutableLiveData<Event<Unit>>()
+    val readBarcodeEvent: LiveData<Event<Unit>>
+        get() = _readBarcodeEvent
+    private val _goHomeEvent = MutableLiveData<Event<Unit>>()
+    val goHomeEvent: LiveData<Event<Unit>>
+        get() = _goHomeEvent
     private var _progressVisibility = MediatorLiveData<Boolean>()
     val progressVisibility: LiveData<Boolean>
         get() = _progressVisibility
@@ -43,12 +44,9 @@ class BarcodeReaderViewModel(
         _food.value =
             FoodDomain()
     }
-    fun doneReadBarcode() {
-        _startReadingBarcode.value = null
-    }
 
     fun getInfoByBarcode() {
-        _startReadingBarcode.value = true
+        _readBarcodeEvent.value = Event(Unit)
     }
 
     fun getApiFoodDetails(barcode: String) {
@@ -72,14 +70,9 @@ class BarcodeReaderViewModel(
          viewModelScope.launch {
              foodRepository.saveNewFood(food)
              //TODO check whether the record has been inserted or not
-             _popToHome.value = true
+             _goHomeEvent.value = Event(Unit)
          }
     }
-
-    fun donePopToHome() {
-        _popToHome.value = null
-    }
-
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
