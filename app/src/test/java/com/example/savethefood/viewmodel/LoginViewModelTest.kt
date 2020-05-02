@@ -3,7 +3,7 @@ package com.example.savethefood.viewmodel
 
 import org.junit.Assert.*
 import org.junit.Test
-import com.example.savethefood.viewmodel.LoginViewModel
+import com.example.savethefood.login.LoginViewModel
 
 class LoginViewModelTest {
 

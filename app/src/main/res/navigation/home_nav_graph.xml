@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.savethefood.ui.HomeFragment"
+        android:name="com.example.savethefood.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
-        android:name="com.example.savethefood.ui.RecipeFragment"
+        android:name="com.example.savethefood.recipe.RecipeFragment"
         android:label="RecipeFragment"
         tools:layout="@layout/fragment_receipe">
         <action
@@ -32,12 +32,12 @@
     </fragment>
     <fragment
         android:id="@+id/barcodeReaderFragment"
-        android:name="com.example.savethefood.ui.BarcodeReaderFragment"
+        android:name="com.example.savethefood.addfood.BarcodeReaderFragment"
         android:label="BarcodeReaderFragment"
         tools:layout="@layout/fragment_barcodereader" />
     <fragment
         android:id="@+id/foodDetailFragment"
-        android:name="com.example.savethefood.ui.FoodDetailFragment"
+        android:name="com.example.savethefood.fooddetail.FoodDetailFragment"
         android:label="FoodDetailFragment"
         tools:layout="@layout/fragment_food_detail">
         <argument
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
-        android:name="com.example.savethefood.ui.RecipeDetailFragment"
+        android:name="com.example.savethefood.recipedetail.RecipeDetailFragment"
         android:label="RecipeDetailFragment"
         tools:layout="@layout/fragment_recipe_detail">
         <argument
@@ -61,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipeCookFragment"
-        android:name="com.example.savethefood.ui.RecipeCookFragment"
+        android:name="com.example.savethefood.cook.RecipeCookFragment"
         android:label="RecipeCookFragment"
         tools:layout="@layout/fragment_recipe_cook">
         <argument

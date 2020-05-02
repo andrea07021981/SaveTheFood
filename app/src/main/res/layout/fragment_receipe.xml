@@ -8,13 +8,13 @@
     <data>
         <variable
             name="recipeViewModel"
-            type="com.example.savethefood.viewmodel.RecipeViewModel" />
+            type="com.example.savethefood.recipe.RecipeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.RecipeFragment"
+        tools:context=".recipe.RecipeFragment"
         android:background="@color/colorPrimary">
 
         <androidx.recyclerview.widget.RecyclerView

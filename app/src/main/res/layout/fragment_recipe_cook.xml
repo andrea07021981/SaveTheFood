@@ -8,7 +8,7 @@
     <data>
         <variable
             name="recipeCookViewModel"
-            type="com.example.savethefood.viewmodel.RecipeCookViewModel" />
+            type="com.example.savethefood.cook.RecipeCookViewModel" />
     </data>
     <FrameLayout
         android:layout_width="match_parent"

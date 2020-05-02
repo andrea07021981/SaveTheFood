@@ -28,7 +28,7 @@
 
         <variable
             name="recipeCallback"
-            type="com.example.savethefood.component.RecipeAdapter.OnClickListener" />
+            type="com.example.savethefood.recipe.RecipeAdapter.OnClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView

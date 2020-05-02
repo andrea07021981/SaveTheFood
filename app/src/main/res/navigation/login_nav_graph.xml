@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/loginFragment"
         tools:layout="@layout/fragment_login"
-        android:name="com.example.savethefood.ui.LoginFragment"
+        android:name="com.example.savethefood.login.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/splashFragment"
         tools:layout="@layout/fragment_splash"
-        android:name="com.example.savethefood.ui.SplashFragment"
+        android:name="com.example.savethefood.splash.SplashFragment"
         android:label="SplashFragment" >
         <action
             android:id="@+id/action_splashFragment_to_loginFragment"
@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/signUpFragment"
         tools:layout="@layout/fragment_signup"
-        android:name="com.example.savethefood.ui.SignUpFragment"
+        android:name="com.example.savethefood.login.SignUpFragment"
         android:label="SignUpFragment" />
 
     <include app:graph="@navigation/nested_nav_graph" />

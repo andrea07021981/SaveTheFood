@@ -11,7 +11,7 @@
 
         <variable
             name="stepCallback"
-            type="com.example.savethefood.component.StepCookAdapter.OnStepClickListener" />
+            type="com.example.savethefood.cook.StepCookAdapter.OnStepClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView

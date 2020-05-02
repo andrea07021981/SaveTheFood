@@ -9,7 +9,7 @@
 
         <variable
             name="foodDetailViewModel"
-            type="com.example.savethefood.viewmodel.FoodDetailViewModel" />
+            type="com.example.savethefood.fooddetail.FoodDetailViewModel" />
     </data>
 
 <androidx.drawerlayout.widget.DrawerLayout

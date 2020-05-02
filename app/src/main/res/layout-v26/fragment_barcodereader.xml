@@ -16,14 +16,14 @@
 
         <variable
             name="barcodeReaderViewModel"
-            type="com.example.savethefood.viewmodel.BarcodeReaderViewModel" />
+            type="com.example.savethefood.addfood.BarcodeReaderViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
-        tools:context=".ui.BarcodeReaderFragment">
+        tools:context=".addfood.BarcodeReaderFragment">
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/loading_progressbar"

@@ -10,12 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
-import com.example.savethefood.component.*
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.Done
 import com.example.savethefood.constants.Loading
 import com.example.savethefood.constants.UrlImagesPath
+import com.example.savethefood.cook.EquipmentInstructionAdapter
+import com.example.savethefood.cook.IngredientInstructionAdapter
+import com.example.savethefood.cook.StepCookAdapter
 import com.example.savethefood.data.domain.*
+import com.example.savethefood.recipe.RecipeAdapter
+import com.example.savethefood.recipedetail.IngredientAdapter
 
 @BindingAdapter("recipeApiStatus")
 fun bindStatus(statusImageView: ImageView, status: ApiCallStatus) {
