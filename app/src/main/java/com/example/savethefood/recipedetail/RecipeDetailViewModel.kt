@@ -16,8 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class
-RecipeDetailViewModel(
+class RecipeDetailViewModel(
     application: Application,
     recipeResult: RecipeResult
 ) : ViewModel() {
