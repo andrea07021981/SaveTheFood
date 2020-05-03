@@ -31,6 +31,13 @@ android {
         kotlinOptions {
             jvmTarget = JavaVersion.VERSION_1_8.toString()
         }
+
+        // Always show the result of every unit test when running via command line, even if it passes.
+        testOptions.unitTests {
+            includeAndroidResources = true
+
+            // ...
+        }
     }
 
     //For migration tests
@@ -122,8 +129,14 @@ dependencies {
     // AndroidJUnitRunner and JUnit Rules
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
+    testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
 
     // AndroidX Test - Instrumented testing
     androidTestImplementation "androidx.test.ext:junit:$androidXTestExtKotlinRunnerVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+    testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
+    // AndroidX Test - JVM testing
+    testImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion"
 }
