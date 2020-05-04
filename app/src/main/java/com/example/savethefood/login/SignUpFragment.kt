@@ -8,12 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.savethefood.EventObserver
+import com.example.savethefood.data.source.repository.UserDataRepository
+import com.example.savethefood.data.source.repository.UserRepository
 import com.example.savethefood.databinding.FragmentSignupBinding
 
 class SignUpFragment : Fragment() {
 
     //We can use by viewModels when the VM is not shared with other fragments
-    private val signUpViewModel by viewModels<SignUpViewModel>()
+    private val signUpViewModel by viewModels<SignUpViewModel>() {
+        SignUpViewModel.SignUpViewModelFactory(UserDataRepository.getRepository(requireActivity().application))
+    }
 
     private lateinit var dataBinding: FragmentSignupBinding
 

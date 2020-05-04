@@ -1,18 +1,16 @@
 package com.example.savethefood.login
 
-import android.app.Application
 import android.util.Patterns
 import androidx.lifecycle.*
 import com.example.savethefood.Event
-import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.repository.UserRepository
 import kotlinx.coroutines.*
 
 //Inherit from AndroidViewModel we don't need to use a CustomViewmodelFactory for passing the application
 class SignUpViewModel(
-    application: Application
-) : AndroidViewModel(application) {
+    private val userDataRepository: UserRepository
+) : ViewModel() {
 
     var user = UserDomain()
     var userNameValue = MutableLiveData<String>()
@@ -26,9 +24,6 @@ class SignUpViewModel(
     val loginEvent: LiveData<Event<Unit>>
         get() = _loginEvent
 
-    private val database = SaveTheFoodDatabase.getInstance(application)
-    private val userRepository =
-        UserRepository(database)
     private var viewModelJob = Job()
     /**
      * A [CoroutineScope] keeps track of all coroutines started by this ViewModel.
@@ -58,7 +53,7 @@ class SignUpViewModel(
                 }
                 .also {
                     uiScope.launch {
-                        userRepository.saveNewUser(user)
+                        userDataRepository.saveNewUser(user)
                         _loginEvent.value = Event(Unit)
                     }
                 }
@@ -75,5 +70,20 @@ class SignUpViewModel(
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    /**
+     * Factory for constructing SignUpViewModel with parameter
+     */
+    class SignUpViewModelFactory(
+        private val dataRepository: UserRepository
+    ) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return LoginViewModel(dataRepository) as T
+            }
+            throw IllegalArgumentException("Unable to construct viewmodel")
+        }
     }
 }

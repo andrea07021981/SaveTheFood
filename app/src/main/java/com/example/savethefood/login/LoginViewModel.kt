@@ -1,9 +1,7 @@
 package com.example.savethefood.login
 
-import android.app.Application
 import androidx.lifecycle.*
 import com.example.savethefood.R
-import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
@@ -12,7 +10,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val userRepository: UserRepository
+    private val userDataRepository: UserRepository
 ) : ViewModel() {
 
     val animationResourceView = R.anim.fade_in
@@ -65,7 +63,7 @@ class LoginViewModel(
             userEmail = emailValue.value.toString()
             userPassword = passwordValue.value.toString()
         }
-        val userRecord = userRepository.getUser(user = userToSave)
+        val userRecord = userDataRepository.getUser(user = userToSave)
         //_userLogged.addSource(userRecord, _userLogged::setValue)
     }
 
@@ -94,15 +92,15 @@ class LoginViewModel(
     }
 
     /**
-     * Factory for constructing DevByteViewModel with parameter
+     * Factory for constructing LoginViewModel with parameter
      */
     class LoginViewModelFactory(
-        private val repository: UserRepository
+        private val dataRepository: UserRepository
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return LoginViewModel(repository) as T
+                return LoginViewModel(dataRepository) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

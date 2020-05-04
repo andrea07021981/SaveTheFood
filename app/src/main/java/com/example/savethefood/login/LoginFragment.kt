@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.savethefood.R
+import com.example.savethefood.data.source.repository.UserDataRepository
 import com.example.savethefood.data.source.repository.UserRepository
 import com.example.savethefood.databinding.FragmentLoginBinding
 
@@ -22,7 +23,7 @@ class LoginFragment : Fragment() {
     }
 
     private val loginViewModel by viewModels<LoginViewModel> {
-        LoginViewModel.LoginViewModelFactory(UserRepository.getRepository(requireActivity().application))
+        LoginViewModel.LoginViewModelFactory(UserDataRepository.getRepository(requireActivity().application))
     }
 
     private lateinit var dataBinding: FragmentLoginBinding
