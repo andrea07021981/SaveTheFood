@@ -12,7 +12,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    application: Application
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     val animationResourceView = R.anim.fade_in
@@ -33,9 +33,6 @@ class LoginViewModel(
     val navigateToSignUpFragment: LiveData<Boolean>
         get() = _navigateToSignUpFragment
 
-    private val database = SaveTheFoodDatabase.getInstance(application)
-    private val userRepository =
-        UserRepository(database)
     private var viewModelJob = Job()
     /**
      * A [CoroutineScope] keeps track of all coroutines started by this ViewModel.
@@ -69,8 +66,7 @@ class LoginViewModel(
             userPassword = passwordValue.value.toString()
         }
         val userRecord = userRepository.getUser(user = userToSave)
-        userRetrieved = true
-        _userLogged.addSource(userRecord, _userLogged::setValue)
+        //_userLogged.addSource(userRecord, _userLogged::setValue)
     }
 
     fun doneNavigationSignUp() {
@@ -100,13 +96,13 @@ class LoginViewModel(
     /**
      * Factory for constructing DevByteViewModel with parameter
      */
-    class Factory(
-        val app: Application
+    class LoginViewModelFactory(
+        private val repository: UserRepository
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return LoginViewModel(app) as T
+                return LoginViewModel(repository) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
