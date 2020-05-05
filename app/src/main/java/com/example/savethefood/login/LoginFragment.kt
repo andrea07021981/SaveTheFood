@@ -12,8 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.savethefood.R
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.repository.UserDataRepository
-import com.example.savethefood.data.source.repository.UserRepository
 import com.example.savethefood.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -63,23 +63,23 @@ class LoginFragment : Fragment() {
 
         loginViewModel.userLogged.observe(this.viewLifecycleOwner, Observer {
             if (it != null) {
-                Log.d(TAG, "User logged with ${it.userEmail} and ${it.userPassword} ")
-                this
-                    .findNavController()
-                    .navigate(
-                        LoginFragmentDirections.actionLoginFragmentToNestedNavGraph(
-                            it
+                if (it is Result.Success) {
+                    Log.d(TAG, "User logged with ${it.data.userName} and ${it.data.userPassword} ")
+                    this
+                        .findNavController()
+                        .navigate(
+                            LoginFragmentDirections.actionLoginFragmentToNestedNavGraph(
+                                it.data
+                            )
                         )
-                    )
-                loginViewModel.doneNavigationHome()
-            } else if (loginViewModel.isUserRetrieved()) {
-                Toast.makeText(
-                    context,
-                    "Login Error",
-                    Toast.LENGTH_SHORT).show()
-                loginViewModel.loginFailed()
+                    loginViewModel.doneNavigationHome()
+                } else if (it is Result.Error) {
+                    Toast.makeText(
+                        context,
+                        it.message,
+                        Toast.LENGTH_SHORT).show()
+                }
             }
-
         })
     }
 }

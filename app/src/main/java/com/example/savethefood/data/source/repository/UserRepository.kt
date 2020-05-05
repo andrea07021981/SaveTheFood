@@ -9,5 +9,5 @@ interface UserRepository {
      */
     suspend fun saveNewUser(user: UserDomain)
 
-    suspend fun getUser(user: UserDomain): Result<UserDomain?>
+    suspend fun getUser(user: UserDomain): Result<UserDomain>
 }

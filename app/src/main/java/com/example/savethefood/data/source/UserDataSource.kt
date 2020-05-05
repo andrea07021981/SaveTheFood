@@ -8,5 +8,5 @@ interface UserDataSource {
 
     suspend fun getUser(email: String, password: String): Result<UserDomain>
 
-    suspend fun saveUser(user: UserDomain)
+    suspend fun saveUser(user: UserDomain): Long
 }

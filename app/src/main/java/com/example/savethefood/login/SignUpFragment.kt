@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.savethefood.EventObserver
 import com.example.savethefood.data.source.repository.UserDataRepository
-import com.example.savethefood.data.source.repository.UserRepository
 import com.example.savethefood.databinding.FragmentSignupBinding
 
 class SignUpFragment : Fragment() {

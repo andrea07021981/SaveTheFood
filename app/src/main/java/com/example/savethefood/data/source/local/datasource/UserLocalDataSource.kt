@@ -25,7 +25,7 @@ class UserLocalDataSource internal constructor(
 
     }
 
-    override suspend fun saveUser(user: UserDomain) {
+    override suspend fun saveUser(user: UserDomain) = withContext(ioDispatcher){
         userDatabaseDao.insert(user.asDatabaseModel())
     }
 }

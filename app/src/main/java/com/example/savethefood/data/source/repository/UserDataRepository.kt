@@ -42,7 +42,7 @@ class UserDataRepository(
         }*/
     }
 
-    override suspend fun getUser(user: UserDomain): Result<UserDomain?> {
+    override suspend fun getUser(user: UserDomain): Result<UserDomain> {
         return userLocalDataSource.getUser(user.userEmail, user.userPassword)
     }
 }

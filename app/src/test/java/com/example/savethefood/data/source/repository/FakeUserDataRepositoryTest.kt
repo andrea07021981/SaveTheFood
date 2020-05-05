@@ -1,17 +1,29 @@
 package com.example.savethefood.data.source.repository
 
+import androidx.annotation.VisibleForTesting
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
+import com.example.savethefood.data.source.UserDataSource
+import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
+import org.jetbrains.annotations.TestOnly
 import org.junit.Assert.*
 
-class FakeUserDataRepositoryTest : UserRepository {
+class FakeUserDataRepositoryTest(
+    private val fakeUserDataRepositoryTest: FakeUserDataSourceTest
+) : UserRepository {
 
-    //Todo implements methods, then creare
     override suspend fun saveNewUser(user: UserDomain) {
-        TODO("Not yet implemented")
+        fakeUserDataRepositoryTest.saveUser(user)
     }
 
-    override suspend fun getUser(user: UserDomain): Result<UserDomain?> {
-        TODO("Not yet implemented")
+    override suspend fun getUser(user: UserDomain): Result<UserDomain> {
+        return fakeUserDataRepositoryTest.getUser(user.userEmail, user.userPassword)
+    }
+
+    @VisibleForTesting
+    suspend fun addUsers(vararg users: UserDomain) {
+        for (user in users) {
+            fakeUserDataRepositoryTest.saveUser(user)
+        }
     }
 }

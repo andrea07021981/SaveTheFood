@@ -2,6 +2,7 @@ package com.example.savethefood.login
 
 import androidx.lifecycle.*
 import com.example.savethefood.R
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
@@ -21,11 +22,9 @@ class LoginViewModel(
     var errorPassword = MutableLiveData<Boolean>()
     var errorEmail = MutableLiveData<Boolean>()
 
-    private val _userLogged = MediatorLiveData<UserDomain>()
-    val userLogged: LiveData<UserDomain>
+    private val _userLogged = MediatorLiveData<Result<UserDomain>>()
+    val userLogged: LiveData<Result<UserDomain>>
         get() = _userLogged
-
-    private var userRetrieved = false
 
     private val _navigateToSignUpFragment = MutableLiveData<Boolean>()
     val navigateToSignUpFragment: LiveData<Boolean>
@@ -64,7 +63,7 @@ class LoginViewModel(
             userPassword = passwordValue.value.toString()
         }
         val userRecord = userDataRepository.getUser(user = userToSave)
-        //_userLogged.addSource(userRecord, _userLogged::setValue)
+        _userLogged.value = userRecord
     }
 
     fun doneNavigationSignUp() {
@@ -77,14 +76,7 @@ class LoginViewModel(
 
     fun doneNavigationHome() {
         _userLogged.value = null
-        loginFailed()
     }
-
-    fun loginFailed() {
-        userRetrieved = false
-    }
-
-    fun isUserRetrieved() = userRetrieved
 
     override fun onCleared() {
         super.onCleared()

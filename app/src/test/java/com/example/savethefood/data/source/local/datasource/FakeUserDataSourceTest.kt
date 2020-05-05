@@ -17,7 +17,8 @@ class FakeUserDataSourceTest(var users: MutableList<UserDomain>? = mutableListOf
         return Result.Error("Not found")
     }
 
-    override suspend fun saveUser(user: UserDomain) {
+    override suspend fun saveUser(user: UserDomain): Long {
         users?.add(user)
+        return 1 // Default fake result
     }
 }
