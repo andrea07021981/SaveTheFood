@@ -88,7 +88,7 @@ class LoginViewModel(
      */
     class LoginViewModelFactory(
         private val dataRepository: UserRepository
-    ) : ViewModelProvider.Factory {
+    ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")

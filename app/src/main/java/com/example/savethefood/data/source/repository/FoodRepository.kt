@@ -1,15 +1,14 @@
-package com.example.savethefood.data.source
+package com.example.savethefood.data.source.repository
 
 import androidx.lifecycle.LiveData
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 
-interface FoodDataSource {
-
+interface FoodRepository {
     @Throws(Exception::class)
-    suspend fun getFoodByUpc(barcode: String): Result<FoodDomain>
+    suspend fun getApiFoodUpc(barcode: String): Result<FoodDomain>
 
-    suspend fun insertFood(food: FoodDomain): Long
+    suspend fun saveNewFood(food: FoodDomain): Long
 
     suspend fun getFoods(): LiveData<List<FoodDomain>>
 

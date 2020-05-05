@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.savethefood.EventObserver
+import com.example.savethefood.data.Result
+import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.databinding.FragmentBarcodereaderBinding
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
@@ -17,8 +20,7 @@ import com.google.zxing.integration.android.IntentResult
 class BarcodeReaderFragment : Fragment() {
 
     private val barcodeReaderViewModel by viewModels<BarcodeReaderViewModel> {
-        val activity = requireNotNull(this.activity)
-        BarcodeReaderViewModel.Factory(activity.application)
+        BarcodeReaderViewModel.BarcodeViewModelFactory(FoodDataRepository.getRepository(requireActivity().application))
     }
 
     private lateinit var dataBinding: FragmentBarcodereaderBinding
@@ -51,6 +53,16 @@ class BarcodeReaderFragment : Fragment() {
                 dataBinding.loadingProgressbar.visibility = View.VISIBLE
             } else {
                 dataBinding.loadingProgressbar.visibility = View.GONE
+            }
+        })
+
+        barcodeReaderViewModel.barcodeResult.observe(this.viewLifecycleOwner, Observer {
+            if (it is Result.Error || it is Result.ExError) {
+                Toast.makeText(
+                    context,
+                    it.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }

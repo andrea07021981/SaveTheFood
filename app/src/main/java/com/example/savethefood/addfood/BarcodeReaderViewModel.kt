@@ -4,26 +4,28 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.savethefood.Event
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.repository.FoodDataRepository
+import com.example.savethefood.data.source.repository.FoodRepository
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.*
 import java.lang.Exception
 
 class BarcodeReaderViewModel(
-    application: Application
-) : AndroidViewModel(application) {
+    private val foodDataRepository: FoodRepository
+) : ViewModel() {
 
     private val viewModelJob = Job()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-    private val database = SaveTheFoodDatabase.getInstance(application)
-    private val foodRepository =
-        FoodDataRepository(database)
 
     private val _food = MutableLiveData<FoodDomain>()
     val food: LiveData<FoodDomain>
         get() = _food
+    private val _barcodeResult = MutableLiveData<Result<FoodDomain>>()
+    val barcodeResult: LiveData<Result<FoodDomain>>
+        get() = _barcodeResult
     private val _readBarcodeEvent = MutableLiveData<Event<Unit>>()
     val readBarcodeEvent: LiveData<Event<Unit>>
         get() = _readBarcodeEvent
@@ -53,7 +55,12 @@ class BarcodeReaderViewModel(
         viewModelScope.launch {
             try {
                 _progressVisibility.value = true
-                _food.postValue(foodRepository.getApiFoodUpc(barcode))
+                val foodRetrieved = foodDataRepository.getApiFoodUpc(barcode)
+                if (foodRetrieved is Result.Success) {
+                    _food.postValue(foodRetrieved.data)
+                } else {
+                    _barcodeResult.postValue(foodRetrieved)
+                }
                 Log.d("Food title", _food.value?.foodTitle)
                 Log.d("Food description", _food.value?.foodDescription)
             } catch (error: JsonDataException) {
@@ -68,7 +75,7 @@ class BarcodeReaderViewModel(
 
     fun saveFood(food: FoodDomain) {
          viewModelScope.launch {
-             foodRepository.saveNewFood(food)
+             foodDataRepository.saveNewFood(food)
              //TODO check whether the record has been inserted or not
              _goHomeEvent.value = Event(Unit)
          }
@@ -80,11 +87,11 @@ class BarcodeReaderViewModel(
     /*
      * Factory for constructing DevByteViewModel with parameter
      */
-    class Factory(val app: Application) : ViewModelProvider.Factory {
+    class BarcodeViewModelFactory(private val dataRepository: FoodRepository) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(BarcodeReaderViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return BarcodeReaderViewModel(app) as T
+                return BarcodeReaderViewModel(dataRepository) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

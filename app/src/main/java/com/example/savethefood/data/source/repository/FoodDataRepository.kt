@@ -1,35 +1,49 @@
 package com.example.savethefood.data.source.repository
 
-import android.util.Log
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
+import androidx.lifecycle.map
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.asDatabaseModel
-import com.example.savethefood.data.source.local.entity.asDomainModel
-import com.example.savethefood.data.source.remote.datatransferobject.asDomainModel
+import com.example.savethefood.data.source.FoodDataSource
+import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
+import com.example.savethefood.data.source.local.datasource.FoodLocalDataSource
+import com.example.savethefood.data.source.remote.datasource.FoodRemoteDataSource
 import com.example.savethefood.data.source.remote.service.ApiClient
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class FoodDataRepository(
-    private val database: SaveTheFoodDatabase
-) {
+    private val foodLocalDataSource: FoodDataSource,
+    private val foodRemoteDataSource: FoodDataSource,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) : FoodRepository {
 
+    companion object {
+        @Volatile
+        private var INSTANCE: FoodDataRepository? = null
+
+        fun getRepository(app: Application): FoodDataRepository {
+            return INSTANCE ?: synchronized(this) {
+                val database = SaveTheFoodDatabase.getInstance(app)
+                return FoodDataRepository(
+                    FoodLocalDataSource(database.foodDatabaseDao),
+                    FoodRemoteDataSource(ApiClient.retrofitService)
+                ).also {
+                    INSTANCE = it
+                }
+            }
+        }
+    }
     /**may throw Exception, with coroutineScope is possible Exception will cancell only the coroutines created in
     *This scope, without touching the outer scope. We could avoid it and use the supervisor job in VM, but this way is more efficient
     */
     @Throws(Exception::class)
-    suspend fun getApiFoodUpc(barcode: String): FoodDomain? = coroutineScope{
-        try {
-            val foodData = ApiClient.retrofitService.getFoodByUpc(barcode).await()
-            Log.d("JSON RESULT", foodData.id.toString())
-            return@coroutineScope foodData.asDomainModel()
-        } catch (e: Exception) {
-            throw Exception(e)
-        }
+    override suspend fun getApiFoodUpc(barcode: String): Result<FoodDomain> = coroutineScope{
+        foodRemoteDataSource.getFoodByUpc(barcode)
     }
 
     /**
@@ -40,23 +54,15 @@ class FoodDataRepository(
      * Withcontext is a function that allows to easily change the context that will be used to run a part of the code inside a coroutine. This is a suspending function, so it means that it’ll suspend the coroutine until the code inside is executed, no matter the dispatcher that it’s used.
      * With that, we can make our suspending functions use a different thread:
      */
-    suspend fun saveNewFood(food: FoodDomain) {
-        withContext(Dispatchers.IO) {
-            val newId = database.foodDatabaseDao.insert(food.asDatabaseModel())
-        }
+    override suspend fun saveNewFood(food: FoodDomain) = withContext(ioDispatcher) {
+        foodLocalDataSource.insertFood(food)
     }
 
-    suspend fun getFoods(): LiveData<List<FoodDomain>> {
-        return withContext(Dispatchers.IO) {
-            Transformations.map(database.foodDatabaseDao.getFoods()) {
-                it.asDomainModel()
-            }
-        }
+    override suspend fun getFoods(): LiveData<List<FoodDomain>> = withContext(Dispatchers.IO) {
+        foodLocalDataSource.getFoods()
     }
 
-    suspend fun deleteFood(food: FoodDomain?) {
-        withContext(Dispatchers.IO) {
-                database.foodDatabaseDao.deleteFood(food = food!!.asDatabaseModel())
-        }
+    override suspend fun deleteFood(food: FoodDomain?)  = withContext(Dispatchers.IO) {
+        foodLocalDataSource.deleteFood(food)
     }
 }

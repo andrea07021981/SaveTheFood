@@ -7,22 +7,18 @@ import com.example.savethefood.R
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.repository.FoodDataRepository
+import com.example.savethefood.data.source.repository.FoodRepository
 import kotlinx.coroutines.*
 
 class HomeViewModel(
-    application: Application
-) : AndroidViewModel(application) {
+    private val foodDataRepository: FoodRepository
+) : ViewModel() {
 
     val animationResourceButton = R.anim.bounce
 
     //Supervisor prevent a crash. If one on the children fails, it keeps working.
     private val viewModelJob = SupervisorJob()
-
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
-    private val database = SaveTheFoodDatabase.getInstance(application)
-    private val foodsRepository =
-        FoodDataRepository(database)
 
     private var _foodList = MediatorLiveData<List<FoodDomain>>()
     val foodList: LiveData<List<FoodDomain>>
@@ -38,7 +34,7 @@ class HomeViewModel(
 
     init {
         viewModelScope.launch {
-            _foodList.addSource(foodsRepository.getFoods(), _foodList::setValue)
+            _foodList.addSource(foodDataRepository.getFoods(), _foodList::setValue)
         }
     }
 
@@ -57,11 +53,11 @@ class HomeViewModel(
     /*
      * Factory for constructing DevByteViewModel with parameter
      */
-    class Factory(val app: Application) : ViewModelProvider.Factory {
+    class HomeViewModelFactory(private val dataRepository: FoodRepository) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return HomeViewModel(app) as T
+                return HomeViewModel(dataRepository) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

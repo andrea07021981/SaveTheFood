@@ -1,27 +1,23 @@
 package com.example.savethefood.data.source.local.datasource
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.asDatabaseModel
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.local.dao.FoodDatabaseDao
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.local.entity.asDomainModel
-import com.example.savethefood.data.source.remote.datatransferobject.asDomainModel
-import com.example.savethefood.data.source.remote.service.ApiClient
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class FoodLocalDataSource internal constructor(
     private val foodDatabaseDao: FoodDatabaseDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : FoodDataSource {
 
-    override suspend fun getFoodByUpc(barcode: String): FoodDomain? {
+    override suspend fun getFoodByUpc(barcode: String): Result<FoodDomain> {
         TODO("No OP")
     }
 
@@ -34,17 +30,14 @@ class FoodLocalDataSource internal constructor(
      * This is a suspending function, so it means that it’ll suspend the coroutine until the code inside is executed, no matter the dispatcher that it’s used.
      * With that, we can make our suspending functions use a different thread:
      */
-    override suspend fun saveNewFood(food: FoodDomain) {
-        withContext(ioDispatcher) {
-            val newId = foodDatabaseDao.insert(food.asDatabaseModel())
-        }
+    override suspend fun insertFood(food: FoodDomain) = withContext(ioDispatcher) {
+        foodDatabaseDao.insert(food.asDatabaseModel())
     }
 
-    override suspend fun getFoods(): LiveData<List<FoodDomain>> {
-        return withContext(ioDispatcher) {
-            Transformations.map(foodDatabaseDao.getFoods()) {
-                it.asDomainModel()
-            }
+    override suspend fun getFoods(): LiveData<List<FoodDomain>> = withContext(ioDispatcher) {
+        //TODO add try catch with Result.ExError
+        return@withContext foodDatabaseDao.getFoods().map {
+            it.asDomainModel()
         }
     }
 

@@ -15,13 +15,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.TransitionInflater
 import com.example.savethefood.EventObserver
 import com.example.savethefood.R
+import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.databinding.FragmentHomeBinding
+import com.example.savethefood.fooddetail.FoodDetailViewModel
 
 class HomeFragment : Fragment() {
 
     private val homeViewModel by viewModels<HomeViewModel>{
-        val activity = requireNotNull(this.activity)
-        HomeViewModel.Factory(activity.application)
+        HomeViewModel.HomeViewModelFactory(FoodDataRepository.getRepository(requireActivity().application))
     }
 
     private lateinit var dataBinding: FragmentHomeBinding

@@ -6,7 +6,6 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.remote.datatransferobject.asDomainModel
-import com.example.savethefood.data.source.remote.service.ApiClient
 import com.example.savethefood.data.source.remote.service.FoodService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +21,7 @@ class FoodRemoteDataSource(
      *This scope, without touching the outer scope. We could avoid it and use the supervisor job in VM, but this way is more efficient
      */
     @Throws(Exception::class)
-    override suspend fun getFoodByUpc(barcode: String): Result<FoodDomain?> = coroutineScope{
+    override suspend fun getFoodByUpc(barcode: String): Result<FoodDomain> = coroutineScope{
         try {
             val foodData = foodApi.getFoodByUpc(barcode).await()
             Log.d("JSON RESULT", foodData.id.toString())
@@ -32,7 +31,7 @@ class FoodRemoteDataSource(
         }
     }
 
-    override suspend fun saveNewFood(food: FoodDomain) {
+    override suspend fun insertFood(food: FoodDomain): Long {
         TODO("No OP")
     }
 

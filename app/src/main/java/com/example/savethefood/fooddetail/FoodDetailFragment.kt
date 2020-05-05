@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
@@ -14,15 +15,17 @@ import androidx.transition.TransitionInflater
 import com.example.savethefood.EventObserver
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.source.repository.FoodDataRepository
 
 class FoodDetailFragment : Fragment() {
 
     private val args: FoodDetailFragmentArgs by navArgs()
 
-    private val foodDetailViewModel: FoodDetailViewModel by lazy {
-        val application = requireNotNull(activity).application
-        ViewModelProvider(this, FoodDetailViewModel.Factory(application = application, foodSelected = foodSelected))
-            .get(FoodDetailViewModel::class.java)
+    private val foodDetailViewModel: FoodDetailViewModel by viewModels {
+        FoodDetailViewModel.FoodDetailViewModelFactory(
+            FoodDataRepository.getRepository(requireActivity().application),
+            foodSelected
+        )
     }
 
     private lateinit var foodSelected: FoodDomain

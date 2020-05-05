@@ -7,6 +7,8 @@ import com.example.savethefood.Event
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.repository.FoodDataRepository
+import com.example.savethefood.data.source.repository.FoodRepository
+import com.example.savethefood.data.source.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -15,14 +17,12 @@ import java.lang.IllegalArgumentException
 import java.lang.NullPointerException
 
 class FoodDetailViewModel(
-    app: Application,
+    private val foodDataRepository: FoodRepository,
     food: FoodDomain
 ) : ViewModel() {
 
     private val viewmodelJob = Job()
     private val viewmodelScope = CoroutineScope(viewmodelJob + Dispatchers.IO)
-    private val database = SaveTheFoodDatabase.getInstance(app)
-    private val foodsRepository = FoodDataRepository(database)
 
     private val _food = MutableLiveData<FoodDomain>()
     val food: LiveData<FoodDomain>
@@ -39,7 +39,7 @@ class FoodDetailViewModel(
     fun deleteFood() {
         viewmodelScope.launch {
             try {
-                foodsRepository.deleteFood(_food.value)
+                foodDataRepository.deleteFood(_food.value)
             } catch (e: NullPointerException) {
                 Log.e("FoodDetail", e.message)
             }
@@ -53,13 +53,13 @@ class FoodDetailViewModel(
     /**
      * Factory for constructing DevByteViewModel with parameter
      */
-    class Factory(val application: Application, val foodSelected: FoodDomain) : ViewModelProvider.Factory {
+    class FoodDetailViewModelFactory(private val dataRepository: FoodRepository, private val foodSelected: FoodDomain) : ViewModelProvider.NewInstanceFactory() {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(FoodDetailViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
                 return FoodDetailViewModel(
-                    app = application,
+                    foodDataRepository = dataRepository,
                     food = foodSelected
                 ) as T
             }
