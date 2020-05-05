@@ -14,7 +14,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
-class FoodRepository(
+class FoodDataRepository(
     private val database: SaveTheFoodDatabase
 ) {
 

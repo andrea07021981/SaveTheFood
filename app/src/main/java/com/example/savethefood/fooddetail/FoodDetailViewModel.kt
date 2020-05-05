@@ -6,7 +6,7 @@ import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.source.repository.FoodRepository
+import com.example.savethefood.data.source.repository.FoodDataRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -22,7 +22,7 @@ class FoodDetailViewModel(
     private val viewmodelJob = Job()
     private val viewmodelScope = CoroutineScope(viewmodelJob + Dispatchers.IO)
     private val database = SaveTheFoodDatabase.getInstance(app)
-    private val foodsRepository = FoodRepository(database)
+    private val foodsRepository = FoodDataRepository(database)
 
     private val _food = MutableLiveData<FoodDomain>()
     val food: LiveData<FoodDomain>

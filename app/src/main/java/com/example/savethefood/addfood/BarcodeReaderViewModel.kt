@@ -6,7 +6,7 @@ import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.source.repository.FoodRepository
+import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.*
 import java.lang.Exception
@@ -19,7 +19,7 @@ class BarcodeReaderViewModel(
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
     private val database = SaveTheFoodDatabase.getInstance(application)
     private val foodRepository =
-        FoodRepository(database)
+        FoodDataRepository(database)
 
     private val _food = MutableLiveData<FoodDomain>()
     val food: LiveData<FoodDomain>

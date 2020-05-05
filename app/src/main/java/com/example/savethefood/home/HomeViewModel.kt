@@ -6,7 +6,7 @@ import com.example.savethefood.Event
 import com.example.savethefood.R
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.source.repository.FoodRepository
+import com.example.savethefood.data.source.repository.FoodDataRepository
 import kotlinx.coroutines.*
 
 class HomeViewModel(
@@ -22,7 +22,7 @@ class HomeViewModel(
 
     private val database = SaveTheFoodDatabase.getInstance(application)
     private val foodsRepository =
-        FoodRepository(database)
+        FoodDataRepository(database)
 
     private var _foodList = MediatorLiveData<List<FoodDomain>>()
     val foodList: LiveData<List<FoodDomain>>

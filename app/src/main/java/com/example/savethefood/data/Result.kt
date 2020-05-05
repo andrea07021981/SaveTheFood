@@ -23,14 +23,14 @@ package com.example.savethefood.data
 sealed class Result<out R> {
 
     data class Success<out T>(val data: T) : Result<T>()
-    data class Exception(val exception: Exception) : Result<Nothing>()
+    data class ExError(val exception: Exception) : Result<Nothing>()
     data class Error(val message: String) : Result<Nothing>()
     object Loading : Result<Nothing>()
 
     override fun toString(): String {
         return when (this) {
             is Success<*> -> "Success[data=$data]"
-            is Exception -> "Exception[exception=$exception]"
+            is ExError -> "Exception[exception=$exception]"
             is Error -> "Error[exception=$message]"
             Loading -> "Loading"
         }
