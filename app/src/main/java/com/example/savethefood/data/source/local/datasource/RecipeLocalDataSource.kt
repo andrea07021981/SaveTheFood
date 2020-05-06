@@ -1,5 +1,6 @@
 package com.example.savethefood.data.source.local.datasource
 
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.source.RecipeDataSource
@@ -14,12 +15,12 @@ class RecipeLocalDataSource internal constructor(
 ) : RecipeDataSource {
 
     @Throws(Exception::class)
-    override suspend fun getRecipes(foodFilter: String?): RecipeDomain = coroutineScope {
+    override suspend fun getRecipes(foodFilter: String?): Result<RecipeDomain> = coroutineScope {
         TODO("No OP")
     }
 
     @Throws(Exception::class)
-    override suspend fun getRecipeInfo(id: Int): RecipeInfoDomain = coroutineScope {
+    override suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain> = coroutineScope {
         TODO("No OP")
     }
 

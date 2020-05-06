@@ -1,6 +1,7 @@
 package com.example.savethefood.data.source.repository
 
 import android.app.Application
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
@@ -39,12 +40,12 @@ class RecipeDataRepository(
     }
 
     @Throws(Exception::class)
-    override suspend fun getRecipes(foodFilter: String?): RecipeDomain = withContext(ioDispatcher) {
+    override suspend fun getRecipes(foodFilter: String?): Result<RecipeDomain> = withContext(ioDispatcher) {
         recipeRemoteDataSource.getRecipes(foodFilter)
     }
 
     @Throws(Exception::class)
-    override suspend fun getRecipeInfo(id: Int): RecipeInfoDomain = withContext(ioDispatcher) {
+    override suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain> = withContext(ioDispatcher) {
         recipeRemoteDataSource.getRecipeInfo(id)
     }
 

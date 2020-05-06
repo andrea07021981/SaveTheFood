@@ -1,5 +1,6 @@
 package com.example.savethefood.data.source.remote.datasource
 
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.source.RecipeDataSource
@@ -17,22 +18,22 @@ class RecipeRemoteDataSource(
 ) : RecipeDataSource{
 
     @Throws(Exception::class)
-    override suspend fun getRecipes(foodFilter: String?): RecipeDomain = coroutineScope {
-        try {
+    override suspend fun getRecipes(foodFilter: String?): Result<RecipeDomain> = coroutineScope {
+        return@coroutineScope try {
             val recipes = if (foodFilter.isNullOrEmpty()) foodApi.getRecipes() else foodApi.getRecipesByIngredient(foodFilter)
-            return@coroutineScope recipes.asDomainModel()
+            Result.Success(recipes.asDomainModel())
         } catch (error: Exception) {
-            throw Exception(error)
+            Result.ExError(error)
         }
     }
 
     @Throws(Exception::class)
-    override suspend fun getRecipeInfo(id: Int): RecipeInfoDomain = coroutineScope {
-        try {
+    override suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain> = coroutineScope {
+        return@coroutineScope try {
             val recipe = foodApi.getRecipeInfo(id).await()
-            return@coroutineScope recipe.asDomainModel()
+            Result.Success(recipe.asDomainModel())
         } catch (error: Exception) {
-            throw Exception(error)
+            Result.ExError(error)
         }
     }
 

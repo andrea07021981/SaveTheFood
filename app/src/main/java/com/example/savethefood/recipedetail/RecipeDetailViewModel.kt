@@ -7,6 +7,7 @@ import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.Done
 import com.example.savethefood.constants.Error
 import com.example.savethefood.constants.Loading
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.domain.RecipeResult
@@ -56,7 +57,11 @@ class RecipeDetailViewModel(
             try {
                 _status.value = Loading("Loading")
                 val recipe = recipeRepository.getRecipeInfo(recipeResult.id)
-                _recipeDetail.value = recipe
+                if (recipe is Result.Success) {
+                    _recipeDetail.value = recipe.data
+                } else {
+                    throw Exception(recipe.toString())
+                }
                 _status.value = Done("Done")
             } catch (e: Exception) {
                 _status.value = Error(toString())
