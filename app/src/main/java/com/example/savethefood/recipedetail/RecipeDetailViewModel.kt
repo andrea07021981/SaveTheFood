@@ -10,6 +10,7 @@ import com.example.savethefood.constants.Loading
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.domain.RecipeResult
+import com.example.savethefood.data.source.repository.RecipeDataRepository
 import com.example.savethefood.data.source.repository.RecipeRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +18,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class RecipeDetailViewModel(
-    application: Application,
+    private val recipeRepository: RecipeRepository,
     recipeResult: RecipeResult
 ) : ViewModel() {
 
@@ -26,9 +27,6 @@ class RecipeDetailViewModel(
     private val viewModelJob = Job()
 
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
-    private val database = SaveTheFoodDatabase.getInstance(application)
-    private val recipesRepository = RecipeRepository(database)
 
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<ApiCallStatus>(Done("Done"))
@@ -57,7 +55,7 @@ class RecipeDetailViewModel(
         viewModelScope.launch {
             try {
                 _status.value = Loading("Loading")
-                val recipe = recipesRepository.getRecipeInfo(recipeResult.id)
+                val recipe = recipeRepository.getRecipeInfo(recipeResult.id)
                 _recipeDetail.value = recipe
                 _status.value = Done("Done")
             } catch (e: Exception) {
@@ -77,16 +75,22 @@ class RecipeDetailViewModel(
 
     fun saveRecipe(recipe: RecipeInfoDomain) {
         //TODO SAVE IN LOCAL THE RECIPE, ADD A LIVE DATA AND DATABINDIG FOR HEART ICON
+        viewModelScope.launch {
+            recipeRepository.saveRecipe(recipe)
+        }
     }
 
-    class Factory(val application: Application, val recipeResult: RecipeResult) : ViewModelProvider.Factory {
+    class RecipeDetailViewModelFactory(
+        private val dataRepository: RecipeRepository,
+        private val recipeResult: RecipeResult
+    ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(RecipeDetailViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
                 return RecipeDetailViewModel(
-                    application = application,
-                    recipeResult = recipeResult
+                    dataRepository,
+                    recipeResult
                 ) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")

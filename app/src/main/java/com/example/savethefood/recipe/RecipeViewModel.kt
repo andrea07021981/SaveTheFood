@@ -10,21 +10,18 @@ import com.example.savethefood.constants.Error
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeResult
+import com.example.savethefood.data.source.repository.RecipeDataRepository
 import com.example.savethefood.data.source.repository.RecipeRepository
 import kotlinx.coroutines.*
 
 class RecipeViewModel(
-    application: Application,
+    private val recipeRepository: RecipeRepository,
     foodName: String?
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     private val viewModelJob = SupervisorJob()
 
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
-    private val database = SaveTheFoodDatabase.getInstance(application)
-    private val recipesRepository =
-        RecipeRepository(database)
 
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<ApiCallStatus>(Done("Done"))
@@ -53,7 +50,7 @@ class RecipeViewModel(
         viewModelScope.launch {
             try {
                 _status.value = Loading("Loading")
-                val recipes = recipesRepository.getRecipes(food)
+                val recipes = recipeRepository.getRecipes(food)
                 _recipeList.value = recipes
                 _recipeListResult.value = recipes.results
                 _status.value = Done("Done")
@@ -72,12 +69,15 @@ class RecipeViewModel(
         _recipeListResult.value = list
     }
 
-    class Factory(val app: Application, val foodName: String?) : ViewModelProvider.Factory {
+    class RecipeViewModelFactory(
+        private val dataRepository: RecipeRepository,
+        private val foodName: String?
+    ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(RecipeViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
                 return RecipeViewModel(
-                    app,
+                    dataRepository,
                     foodName
                 ) as T
             }

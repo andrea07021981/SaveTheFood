@@ -54,7 +54,9 @@ class HomeViewModel(
     /*
      * Factory for constructing DevByteViewModel with parameter
      */
-    class HomeViewModelFactory(private val dataRepository: FoodRepository) : ViewModelProvider.NewInstanceFactory() {
+    class HomeViewModelFactory(
+        private val dataRepository: FoodRepository
+    ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")

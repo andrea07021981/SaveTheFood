@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.EventObserver
 import com.example.savethefood.databinding.FragmentRecipeDetailBinding
 import com.example.savethefood.data.domain.RecipeResult
+import com.example.savethefood.data.source.repository.RecipeDataRepository
 
 class RecipeDetailFragment : Fragment() {
 
     private val recipeDetailViewModel by viewModels<RecipeDetailViewModel> {
-        val application = requireNotNull(activity).application
-        RecipeDetailViewModel.Factory(application = application, recipeResult = recipeSelected)
+        RecipeDetailViewModel.RecipeDetailViewModelFactory(RecipeDataRepository.getRepository(requireActivity().application), recipeSelected)
     }
 
     private lateinit var recipeSelected: RecipeResult

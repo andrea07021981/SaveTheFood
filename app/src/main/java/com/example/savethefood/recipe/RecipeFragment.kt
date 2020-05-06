@@ -16,14 +16,14 @@ import com.example.savethefood.EventObserver
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentReceipeBinding
 import com.example.savethefood.data.domain.RecipeResult
+import com.example.savethefood.data.source.repository.RecipeDataRepository
 import kotlinx.android.synthetic.main.fragment_nested.*
 
 class RecipeFragment : Fragment() {
 
     private var foodName: String? = null
     private val recipeViewModel by viewModels<RecipeViewModel> {
-        val activity = requireNotNull(this.activity)
-        RecipeViewModel.Factory(activity.application, foodName = foodName)
+        RecipeViewModel.RecipeViewModelFactory(RecipeDataRepository.getRepository(requireActivity().application), foodName)
     }
 
     private lateinit var dataBinding: FragmentReceipeBinding

@@ -1,9 +1,9 @@
-package com.example.savethefood.data.source.repository
+package com.example.savethefood.data.source
 
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
 
-interface RecipeRepository {
+interface RecipeDataSource {
     @Throws(Exception::class)
     suspend fun getRecipes(foodFilter: String?): RecipeDomain
 
