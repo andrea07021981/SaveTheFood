@@ -79,9 +79,9 @@ class SignUpViewModel(
         private val dataRepository: UserRepository
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(SignUpViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return LoginViewModel(dataRepository) as T
+                return SignUpViewModel(dataRepository) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

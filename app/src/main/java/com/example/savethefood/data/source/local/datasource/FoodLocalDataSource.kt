@@ -34,10 +34,10 @@ class FoodLocalDataSource internal constructor(
         foodDatabaseDao.insert(food.asDatabaseModel())
     }
 
-    override suspend fun getFoods(): LiveData<List<FoodDomain>> = withContext(ioDispatcher) {
+    override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> {
         //TODO add try catch with Result.ExError
-        return@withContext foodDatabaseDao.getFoods().map {
-            it.asDomainModel()
+        return foodDatabaseDao.getFoods().map {
+            Result.Success(it.asDomainModel())
         }
     }
 

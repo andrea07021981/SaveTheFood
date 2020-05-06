@@ -58,7 +58,7 @@ class FoodDataRepository(
         foodLocalDataSource.insertFood(food)
     }
 
-    override suspend fun getFoods(): LiveData<List<FoodDomain>> = withContext(Dispatchers.IO) {
+    override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> = withContext(Dispatchers.IO) {
         foodLocalDataSource.getFoods()
     }
 

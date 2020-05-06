@@ -18,7 +18,6 @@
         tools:context=".home.HomeFragment"
         android:background="@color/colorAccent">
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/food_recycleview"
             android:layout_width="match_parent"

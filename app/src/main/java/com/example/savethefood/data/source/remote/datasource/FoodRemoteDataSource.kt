@@ -35,7 +35,7 @@ class FoodRemoteDataSource(
         TODO("No OP")
     }
 
-    override suspend fun getFoods(): LiveData<List<FoodDomain>> {
+    override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> {
         TODO("No OP")
     }
 

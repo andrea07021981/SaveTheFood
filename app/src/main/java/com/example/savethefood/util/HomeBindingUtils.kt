@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
+import com.example.savethefood.data.Result
 import com.example.savethefood.home.FoodAdapter
 import com.example.savethefood.data.domain.FoodDomain
 
@@ -37,7 +38,10 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
 }
 
 @BindingAdapter("listdata")
-fun bindRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?) {
+fun bindRecycleView(recyclerView: RecyclerView, data: Result<List<FoodDomain>>?) {
     val adapter = recyclerView.adapter as FoodAdapter
-    adapter.submitList(data)
+    when (data) {
+        is Result.Success -> adapter.submitList(data.data)
+        else -> adapter.submitList(listOf())
+    }
 }

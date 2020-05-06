@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.R
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.repository.FoodDataRepository
@@ -20,8 +21,8 @@ class HomeViewModel(
     private val viewModelJob = SupervisorJob()
     private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    private var _foodList = MediatorLiveData<List<FoodDomain>>()
-    val foodList: LiveData<List<FoodDomain>>
+    private var _foodList = MediatorLiveData<Result<List<FoodDomain>>>()
+    val foodList: LiveData<Result<List<FoodDomain>>>
         get() = _foodList
 
     private val _detailFoodEvent = MutableLiveData<Event<FoodDomain>>()
