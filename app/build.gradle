@@ -38,6 +38,16 @@ android {
 
             // ...
         }
+
+        //Shared fake data resource for test and android test
+        sourceSets {
+            androidTest {
+                java.srcDirs += "src/sharedtest/java"
+            }
+            test {
+                java.srcDirs += "src/sharedtest/java"
+            }
+        }
     }
 
     //For migration tests
