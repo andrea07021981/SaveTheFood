@@ -20,6 +20,7 @@ class FoodDetailViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()//Must include it for livedata
 
     private lateinit var foodViewModel: FoodDetailViewModel
+    //TODO add fake data and repository for food and recipes
 
     @Before
     fun setupViewModel() {

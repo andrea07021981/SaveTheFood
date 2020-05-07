@@ -24,9 +24,7 @@ class LoginViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()//Must include it for livedata
 
     private lateinit var fakeUserDataRepositoryTest: FakeUserDataRepositoryTest
-    lateinit var loginViewModel: LoginViewModel
-    lateinit var userName: String
-    lateinit var userPassword: String
+    private lateinit var loginViewModel: LoginViewModel
 
     @Before
     fun setupViewModel() {

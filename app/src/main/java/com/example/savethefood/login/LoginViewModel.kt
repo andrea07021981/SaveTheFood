@@ -1,5 +1,6 @@
 package com.example.savethefood.login
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import com.example.savethefood.R
 import com.example.savethefood.data.Result
@@ -18,7 +19,9 @@ class LoginViewModel(
     val animationResourceButton = R.anim.bounce
 
     var emailValue = MutableLiveData<String>()
+        @VisibleForTesting set // this allow us to use this set only for test
     var passwordValue = MutableLiveData<String>()
+        @VisibleForTesting set // this allow us to use this set only for test
     var errorPassword = MutableLiveData<Boolean>()
     var errorEmail = MutableLiveData<Boolean>()
 
