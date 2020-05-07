@@ -12,6 +12,13 @@ class FakeUserDataRepositoryTest(
     private val fakeUserDataRepositoryTest: FakeUserDataSourceTest
 ) : UserRepository {
 
+    //Variable and fun for testing fake errors
+    private var shouldReturnError = false
+
+    fun setReturnError(value: Boolean) {
+        shouldReturnError = value
+    }
+
     override suspend fun saveNewUser(user: UserDomain) {
         fakeUserDataRepositoryTest.saveUser(user)
     }

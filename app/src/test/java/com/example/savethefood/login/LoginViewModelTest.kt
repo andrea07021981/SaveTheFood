@@ -77,4 +77,16 @@ class LoginViewModelTest {
         val value = loginViewModel.userLogged.getOrAwaitValue() as Result.Error
         assertThat(value, `is`(Result.Error("Not found")))
     }
+
+    @Test
+    fun login_andFail() {
+        // Make the repository return errors.
+        //TODO add error login on fragmentlogin
+        fakeUserDataRepositoryTest.setReturnError(true)
+        loginViewModel.onSignUpClick()
+
+        // Then empty and error are true (which triggers an error message to be shown).
+        assertThat(loginViewModel.errorEmail.getOrAwaitValue(), `is`(true))
+        assertThat(loginViewModel.errorPassword.getOrAwaitValue(), `is`(true))
+    }
 }
