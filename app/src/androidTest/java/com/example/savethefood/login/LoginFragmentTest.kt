@@ -12,6 +12,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
+import com.example.savethefood.MainCoroutineRuleAndroid
 import com.example.savethefood.R
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
@@ -32,8 +33,11 @@ import org.mockito.Mockito.verify
 @ExperimentalCoroutinesApi
 class LoginFragmentTest {
 
+    // Executes each task synchronously using Architecture Components.
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()//Must include it for livedata
+    @get:Rule
+    var mainCoroutineRule = MainCoroutineRuleAndroid()
 
     private lateinit var repository: FakeUserDataRepositoryTest
     private lateinit var loginViewModel: LoginViewModel
@@ -50,21 +54,24 @@ class LoginFragmentTest {
         val user2 = UserDomain("b", "a@b", "b")
         val user3 = UserDomain("c", "a@c", "c")
         val user4 = UserDomain("d", "a@d", "d")
-        runBlocking {  repository.addUsers(user1, user2, user3, user4) } // Simulate a coroutine
+        mainCoroutineRule.runBlockingTest {  repository.addUsers(user1, user2, user3, user4) } // Simulate a coroutine
 
     }
 
     @Test
-    fun activeLogin_DisplayedInUi() = runBlockingTest {
+    fun activeLogin_DisplayedInUi() = mainCoroutineRule.runBlockingTest {
+        // GIVEN
         launchFragmentInContainer<LoginFragment>(null, R.style.AppTheme)
         Thread.sleep(2000)
 
+        // _WHEN email and pass are displayed
         onView(withId(R.id.etEmail))
             .check(matches(isDisplayed()))
 
         onView(withId(R.id.etPassword))
             .check(matches(isDisplayed()))
 
+        // THEN click and login
         onView(withId(R.id.button)).perform(click())
     }
 

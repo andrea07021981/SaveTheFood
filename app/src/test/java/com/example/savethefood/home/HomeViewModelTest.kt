@@ -19,6 +19,7 @@ import java.util.*
 @RunWith(AndroidJUnit4::class)
 class HomeViewModelTest {
 
+    // Executes each task synchronously using Architecture Components.
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()//Must include it for livedata
 
