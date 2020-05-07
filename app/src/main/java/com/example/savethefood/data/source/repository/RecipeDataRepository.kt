@@ -10,6 +10,7 @@ import com.example.savethefood.data.source.local.datasource.RecipeLocalDataSourc
 import com.example.savethefood.data.source.remote.datasource.RecipeRemoteDataSource
 import com.example.savethefood.data.source.remote.datatransferobject.asDomainModel
 import com.example.savethefood.data.source.remote.service.ApiClient
+import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -41,15 +42,21 @@ class RecipeDataRepository(
 
     @Throws(Exception::class)
     override suspend fun getRecipes(foodFilter: String?): Result<RecipeDomain> = withContext(ioDispatcher) {
-        recipeRemoteDataSource.getRecipes(foodFilter)
+        wrapEspressoIdlingResource {
+            recipeRemoteDataSource.getRecipes(foodFilter)
+        }
     }
 
     @Throws(Exception::class)
     override suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain> = withContext(ioDispatcher) {
-        recipeRemoteDataSource.getRecipeInfo(id)
+        wrapEspressoIdlingResource {
+            recipeRemoteDataSource.getRecipeInfo(id)
+        }
     }
 
     override suspend fun saveRecipe(recipe: RecipeInfoDomain) = withContext(ioDispatcher){
-        recipeLocalDataSource.saveRecipe(recipe)
+        wrapEspressoIdlingResource {
+            recipeLocalDataSource.saveRecipe(recipe)
+        }
     }
 }

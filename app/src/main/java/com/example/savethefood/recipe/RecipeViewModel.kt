@@ -51,7 +51,7 @@ class RecipeViewModel(
         viewModelScope.launch {
             try {
                 _status.value = Loading("Loading")
-                val recipes = recipeRepository.getRecipes(food)
+                val recipes = recipeRepository.getRecipes(food) ?: return@launch
                 if (recipes is Result.Success) {
                     _recipeList.value = recipes.data
                     _recipeListResult.value = recipes.data.results

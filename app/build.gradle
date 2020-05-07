@@ -35,7 +35,7 @@ android {
         // Always show the result of every unit test when running via command line, even if it passes.
         testOptions.unitTests {
             includeAndroidResources = true
-
+            returnDefaultValues = true //It's mandatory to not break unit tests
             // ...
         }
 
@@ -144,8 +144,8 @@ dependencies {
 
     // AndroidX Test - Instrumented testing
     androidTestImplementation "androidx.test.ext:junit:$androidXTestExtKotlinRunnerVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$version_espresso"
     testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_coroutine"
     // Dependencies for Android instrumented unit tests
@@ -167,5 +167,8 @@ dependencies {
     // Dependencies for Android instrumented unit tests
     androidTestImplementation "org.mockito:mockito-core:$version_mockito"
     androidTestImplementation "com.linkedin.dexmaker:dexmaker-mockito:$version_dex_maker"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$version_espresso"
+
+    //Test Espresso idling resources
+    implementation "androidx.test.espresso:espresso-idling-resource:$version_espresso"
 }

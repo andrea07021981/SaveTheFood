@@ -23,7 +23,7 @@ buildscript {
         version_glide = "4.8.0"
         version_paging = "2.1.2"
         androidXTestExtKotlinRunnerVersion = '1.1.1'
-        espressoVersion = '3.2.0-beta01'
+        version_espresso = '3.2.0-beta01'
         androidXTestCoreVersion = '1.2.0'
         robolectricVersion = '4.3.1'
         androidXTestExtKotlinRunnerVersion = '1.1.1'

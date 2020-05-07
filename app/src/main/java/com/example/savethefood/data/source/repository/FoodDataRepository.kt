@@ -11,6 +11,7 @@ import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.source.local.datasource.FoodLocalDataSource
 import com.example.savethefood.data.source.remote.datasource.FoodRemoteDataSource
 import com.example.savethefood.data.source.remote.service.ApiClient
+import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -43,7 +44,9 @@ class FoodDataRepository(
     */
     @Throws(Exception::class)
     override suspend fun getApiFoodUpc(barcode: String): Result<FoodDomain> = coroutineScope{
-        foodRemoteDataSource.getFoodByUpc(barcode)
+        wrapEspressoIdlingResource {
+            foodRemoteDataSource.getFoodByUpc(barcode)
+        }
     }
 
     /**
@@ -55,14 +58,20 @@ class FoodDataRepository(
      * With that, we can make our suspending functions use a different thread:
      */
     override suspend fun saveNewFood(food: FoodDomain) = withContext(ioDispatcher) {
-        foodLocalDataSource.insertFood(food)
+        wrapEspressoIdlingResource {
+            foodLocalDataSource.insertFood(food)
+        }
     }
 
     override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> = withContext(Dispatchers.IO) {
-        foodLocalDataSource.getFoods()
+        wrapEspressoIdlingResource {
+            foodLocalDataSource.getFoods()
+        }
     }
 
     override suspend fun deleteFood(food: FoodDomain?)  = withContext(Dispatchers.IO) {
-        foodLocalDataSource.deleteFood(food)
+        wrapEspressoIdlingResource {
+            foodLocalDataSource.deleteFood(food)
+        }
     }
 }
