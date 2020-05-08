@@ -80,7 +80,7 @@ class LoginFragmentTest {
 
     @Test
     fun activeLogin_DisplayedInUi() = mainCoroutineRule.runBlockingTest {
-        // GIVEN
+        // GIVEN a fragment
         val fragmentScenario =
             launchFragmentInContainer<LoginFragment>(null, R.style.AppTheme)
         Thread.sleep(2000)
