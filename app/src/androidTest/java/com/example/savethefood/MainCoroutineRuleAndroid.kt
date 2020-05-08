@@ -9,7 +9,7 @@ import kotlinx.coroutines.test.setMain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-//This swap the standard coroutine main dispatcher to the test dispatcher
+//This swap the standard coroutine main dispatcher to the test dispatcher, better performance
 @ExperimentalCoroutinesApi
 class MainCoroutineRuleAndroid(private val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()):
     TestWatcher(),//this makes MainCoroutineRule a JUnit Rule

@@ -52,7 +52,7 @@ class LoginViewModelTest {
         val user2 = UserDomain("b", "a@b", "b")
         val user3 = UserDomain("c", "a@c", "c")
         val user4 = UserDomain("d", "a@d", "d")
-        mainCoroutineRule.runBlockingTest {  fakeUserDataRepositoryTest.addUsers(user1, user2, user3, user4) } // Simulate a coroutine
+        mainCoroutineRule.runBlockingTest {  fakeUserDataRepositoryTest.addUsers(user1, user2, user3, user4) } // Simulate a coroutine DON'T USE IT IN REAL CODE
     }
 
     @Test
