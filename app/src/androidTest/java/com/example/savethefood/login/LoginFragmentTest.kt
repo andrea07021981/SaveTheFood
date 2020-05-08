@@ -6,6 +6,7 @@ import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -18,9 +19,13 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
 import com.example.savethefood.data.source.repository.FakeUserDataRepositoryTest
+import com.example.savethefood.util.DataBindingIdlingResource
+import com.example.savethefood.util.EspressoIdlingResource
+import com.example.savethefood.util.monitorFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -58,11 +63,28 @@ class LoginFragmentTest {
 
     }
 
+    //We are using this class for databinding test
+    private val dataBindingIdlingResource = DataBindingIdlingResource()
+
+    @Before
+    fun registerIdlingResource() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
+        IdlingRegistry.getInstance().register(dataBindingIdlingResource)
+    }
+
+    @After
+    fun unregisterIdlingResource() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
+        IdlingRegistry.getInstance().unregister(dataBindingIdlingResource)
+    }
+
     @Test
     fun activeLogin_DisplayedInUi() = mainCoroutineRule.runBlockingTest {
         // GIVEN
-        launchFragmentInContainer<LoginFragment>(null, R.style.AppTheme)
+        val fragmentScenario =
+            launchFragmentInContainer<LoginFragment>(null, R.style.AppTheme)
         Thread.sleep(2000)
+        dataBindingIdlingResource.monitorFragment(fragmentScenario)
 
         // _WHEN email and pass are displayed
         onView(withId(R.id.etEmail))
