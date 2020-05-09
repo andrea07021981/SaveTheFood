@@ -60,6 +60,7 @@ class LoginViewModel(
     }
 
     private fun doLogin() = uiScope.launch {
+
         val userToSave = UserDomain()
             .apply {
             userEmail = emailValue.value.toString()
