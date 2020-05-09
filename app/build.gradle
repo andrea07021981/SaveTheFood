@@ -89,7 +89,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$version_room"
     kapt "androidx.room:room-compiler:$version_room"
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_archlifecycle"
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_coroutine"
@@ -140,29 +140,29 @@ dependencies {
     // AndroidJUnitRunner and JUnit Rules
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
-    testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+    testImplementation "androidx.arch.core:core-testing:$version_arch_testing"
 
     // AndroidX Test - Instrumented testing
-    androidTestImplementation "androidx.test.ext:junit:$androidXTestExtKotlinRunnerVersion"
+    androidTestImplementation "androidx.test.ext:junit:$version_androidX_test_ext_kotlin_runner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$version_espresso"
-    testImplementation "org.hamcrest:hamcrest-all:$hamcrestVersion"
+    testImplementation "org.hamcrest:hamcrest-all:$version_hamcrest"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_coroutine"
     // Dependencies for Android instrumented unit tests
     androidTestImplementation "junit:junit:$version_junit"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_coroutine"
-    androidTestImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+    androidTestImplementation "androidx.arch.core:core-testing:$version_arch_testing"
 
     // AndroidX Test - JVM testing
-    testImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"
-    testImplementation "org.robolectric:robolectric:$robolectricVersion"
-    testImplementation "androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion"
+    testImplementation "androidx.test:core-ktx:$version_androidX_test_core"
+    testImplementation "org.robolectric:robolectric:$version_robolectric"
+    testImplementation "androidx.test.ext:junit-ktx:$version_androidX_test_ext_kotlin_runner"
 
 
     // Testing code should not be included in the main code.
     // Once https://issuetracker.google.com/128612536 is fixed this can be fixed.
     debugImplementation "androidx.fragment:fragment-testing:$version_fragmentTest"
-    implementation "androidx.test:core:$androidXTestCoreVersion"
+    implementation "androidx.test:core:$version_androidX_test_core"
 
     // Dependencies for Android instrumented unit tests
     androidTestImplementation "org.mockito:mockito-core:$version_mockito"

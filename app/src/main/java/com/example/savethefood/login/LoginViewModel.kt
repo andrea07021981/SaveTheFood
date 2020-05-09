@@ -33,6 +33,7 @@ class LoginViewModel(
     val navigateToSignUpFragment: LiveData<Boolean>
         get() = _navigateToSignUpFragment
 
+    //TODO remove viewModelJob and scope, with new version of androidx there the viewmodescope of
     private var viewModelJob = Job()
     /**
      * A [CoroutineScope] keeps track of all coroutines started by this ViewModel.
