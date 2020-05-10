@@ -25,10 +25,6 @@ class RecipeDetailViewModel(
 
     //TODO ADD CHECK STATUS OF SAVED RECIPE AND BIND IT
 
-    private val viewModelJob = Job()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<ApiCallStatus>(Done("Done"))
 

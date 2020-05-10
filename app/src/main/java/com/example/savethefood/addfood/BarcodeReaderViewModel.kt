@@ -17,9 +17,6 @@ class BarcodeReaderViewModel(
     private val foodDataRepository: FoodRepository
 ) : ViewModel() {
 
-    private val viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     private val _food = MutableLiveData<FoodDomain>()
     val food: LiveData<FoodDomain>
         get() = _food
@@ -80,10 +77,7 @@ class BarcodeReaderViewModel(
              _goHomeEvent.value = Event(Unit)
          }
     }
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
+
     /*
      * Factory for constructing DevByteViewModel with parameter
      */

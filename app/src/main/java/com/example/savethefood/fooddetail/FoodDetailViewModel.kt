@@ -21,9 +21,6 @@ class FoodDetailViewModel(
     food: FoodDomain
 ) : ViewModel() {
 
-    private val viewmodelJob = Job()
-    private val viewmodelScope = CoroutineScope(viewmodelJob + Dispatchers.IO)
-
     private val _food = MutableLiveData<FoodDomain>()
     val food: LiveData<FoodDomain>
         get() = _food
@@ -37,7 +34,7 @@ class FoodDetailViewModel(
     }
 
     fun deleteFood() {
-        viewmodelScope.launch {
+        val launch = viewModelScope.launch {
             try {
                 foodDataRepository.deleteFood(_food.value)
             } catch (e: NullPointerException) {

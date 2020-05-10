@@ -20,10 +20,6 @@ class RecipeViewModel(
     foodName: String?
 ) : ViewModel() {
 
-    private val viewModelJob = SupervisorJob()
-
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     // The internal MutableLiveData that stores the status of the most recent request
     private val _status = MutableLiveData<ApiCallStatus>(Done("Done"))
 
