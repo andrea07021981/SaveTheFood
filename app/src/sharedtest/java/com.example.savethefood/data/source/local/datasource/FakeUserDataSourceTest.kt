@@ -5,7 +5,9 @@ import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.UserDataSource
 import org.junit.Assert.*
 
-class FakeUserDataSourceTest(var users: MutableList<UserDomain>? = mutableListOf()) : UserDataSource {
+class FakeUserDataSourceTest(
+    var users: MutableList<UserDomain>? = mutableListOf()
+) : UserDataSource {
 
     //TODO add fake data, not related with local or remote
 

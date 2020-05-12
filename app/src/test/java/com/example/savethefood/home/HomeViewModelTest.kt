@@ -6,6 +6,8 @@ import androidx.lifecycle.Observer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.source.local.datasource.FakeFoodDataSourceTest
+import com.example.savethefood.data.source.repository.FakeFoodDataRepositoryTest
 import com.example.savethefood.viewmodel.getOrAwaitValue
 import org.checkerframework.common.reflection.qual.GetClass
 import org.hamcrest.CoreMatchers.*
@@ -23,11 +25,13 @@ class HomeViewModelTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()//Must include it for livedata
 
+    private lateinit var fakeFoodDataRepositoryTest: FakeFoodDataRepositoryTest
     private lateinit var homeViewModel: HomeViewModel
 
     @Before
     fun setupViewModel() {
-        homeViewModel = HomeViewModel(ApplicationProvider.getApplicationContext())
+        fakeFoodDataRepositoryTest = FakeFoodDataRepositoryTest(FakeFoodDataSourceTest())
+        homeViewModel = HomeViewModel(fakeFoodDataRepositoryTest)
     }
 
     @Test
