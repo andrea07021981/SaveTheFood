@@ -6,10 +6,7 @@ import com.example.savethefood.R
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.repository.UserRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class LoginViewModel(
     private val userDataRepository: UserRepository
@@ -46,15 +43,21 @@ class LoginViewModel(
         }
     }
 
-    private fun doLogin() = viewModelScope.launch {
+    private fun doLogin() {
 
-        val userToSave = UserDomain()
-            .apply {
-            userEmail = emailValue.value.toString()
-            userPassword = passwordValue.value.toString()
+        viewModelScope.launch {
+            var userRecord: Result<UserDomain>? = null
+            withContext(Dispatchers.IO) {
+                val userToSave = UserDomain()
+                    .apply {
+                        userEmail = emailValue.value.toString()
+                        userPassword = passwordValue.value.toString()
+                    }
+                userRecord = userDataRepository.getUser(user = userToSave)
+            }
+            //This observe is active, so it works even if get operation will be longer that usual
+            _userLogged.value = userRecord
         }
-        val userRecord = userDataRepository.getUser(user = userToSave)
-        _userLogged.value = userRecord
     }
 
     fun doneNavigationSignUp() {
