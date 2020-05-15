@@ -12,7 +12,7 @@
 
     <style name="button" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:gravity">center_vertical|center_horizontal</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
         <item name="android:shadowColor">#FF000000</item>
         <item name="android:shadowDx">0</item>
         <item name="android:shadowDy">-1</item>
@@ -20,7 +20,7 @@
         <item name="android:textSize">18sp</item>
         <item name="android:padding">10dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="backgroundTint">@color/colorAccent</item>
+        <item name="backgroundTint">@color/colorSecondary</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
     </style>

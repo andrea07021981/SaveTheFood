@@ -7,9 +7,9 @@
     <color name="colorPrimarySmooth">#BC28354A</color>
     <color name="colorPrimaryAlpha">#3C28354A</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#31FFFFFF</color>
-    <color name="colorSecondary">#e0292c</color>
-    <color name="colorSecondaryLight">#ff6356</color>
-    <color name="colorSecondaryDark">#a60003</color>
+    <color name="colorSecondary">#791112</color>
+    <color name="colorSecondaryLight">#973C34</color>
+    <color name="colorSecondaryDark">#430102</color>
     <color name="colorSecondaryText">#ffffff</color>
 
     <!-- Custom colors -->

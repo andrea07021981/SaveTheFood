@@ -51,14 +51,18 @@ fun bindRecycleView(recyclerView: RecyclerView, data: List<RecipeResult>?) {
 
 @BindingAdapter("listIngredientsInstruction")
 fun bindIngredientInstructionsRecycleView(recyclerView: RecyclerView, data: List<IngredientsDomain>?) {
-    val adapter = recyclerView.adapter as IngredientInstructionAdapter
-    adapter.submitList(data)
+    if (recyclerView.adapter is IngredientInstructionAdapter) {
+        val adapter = recyclerView.adapter as IngredientInstructionAdapter
+        adapter.submitList(data)
+    }
 }
 
 @BindingAdapter("listEquipmentsInstruction")
 fun bindEquipmentInstructionsRecycleView(recyclerView: RecyclerView, data: List<EquipmentDomain>?) {
-    val adapter = recyclerView.adapter as EquipmentInstructionAdapter
-    adapter.submitList(data)
+    if (recyclerView.adapter is EquipmentInstructionAdapter) {
+        val adapter = recyclerView.adapter as EquipmentInstructionAdapter
+        adapter.submitList(data)
+    }
 }
 
 @BindingAdapter("listIngredients")
