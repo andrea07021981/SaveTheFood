@@ -77,22 +77,4 @@ class HomeViewModel(
         }
 
     }
-
-    //TODO ADD COROUTINE LIVEDATA IMMEDIATELY WITHOUTH INIT AND OBSERVE IT. THEN WE CAN REMOVE THE VARIABLES FOR FOOD LIST
-    /*private val coroutineContext = viewModelScope.coroutineContext + Dispatchers.IO
-    private var repository: TravelsRepository = TravelsRepository()
-
-    val pippo: LiveData<Result<List<Deal>>> = liveData(coroutineContext) {
-        // start with loading.
-        emit(Result.Loading)
-
-        val result = repository.getDeals()
-        // if list is empty, consider it as error to be displayed.
-        if (result is Result.Success && result.data.isEmpty())
-            emit(Result.Error(Exception("There is no deals at the moment.\n Wait for it.")))
-        else
-            emit(result)
-    }
-    */
-
 }
