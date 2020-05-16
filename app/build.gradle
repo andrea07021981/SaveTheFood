@@ -171,4 +171,7 @@ dependencies {
 
     //Test Espresso idling resources
     implementation "androidx.test.espresso:espresso-idling-resource:$version_espresso"
+
+    //Custom login effect github
+    implementation 'br.com.simplepass:loading-button-android:2.2.0'
 }

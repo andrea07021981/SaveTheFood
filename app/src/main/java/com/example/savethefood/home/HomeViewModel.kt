@@ -15,7 +15,7 @@ class HomeViewModel(
     private val foodDataRepository: FoodRepository
 ) : ViewModel() {
 
-    val animationResourceButton = R.anim.bounce
+    val animationResourceButton = R.anim.fade_in
 
     //TODO remove viewModelJob and scope, with new version of androidx there the viewmodescope of
     /**
