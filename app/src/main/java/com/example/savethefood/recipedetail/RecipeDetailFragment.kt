@@ -51,6 +51,8 @@ class RecipeDetailFragment : Fragment() {
             }
         })
 
+        //TODO add save recipe into DB
+        
         recipeDetailViewModel.recipeCookingtEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 findNavController()

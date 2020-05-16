@@ -25,6 +25,8 @@ class BarcodeReaderFragment : Fragment() {
 
     private lateinit var dataBinding: FragmentBarcodereaderBinding
 
+    //TODO add section for searching food by name and not code
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

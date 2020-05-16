@@ -62,6 +62,12 @@ class NestedFragment : Fragment() {
         navigationViewTest = view.findViewById(R.id.navigationView)
         navigationViewTest?.setupWithNavController(navController)
 
+        //TODO add new menu section for map and groceries
+        //https://spoonacular.com/food-api/docs#Map-Ingredients-to-Grocery-Products
+
+        //TODO add new menu for meal planning https://spoonacular.com/food-api/docs#Generate-Meal-Plan
+
+        //TODO add menu for wines related to your recipes
         //This listener manages the nawdrawer configuration
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
             when (nd.id) {

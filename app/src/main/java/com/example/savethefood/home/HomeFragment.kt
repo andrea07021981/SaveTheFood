@@ -32,6 +32,7 @@ class HomeFragment : Fragment() {
         sharedElementEnterTransition =
             TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
+    //TODO add bottom for food type (https://www.foodstandards.gov.scot/consumers/healthy-eating/nutrition/the-five-food-groups)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
