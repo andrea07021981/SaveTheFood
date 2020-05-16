@@ -28,6 +28,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:loadViewAnimation="@{splashViewModel.animationResource}"
-            app:srcCompat="@drawable/food" />
+            app:srcCompat="@drawable/ic_food" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

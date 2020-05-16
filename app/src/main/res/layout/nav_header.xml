@@ -10,8 +10,8 @@
         android:layout_height="104dp"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
-        android:background="@color/colorPrimaryDark"
-        android:src="@drawable/food"/>
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_food"/>
 
     <TextView
         android:layout_width="wrap_content"

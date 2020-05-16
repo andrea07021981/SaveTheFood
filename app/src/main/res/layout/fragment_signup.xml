@@ -33,7 +33,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:transitionName="chef_imageview"
-                android:src="@drawable/food"/>
+                android:src="@drawable/ic_food"/>
         </com.google.android.material.card.MaterialCardView>
 
 
