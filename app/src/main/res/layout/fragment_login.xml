@@ -49,7 +49,7 @@
                 android:elevation="@dimen/cardview_compat_inset_shadow"
                 android:orientation="vertical"
                 app:cardElevation="10dp"
-                app:layout_constraintBottom_toTopOf="@+id/button"
+                app:layout_constraintBottom_toTopOf="@+id/login_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.59"
                 app:layout_constraintStart_toStartOf="parent"
@@ -127,7 +127,7 @@
             </androidx.cardview.widget.CardView>
 
             <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
-                android:id="@+id/button"
+                android:id="@+id/login_button"
                 style="@style/button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -163,7 +163,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/textView2"
                 app:layout_constraintHorizontal_weight="0.7"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button" />
+                app:layout_constraintTop_toBottomOf="@+id/login_button" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -181,7 +181,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_weight="0.3"
                 app:layout_constraintStart_toEndOf="@+id/textView"
-                app:layout_constraintTop_toBottomOf="@+id/button" />
+                app:layout_constraintTop_toBottomOf="@+id/login_button" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </layout>

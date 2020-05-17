@@ -15,7 +15,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.example.savethefood.MainCoroutineRuleAndroid
 import com.example.savethefood.R
-import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
 import com.example.savethefood.data.source.repository.FakeUserDataRepositoryTest
@@ -23,7 +22,6 @@ import com.example.savethefood.util.DataBindingIdlingResource
 import com.example.savethefood.util.EspressoIdlingResource
 import com.example.savethefood.util.monitorFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Before
@@ -94,7 +92,7 @@ class LoginFragmentTest {
             .check(matches(isDisplayed()))
 
         // THEN click and login
-        onView(withId(R.id.button)).perform(click())
+        onView(withId(R.id.login_button)).perform(click())
     }
 
     @Test
@@ -111,7 +109,7 @@ class LoginFragmentTest {
         }
 
         //WHEN - User click login with right credentials
-        onView(withId(R.id.button)).perform(click())
+        onView(withId(R.id.login_button)).perform(click())
 
         //THEN - navigate to home fragment (the nested is just a container for sub navigation) with the current user
          verify(navController)

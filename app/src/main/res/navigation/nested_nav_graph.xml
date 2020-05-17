@@ -12,8 +12,8 @@
         tools:layout="@layout/fragment_nested" >
 
         <argument
-            android:name="loggedUser"
-            app:argType="com.example.savethefood.data.domain.UserDomain" />
+            android:name="params"
+            app:argType="android.os.Bundle"/>
 
     </fragment>
 </navigation>

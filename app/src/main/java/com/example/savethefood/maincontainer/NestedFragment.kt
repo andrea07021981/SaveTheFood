@@ -42,7 +42,7 @@ class NestedFragment : Fragment() {
         //TODO Use the user to update the drawer info
         val user = NestedFragmentArgs.fromBundle(
             requireArguments()
-        ).loggedUser
+        ).params
 
         return view
     }

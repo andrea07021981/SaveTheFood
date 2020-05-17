@@ -3,6 +3,7 @@ package com.example.savethefood.login;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.savethefood.MainCoroutineRule
+import com.example.savethefood.constants.LoginAuthenticationStates
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
@@ -65,7 +66,7 @@ class LoginViewModelTest {
 
         // THEN restart the dispatcher and is success login
         mainCoroutineRule.resumeDispatcher()//Immediately execute the coroutine
-        val value = loginViewModel.userLogged.getOrAwaitValue() as Result.Success
+        val value = loginViewModel.loginAuthenticationState.getOrAwaitValue()
         assertThat(value, `is`(equalTo(value)))
     }
 
@@ -74,7 +75,7 @@ class LoginViewModelTest {
         loginViewModel.emailValue.value = "x"
         loginViewModel.passwordValue.value = "x"
         loginViewModel.onSignUpClick()
-        val value = loginViewModel.userLogged.getOrAwaitValue() as Result.Error
+        val value = loginViewModel.loginAuthenticationState.getOrAwaitValue() as Result.Error
         assertThat(value, `is`(Result.Error("Not found")))
     }
 

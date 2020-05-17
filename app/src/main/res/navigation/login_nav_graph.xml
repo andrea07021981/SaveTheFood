@@ -22,9 +22,6 @@
             android:id="@+id/action_loginFragment_to_nested_nav_graph"
             app:destination="@id/nested_nav_graph" >
 
-            <argument
-                android:name="loggedUser"
-                app:argType="com.example.savethefood.data.domain.UserDomain" />
         </action>
     </fragment>
     <fragment

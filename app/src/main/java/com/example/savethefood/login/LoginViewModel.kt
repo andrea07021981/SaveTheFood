@@ -3,6 +3,10 @@ package com.example.savethefood.login
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import com.example.savethefood.R
+import com.example.savethefood.constants.Authenticated
+import com.example.savethefood.constants.Authenticating
+import com.example.savethefood.constants.InvalidAuthentication
+import com.example.savethefood.constants.LoginAuthenticationStates
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.repository.UserRepository
@@ -22,9 +26,9 @@ class LoginViewModel(
     var errorPassword = MutableLiveData<Boolean>()
     var errorEmail = MutableLiveData<Boolean>()
 
-    private val _userLogged = MediatorLiveData<Result<UserDomain>>()
-    val userLogged: LiveData<Result<UserDomain>>
-        get() = _userLogged
+    private val _loginAuthenticationState = MutableLiveData<LoginAuthenticationStates>()
+    val loginAuthenticationState: LiveData<LoginAuthenticationStates>
+        get() = _loginAuthenticationState
 
     private val _navigateToSignUpFragment = MutableLiveData<Boolean>()
     val navigateToSignUpFragment: LiveData<Boolean>
@@ -46,17 +50,18 @@ class LoginViewModel(
     private fun doLogin() {
 
         viewModelScope.launch {
-            var userRecord: Result<UserDomain>? = null
-            withContext(Dispatchers.IO) {
-                val userToSave = UserDomain()
-                    .apply {
-                        userEmail = emailValue.value.toString()
-                        userPassword = passwordValue.value.toString()
-                    }
-                userRecord = userDataRepository.getUser(user = userToSave)
+            var result: Result<UserDomain>? = null
+            _loginAuthenticationState.value = Authenticating()
+            result = userDataRepository.getUser(user = UserDomain()
+                .apply {
+                    userEmail = emailValue.value.toString()
+                    userPassword = passwordValue.value.toString()
+                })
+            when (result) {
+                is Result.Success -> _loginAuthenticationState.value = Authenticated(user = result.data)
+                is Result.Error -> _loginAuthenticationState.value = InvalidAuthentication(result.message)
+                else -> _loginAuthenticationState.value = null
             }
-            //This observe is active, so it works even if get operation will be longer that usual
-            _userLogged.value = userRecord
         }
     }
 
@@ -68,10 +73,9 @@ class LoginViewModel(
         _navigateToSignUpFragment.value = true
     }
 
-    fun doneNavigationHome() {
-        _userLogged.value = null
+    fun resetState() {
+        _loginAuthenticationState.value = null
     }
-
     /**
      * Factory for constructing LoginViewModel with parameter
      */
