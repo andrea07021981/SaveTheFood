@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.fragment_nested.*
 import kotlinx.android.synthetic.main.fragment_nested.view.*
 
 
-class NestedFragment : Fragment() {
+class NestedFragment : Fragment(), View.OnLayoutChangeListener {
 
     private lateinit var dataBinding: FragmentNestedBinding
     private lateinit var navController: NavController
@@ -43,10 +43,7 @@ class NestedFragment : Fragment() {
         savedInstanceState: Bundle?
     ) : View? {
         dataBinding = FragmentNestedBinding.inflate(inflater)
-
-        //TODO check the reason of slow animation loading. Remove animation for adapter and fab
-        animateTransition(
-            args.params)
+        dataBinding.rootLayout.addOnLayoutChangeListener(this)
         return dataBinding.root
     }
 
@@ -140,46 +137,59 @@ class NestedFragment : Fragment() {
      */
     private fun animateTransition(params: Bundle?) {
         dataBinding.lifecycleOwner = this
-        Log.d("TESTTTTTTTTT", "2asd")
-        dataBinding.rootLayout.addOnLayoutChangeListener { p0, p1, p2, p3, p4, p5, p6, p7, p8 ->
-            // Check if the runtime version is at least Lollipop
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                // get the center for the clipping circle
-                val cx = dataBinding.rootLayout.width / 2
-                val cy = dataBinding.rootLayout.height / 2
-                val xPosition = params?.getFloat("x")?.toInt() ?: 0
-                val yPosition = params?.getFloat("y")?.toInt() ?: 0
+        // Check if the runtime version is at least Lollipop
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // get the center for the clipping circle
+            val cx = dataBinding.rootLayout.width / 2
+            val cy = dataBinding.rootLayout.height / 2
+            val xPosition = params?.getFloat("x")?.toInt() ?: 0
+            val yPosition = params?.getFloat("y")?.toInt() ?: 0
 
-                // get the final radius for the clipping circle
-                val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
+            // get the final radius for the clipping circle
+            val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
 
-                // create the animator for this view (the start radius is zero)
-                val anim = ViewAnimationUtils.createCircularReveal(
-                    dataBinding.rootLayout,
-                    xPosition,
-                    yPosition,
-                    0f,
-                    finalRadius
-                )
-                // make the view visible and start the animation
-                dataBinding.rootLayout.visibility = View.VISIBLE
-                anim.addListener(object : Animator.AnimatorListener {
-                    override fun onAnimationRepeat(p0: Animator?) {
-                    }
+            // create the animator for this view (the start radius is zero)
+            val anim = ViewAnimationUtils.createCircularReveal(
+                dataBinding.rootLayout,
+                xPosition,
+                yPosition,
+                0f,
+                finalRadius
+            )
+            // make the view visible and start the animation
+            dataBinding.rootLayout.visibility = View.VISIBLE
+            anim.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(p0: Animator?) {
+                }
 
-                    override fun onAnimationEnd(p0: Animator?) {
-                    }
+                override fun onAnimationEnd(p0: Animator?) {
+                }
 
-                    override fun onAnimationCancel(p0: Animator?) {
-                    }
+                override fun onAnimationCancel(p0: Animator?) {
+                }
 
-                    override fun onAnimationStart(p0: Animator?) {
-                        //TODO START ANIMATION FOR THE VIEW CHILDREN
-                    }
+                override fun onAnimationStart(p0: Animator?) {
+                    //TODO START ANIMATION FOR THE VIEW CHILDREN
+                }
 
-                })
-                anim.start()
-            }
+            })
+            anim.start()
         }
+        dataBinding.rootLayout.removeOnLayoutChangeListener(this)
+    }
+
+    override fun onLayoutChange(
+        p0: View?,
+        p1: Int,
+        p2: Int,
+        p3: Int,
+        p4: Int,
+        p5: Int,
+        p6: Int,
+        p7: Int,
+        p8: Int
+    ) {
+        animateTransition(
+            args.params)
     }
 }
