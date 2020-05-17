@@ -48,7 +48,6 @@ class LoginViewModel(
     }
 
     private fun doLogin() {
-
         viewModelScope.launch {
             var result: Result<UserDomain>? = null
             _loginAuthenticationState.value = Authenticating()

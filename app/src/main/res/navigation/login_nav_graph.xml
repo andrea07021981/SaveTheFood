@@ -22,6 +22,9 @@
             android:id="@+id/action_loginFragment_to_nested_nav_graph"
             app:destination="@id/nested_nav_graph" >
 
+            <argument
+                android:name="params"
+                app:argType="android.os.Bundle"/>
         </action>
     </fragment>
     <fragment

@@ -67,33 +67,12 @@ class LoginFragment : Fragment() {
         })
 
         loginViewModel.loginAuthenticationState.observe(this.viewLifecycleOwner, Observer {
-            if (it is Authenticated) {
+            if (it is Authenticated || it is Authenticating) {
                 dataBinding.loginButton.run { morphDoneAndRevert(requireNotNull(activity), it) }
             } else if (it is Unauthenticated){
                 Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
             }
         })
-
-        /*loginViewModel.userLogged.observe(this.viewLifecycleOwner, Observer {
-            if (it != null) {
-                if (it is Result.Success) {
-                    Log.d(TAG, "User logged with ${it.data.userName} and ${it.data.userPassword} ")
-                    this
-                        .findNavController()
-                        .navigate(
-                            LoginFragmentDirections.actionLoginFragmentToNestedNavGraph(
-                                it.data
-                            )
-                        )
-                    loginViewModel.doneNavigationHome()
-                } else if (it is Result.Error) {
-                    Toast.makeText(
-                        context,
-                        it.message,
-                        Toast.LENGTH_SHORT).show()
-                }
-            }
-        })*/
     }
 
     //TODO review animation, it should be declared as bindingadapter and manage differetns states
@@ -114,17 +93,19 @@ class LoginFragment : Fragment() {
                 startAnimation()
             }
             is Authenticated -> {
-                /*Handler().run {
+                Handler().run {
                     doneLoadingAnimation(fillColor, bitmap)
                     postDelayed({
                         val bundle = bundleOf("x" to dataBinding.loginButton.x, "y" to dataBinding.loginButton.y)
                         bundle.putParcelable("user", state.user)
                         findNavController()
                             .navigate(
-                                LoginFragmentDirections.A
+                                LoginFragmentDirections.actionLoginFragmentToNestedNavGraph(
+                                    bundle
+                                )
                             )}, navigateTime)
                     loginViewModel.resetState()
-                }*/
+                }
             }
             is Unauthenticated -> {
                 Handler().run {

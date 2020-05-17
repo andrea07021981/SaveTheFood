@@ -47,7 +47,9 @@ class UserDataRepository(
 
     override suspend fun getUser(user: UserDomain): Result<UserDomain> {
         wrapEspressoIdlingResource {
-            return userLocalDataSource.getUser(user.userEmail, user.userPassword)
+            return@getUser withContext(ioDispatcher) {
+                userLocalDataSource.getUser(user.userEmail, user.userPassword)
+            }
         }
     }
 }
