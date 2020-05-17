@@ -43,8 +43,8 @@ class NestedFragment : Fragment() {
         savedInstanceState: Bundle?
     ) : View? {
         dataBinding = FragmentNestedBinding.inflate(inflater)
-        //TODO Use the user to update the drawer info
 
+        //TODO check the reason of slow animation loading. Remove animation for adapter and fab
         animateTransition(
             args.params)
         return dataBinding.root
