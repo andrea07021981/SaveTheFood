@@ -39,7 +39,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="64dp"
             android:elevation="@dimen/cardview_compat_inset_shadow"
             android:orientation="vertical"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -113,37 +113,18 @@
             style="@style/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="64dp"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="64dp"
+            android:layout_marginBottom="64dp"
             android:elevation="2dp"
             android:onClick="@{() -> barcodeReaderViewModel.getInfoByBarcode()}"
             android:stateListAnimator="@null"
             android:text="@string/scan"
             android:translationZ="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/save_button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/save_button"
-            style="@style/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
-            android:elevation="2dp"
-            android:onClick="@{() -> barcodeReaderViewModel.saveFood(food)}"
-            android:stateListAnimator="@null"
-            android:text="Save"
-            android:translationZ="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/scan_button"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -168,11 +149,5 @@
             app:layout_constraintGuide_begin="391dp"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="603dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

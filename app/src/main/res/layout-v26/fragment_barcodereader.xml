@@ -39,9 +39,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginTop="64dp"
             android:elevation="@dimen/cardview_compat_inset_shadow"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -58,10 +56,10 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:focusedByDefault="false"
-                app:hintTextColor="@color/colorAccent"
                 android:textColorHint="@color/colorAccent"
                 app:boxStrokeColor="@color/colorAccent"
                 app:errorEnabled="true"
+                app:hintTextColor="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layoutEmail">
@@ -72,8 +70,8 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/lock_white_24dp"
                     android:drawablePadding="10dp"
-                    android:hint="Title"
                     android:enabled="@{barcodeReaderViewModel.validBarcode}"
+                    android:hint="Title"
                     android:imeOptions="actionDone"
                     android:singleLine="true"
                     android:text="@={food.foodTitle}"
@@ -89,10 +87,10 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:focusedByDefault="false"
-                app:hintTextColor="@color/colorAccent"
                 android:textColorHint="@color/colorAccent"
                 app:boxStrokeColor="@color/colorAccent"
                 app:errorEnabled="true"
+                app:hintTextColor="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -103,9 +101,9 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/email_white_24dp"
                     android:drawablePadding="10dp"
-                    android:hint="Description"
                     android:enabled="@{barcodeReaderViewModel.validBarcode}"
-                    android:scrollbars = "vertical"
+                    android:hint="Description"
+                    android:scrollbars="vertical"
                     android:text="@={food.foodDescription}"
                     android:textColor="@color/colorAccent" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -116,33 +114,17 @@
             style="@style/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginEnd="64dp"
+            android:layout_marginBottom="64dp"
+            android:elevation="2dp"
             android:onClick="@{() -> barcodeReaderViewModel.getInfoByBarcode()}"
+            android:stateListAnimator="@null"
             android:text="Scan"
-            android:elevation="2dp"
             android:translationZ="20dp"
-            android:stateListAnimator="@null"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/save_button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/save_button"
-            style="@style/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
-            android:onClick="@{() -> barcodeReaderViewModel.saveFood(food)}"
-            android:text="Save"
-            android:elevation="2dp"
-            android:translationZ="20dp"
-            android:stateListAnimator="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/scan_button" />
+            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
