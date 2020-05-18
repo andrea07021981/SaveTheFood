@@ -99,7 +99,7 @@ class NestedFragment : Fragment(), View.OnLayoutChangeListener {
                     appbar.toolbar.visibility = View.VISIBLE
                     //TODO hide for now
                     appbar.toolbar.menu.findItem(R.id.action_search).isVisible = false
-                    appbar.toolbar.menu.findItem(R.id.action_filter).isVisible = false
+                    appbar.toolbar.menu.findItem(R.id.action_save).isVisible = false
                 }
                 nc.graph.findNode(foodDetailFragment)?.id,
                 nc.graph.findNode(recipeDetailFragment)?.id -> {
@@ -110,7 +110,7 @@ class NestedFragment : Fragment(), View.OnLayoutChangeListener {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                     appbar.toolbar.visibility = View.VISIBLE
                     appbar.toolbar.menu.findItem(R.id.action_search).isVisible = true
-                    appbar.toolbar.menu.findItem(R.id.action_filter).isVisible = true
+                    appbar.toolbar.menu.findItem(R.id.action_save).isVisible = true
                 }
             }
         }

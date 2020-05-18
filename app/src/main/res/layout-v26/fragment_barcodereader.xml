@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".addfood.BarcodeReaderFragment">
     <!-- Data to make available to the XML via data binding. In this case,
          the whole ViewModel, so that we can access the LiveData,
          click handlers, and state variables.
@@ -22,8 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
-        tools:context=".addfood.BarcodeReaderFragment">
+        android:background="@color/colorPrimary">
 
         <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/loading_progressbar"
