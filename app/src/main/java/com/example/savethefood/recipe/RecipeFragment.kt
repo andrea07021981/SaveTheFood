@@ -20,7 +20,7 @@ import com.example.savethefood.data.source.repository.RecipeDataRepository
 
 class RecipeFragment : Fragment() {
 
-    /*private var foodName: String? = null
+    private var foodName: String? = null
     private val recipeViewModel by viewModels<RecipeViewModel> {
         RecipeViewModel.RecipeViewModelFactory(RecipeDataRepository.getRepository(requireActivity().application), foodName)
     }
@@ -40,8 +40,8 @@ class RecipeFragment : Fragment() {
         dataBinding.recipeViewModel = recipeViewModel
         dataBinding.recipeRecycleview.layoutManager = LinearLayoutManager(activity)
 
-        val filteredUsers = ArrayList<RecipeResult?>()
-        *//*val findItem = (activity as AppCompatActivity).toolbar.menu.findItem(R.id.action_search)
+        /*val filteredUsers = ArrayList<RecipeResult?>()
+        val findItem = (activity as AppCompatActivity).toolbar.menu.findItem(R.id.action_search)
         val searchView = findItem?.actionView as SearchView
         //making the searchview consume all the toolbar when open
         searchView.maxWidth= Int.MAX_VALUE
@@ -71,7 +71,7 @@ class RecipeFragment : Fragment() {
                 return false
             }
 
-        })*//*
+        })*/
         return dataBinding.root
     }
 
@@ -93,5 +93,5 @@ class RecipeFragment : Fragment() {
         recipeViewModel.recipeListResult.observe(this.viewLifecycleOwner, Observer {
             (dataBinding.recipeRecycleview.adapter as RecipeAdapter).notifyDataSetChanged()
         })
-    }*/
+    }
 }

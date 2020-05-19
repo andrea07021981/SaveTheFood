@@ -56,7 +56,7 @@ class HomeFragment : Fragment() {
             FoodAdapter(FoodAdapter.OnClickListener {
                 homeViewModel.moveToFoodDetail(it)
             })
-/*
+
         homeViewModel.detailFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 val foodImageView =
@@ -76,6 +76,6 @@ class HomeFragment : Fragment() {
             it.let {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBarcodeReaderFragment())
             }
-        })*/
+        })
     }
 }
