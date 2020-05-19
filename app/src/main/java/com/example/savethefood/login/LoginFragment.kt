@@ -100,7 +100,7 @@ class LoginFragment : Fragment() {
                         bundle.putParcelable("user", state.user)
                         findNavController()
                             .navigate(
-                                LoginFragmentDirections.actionLoginFragmentToNestedNavGraph(
+                                LoginFragmentDirections.actionLoginFragmentToHomeFragment(
                                     bundle
                                 )
                             )}, navigateTime)

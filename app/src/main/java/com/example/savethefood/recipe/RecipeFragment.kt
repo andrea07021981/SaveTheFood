@@ -17,7 +17,6 @@ import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentReceipeBinding
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.RecipeDataRepository
-import kotlinx.android.synthetic.main.fragment_nested.*
 
 class RecipeFragment : Fragment() {
 
@@ -41,7 +40,7 @@ class RecipeFragment : Fragment() {
         dataBinding.recipeViewModel = recipeViewModel
         dataBinding.recipeRecycleview.layoutManager = LinearLayoutManager(activity)
 
-        val filteredUsers = ArrayList<RecipeResult?>()
+        /*val filteredUsers = ArrayList<RecipeResult?>()
         val findItem = (activity as AppCompatActivity).toolbar.menu.findItem(R.id.action_search)
         val searchView = findItem?.actionView as SearchView
         //making the searchview consume all the toolbar when open
@@ -72,7 +71,7 @@ class RecipeFragment : Fragment() {
                 return false
             }
 
-        })
+        })*/
         return dataBinding.root
     }
 
