@@ -15,7 +15,7 @@ import com.example.savethefood.data.source.repository.RecipeDataRepository
 
 class RecipeDetailFragment : Fragment() {
 
-    private val recipeDetailViewModel by viewModels<RecipeDetailViewModel> {
+    /*private val recipeDetailViewModel by viewModels<RecipeDetailViewModel> {
         RecipeDetailViewModel.RecipeDetailViewModelFactory(RecipeDataRepository.getRepository(requireActivity().application), recipeSelected)
     }
 
@@ -64,6 +64,6 @@ class RecipeDetailFragment : Fragment() {
             }
         })
         return dataBinding.root
-    }
+    }*/
 
 }

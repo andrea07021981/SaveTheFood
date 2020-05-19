@@ -18,7 +18,7 @@ import com.google.zxing.integration.android.IntentResult
 
 class BarcodeReaderFragment : Fragment() {
 
-    private val barcodeReaderViewModel by viewModels<BarcodeReaderViewModel> {
+    /*private val barcodeReaderViewModel by viewModels<BarcodeReaderViewModel> {
         BarcodeReaderViewModel.BarcodeViewModelFactory(FoodDataRepository.getRepository(requireActivity().application))
     }
 
@@ -103,5 +103,5 @@ class BarcodeReaderFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return super.onOptionsItemSelected(item)
-    }
+    }*/
 }

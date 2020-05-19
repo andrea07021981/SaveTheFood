@@ -12,7 +12,7 @@ import com.example.savethefood.data.domain.RecipeInfoDomain
 
 class RecipeCookFragment : Fragment() {
 
-    private val recipeCookViewModel by viewModels<RecipeCookViewModel> {
+    /*private val recipeCookViewModel by viewModels<RecipeCookViewModel> {
         val application = requireNotNull(activity).application
         RecipeCookViewModel.Factory(application = application, recipe = recipeInfoSelected)
     }
@@ -37,6 +37,6 @@ class RecipeCookFragment : Fragment() {
             StepCookAdapter(StepCookAdapter.OnStepClickListener {
             })
         return dataBinding.root
-    }
+    }*/
 
 }

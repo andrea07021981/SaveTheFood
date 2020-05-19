@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.TransitionInflater
 import com.example.savethefood.EventObserver
@@ -25,13 +26,10 @@ class HomeFragment : Fragment() {
         HomeViewModel.HomeViewModelFactory(FoodDataRepository.getRepository(requireActivity().application))
     }
 
+    //private val args: HomeFragmentArgs by navArgs()
+
     private lateinit var dataBinding: FragmentHomeBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-    }
     //TODO add bottom for food type (https://www.foodstandards.gov.scot/consumers/healthy-eating/nutrition/the-five-food-groups)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,19 +43,20 @@ class HomeFragment : Fragment() {
         return dataBinding.root
     }
 
-    /**
+    /*
      * Called when the fragment's activity has been created and this
      * fragment's view hierarchy instantiated.  It can be used to do final
      * initialization once these pieces are in place, such as retrieving
      * views or restoring state.
      */
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         dataBinding.foodRecycleview.adapter =
             FoodAdapter(FoodAdapter.OnClickListener {
                 homeViewModel.moveToFoodDetail(it)
             })
-
+/*
         homeViewModel.detailFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 val foodImageView =
@@ -77,6 +76,6 @@ class HomeFragment : Fragment() {
             it.let {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBarcodeReaderFragment())
             }
-        })
+        })*/
     }
 }

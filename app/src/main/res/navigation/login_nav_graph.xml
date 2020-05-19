@@ -6,6 +6,72 @@
     app:startDestination="@id/splashFragment">
 
     <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="com.example.savethefood.recipedetail.RecipeDetailFragment"
+        android:label="RecipeDetailFragment"
+        tools:layout="@layout/fragment_recipe_detail">
+        <argument
+            android:name="recipeResult"
+            app:argType="com.example.savethefood.data.domain.RecipeResult" />
+        <action
+            android:id="@+id/action_recipeDetailFragment_to_recipeCookFragment"
+            app:destination="@id/recipeCookFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/barcodeReaderFragment"
+        android:name="com.example.savethefood.addfood.BarcodeReaderFragment"
+        android:label="BarcodeReaderFragment"
+        tools:layout="@layout/fragment_barcodereader" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.savethefood.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_barcodeReaderFragment"
+            app:destination="@id/barcodeReaderFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_foodDetailFragment"
+            app:destination="@id/foodDetailFragment" />
+        <argument
+            android:name="params"
+            app:argType="android.os.Bundle" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.example.savethefood.recipe.RecipeFragment"
+        android:label="RecipeFragment"
+        tools:layout="@layout/fragment_receipe">
+        <action
+            android:id="@+id/action_recipeFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+        <argument
+            android:name="foodName"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeCookFragment"
+        android:name="com.example.savethefood.cook.RecipeCookFragment"
+        android:label="RecipeCookFragment"
+        tools:layout="@layout/fragment_recipe_cook">
+        <argument
+            android:name="recipeInfoDomain"
+            app:argType="com.example.savethefood.data.domain.RecipeInfoDomain" />
+    </fragment>
+    <fragment
+        android:id="@+id/foodDetailFragment"
+        android:name="com.example.savethefood.fooddetail.FoodDetailFragment"
+        android:label="FoodDetailFragment"
+        tools:layout="@layout/fragment_food_detail">
+        <argument
+            android:name="foodDomain"
+            app:argType="com.example.savethefood.data.domain.FoodDomain" />
+        <action
+            android:id="@+id/action_foodDetailFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/loginFragment"
         tools:layout="@layout/fragment_login"
         android:name="com.example.savethefood.login.LoginFragment"
@@ -19,13 +85,8 @@
             app:popExitAnim="@anim/slide_out_left"
             app:popUpTo="@id/loginFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_nested_nav_graph"
-            app:destination="@id/nested_nav_graph" >
-
-            <argument
-                android:name="params"
-                app:argType="android.os.Bundle"/>
-        </action>
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -43,5 +104,4 @@
         android:name="com.example.savethefood.login.SignUpFragment"
         android:label="SignUpFragment" />
 
-    <include app:graph="@navigation/nested_nav_graph" />
 </navigation>

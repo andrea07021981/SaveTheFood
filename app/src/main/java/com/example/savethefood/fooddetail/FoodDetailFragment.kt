@@ -19,7 +19,7 @@ import com.example.savethefood.data.source.repository.FoodDataRepository
 
 class FoodDetailFragment : Fragment() {
 
-    private val args: FoodDetailFragmentArgs by navArgs()
+    /*private val args: FoodDetailFragmentArgs by navArgs()
 
     private val foodDetailViewModel: FoodDetailViewModel by viewModels {
         FoodDetailViewModel.FoodDetailViewModelFactory(
@@ -81,5 +81,5 @@ class FoodDetailFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         ActivityNavigator.applyPopAnimationsToPendingTransition(requireNotNull(activity))
-    }
+    }*/
 }
