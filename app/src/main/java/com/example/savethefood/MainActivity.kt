@@ -25,18 +25,26 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         drawerLayout = binding.drawerLayout
         val navController = findNavController(R.id.nav_host_fragment)
-        var navigationViewTest = this.findViewById<NavigationView>(R.id.navView)
-        navigationViewTest?.setupWithNavController(navController)
+        val navigationView = this.findViewById<NavigationView>(R.id.navView)
+        navigationView?.setupWithNavController(navController)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         // prevent nav gesture if not on start destination
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
-            if (nd.id == nc.graph.findNode(R.id.homeFragment)?.id) {
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-                appbar.toolbar.visibility = View.VISIBLE
-            } else {
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-                appbar.toolbar.visibility = View.GONE
+        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, _: Bundle? ->
+            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            when (nd.id) {
+                nc.graph.findNode(R.id.homeFragment)?.id -> {
+                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                    appbar.toolbar.visibility = View.VISIBLE
+                }
+                nc.graph.findNode(R.id.barcodeReaderFragment)?.id,
+                nc.graph.findNode(R.id.recipeCookFragment)?.id,
+                nc.graph.findNode(R.id.recipeFragment)?.id -> {
+                    appbar.toolbar.visibility = View.VISIBLE
+                }
+                else -> {
+                    appbar.toolbar.visibility = View.GONE
+                }
             }
         }
         NavigationUI.setupWithNavController(binding.navView, navController)

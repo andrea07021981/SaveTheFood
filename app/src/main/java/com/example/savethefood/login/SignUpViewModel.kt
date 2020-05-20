@@ -45,8 +45,7 @@ class SignUpViewModel(
 
     fun onSignUpClick(){
         if (!checkValues()) {
-            user
-                .apply {
+            with(user) {
                     userName = userNameValue.value.toString()
                     userEmail = emailValue.value.toString()
                     userPassword = passwordValue.value.toString()
