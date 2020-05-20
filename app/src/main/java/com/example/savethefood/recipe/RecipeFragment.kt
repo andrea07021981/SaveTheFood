@@ -1,9 +1,9 @@
 package com.example.savethefood.recipe
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
@@ -17,6 +17,7 @@ import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentReceipeBinding
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.RecipeDataRepository
+import kotlinx.android.synthetic.main.activity_main.*
 
 class RecipeFragment : Fragment() {
 
@@ -39,39 +40,7 @@ class RecipeFragment : Fragment() {
         dataBinding.lifecycleOwner = this
         dataBinding.recipeViewModel = recipeViewModel
         dataBinding.recipeRecycleview.layoutManager = LinearLayoutManager(activity)
-
-        /*val filteredUsers = ArrayList<RecipeResult?>()
-        val findItem = (activity as AppCompatActivity).toolbar.menu.findItem(R.id.action_search)
-        val searchView = findItem?.actionView as SearchView
-        //making the searchview consume all the toolbar when open
-        searchView.maxWidth= Int.MAX_VALUE
-        searchView.queryHint = "Search Recipes"
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-            override fun onQueryTextChange(newText: String): Boolean {
-                //action while typing
-                if (newText.isNotEmpty()){
-                    filteredUsers.clear()
-                    dataBinding.recipeViewModel?.recipeList?.value!!.results.let {
-                        for (recipe in it!!){
-                            if (recipe.title.toLowerCase().contains(newText.toLowerCase())){
-                                filteredUsers.add(recipe)
-                            }
-                        }
-                    }
-
-                    dataBinding.recipeViewModel?.updateDataList(filteredUsers)
-                }
-
-                return false
-            }
-
-            override fun onQueryTextSubmit(query: String): Boolean {
-                //action when type Enter
-                return false
-            }
-
-        })*/
+        setHasOptionsMenu(true)
         return dataBinding.root
     }
 
@@ -93,5 +62,58 @@ class RecipeFragment : Fragment() {
         recipeViewModel.recipeListResult.observe(this.viewLifecycleOwner, Observer {
             (dataBinding.recipeRecycleview.adapter as RecipeAdapter).notifyDataSetChanged()
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.menu_toolbar, menu)
+        val searchItem = menu.findItem(R.id.action_search)
+
+        val searchManager =
+            activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+
+        var searchView: SearchView? = null
+        if (searchItem != null) {
+            searchView = searchItem.actionView as SearchView
+        }
+        searchView?.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
+
+        //Manage search view
+        val filteredUsers = ArrayList<RecipeResult?>()
+        //making the searchview consume all the toolbar when open
+        searchView?.let {
+            it.maxWidth= Int.MAX_VALUE
+            it.queryHint = "Search Recipes"
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+                override fun onQueryTextChange(newText: String): Boolean {
+                    //action while typing
+                    if (newText.isNotEmpty()){
+                        filteredUsers.clear()
+                        dataBinding.recipeViewModel?.recipeList?.value!!.results.let {
+                            for (recipe in it!!){
+                                if (recipe.title.toLowerCase().contains(newText.toLowerCase())){
+                                    filteredUsers.add(recipe)
+                                }
+                            }
+                        }
+
+                        dataBinding.recipeViewModel?.updateDataList(filteredUsers)
+                    }
+
+                    return false
+                }
+
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    //action when type Enter
+                    return false
+                }
+
+            })
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
     }
 }
