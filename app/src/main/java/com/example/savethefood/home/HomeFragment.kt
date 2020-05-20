@@ -1,7 +1,10 @@
 package com.example.savethefood.home
 
+import android.animation.Animator
+import android.os.Build
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
@@ -18,13 +21,13 @@ import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.fooddetail.FoodDetailViewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), View.OnLayoutChangeListener {
 
     private val homeViewModel by viewModels<HomeViewModel>{
         HomeViewModel.HomeViewModelFactory(FoodDataRepository.getRepository(requireActivity().application))
     }
 
-    //private val args: HomeFragmentArgs by navArgs()
+    private val args: HomeFragmentArgs by navArgs()
 
     private lateinit var dataBinding: FragmentHomeBinding
 
@@ -39,6 +42,7 @@ class HomeFragment : Fragment() {
         dataBinding.homeViewModel = homeViewModel
         dataBinding.foodRecycleview.layoutManager = GridLayoutManager(activity, 2)
         setHasOptionsMenu(true)
+        dataBinding.rootLayout.addOnLayoutChangeListener(this)
         return dataBinding.root
     }
 
@@ -80,11 +84,72 @@ class HomeFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_home, menu)
+        inflater?.inflate(R.menu.overflow_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         return super.onOptionsItemSelected(item)
+    }
+
+    /**
+     * Reveal animation for the view
+     */
+    private fun animateTransition(params: Bundle?) {
+        dataBinding.lifecycleOwner = this
+        // Check if the runtime version is at least Lollipop
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // get the center for the clipping circle
+            val cx = dataBinding.rootLayout.width / 2
+            val cy = dataBinding.rootLayout.height / 2
+            val xPosition = params?.getFloat("x")?.toInt() ?: 0
+            val yPosition = params?.getFloat("y")?.toInt() ?: 0
+
+            // get the final radius for the clipping circle
+            val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
+
+            // create the animator for this view (the start radius is zero)
+            val anim = ViewAnimationUtils.createCircularReveal(
+                dataBinding.rootLayout,
+                xPosition,
+                yPosition,
+                0f,
+                finalRadius
+            )
+            // make the view visible and start the animation
+            dataBinding.rootLayout.visibility = View.VISIBLE
+            anim.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(p0: Animator?) {
+                }
+
+                override fun onAnimationEnd(p0: Animator?) {
+                }
+
+                override fun onAnimationCancel(p0: Animator?) {
+                }
+
+                override fun onAnimationStart(p0: Animator?) {
+                    //TODO START ANIMATION FOR THE VIEW CHILDREN
+                }
+
+            })
+            anim.start()
+        }
+        dataBinding.rootLayout.removeOnLayoutChangeListener(this)
+    }
+
+    override fun onLayoutChange(
+        p0: View?,
+        p1: Int,
+        p2: Int,
+        p3: Int,
+        p4: Int,
+        p5: Int,
+        p6: Int,
+        p7: Int,
+        p8: Int
+    ) {
+        animateTransition(
+            args.params)
     }
 }

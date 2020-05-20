@@ -95,9 +95,7 @@ class BarcodeReaderFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_barcode, menu)
-        // check if the activity resolves
-
+        inflater?.inflate(R.menu.menu_home, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
