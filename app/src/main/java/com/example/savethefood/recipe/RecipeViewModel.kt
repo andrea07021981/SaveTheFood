@@ -26,13 +26,20 @@ class RecipeViewModel(
     val status: LiveData<ApiCallStatus>
         get() = _status
 
-    private var _recipeList = MediatorLiveData<RecipeDomain>()
-    val recipeList: LiveData<RecipeDomain>
-        get() = _recipeList
-
-    private var _recipeListResult = MediatorLiveData<List<RecipeResult>>()
-    val recipeListResult: LiveData<List<RecipeResult>>
-        get() = updateDataList("")
+    //Added a livedata filter, every time it changes and emit signal the switch map is activated and filter the private list
+    private var _searchFilter = MutableLiveData<String>("")
+    private var _recipeListResult = MutableLiveData<List<RecipeResult>>()
+    val recipeListResult: LiveData<List<RecipeResult>> = Transformations.switchMap(_searchFilter) {
+        if (it.isNotEmpty()) {
+            return@switchMap _recipeListResult.map { list ->
+                list.filter { recipe ->
+                    recipe.title.toLowerCase().contains(it.toLowerCase())
+                }
+            }
+        } else {
+            return@switchMap _recipeListResult
+        }
+    }
 
     private val _recipeDetailEvent = MutableLiveData<Event<RecipeResult>>()
     val recipeDetailEvent: LiveData<Event<RecipeResult>>
@@ -48,7 +55,6 @@ class RecipeViewModel(
                 _status.value = Loading("Loading")
                 val recipes = recipeRepository.getRecipes(food) ?: return@launch
                 if (recipes is Result.Success) {
-                    _recipeList.value = recipes.data
                     _recipeListResult.value = recipes.data.results
                 } else {
                     throw Exception(recipes.toString())
@@ -56,7 +62,6 @@ class RecipeViewModel(
                 _status.value = Done("Done")
             } catch (e: Exception) {
                 _status.value = Error(e.message.let { toString() })
-                _recipeList.value = null
             }
         }
     }
@@ -65,18 +70,8 @@ class RecipeViewModel(
         _recipeDetailEvent.value = Event(recipe)
     }
 
-    fun updateDataList(filter: String): LiveData<List<RecipeResult>> {
-        //TODO correft the filter with switch map
-        if (filter.isNotEmpty()) {
-            return Transformations.map(
-                _recipeListResult
-            ) { recipe ->
-                recipe.filter {
-                    it.title.toLowerCase().contains(filter)
-                }
-            }
-        }
-        return _recipeListResult
+    fun updateDataList(filter: String) {
+       _searchFilter.value = filter
     }
 
     class RecipeViewModelFactory(
