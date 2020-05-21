@@ -66,6 +66,7 @@ class RecipeViewModel(
     }
 
     fun updateDataList(filter: String): LiveData<List<RecipeResult>> {
+        //TODO correft the filter with switch map
         if (filter.isNotEmpty()) {
             return Transformations.map(
                 _recipeListResult
