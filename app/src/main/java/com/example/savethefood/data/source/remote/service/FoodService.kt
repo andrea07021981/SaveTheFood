@@ -29,7 +29,7 @@ interface FoodService {
      * and retrofit methid deferred
      */
     @GET("recipes/search")
-    suspend fun getRecipes(@Query("apiKey") key: String = API_KEY): NetworkRecipe
+    suspend fun getRecipes(@Query("apiKey") key: String = API_KEY, @Query("number") number: Int = 10): NetworkRecipe
 
     @GET("recipes/findByIngredients")
     suspend fun getRecipesByIngredient(@Query("ingredients") ingredients: String?, @Query("apiKey") key: String = API_KEY): NetworkRecipe

@@ -1,19 +1,18 @@
 package com.example.savethefood.recipe
 
-import android.app.Application
+import androidx.arch.core.util.Function
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.Done
-import com.example.savethefood.constants.Loading
 import com.example.savethefood.constants.Error
+import com.example.savethefood.constants.Loading
 import com.example.savethefood.data.Result
-import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeResult
-import com.example.savethefood.data.source.repository.RecipeDataRepository
 import com.example.savethefood.data.source.repository.RecipeRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
+
 
 class RecipeViewModel(
     private val recipeRepository: RecipeRepository,
@@ -31,9 +30,9 @@ class RecipeViewModel(
     val recipeList: LiveData<RecipeDomain>
         get() = _recipeList
 
-    private var _recipeListResult = MediatorLiveData<List<RecipeResult?>>()
-    val recipeListResult: LiveData<List<RecipeResult?>>
-        get() = _recipeListResult
+    private var _recipeListResult = MediatorLiveData<List<RecipeResult>>()
+    val recipeListResult: LiveData<List<RecipeResult>>
+        get() = updateDataList("")
 
     private val _recipeDetailEvent = MutableLiveData<Event<RecipeResult>>()
     val recipeDetailEvent: LiveData<Event<RecipeResult>>
@@ -66,8 +65,17 @@ class RecipeViewModel(
         _recipeDetailEvent.value = Event(recipe)
     }
 
-    fun updateDataList(list: ArrayList<RecipeResult?>) {
-        _recipeListResult.value = list
+    fun updateDataList(filter: String): LiveData<List<RecipeResult>> {
+        if (filter.isNotEmpty()) {
+            return Transformations.map(
+                _recipeListResult
+            ) { recipe ->
+                recipe.filter {
+                    it.title.toLowerCase().contains(filter)
+                }
+            }
+        }
+        return _recipeListResult
     }
 
     class RecipeViewModelFactory(

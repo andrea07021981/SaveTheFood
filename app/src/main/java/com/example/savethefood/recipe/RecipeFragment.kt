@@ -79,28 +79,16 @@ class RecipeFragment : Fragment() {
         searchView?.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
 
         //Manage search view
-        val filteredUsers = ArrayList<RecipeResult?>()
+        val filteredUsers = ArrayList<RecipeResult>()
         //making the searchview consume all the toolbar when open
-        searchView?.let {
+        searchView?.let { it ->
             it.maxWidth= Int.MAX_VALUE
             it.queryHint = "Search Recipes"
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
                 override fun onQueryTextChange(newText: String): Boolean {
                     //action while typing
-                    if (newText.isNotEmpty()){
-                        filteredUsers.clear()
-                        dataBinding.recipeViewModel?.recipeList?.value!!.results.let {
-                            for (recipe in it!!){
-                                if (recipe.title.toLowerCase().contains(newText.toLowerCase())){
-                                    filteredUsers.add(recipe)
-                                }
-                            }
-                        }
-
-                        dataBinding.recipeViewModel?.updateDataList(filteredUsers)
-                    }
-
+                    dataBinding.recipeViewModel?.updateDataList(newText)
                     return false
                 }
 
