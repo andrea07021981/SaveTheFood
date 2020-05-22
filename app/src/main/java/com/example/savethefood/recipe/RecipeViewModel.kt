@@ -26,7 +26,7 @@ class RecipeViewModel(
     val status: LiveData<ApiCallStatus>
         get() = _status
 
-    //Added a livedata filter, every time it changes and emit signal the switch map is activated and filter the private list
+    //livedata filter, every time it changes and emit signal the switch map is activated and filter the private list
     private var _searchFilter = MutableLiveData<String>("")
     private var _recipeListResult = MutableLiveData<List<RecipeResult>>()
     val recipeListResult: LiveData<List<RecipeResult>> = Transformations.switchMap(_searchFilter) {
