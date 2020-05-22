@@ -43,6 +43,7 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
         dataBinding.homeViewModel = homeViewModel
         dataBinding.foodRecycleview.layoutManager = GridLayoutManager(activity, 2)
         setHasOptionsMenu(true)
+        //TODO check args invocationtargerexception after drawer click
         dataBinding.rootLayout.addOnLayoutChangeListener(this)
         return dataBinding.root
     }
