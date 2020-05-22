@@ -4,8 +4,9 @@ import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,10 +15,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.EventObserver
 import com.example.savethefood.R
-import com.example.savethefood.databinding.FragmentReceipeBinding
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.RecipeDataRepository
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.savethefood.databinding.FragmentReceipeBinding
+
 
 class RecipeFragment : Fragment() {
 
@@ -27,6 +28,7 @@ class RecipeFragment : Fragment() {
     }
 
     private lateinit var dataBinding: FragmentReceipeBinding
+    private var searchView: SearchView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,25 +68,23 @@ class RecipeFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_toolbar, menu)
+        inflater.inflate(R.menu.menu_toolbar, menu)
         val searchItem = menu.findItem(R.id.action_search)
 
         val searchManager =
             activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
-        var searchView: SearchView? = null
         if (searchItem != null) {
             searchView = searchItem.actionView as SearchView
         }
         searchView?.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
 
         //Manage search view
-        val filteredUsers = ArrayList<RecipeResult>()
         //making the searchview consume all the toolbar when open
         searchView?.let { it ->
             it.maxWidth= Int.MAX_VALUE
             it.queryHint = "Search Recipes"
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
                 override fun onQueryTextChange(newText: String): Boolean {
                     //action while typing
@@ -103,5 +103,16 @@ class RecipeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun hideKeyboard() {
+        val inputManager:InputMethodManager = requireNotNull(activity)
+            .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(requireNotNull(activity).currentFocus?.windowToken, InputMethodManager.RESULT_UNCHANGED_SHOWN)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        hideKeyboard()
     }
 }
