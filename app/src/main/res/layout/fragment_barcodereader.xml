@@ -111,21 +111,40 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/scan_button"
             style="@style/button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="64dp"
-            android:layout_marginBottom="64dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
             android:elevation="2dp"
-            android:onClick="@{() -> barcodeReaderViewModel.getInfoByBarcode()}"
+            android:onClick="@{() -> barcodeReaderViewModel.searchInfoByBarcode()}"
             android:stateListAnimator="@null"
             android:text="@string/scan"
+            android:translationZ="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/login_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login_button"
+            style="@style/button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:elevation="2dp"
+            android:onClick="@{() -> barcodeReaderViewModel.searchOnline()}"
+            android:stateListAnimator="@null"
+            android:text="Search Online"
             android:translationZ="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline3" />
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"

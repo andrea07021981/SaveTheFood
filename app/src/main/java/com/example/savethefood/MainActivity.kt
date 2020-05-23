@@ -30,9 +30,12 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         val navigationView = this.findViewById<NavigationView>(R.id.navView)
         navigationView?.setupWithNavController(navController)
+
+        //This forces the drawer menu in home and avoid the back button navigation
         appBarConfiguration = AppBarConfiguration(setOf(
             R.id.homeFragment
         ), drawerLayout)
+
         // prevent nav gesture if not on start destination
         setupActionBarWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, _: Bundle? ->

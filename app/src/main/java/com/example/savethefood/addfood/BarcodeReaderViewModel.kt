@@ -44,8 +44,12 @@ class BarcodeReaderViewModel(
             FoodDomain()
     }
 
-    fun getInfoByBarcode() {
+    fun searchInfoByBarcode() {
         _readBarcodeEvent.value = Event(Unit)
+    }
+
+    fun searchOnline() {
+        //Todo use spoonacular to find a fit for the food. Show a list and let the user select
     }
 
     fun getApiFoodDetails(barcode: String) {
