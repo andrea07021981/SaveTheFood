@@ -1,19 +1,18 @@
 package com.example.savethefood.recipe
 
-import android.app.Application
+import androidx.arch.core.util.Function
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.Done
-import com.example.savethefood.constants.Loading
 import com.example.savethefood.constants.Error
+import com.example.savethefood.constants.Loading
 import com.example.savethefood.data.Result
-import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeResult
-import com.example.savethefood.data.source.repository.RecipeDataRepository
 import com.example.savethefood.data.source.repository.RecipeRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
+
 
 class RecipeViewModel(
     private val recipeRepository: RecipeRepository,
@@ -27,13 +26,20 @@ class RecipeViewModel(
     val status: LiveData<ApiCallStatus>
         get() = _status
 
-    private var _recipeList = MediatorLiveData<RecipeDomain>()
-    val recipeList: LiveData<RecipeDomain>
-        get() = _recipeList
-
-    private var _recipeListResult = MediatorLiveData<List<RecipeResult?>>()
-    val recipeListResult: LiveData<List<RecipeResult?>>
-        get() = _recipeListResult
+    //livedata filter, every time it changes and emit signal the switch map is activated and filter the private list
+    private var _searchFilter = MutableLiveData<String>("")
+    private var _recipeListResult = MutableLiveData<List<RecipeResult>>()
+    val recipeListResult: LiveData<List<RecipeResult>> = Transformations.switchMap(_searchFilter) {
+        if (it.isNotEmpty()) {
+            return@switchMap _recipeListResult.map { list ->
+                list.filter { recipe ->
+                    recipe.title.toLowerCase().contains(it.toLowerCase())
+                }
+            }
+        } else {
+            return@switchMap _recipeListResult
+        }
+    }
 
     private val _recipeDetailEvent = MutableLiveData<Event<RecipeResult>>()
     val recipeDetailEvent: LiveData<Event<RecipeResult>>
@@ -49,7 +55,6 @@ class RecipeViewModel(
                 _status.value = Loading("Loading")
                 val recipes = recipeRepository.getRecipes(food) ?: return@launch
                 if (recipes is Result.Success) {
-                    _recipeList.value = recipes.data
                     _recipeListResult.value = recipes.data.results
                 } else {
                     throw Exception(recipes.toString())
@@ -57,7 +62,6 @@ class RecipeViewModel(
                 _status.value = Done("Done")
             } catch (e: Exception) {
                 _status.value = Error(e.message.let { toString() })
-                _recipeList.value = null
             }
         }
     }
@@ -66,8 +70,8 @@ class RecipeViewModel(
         _recipeDetailEvent.value = Event(recipe)
     }
 
-    fun updateDataList(list: ArrayList<RecipeResult?>) {
-        _recipeListResult.value = list
+    fun updateDataList(filter: String) {
+       _searchFilter.value = filter
     }
 
     class RecipeViewModelFactory(

@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -42,6 +43,7 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
         dataBinding.homeViewModel = homeViewModel
         dataBinding.foodRecycleview.layoutManager = GridLayoutManager(activity, 2)
         setHasOptionsMenu(true)
+        //TODO check args invocationtargerexception after drawer click
         dataBinding.rootLayout.addOnLayoutChangeListener(this)
         return dataBinding.root
     }
