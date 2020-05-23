@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         ), drawerLayout)
 
         // prevent nav gesture if not on start destination
+        //TODO BAck navigation doesn't work
         setupActionBarWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, _: Bundle? ->
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
