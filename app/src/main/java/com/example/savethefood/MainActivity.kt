@@ -33,7 +33,8 @@ class MainActivity : AppCompatActivity() {
 
         //This forces the drawer menu in home and avoid the back button navigation
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.homeFragment
+            R.id.homeFragment,
+            R.id.recipeFragment
         ), drawerLayout)
 
         // prevent nav gesture if not on start destination
