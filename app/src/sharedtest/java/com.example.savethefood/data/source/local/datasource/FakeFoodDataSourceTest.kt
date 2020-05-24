@@ -19,6 +19,10 @@ class FakeFoodDataSourceTest(
         TODO("Not yet implemented")
     }
 
+    override suspend fun getFoodByQuery(barcode: String): Result<FoodDomain> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun insertFood(food: FoodDomain): Long {
         TODO("Not yet implemented")
     }

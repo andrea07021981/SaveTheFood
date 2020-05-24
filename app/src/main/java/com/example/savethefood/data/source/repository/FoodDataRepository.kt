@@ -46,6 +46,13 @@ class FoodDataRepository(
         }
     }
 
+    @Throws(Exception::class)
+    override suspend fun getApiFoodQuery(query: String): Result<FoodDomain> = coroutineScope{
+        wrapEspressoIdlingResource {
+            foodRemoteDataSource.getFoodByUpc(query)
+        }
+    }
+
     /**
       This function uses the IO dispatcher to ensure the database insert database operation
      * happens on the IO dispatcher. By switching to the IO dispatcher using `withContext` this

@@ -21,6 +21,10 @@ class FoodLocalDataSource internal constructor(
         TODO("No OP")
     }
 
+    override suspend fun getFoodByQuery(barcode: String): Result<FoodDomain> {
+        TODO("No OP")
+    }
+
     /**
     This function uses the IO dispatcher to ensure the database insert database operation
      * happens on the IO dispatcher. By switching to the IO dispatcher using `withContext` this
