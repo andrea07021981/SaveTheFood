@@ -44,6 +44,13 @@ class BarcodeReaderFragment : Fragment() {
         barcodeReaderViewModel.readBarcodeEvent.observe(this.viewLifecycleOwner, EventObserver {
             readBarcode()
         })
+
+        barcodeReaderViewModel.searchFoodEvent.observe(viewLifecycleOwner, EventObserver {
+            findNavController()
+                .navigate(
+                    BarcodeReaderFragmentDirections.actionBarcodeReaderFragmentToFoodFragment()
+                )
+        })
         barcodeReaderViewModel.goHomeEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 findNavController().popBackStack()
