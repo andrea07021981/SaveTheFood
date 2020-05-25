@@ -21,7 +21,11 @@
         android:id="@+id/barcodeReaderFragment"
         android:name="com.example.savethefood.addfood.BarcodeReaderFragment"
         android:label="BarcodeReaderFragment"
-        tools:layout="@layout/fragment_barcodereader" />
+        tools:layout="@layout/fragment_barcodereader" >
+        <action
+            android:id="@+id/action_barcodeReaderFragment_to_foodFragment"
+            app:destination="@id/foodFragment" />
+    </fragment>
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.savethefood.home.HomeFragment"
@@ -103,5 +107,10 @@
         tools:layout="@layout/fragment_signup"
         android:name="com.example.savethefood.login.SignUpFragment"
         android:label="SignUpFragment" />
+    <fragment
+        android:id="@+id/foodFragment"
+        android:name="com.example.savethefood.food.FoodFragment"
+        android:label="FoodFragment"
+        tools:layout="@layout/fragment_food"/>
 
 </navigation>

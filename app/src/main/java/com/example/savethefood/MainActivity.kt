@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = binding.drawerLayout
         val navController = findNavController(R.id.nav_host_fragment)
         val navigationView = this.findViewById<NavigationView>(R.id.navView)
-        navigationView?.setupWithNavController(navController)
+        //navigationView?.setupWithNavController(navController)
 
         //This forces the drawer menu in home and avoid the back button navigation
         appBarConfiguration = AppBarConfiguration(setOf(
@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
                     appbar.toolbar.visibility = View.VISIBLE
                 }
                 nc.graph.findNode(R.id.barcodeReaderFragment)?.id,
+                nc.graph.findNode(R.id.foodFragment)?.id,
                 nc.graph.findNode(R.id.recipeCookFragment)?.id,
                 nc.graph.findNode(R.id.recipeFragment)?.id -> {
                     appbar.toolbar.visibility = View.VISIBLE
@@ -57,6 +58,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        createDrawerAnimation(navigationView)
+        NavigationUI.setupWithNavController(binding.navView, navController)
+    }
+
+    /**
+     * Manage the effect of the open/close drawer
+     */
+    private fun createDrawerAnimation(navigationView: NavigationView) {
         //TODO ORGANIZE CODE
         val toggle = ActionBarDrawerToggle(
             this,
@@ -65,6 +75,7 @@ class MainActivity : AppCompatActivity() {
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
+
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         (toolbar as Toolbar).setNavigationOnClickListener { v ->
@@ -95,8 +106,6 @@ class MainActivity : AppCompatActivity() {
                 main_layout.translationX = xTranslation
             }
         })
-        NavigationUI.setupWithNavController(binding.navView, navController)
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

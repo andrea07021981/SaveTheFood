@@ -26,6 +26,9 @@ class BarcodeReaderViewModel(
     private val _readBarcodeEvent = MutableLiveData<Event<Unit>>()
     val readBarcodeEvent: LiveData<Event<Unit>>
         get() = _readBarcodeEvent
+    private val _searchFoodEvent = MutableLiveData<Event<Unit>>()
+    val searchFoodEvent: LiveData<Event<Unit>>
+        get() = _searchFoodEvent
     private val _goHomeEvent = MutableLiveData<Event<Unit>>()
     val goHomeEvent: LiveData<Event<Unit>>
         get() = _goHomeEvent
@@ -44,12 +47,18 @@ class BarcodeReaderViewModel(
             FoodDomain()
     }
 
+    /**
+     * External intent for barcode
+     */
     fun searchInfoByBarcode() {
         _readBarcodeEvent.value = Event(Unit)
     }
 
+    /**
+     * Internal call foor food detail through
+     */
     fun searchOnline() {
-        //Todo use spoonacular to find a fit for the food. Show a list and let the user select
+        _searchFoodEvent.value = Event(Unit)
     }
 
     fun getApiFoodDetails(barcode: String) {
