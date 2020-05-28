@@ -31,7 +31,7 @@
             android:textColorHint="@color/colorAccent"
             android:hint="food name"
             android:inputType="textPersonName"
-            android:text="Name"
+            android:textColorLink="@color/colorAccent"
             app:layout_constraintEnd_toStartOf="@+id/imageButton3"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
