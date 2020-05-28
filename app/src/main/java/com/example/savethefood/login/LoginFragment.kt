@@ -51,6 +51,7 @@ class LoginFragment : Fragment() {
         dataBinding = FragmentLoginBinding.inflate(inflater)
         dataBinding.loginViewModel = loginViewModel
         dataBinding.lifecycleOwner = this
+        //TODO fix the error after signup and come back
         return dataBinding.root
     }
 
