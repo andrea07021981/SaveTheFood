@@ -5,9 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.databinding.FragmentFoodBinding
 
 class FoodFragment : Fragment() {
+
+    private val foodViewModel by viewModels<FoodViewmodel> {
+        FoodViewmodel.FoodViewModelFactory(FoodDataRepository.getRepository(requireActivity().application))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -15,6 +23,7 @@ class FoodFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         var databinding = FragmentFoodBinding.inflate(inflater)
+
         return databinding.root
     }
 }
