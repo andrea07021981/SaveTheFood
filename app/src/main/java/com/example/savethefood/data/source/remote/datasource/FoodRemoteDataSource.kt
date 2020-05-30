@@ -35,8 +35,8 @@ class FoodRemoteDataSource(
     override suspend fun getFoodByQuery(query: String): Result<FoodDomain>  = coroutineScope{
         try {
             val foodData = foodApi.getFoodByName(query = query)
-            Log.d("JSON RESULT", foodData.id.toString())
-            return@coroutineScope Result.Success(foodData.asDomainModel())
+            //Log.d("JSON RESULT", foodData.id.toString())
+            return@coroutineScope Result.Success(FoodDomain())
         } catch (e: Exception) {
             return@coroutineScope Result.ExError(e)
         }
