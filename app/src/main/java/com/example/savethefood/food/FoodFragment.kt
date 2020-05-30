@@ -22,9 +22,10 @@ class FoodFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var databinding = FragmentFoodBinding.inflate(inflater)
-
-        return databinding.root
+        var dataBinding = FragmentFoodBinding.inflate(inflater)
+        dataBinding.lifecycleOwner = this
+        dataBinding.foodViewModel = foodViewModel
+        return dataBinding.root
     }
 }
 

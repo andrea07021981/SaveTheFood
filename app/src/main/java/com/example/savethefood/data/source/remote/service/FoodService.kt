@@ -1,6 +1,7 @@
 package com.example.savethefood.data.source.remote.service
 
 import com.example.savethefood.data.source.remote.datatransferobject.NetworkFood
+import com.example.savethefood.data.source.remote.datatransferobject.NetworkFoodSearch
 import com.example.savethefood.data.source.remote.datatransferobject.NetworkRecipe
 import com.example.savethefood.data.source.remote.datatransferobject.NetworkRecipeInfo
 import com.example.savethefood.data.source.remote.service.ApiEndPoint.BASE_URL
@@ -24,7 +25,7 @@ interface FoodService {
     fun getFoodByUpc(@Path("upc") type: String, @Query("apiKey") key: String = API_KEY): Deferred<NetworkFood>
 
     @GET("food/products/search")
-    suspend fun getFoodByName(@Query("apiKey") key: String = API_KEY, @Query("query") query: String): NetworkFood
+    suspend fun getFoodByName(@Query("apiKey") key: String = API_KEY, @Query("query") query: String): NetworkFoodSearch
 
     /**
      * New direct method added in retrofit 2.6. No need enqueue and retrofit with deferred
