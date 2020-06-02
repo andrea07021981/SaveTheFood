@@ -1,6 +1,7 @@
 package com.example.savethefood.data.source.remote.datatransferobject
 
 import com.example.savethefood.data.domain.FoodSearchDomain
+import com.example.savethefood.data.domain.ProductDomain
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -24,12 +25,22 @@ data class NetworkProduct(
 /**
  * Convert Network results to database objects
  */
-/*fun NetworkFoodSearch.asDomainModel() : FoodSearchDomain {
+fun NetworkFoodSearch.asDomainModel() : FoodSearchDomain {
     return FoodSearchDomain(
         number = number,
-        offset =
+        offset = offset,
+        products = products.map {
+            ProductDomain(
+                it.id,
+                it.image,
+                it.imageType,
+                it.title
+            )
+        },
+        totalProducts = totalProducts,
+        type = type
     )
-}*/
+}
 
 
 //TODO ADD converter for local data

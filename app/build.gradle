@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -174,4 +175,7 @@ dependencies {
 
     //Custom login effect github
     implementation 'br.com.simplepass:loading-button-android:2.2.0'
+
+    //Analytics
+    implementation 'com.google.firebase:firebase-analytics:17.4.2'
 }
