@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.remote.datatransferobject.asDomainModel
 import com.example.savethefood.data.source.remote.service.FoodService
@@ -32,11 +33,11 @@ class FoodRemoteDataSource(
     }
 
     @Throws(Exception::class)
-    override suspend fun getFoodByQuery(query: String): Result<FoodDomain>  = coroutineScope{
+    override suspend fun getFoodByQuery(query: String): Result<FoodSearchDomain>  = coroutineScope{
         try {
             val foodData = foodApi.getFoodByName(query = query)
             //Log.d("JSON RESULT", foodData.id.toString())
-            return@coroutineScope Result.Success(FoodDomain())
+            return@coroutineScope Result.Success(foodData.asDomainModel())
         } catch (e: Exception) {
             return@coroutineScope Result.ExError(e)
         }

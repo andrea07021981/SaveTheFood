@@ -3,6 +3,7 @@ package com.example.savethefood.data.source
 import androidx.lifecycle.LiveData
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.domain.FoodSearchDomain
 
 interface FoodDataSource {
 
@@ -10,7 +11,7 @@ interface FoodDataSource {
     suspend fun getFoodByUpc(barcode: String): Result<FoodDomain>
 
     @Throws(Exception::class)
-    suspend fun getFoodByQuery(barcode: String): Result<FoodDomain>
+    suspend fun getFoodByQuery(barcode: String): Result<FoodSearchDomain>
 
     suspend fun insertFood(food: FoodDomain): Long
 

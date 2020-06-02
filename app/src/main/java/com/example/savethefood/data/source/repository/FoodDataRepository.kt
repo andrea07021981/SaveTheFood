@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.map
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.source.local.datasource.FoodLocalDataSource
@@ -47,9 +48,9 @@ class FoodDataRepository(
     }
 
     @Throws(Exception::class)
-    override suspend fun getApiFoodQuery(query: String): Result<FoodDomain> = coroutineScope{
+    override suspend fun getApiFoodQuery(query: String): Result<FoodSearchDomain> = coroutineScope{
         wrapEspressoIdlingResource {
-            foodRemoteDataSource.getFoodByUpc(query)
+            foodRemoteDataSource.getFoodByQuery(query)
         }
     }
 

@@ -7,6 +7,7 @@ import com.example.savethefood.data.domain.asDatabaseModel
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.local.dao.FoodDatabaseDao
 import com.example.savethefood.data.Result
+import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.local.entity.asDomainModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +22,7 @@ class FoodLocalDataSource internal constructor(
         TODO("No OP")
     }
 
-    override suspend fun getFoodByQuery(barcode: String): Result<FoodDomain> {
+    override suspend fun getFoodByQuery(barcode: String): Result<FoodSearchDomain> {
         TODO("No OP")
     }
 

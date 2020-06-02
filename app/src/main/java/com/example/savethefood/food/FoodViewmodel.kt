@@ -33,8 +33,12 @@ class FoodViewmodel(
             try {
                 _status.value = Loading("Loading")
                 //TODO search food list by name https://spoonacular.com/food-api/docs#Search-Grocery-Products
-                //val foodResult = dataRepository.getApiFoodQuery(foodName.value!!)
+                val foodResult = dataRepository.getApiFoodQuery(foodName.value!!)
+                if (foodResult is Result.Success) {
+                    //_foodListResult.postValue(foodResult.data.products)
+                } else {
 
+                }
                 _status.value = Done("Done")
             } catch (e: Exception) {
                 _status.value = Error(toString())
