@@ -48,7 +48,7 @@ class FoodDataRepository(
     }
 
     @Throws(Exception::class)
-    override suspend fun getApiFoodQuery(query: String): Result<FoodSearchDomain> = coroutineScope{
+    override suspend fun getApiFoodQuery(query: String): Result<FoodSearchDomain>? = coroutineScope{
         wrapEspressoIdlingResource {
             foodRemoteDataSource.getFoodByQuery(query)
         }

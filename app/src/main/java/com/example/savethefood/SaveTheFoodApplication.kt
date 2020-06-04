@@ -8,7 +8,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 
 class SaveTheFoodApplication : Application(){
 
-    //TODO Add worker to update food, recipes
+    //TODO Add worker to update food, recipes and analytics
 
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
     override fun onCreate() {
