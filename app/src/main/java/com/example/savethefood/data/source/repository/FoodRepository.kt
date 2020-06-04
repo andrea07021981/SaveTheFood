@@ -10,7 +10,7 @@ interface FoodRepository {
     @Throws(Exception::class)
     suspend fun getApiFoodUpc(barcode: String): Result<FoodDomain>
 
-    suspend fun getApiFoodQuery(query: String): Result<FoodSearchDomain>
+    suspend fun getApiFoodQuery(query: String): Result<FoodSearchDomain>?
 
     suspend fun saveNewFood(food: FoodDomain): Long
 

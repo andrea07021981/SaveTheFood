@@ -11,7 +11,7 @@ interface FoodDataSource {
     suspend fun getFoodByUpc(barcode: String): Result<FoodDomain>
 
     @Throws(Exception::class)
-    suspend fun getFoodByQuery(barcode: String): Result<FoodSearchDomain>
+    suspend fun getFoodByQuery(barcode: String): Result<FoodSearchDomain>?
 
     suspend fun insertFood(food: FoodDomain): Long
 

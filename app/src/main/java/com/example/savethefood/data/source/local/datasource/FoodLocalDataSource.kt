@@ -22,7 +22,7 @@ class FoodLocalDataSource internal constructor(
         TODO("No OP")
     }
 
-    override suspend fun getFoodByQuery(barcode: String): Result<FoodSearchDomain> {
+    override suspend fun getFoodByQuery(barcode: String): Result<FoodSearchDomain>? {
         TODO("No OP")
     }
 

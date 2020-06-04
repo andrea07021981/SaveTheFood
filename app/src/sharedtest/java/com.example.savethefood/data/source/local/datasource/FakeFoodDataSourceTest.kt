@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.FoodDataSource
 
 class FakeFoodDataSourceTest(
@@ -19,7 +20,7 @@ class FakeFoodDataSourceTest(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getFoodByQuery(barcode: String): Result<FoodDomain> {
+    override suspend fun getFoodByQuery(barcode: String): Result<FoodSearchDomain>? {
         TODO("Not yet implemented")
     }
 

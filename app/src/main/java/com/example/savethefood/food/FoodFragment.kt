@@ -1,13 +1,15 @@
 package com.example.savethefood.food
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.savethefood.EventObserver
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.databinding.FragmentFoodBinding
 
@@ -22,9 +24,25 @@ class FoodFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var dataBinding = FragmentFoodBinding.inflate(inflater)
+        val dataBinding = FragmentFoodBinding.inflate(inflater)
         dataBinding.lifecycleOwner = this
         dataBinding.foodViewModel = foodViewModel
+        dataBinding.recyclerView.layoutManager = LinearLayoutManager(activity)
+        dataBinding.recyclerView.adapter = FoodSearchAdapter(FoodSearchAdapter.OnClickListener {
+            it.let {
+                //TODO select and call the same api call of foor barcode, save and go home
+            }
+        })
+        foodViewModel.search.observe(this.viewLifecycleOwner, EventObserver{
+            it.let {
+                val inputManager: InputMethodManager =
+                    requireNotNull(activity).getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputManager.hideSoftInputFromWindow(
+                    requireNotNull(activity).currentFocus!!.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS
+                )
+            }
+        })
         return dataBinding.root
     }
 }

@@ -62,9 +62,9 @@ class RecipeAdapter(
     }
 
     /**
-     * Custom listener that handles clicks on [RecyclerView] items.  Passes the [Food]
+     * Custom listener that handles clicks on [RecyclerView] items.  Passes the [Recipe]
      * associated with the current item to the [onClick] function.
-     * @param clickListener lambda that will be called with the current [Food]
+     * @param clickListener lambda that will be called with the current [Recipe]
      */
     class OnClickListener(
         val clickListener: (recipe: RecipeResult) -> Unit
