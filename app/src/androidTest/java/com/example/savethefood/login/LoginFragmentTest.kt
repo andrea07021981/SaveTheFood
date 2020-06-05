@@ -2,6 +2,7 @@ package com.example.savethefood.login
 
 import android.os.Bundle
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -112,7 +113,9 @@ class LoginFragmentTest {
         onView(withId(R.id.login_button)).perform(click())
 
         //THEN - navigate to home fragment (the nested is just a container for sub navigation) with the current user
+        val bundle = bundleOf("x" to 200, "y" to 200)
+        bundle.putParcelable("user", UserDomain())
          verify(navController)
-             .navigate(LoginFragmentDirections.actionLoginFragmentToNestedNavGraph(UserDomain()))
+             .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment(bundle))
     }
 }
