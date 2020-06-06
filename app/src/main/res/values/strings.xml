@@ -40,4 +40,6 @@
     <string name="description">Description</string>
     <string name="ingredients">Ingredients</string>
     <string name="food">Food</string>
+    <string name="save">Save</string>
+    <string name="online">Online</string>
 </resources>
