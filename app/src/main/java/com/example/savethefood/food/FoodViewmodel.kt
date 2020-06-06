@@ -39,15 +39,6 @@ class FoodViewmodel(
         foodName.value = "";
     }
 
-    fun saveFood(food: ProductDomain) {
-        viewModelScope.launch {
-            //Call the apy with foodcode
-            //dataRepository.saveNewFood(food)
-            //TODO check whether the record has been inserted or not
-            //_goHomeEvent.value = Event(Unit)
-        }
-    }
-
     fun searchFood() {
         _search.value = Event(Unit)
         viewModelScope.launch {

@@ -18,7 +18,7 @@ class BarcodeReaderViewModel(
 ) : ViewModel() {
 
     private val _food = MutableLiveData<FoodDomain>()
-    val food: LiveData<FoodDomain>
+    val food: MutableLiveData<FoodDomain>
         get() = _food
     private val _barcodeResult = MutableLiveData<Result<FoodDomain>>()
     val barcodeResult: LiveData<Result<FoodDomain>>
@@ -67,16 +67,14 @@ class BarcodeReaderViewModel(
                 _progressVisibility.value = true
                 val foodRetrieved = foodDataRepository.getApiFoodUpc(barcode)
                 if (foodRetrieved is Result.Success) {
-                    _food.postValue(foodRetrieved.data)
+                    _food.value = foodRetrieved.data
                 } else {
                     _barcodeResult.postValue(foodRetrieved)
                 }
-                Log.d("Food title", _food.value?.foodTitle)
-                Log.d("Food description", _food.value?.foodDescription)
             } catch (error: JsonDataException) {
-                Log.d("Error retrofit json ", error.message)
+                _barcodeResult.postValue(Result.Error(error.toString()))
             } catch (generic: Exception) {
-                Log.d("Generic exception ", generic.message)
+                _barcodeResult.postValue(Result.Error(generic.toString()))
             } finally {
                 _progressVisibility.value = false
             }

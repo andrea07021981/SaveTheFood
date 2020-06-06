@@ -34,7 +34,6 @@ class BarcodeReaderFragment : Fragment() {
         dataBinding = FragmentBarcodereaderBinding.inflate(inflater)
         dataBinding.lifecycleOwner = this
         dataBinding.barcodeReaderViewModel = barcodeReaderViewModel
-        dataBinding.food = barcodeReaderViewModel.food.value
         setHasOptionsMenu(true)
         return dataBinding.root
     }
@@ -92,8 +91,9 @@ class BarcodeReaderFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    inner class FragmentIntentIntegrator(private val fragment: Fragment) :
-        IntentIntegrator(fragment.activity) {
+    inner class FragmentIntentIntegrator(
+        private val fragment: Fragment
+    ) : IntentIntegrator(fragment.activity) {
 
         override fun startActivityForResult(intent: Intent, code: Int) {
             fragment.startActivityForResult(intent, code)
@@ -102,7 +102,7 @@ class BarcodeReaderFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.menu_home, menu)
+        inflater.inflate(R.menu.menu_home, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
