@@ -43,6 +43,16 @@ class FoodRemoteDataSource(
         }
     }
 
+    override suspend fun getFoodById(id: Int): Result<FoodDomain> = coroutineScope{
+        try {
+            val foodData = foodApi.getFoodById(id)
+            return@coroutineScope Result.Success(foodData.asDomainModel())
+        } catch (e: Exception) {
+            return@coroutineScope Result.Error(e.toString())
+        }
+    }
+
+
     override suspend fun insertFood(food: FoodDomain): Long {
         TODO("No OP")
     }
@@ -51,7 +61,7 @@ class FoodRemoteDataSource(
         TODO("No OP")
     }
 
-    override suspend fun deleteFood(food: FoodDomain?) {
+    override suspend fun deleteFood(food: FoodDomain?): Int {
         TODO("No OP")
     }
 }

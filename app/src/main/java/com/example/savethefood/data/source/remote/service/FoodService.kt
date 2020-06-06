@@ -27,6 +27,9 @@ interface FoodService {
     @GET("food/products/search")
     suspend fun getFoodByName(@Query("apiKey") key: String = API_KEY, @Query("query") query: String): NetworkFoodSearch
 
+    @GET("food/products/{id}")
+    suspend fun getFoodById(@Path("id") id: Int, @Query("apiKey") key: String = API_KEY): NetworkFood
+
     /**
      * New direct method added in retrofit 2.6. No need enqueue and retrofit with deferred
      * it's the same as PlantApi.retrofitService.postCommand(plantId = plantDomain.plantId, commandType = commandType).await().asDomainModel()

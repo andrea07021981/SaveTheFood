@@ -1,8 +1,6 @@
 package com.example.savethefood.food
 
-import android.R
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +9,11 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.EventObserver
+import com.example.savethefood.R
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.databinding.FragmentFoodBinding
 
@@ -42,8 +42,8 @@ class FoodFragment : Fragment() {
                         dialogInterface.cancel()
                     }
                     .setPositiveButton("Confirm") { dialogInterface, _ ->
-                        findNavController().popBackStack(R.id.home, true)
                         dialogInterface.dismiss()
+                        foodViewModel.saveFoodDetail(it)
                     }
                     .create()
                     .show()
@@ -58,6 +58,9 @@ class FoodFragment : Fragment() {
                     InputMethodManager.HIDE_NOT_ALWAYS
                 )
             }
+        })
+        foodViewModel.foodDomain.observe(this.viewLifecycleOwner, Observer {
+            findNavController().popBackStack(R.id.homeFragment, false)
         })
         return dataBinding.root
     }

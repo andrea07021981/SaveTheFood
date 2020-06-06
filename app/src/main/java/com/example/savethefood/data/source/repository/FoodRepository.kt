@@ -12,9 +12,11 @@ interface FoodRepository {
 
     suspend fun getApiFoodQuery(query: String): Result<FoodSearchDomain>?
 
+    suspend fun getApiFoodById(id: Int): Result<FoodDomain>
+
     suspend fun saveNewFood(food: FoodDomain): Long
 
     suspend fun getFoods(): LiveData<Result<List<FoodDomain>>>
 
-    suspend fun deleteFood(food: FoodDomain?)
+    suspend fun deleteFood(food: FoodDomain?): Int
 }

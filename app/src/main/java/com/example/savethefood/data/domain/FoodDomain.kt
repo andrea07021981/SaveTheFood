@@ -10,7 +10,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class FoodDomain(
     var foodTitle: String = "",
-    var foodDescription: String = "",
+    var foodDescription: String? = "",
     var foodId: Int,
     // used to map img_src from the JSON to imgSrcUrl in our class
     var foodImgUrl: String,

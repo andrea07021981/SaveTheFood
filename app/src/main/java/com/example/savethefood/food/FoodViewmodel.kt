@@ -21,6 +21,10 @@ class FoodViewmodel(
     val foodListResult: LiveData<List<ProductDomain>?>
         get() = _foodListResult
 
+    private var _foodDomain = MutableLiveData<Result<FoodDomain>>()
+    val foodDomain: LiveData<Result<FoodDomain>>
+        get() = _foodDomain
+
     private val _search = MutableLiveData<Event<Unit>>()
     val search: LiveData<Event<Unit>>
         get() = _search
@@ -52,6 +56,23 @@ class FoodViewmodel(
                 val foodResult = dataRepository.getApiFoodQuery(foodName.value!!)
                 if (foodResult is Result.Success) {
                     _foodListResult.postValue(foodResult.data.products)
+                } else {
+                    throw Exception(foodResult.toString())
+                }
+                _status.value = Done("Done")
+            } catch (e: Exception) {
+                _status.value = Error(toString())
+            }
+        }
+    }
+
+    fun saveFoodDetail(food: ProductDomain) {
+        viewModelScope.launch {
+            try {
+                _status.value = Loading("Loading")
+                val foodResult = dataRepository.getApiFoodById(food.id)
+                if (foodResult is Result.Success) {
+                    _foodDomain.value = foodResult
                 } else {
                     throw Exception(foodResult.toString())
                 }
