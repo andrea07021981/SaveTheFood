@@ -54,6 +54,19 @@ class FoodDataRepository(
         }
     }
 
+    override suspend fun getApiFoodById(id: Int): Result<FoodDomain> = coroutineScope{
+        wrapEspressoIdlingResource {
+            val foodByIdResult = foodRemoteDataSource.getFoodById(id)
+            if (foodByIdResult is Result.Success) {
+                foodLocalDataSource.insertFood(foodByIdResult.data)
+                return@coroutineScope foodByIdResult
+            } else {
+                throw Exception(foodByIdResult.toString())
+            }
+        }
+    }
+
+
     /**
       This function uses the IO dispatcher to ensure the database insert database operation
      * happens on the IO dispatcher. By switching to the IO dispatcher using `withContext` this
@@ -74,7 +87,7 @@ class FoodDataRepository(
         }
     }
 
-    override suspend fun deleteFood(food: FoodDomain?)  = withContext(Dispatchers.IO) {
+    override suspend fun deleteFood(food: FoodDomain?): Int  = withContext(Dispatchers.IO) {
         wrapEspressoIdlingResource {
             foodLocalDataSource.deleteFood(food)
         }

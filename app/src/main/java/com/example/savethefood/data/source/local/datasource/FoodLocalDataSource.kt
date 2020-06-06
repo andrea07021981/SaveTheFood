@@ -26,6 +26,10 @@ class FoodLocalDataSource internal constructor(
         TODO("No OP")
     }
 
+    override suspend fun getFoodById(id: Int): Result<FoodDomain> {
+        TODO("Not yet implemented")
+    }
+
     /**
     This function uses the IO dispatcher to ensure the database insert database operation
      * happens on the IO dispatcher. By switching to the IO dispatcher using `withContext` this
@@ -46,8 +50,8 @@ class FoodLocalDataSource internal constructor(
         }
     }
 
-    override suspend fun deleteFood(food: FoodDomain?) {
-        withContext(ioDispatcher) {
+    override suspend fun deleteFood(food: FoodDomain?): Int {
+        return withContext(ioDispatcher) {
             foodDatabaseDao.deleteFood(food = food!!.asDatabaseModel())
         }
     }

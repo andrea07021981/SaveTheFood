@@ -13,7 +13,7 @@ import com.squareup.moshi.JsonClass
 data class NetworkFood(
     val badges: List<String>?,
     @Json(name = "breadcrumbs") val breadCrumbs: List<String>?,
-    val generatedText: String,
+    val generatedText: String?,
     val id: Int,
     val images: List<String>,
     @Json(name = "important_badges")val importantBadges: List<String>?,

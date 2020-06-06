@@ -13,9 +13,12 @@ interface FoodDataSource {
     @Throws(Exception::class)
     suspend fun getFoodByQuery(barcode: String): Result<FoodSearchDomain>?
 
+    @Throws(Exception::class)
+    suspend fun getFoodById(id: Int): Result<FoodDomain>
+
     suspend fun insertFood(food: FoodDomain): Long
 
     suspend fun getFoods(): LiveData<Result<List<FoodDomain>>>
 
-    suspend fun deleteFood(food: FoodDomain?)
+    suspend fun deleteFood(food: FoodDomain?): Int
 }

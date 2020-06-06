@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -45,6 +46,7 @@ class FoodDetailFragment : Fragment() {
         foodSelected = args.foodDomain
         dataBinding.lifecycleOwner = this
         dataBinding.foodDetailViewModel = foodDetailViewModel
+        //TODO bug, first enter image is not present
         return dataBinding.root
     }
 
@@ -76,6 +78,16 @@ class FoodDetailFragment : Fragment() {
                 .create()
                 .show()
         }
+
+        foodDetailViewModel.foodDeleted.observe(this.viewLifecycleOwner, EventObserver {
+            it.let {
+                if (it) {
+                    findNavController().popBackStack()
+                } else {
+                    Toast.makeText(requireNotNull(activity), "Not deleted", Toast.LENGTH_LONG).show()
+                }
+            }
+        })
     }
 
     override fun onDestroy() {

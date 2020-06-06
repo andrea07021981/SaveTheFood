@@ -14,7 +14,7 @@ data class FoodEntity(
     val title: String,
 
     @ColumnInfo(name = "description")
-    val description: String,
+    val description: String?,
 
     @ColumnInfo(name = "img_url")
     val imgUrl: String,

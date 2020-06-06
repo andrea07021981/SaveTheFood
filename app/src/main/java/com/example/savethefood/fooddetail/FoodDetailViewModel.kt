@@ -25,6 +25,10 @@ class FoodDetailViewModel(
     val food: LiveData<FoodDomain>
         get() = _food
 
+    private val _foodDeleted = MutableLiveData<Event<Boolean>>()
+    val foodDeleted: LiveData<Event<Boolean>>
+        get() = _foodDeleted
+
     private val _recipeFoodEvent = MutableLiveData<Event<FoodDomain>>()
     val recipeFoodEvent: LiveData<Event<FoodDomain>>
         get() = _recipeFoodEvent
@@ -34,9 +38,10 @@ class FoodDetailViewModel(
     }
 
     fun deleteFood() {
-        val launch = viewModelScope.launch {
+        viewModelScope.launch {
             try {
-                foodDataRepository.deleteFood(_food.value)
+                val idDeleted = foodDataRepository.deleteFood(_food.value)
+                _foodDeleted.value = Event(idDeleted != 0)
             } catch (e: NullPointerException) {
                 Log.e("FoodDetail", e.message)
             }

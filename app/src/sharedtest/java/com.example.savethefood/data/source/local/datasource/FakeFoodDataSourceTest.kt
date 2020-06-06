@@ -24,6 +24,10 @@ class FakeFoodDataSourceTest(
         TODO("Not yet implemented")
     }
 
+    override suspend fun getFoodById(id: Int): Result<FoodDomain>{
+        TODO("Not yet implemented")
+    }
+
     override suspend fun insertFood(food: FoodDomain): Long {
         TODO("Not yet implemented")
     }
@@ -32,7 +36,7 @@ class FakeFoodDataSourceTest(
         return _foodList
     }
 
-    override suspend fun deleteFood(food: FoodDomain?) {
+    override suspend fun deleteFood(food: FoodDomain?): Int {
         TODO("Not yet implemented")
     }
 }

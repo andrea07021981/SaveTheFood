@@ -34,7 +34,7 @@ interface FoodDatabaseDao {
      * Delete a single food
      */
     @Delete
-    fun deleteFood(food: FoodEntity)
+    fun deleteFood(food: FoodEntity): Int
 
     /**
      * Selects and returns the user with given userId.
