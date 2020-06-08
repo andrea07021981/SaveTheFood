@@ -60,7 +60,7 @@ class FoodFragment : Fragment() {
             }
         })
         foodViewModel.foodDomain.observe(this.viewLifecycleOwner, Observer {
-            findNavController().popBackStack(R.id.homeFragment, false)
+            findNavController().popBackStack()
         })
         return dataBinding.root
     }

@@ -50,7 +50,7 @@ class HomeViewModelTest {
     fun moveToBarcodeReader_barcodeReaderEvent() {
 
         //When adding a new task
-        homeViewModel.moveToBarcodeReader()
+        homeViewModel.navigateToBarcodeReader()
 
         //Then the new task event is triggered
         val value = homeViewModel.barcodeFoodEvent.getOrAwaitValue()
