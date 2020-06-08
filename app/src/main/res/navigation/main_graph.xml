@@ -40,6 +40,9 @@
         <argument
             android:name="params"
             app:argType="android.os.Bundle" />
+        <action
+            android:id="@+id/action_homeFragment_to_foodFragment"
+            app:destination="@id/foodFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"

@@ -16,6 +16,7 @@ import com.example.savethefood.databinding.FragmentBarcodereaderBinding
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
 
+///TODO DELETE CLASS, ACCESS DIRECTLY FROM HOME TO BARCODE APP
 class BarcodeReaderFragment : Fragment() {
 
     private val barcodeReaderViewModel by viewModels<BarcodeReaderViewModel> {

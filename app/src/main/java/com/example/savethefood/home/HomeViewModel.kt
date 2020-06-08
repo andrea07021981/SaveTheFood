@@ -44,6 +44,10 @@ class HomeViewModel(
     val barcodeFoodEvent: LiveData<Event<Unit>>
         get() = _barcodeFoodEvent
 
+    private val _onlineFoodEvent = MutableLiveData<Event<Unit>>()
+    val onlineFoodEvent: LiveData<Event<Unit>>
+        get() = _onlineFoodEvent
+
     init {
         viewModelScope.launch {
             _foodList.addSource(foodDataRepository.getFoods(), _foodList::setValue)
@@ -54,8 +58,12 @@ class HomeViewModel(
         _detailFoodEvent.value = Event(food)
     }
 
-    fun moveToBarcodeReader() {
+    fun navigateToBarcodeReader() {
         _barcodeFoodEvent.value = Event(Unit)
+    }
+
+    fun navigateToOnlineSearch() {
+        _onlineFoodEvent.value = Event(Unit)
     }
 
     override fun onCleared() {

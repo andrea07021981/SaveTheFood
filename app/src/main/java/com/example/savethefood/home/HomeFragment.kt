@@ -82,6 +82,12 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBarcodeReaderFragment())
             }
         })
+
+        homeViewModel.onlineFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
+            it.let {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFoodFragment())
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
