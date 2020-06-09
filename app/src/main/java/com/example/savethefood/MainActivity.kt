@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                     appbar.toolbar.visibility = View.VISIBLE
                 }
-                nc.graph.findNode(R.id.barcodeReaderFragment)?.id,
                 nc.graph.findNode(R.id.foodFragment)?.id,
                 nc.graph.findNode(R.id.recipeCookFragment)?.id,
                 nc.graph.findNode(R.id.recipeFragment)?.id -> {
