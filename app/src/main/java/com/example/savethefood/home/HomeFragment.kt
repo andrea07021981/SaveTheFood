@@ -1,6 +1,7 @@
 package com.example.savethefood.home
 
 import android.animation.Animator
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -21,6 +22,8 @@ import com.example.savethefood.R
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.fooddetail.FoodDetailViewModel
+import com.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.integration.android.IntentResult
 
 class HomeFragment : Fragment(), View.OnLayoutChangeListener {
 
@@ -79,7 +82,7 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
 
         homeViewModel.barcodeFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBarcodeReaderFragment())
+                FragmentIntentIntegrator(this).initiateScan()
             }
         })
 
@@ -88,6 +91,27 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFoodFragment())
             }
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+
+        //TODO forced value, emulator can't read barcode
+        //041631000564
+        result?.let {
+            //TODO call a new method in vm, which gets the repository getApiFoodUpc and save. In the meantime use bindingadapger for a progress bar
+            homeViewModel.getApiFoodDetails(it.contents ?: "041631000564")
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    inner class FragmentIntentIntegrator(
+        private val fragment: Fragment
+    ) : IntentIntegrator(fragment.activity) {
+
+        override fun startActivityForResult(intent: Intent, code: Int) {
+            fragment.startActivityForResult(intent, code)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

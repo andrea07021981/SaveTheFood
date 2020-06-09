@@ -9,7 +9,9 @@ import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.data.source.repository.FoodRepository
+import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.*
+import java.lang.Exception
 
 class HomeViewModel(
     private val foodDataRepository: FoodRepository
@@ -44,6 +46,10 @@ class HomeViewModel(
     val barcodeFoodEvent: LiveData<Event<Unit>>
         get() = _barcodeFoodEvent
 
+    private val _newFoodFoodEvent = MutableLiveData<Result<FoodDomain>>()
+    val newFoodFoodEvent: LiveData<Result<FoodDomain>>
+        get() = _newFoodFoodEvent
+
     private val _onlineFoodEvent = MutableLiveData<Event<Unit>>()
     val onlineFoodEvent: LiveData<Event<Unit>>
         get() = _onlineFoodEvent
@@ -64,6 +70,31 @@ class HomeViewModel(
 
     fun navigateToOnlineSearch() {
         _onlineFoodEvent.value = Event(Unit)
+    }
+
+    fun getApiFoodDetails(barcode: String) {
+        viewModelScope.launch {
+            try {
+                //TODO add live data for progress
+                val foodRetrieved = foodDataRepository.getApiFoodUpc(barcode)
+                if (foodRetrieved is Result.Success) {
+                    val saveNewFood = foodDataRepository.saveNewFood(foodRetrieved.data)
+                    if (saveNewFood == 0L) {
+                        _newFoodFoodEvent.value = Result.Error("Not saved")
+                    } else {
+                        _newFoodFoodEvent.value = Result.Success(foodRetrieved.data)
+                    }
+                } else {
+                    _newFoodFoodEvent.value = Result.Error("Not retrieved")
+                }
+            } catch (error: JsonDataException) {
+                _newFoodFoodEvent.value = Result.Error(error.toString())
+            } catch (generic: Exception) {
+                _newFoodFoodEvent.value = Result.Error(generic.toString())
+            } finally {
+
+            }
+        }
     }
 
     override fun onCleared() {
