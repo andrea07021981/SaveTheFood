@@ -58,14 +58,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        createDrawerAnimation(navigationView)
+        createDrawerAnimation(navigationView, navController)
         NavigationUI.setupWithNavController(binding.navView, navController)
     }
 
     /**
      * Manage the effect of the open/close drawer
      */
-    private fun createDrawerAnimation(navigationView: NavigationView) {
+    private fun createDrawerAnimation(
+        navigationView: NavigationView,
+        navController: NavController
+    ) {
         //TODO ORGANIZE CODE
         val toggle = ActionBarDrawerToggle(
             this,
@@ -78,10 +81,19 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         (toolbar as Toolbar).setNavigationOnClickListener { v ->
-            if (drawerLayout.isDrawerOpen(navigationView)) {
-                drawerLayout.closeDrawer(navigationView)
-            } else {
-                drawerLayout.openDrawer(navigationView, true)
+            when (navController.currentDestination?.id) {
+                navController.graph.findNode(R.id.foodFragment)?.id,
+                navController.graph.findNode(R.id.recipeCookFragment)?.id,
+                navController.graph.findNode(R.id.recipeDetailFragment)?.id -> {
+                    navController.popBackStack()
+                }
+                else -> {
+                    if (drawerLayout.isDrawerOpen(navigationView)) {
+                        drawerLayout.closeDrawer(navigationView)
+                    } else {
+                        drawerLayout.openDrawer(navigationView, true)
+                    }
+                }
             }
         }
 
