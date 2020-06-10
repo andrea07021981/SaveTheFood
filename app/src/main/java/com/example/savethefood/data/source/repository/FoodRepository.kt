@@ -14,6 +14,8 @@ interface FoodRepository {
 
     suspend fun getApiFoodById(id: Int): Result<FoodDomain>
 
+    suspend fun refreshData()
+
     suspend fun saveNewFood(food: FoodDomain): Long
 
     suspend fun getFoods(): LiveData<Result<List<FoodDomain>>>

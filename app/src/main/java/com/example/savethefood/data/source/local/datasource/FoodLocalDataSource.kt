@@ -43,11 +43,20 @@ class FoodLocalDataSource internal constructor(
         foodDatabaseDao.insert(food.asDatabaseModel())
     }
 
+    //TODO use varargs as dev-bytes
+    override suspend fun updateFoods(food: FoodDomain) {
+        foodDatabaseDao.updateAll(food.asDatabaseModel())
+    }
+
     override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> {
         //TODO add try catch with Result.ExError
         return foodDatabaseDao.getFoods().map {
             Result.Success(it.asDomainModel())
         }
+    }
+
+    override suspend fun getLocalFoods(): Result<List<FoodDomain>> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun deleteFood(food: FoodDomain?): Int {

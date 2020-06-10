@@ -57,8 +57,16 @@ class FoodRemoteDataSource(
         TODO("No OP")
     }
 
+    override suspend fun updateFoods(food: FoodDomain) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> {
         TODO("No OP")
+    }
+
+    override suspend fun getLocalFoods(): Result<List<FoodDomain>> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun deleteFood(food: FoodDomain?): Int {
