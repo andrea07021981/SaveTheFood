@@ -46,7 +46,6 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
         dataBinding.homeViewModel = homeViewModel
         dataBinding.foodRecycleview.layoutManager = GridLayoutManager(activity, 2)
         setHasOptionsMenu(true)
-        //TODO check args invocationtargerexception after drawer click
         dataBinding.rootLayout.addOnLayoutChangeListener(this)
         return dataBinding.root
     }
@@ -99,7 +98,6 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
         //TODO forced value, emulator can't read barcode
         //041631000564
         result?.let {
-            //TODO call a new method in vm, which gets the repository getApiFoodUpc and save. In the meantime use bindingadapger for a progress bar
             homeViewModel.getApiFoodDetails(it.contents ?: "041631000564")
         }
         super.onActivityResult(requestCode, resultCode, data)

@@ -66,6 +66,24 @@ class FoodDataRepository(
         }
     }
 
+    override suspend fun refreshData() = coroutineScope{
+        wrapEspressoIdlingResource {
+            val localFoods = foodLocalDataSource.getLocalFoods()
+            if (localFoods is Result.Success) {
+                for (food in localFoods.data) {
+                    val foodById = foodRemoteDataSource.getFoodById(food.foodId)
+                    if (foodById is Result.Success) {
+                        //TODO change, create a fooddomain container like devbytes and pass one shot, are varargs
+                        foodLocalDataSource.updateFoods(foodById.data)
+                    }
+                }
+
+            } else{
+                throw Exception(localFoods.toString())
+            }
+        }
+    }
+
 
     /**
       This function uses the IO dispatcher to ensure the database insert database operation

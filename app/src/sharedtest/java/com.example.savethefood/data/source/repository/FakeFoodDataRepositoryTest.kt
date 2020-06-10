@@ -23,6 +23,10 @@ class FakeFoodDataRepositoryTest(
         TODO("Not yet implemented")
     }
 
+    override suspend fun refreshData() {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun saveNewFood(food: FoodDomain): Long {
         TODO("Not yet implemented")
     }

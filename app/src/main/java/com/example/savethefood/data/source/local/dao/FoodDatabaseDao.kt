@@ -22,6 +22,9 @@ interface FoodDatabaseDao {
     @Update
     fun update(food: FoodEntity)
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun updateAll(food: FoodEntity)
+
     /**
      * Deletes all values from the table.
      *

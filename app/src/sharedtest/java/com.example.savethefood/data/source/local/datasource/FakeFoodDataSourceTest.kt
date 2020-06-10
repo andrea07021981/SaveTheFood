@@ -32,8 +32,16 @@ class FakeFoodDataSourceTest(
         TODO("Not yet implemented")
     }
 
+    override suspend fun updateFoods(food: FoodDomain) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> {
         return _foodList
+    }
+
+    override suspend fun getLocalFoods(): Result<List<FoodDomain>> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun deleteFood(food: FoodDomain?): Int {
