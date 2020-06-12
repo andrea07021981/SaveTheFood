@@ -18,12 +18,14 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.transition.TransitionInflater
 import com.example.savethefood.EventObserver
+import com.example.savethefood.MainActivity
 import com.example.savethefood.R
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.fooddetail.FoodDetailViewModel
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
+import java.lang.reflect.InvocationTargetException
 
 class HomeFragment : Fragment(), View.OnLayoutChangeListener {
 
@@ -179,7 +181,11 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
         p7: Int,
         p8: Int
     ) {
-        animateTransition(
-            args.params)
+        try {
+            animateTransition(
+                args.params)
+        } catch (e: InvocationTargetException) {
+            e.printStackTrace()
+        }
     }
 }
