@@ -41,6 +41,7 @@ class RecipeFragment : Fragment() {
         dataBinding  = FragmentReceipeBinding.inflate(inflater)
         dataBinding.lifecycleOwner = this
         dataBinding.recipeViewModel = recipeViewModel
+        //TODO manage screen landscape
         dataBinding.recipeRecycleview.layoutManager = LinearLayoutManager(activity)
         setHasOptionsMenu(true)
         return dataBinding.root
