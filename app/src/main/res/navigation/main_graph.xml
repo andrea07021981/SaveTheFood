@@ -103,5 +103,10 @@
         android:name="com.example.savethefood.food.FoodFragment"
         android:label="FoodFragment"
         tools:layout="@layout/fragment_food"/>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.savethefood.map.MapFragment"
+        android:label="MapFragment"
+        tools:layout="@layout/fragment_map" />
 
 </navigation>
