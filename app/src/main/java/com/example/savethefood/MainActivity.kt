@@ -34,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         //This forces the drawer menu in home and avoid the back button navigation
         appBarConfiguration = AppBarConfiguration(setOf(
             R.id.homeFragment,
-            R.id.recipeFragment
+            R.id.recipeFragment,
+            R.id.mapFragment
         ), drawerLayout)
 
         // prevent nav gesture if not on start destination
@@ -49,7 +50,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 nc.graph.findNode(R.id.foodFragment)?.id,
                 nc.graph.findNode(R.id.recipeCookFragment)?.id,
-                nc.graph.findNode(R.id.recipeFragment)?.id -> {
+                nc.graph.findNode(R.id.recipeFragment)?.id,
+                nc.graph.findNode(R.id.mapFragment)?.id -> {
                     appbar.toolbar.visibility = View.VISIBLE
                 }
                 else -> {

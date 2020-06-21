@@ -8,4 +8,9 @@
         android:id="@+id/recipeFragment"
         android:icon="@drawable/ic_dish"
         android:title="Recipes"/>
+
+    <item
+        android:id="@+id/mapFragment"
+        android:icon="@drawable/ic_baseline_map_24"
+        android:title="Map"/>
 </menu>
