@@ -2,6 +2,7 @@ package com.example.savethefood
 
 import android.app.Application
 import android.os.Build
+import android.os.Bundle
 import androidx.work.*
 import com.example.savethefood.work.RefreshDataWorker
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -15,11 +16,16 @@ class SaveTheFoodApplication : Application(){
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
 
-    private var mFirebaseAnalytics: FirebaseAnalytics? = null
+    private var firebaseAnalytics: FirebaseAnalytics? = null
     override fun onCreate() {
         super.onCreate()
         // Obtain the FirebaseAnalytics instance.
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        //Test
+        val bundle = Bundle()
+        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, 588)
+        firebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, bundle)
         delayedInit()
     }
 
