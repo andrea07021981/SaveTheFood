@@ -6,6 +6,9 @@ import android.os.Bundle
 import androidx.work.*
 import com.example.savethefood.work.RefreshDataWorker
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,16 +19,19 @@ class SaveTheFoodApplication : Application(){
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
 
-    private var firebaseAnalytics: FirebaseAnalytics? = null
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+
     override fun onCreate() {
         super.onCreate()
         // Obtain the FirebaseAnalytics instance.
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        firebaseAnalytics = Firebase.analytics
 
         //Test
-        val bundle = Bundle()
-        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, 588)
-        firebaseAnalytics!!.logEvent(FirebaseAnalytics.Event.ADD_TO_WISHLIST, bundle)
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+            param(FirebaseAnalytics.Param.ITEM_ID, 1)
+            param(FirebaseAnalytics.Param.ITEM_NAME, "test")
+            param(FirebaseAnalytics.Param.CONTENT_TYPE, "image")
+        }
         delayedInit()
     }
 
