@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
@@ -180,6 +181,28 @@ dependencies {
 
     //Analytics
     implementation "com.google.firebase:firebase-analytics-ktx:$version_analitycs"
+    implementation 'com.google.firebase:firebase-analytics:17.4.3'
 
     implementation "android.arch.work:work-runtime-ktx:$version_work"
+
+    //Firebase Auth
+    implementation "com.google.firebase:firebase-auth-ktx:$version_auth"
+
+    //Firebase crashlytics
+    implementation "com.google.firebase:firebase-crashlytics:$version_crashlytics"
+    // For Robolectric tests.
+    testImplementation 'com.google.dagger:hilt-android-testing:2.28-alpha'
+    // ...with Kotlin.
+    kaptTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+    // ...with Java.
+    testAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+
+
+    // For instrumented tests.
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.28-alpha'
+    // ...with Kotlin.
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+    // ...with Java.
+    androidTestAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+
 }

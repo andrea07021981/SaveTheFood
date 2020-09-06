@@ -29,7 +29,7 @@ class RecipeViewModel(
     //livedata filter, every time it changes and emit signal the switch map is activated and filter the private list
     private var _searchFilter = MutableLiveData<String>("")
     private var _recipeListResult = MutableLiveData<List<RecipeResult>>()
-    val recipeListResult: LiveData<List<RecipeResult>> = Transformations.switchMap(_searchFilter) {
+    val recipeListResult: LiveData<List<RecipeResult>> = Transformations.switchMap(_searchFilter) { // OR    _searchFilter.switchMap {
         if (it.isNotEmpty()) {
             return@switchMap _recipeListResult.map { list ->
                 list.filter { recipe ->
