@@ -25,6 +25,8 @@ import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.fooddetail.FoodDetailViewModel
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import java.lang.reflect.InvocationTargetException
 
 class HomeFragment : Fragment(), View.OnLayoutChangeListener {
@@ -34,10 +36,8 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
     }
 
     private val args: HomeFragmentArgs by navArgs()
-
     private lateinit var dataBinding: FragmentHomeBinding
 
-    //TODO add bottom for food type (https://www.foodstandards.gov.scot/consumers/healthy-eating/nutrition/the-five-food-groups)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -116,7 +116,7 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.overflow_menu, menu)
+        inflater.inflate(R.menu.overflow_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

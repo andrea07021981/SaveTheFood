@@ -1,7 +1,9 @@
 package com.example.savethefood.login
 
+import android.os.Build
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
+import com.example.savethefood.BuildConfig
 import com.example.savethefood.R
 import com.example.savethefood.constants.Authenticated
 import com.example.savethefood.constants.Authenticating
@@ -35,8 +37,10 @@ class LoginViewModel(
         get() = _navigateToSignUpFragment
 
     init {
-        emailValue.value = "a@a.com"
-        passwordValue.value = "a"
+        if (BuildConfig.DEBUG) {
+            emailValue.value = "a@a.com"
+            passwordValue.value = "a"
+        }
     }
 
     fun onSignUpClick(){

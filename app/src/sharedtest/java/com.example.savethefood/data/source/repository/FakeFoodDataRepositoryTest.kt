@@ -28,7 +28,7 @@ class FakeFoodDataRepositoryTest(
     }
 
     override suspend fun saveNewFood(food: FoodDomain): Long {
-        TODO("Not yet implemented")
+        return fakeFoodDataSourceTest.insertFood(food)
     }
 
     override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> {
