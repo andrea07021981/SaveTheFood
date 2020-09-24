@@ -5,6 +5,9 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.UserDataSource
 import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import org.jetbrains.annotations.TestOnly
 import org.junit.Assert.*
 
@@ -23,7 +26,7 @@ class FakeUserDataRepositoryTest(
         fakeUserDataRepositoryTest.saveUser(user)
     }
 
-    override suspend fun getUser(user: UserDomain): Result<UserDomain> {
+    override suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher): Flow<Result<UserDomain>> {
         return fakeUserDataRepositoryTest.getUser(user.userEmail, user.userPassword)
     }
 

@@ -3,6 +3,8 @@ package com.example.savethefood.data.source.local.datasource
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.UserDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.junit.Assert.*
 
 class FakeUserDataSourceTest(
@@ -11,12 +13,12 @@ class FakeUserDataSourceTest(
 
     //TODO add fake data, not related with local or remote
 
-    override suspend fun getUser(email: String, password: String): Result<UserDomain> {
+    override suspend fun getUser(email: String, password: String): Flow<Result<UserDomain>>  = flow {
         val userFound = users?.find { it.userEmail == email && it.userPassword == password }
         if (userFound != null) {
-            return Result.Success(userFound)
+            emit(Result.Success(userFound))
         }
-        return Result.Error("Not found")
+        emit(Result.Error("Not found"))
     }
 
     override suspend fun saveUser(user: UserDomain): Long {

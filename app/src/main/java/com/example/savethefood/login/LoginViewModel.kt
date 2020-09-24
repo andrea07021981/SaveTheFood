@@ -1,22 +1,28 @@
 package com.example.savethefood.login
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import com.example.savethefood.BuildConfig
 import com.example.savethefood.R
-import com.example.savethefood.constants.Authenticated
-import com.example.savethefood.constants.Authenticating
-import com.example.savethefood.constants.InvalidAuthentication
-import com.example.savethefood.constants.LoginAuthenticationStates
+import com.example.savethefood.constants.*
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.repository.UserRepository
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
 
+@ExperimentalCoroutinesApi
 class LoginViewModel(
     private val userDataRepository: UserRepository
 ) : ViewModel() {
+
+    companion object {
+        private val TAG = LoginViewModel::class.java.simpleName
+    }
 
     val animationResourceView = R.anim.fade_in
     val animationResourceButton = R.anim.bounce
@@ -53,19 +59,25 @@ class LoginViewModel(
 
     private fun doLogin() {
         viewModelScope.launch {
-            var result: Result<UserDomain>? = null
-            _loginAuthenticationState.value = Authenticating()
-            result = userDataRepository.getUser(user = UserDomain()
-                .apply {
+            userDataRepository.getUser(user = UserDomain().apply {
                     userEmail = emailValue.value.toString()
                     userPassword = passwordValue.value.toString()
                 })
-            when (result) {
-                is Result.Success -> _loginAuthenticationState.value = Authenticated(user = result.data)
-                is Result.Error -> _loginAuthenticationState.value = InvalidAuthentication(result.message)
-                else -> _loginAuthenticationState.value = null
-            }
+                .onEach { result ->
+                    when (result) {
+                        is Result.Success -> _loginAuthenticationState.value = Authenticated(user = result.data)
+                        is Result.Error -> _loginAuthenticationState.value = InvalidAuthentication(result.message)
+                        is Result.ExError -> _loginAuthenticationState.value = InvalidAuthentication(result.exception.toString())
+                        is Result.Loading -> _loginAuthenticationState.value = Authenticating()
+                    }
+                }
+                .onCompletion { Log.d(TAG, "Done") }
+                .launchIn(viewModelScope)
         }
+    }
+
+    fun resetState() {
+        _loginAuthenticationState.value = Idle()
     }
 
     fun doneNavigationSignUp() {
@@ -76,9 +88,6 @@ class LoginViewModel(
         _navigateToSignUpFragment.value = true
     }
 
-    fun resetState() {
-        _loginAuthenticationState.value = null
-    }
     /**
      * Factory for constructing LoginViewModel with parameter
      */
