@@ -4,13 +4,16 @@ import android.animation.Animator
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -20,6 +23,7 @@ import androidx.transition.TransitionInflater
 import com.example.savethefood.EventObserver
 import com.example.savethefood.MainActivity
 import com.example.savethefood.R
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.fooddetail.FoodDetailViewModel
@@ -30,6 +34,10 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 import java.lang.reflect.InvocationTargetException
 
 class HomeFragment : Fragment(), View.OnLayoutChangeListener {
+
+    companion object {
+        val TAG = HomeFragment::class.java.simpleName
+    }
 
     private val homeViewModel by viewModels<HomeViewModel>{
         HomeViewModel.HomeViewModelFactory(FoodDataRepository.getRepository(requireActivity().application))
@@ -90,6 +98,12 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
         homeViewModel.onlineFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFoodFragment())
+            }
+        })
+
+        homeViewModel.newFoodFoodEvent.observe(viewLifecycleOwner, Observer {
+            if (it is Result.Success) {
+                Log.d(TAG, "Added")
             }
         })
     }
