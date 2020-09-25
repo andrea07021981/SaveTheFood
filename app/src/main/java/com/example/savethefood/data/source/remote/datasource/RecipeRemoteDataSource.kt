@@ -10,6 +10,8 @@ import com.example.savethefood.data.source.remote.service.FoodService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 
 class RecipeRemoteDataSource(
@@ -18,12 +20,13 @@ class RecipeRemoteDataSource(
 ) : RecipeDataSource{
 
     @Throws(Exception::class)
-    override suspend fun getRecipes(foodFilter: String?): Result<RecipeDomain> = coroutineScope {
-        return@coroutineScope try {
+    override  fun getRecipes(foodFilter: String?): Flow<Result<RecipeDomain>> = flow {
+        emit(Result.Loading)
+        try {
             val recipes = if (foodFilter.isNullOrEmpty()) foodApi.getRecipes() else foodApi.getRecipesByIngredient(foodFilter)
-            Result.Success(recipes.asDomainModel())
+            emit(Result.Success(recipes.asDomainModel()))
         } catch (error: Exception) {
-            Result.ExError(error)
+            emit(Result.ExError(error))
         }
     }
 

@@ -6,10 +6,15 @@ import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.local.datasource.FakeFoodDataSourceTest
 import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 
+@ExperimentalCoroutinesApi
 class FakeFoodDataRepositoryTest(
     private val fakeFoodDataSourceTest: FakeFoodDataSourceTest
 ) : FoodRepository{
+
+    val testDispatcher = TestCoroutineDispatcher()
 
     override suspend fun getApiFoodUpc(barcode: String): Result<FoodDomain> {
         TODO("Not yet implemented")

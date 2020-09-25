@@ -7,13 +7,18 @@ import com.example.savethefood.data.source.UserDataSource
 import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.test.TestCoroutineDispatcher
 import org.jetbrains.annotations.TestOnly
 import org.junit.Assert.*
 
+@ExperimentalCoroutinesApi
 class FakeUserDataRepositoryTest(
     private val fakeUserDataRepositoryTest: FakeUserDataSourceTest
 ) : UserRepository {
+
+    val testDispatcher = TestCoroutineDispatcher()
 
     //Variable and fun for testing fake errors
     private var shouldReturnError = false
