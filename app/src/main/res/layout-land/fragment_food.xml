@@ -6,7 +6,7 @@
     <data>
         <variable
             name="foodViewModel"
-            type="com.example.savethefood.food.FoodViewmodel" />
+            type="com.example.savethefood.food.FoodViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -57,18 +57,7 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
         dataBinding.foodRecycleview.layoutManager = GridLayoutManager(activity, 2)
         setHasOptionsMenu(true)
         dataBinding.rootLayout.addOnLayoutChangeListener(this)
-        return dataBinding.root
-    }
 
-    /*
-     * Called when the fragment's activity has been created and this
-     * fragment's view hierarchy instantiated.  It can be used to do final
-     * initialization once these pieces are in place, such as retrieving
-     * views or restoring state.
-     */
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         dataBinding.foodRecycleview.adapter =
             FoodAdapter(FoodAdapter.OnClickListener {
                 homeViewModel.moveToFoodDetail(it)
@@ -106,6 +95,7 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
                 Log.d(TAG, "Added")
             }
         })
+        return dataBinding.root
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

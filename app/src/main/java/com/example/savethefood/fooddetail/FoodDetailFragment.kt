@@ -25,11 +25,10 @@ class FoodDetailFragment : Fragment() {
     private val foodDetailViewModel: FoodDetailViewModel by viewModels {
         FoodDetailViewModel.FoodDetailViewModelFactory(
             FoodDataRepository.getRepository(requireActivity().application),
-            foodSelected
+            args.foodDomain
         )
     }
 
-    private lateinit var foodSelected: FoodDomain
     private lateinit var dataBinding: FragmentFoodDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,18 +41,13 @@ class FoodDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) : View? {
-        dataBinding = FragmentFoodDetailBinding.inflate(inflater)
-        foodSelected = args.foodDomain
-        dataBinding.lifecycleOwner = this
-        dataBinding.foodDetailViewModel = foodDetailViewModel
-        //TODO bug, first enter image is not present
-        return dataBinding.root
-    }
+        dataBinding = FragmentFoodDetailBinding.inflate(inflater).also {
+            it.lifecycleOwner = this
+            it.foodDetailViewModel = foodDetailViewModel
+        }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         dataBinding.recipeFab.setOnClickListener {
-            foodDetailViewModel.moveToRecipeSearch(foodSelected)
+            foodDetailViewModel.moveToRecipeSearch(args.foodDomain)
         }
 
         dataBinding.foodDetailViewModel!!.recipeFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
@@ -88,6 +82,7 @@ class FoodDetailFragment : Fragment() {
                 }
             }
         })
+        return dataBinding.root
     }
 
     override fun onDestroy() {

@@ -28,7 +28,7 @@ class FoodSearchAdapter(
         }
 
         companion object {
-            val from = {parent: ViewGroup ->
+            val from = { parent: ViewGroup ->
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = FoodSearchItemBinding.inflate(layoutInflater, parent, false)
                 FoodSearchViewHolder(
