@@ -27,7 +27,7 @@ class SaveTheFoodApplication : Application(){
         firebaseAnalytics = Firebase.analytics
 
         //Test
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_ITEM) {
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN) {
             param(FirebaseAnalytics.Param.ITEM_ID, 1)
             param(FirebaseAnalytics.Param.ITEM_NAME, "test")
             param(FirebaseAnalytics.Param.CONTENT_TYPE, "image")

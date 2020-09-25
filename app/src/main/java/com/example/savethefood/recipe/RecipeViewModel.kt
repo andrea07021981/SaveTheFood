@@ -11,11 +11,16 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.RecipeRepository
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 class RecipeViewModel(
-    private val recipeRepository: RecipeRepository,
+    recipeRepository: RecipeRepository,
     foodName: String?
 ) : ViewModel() {
 
@@ -27,13 +32,30 @@ class RecipeViewModel(
         get() = _status
 
     //livedata filter, every time it changes and emit signal the switch map is activated and filter the private list
-    private var _searchFilter = MutableLiveData<String>("")
-    private var _recipeListResult = MutableLiveData<List<RecipeResult>>()
-    val recipeListResult: LiveData<List<RecipeResult>> = Transformations.switchMap(_searchFilter) {
-        if (it.isNotEmpty()) {
+    private var _searchFilter = MutableLiveData<String?>("")
+    private var _recipeListResult: LiveData<List<RecipeResult?>?> =
+        recipeRepository.getRecipes(foodName)
+            .onStart {
+                _status.value = Loading("Loading")
+            }
+            .catch {
+                _status.value = Error("Error Loading") //TODO create a class with Errors
+            }
+            .transform { value ->
+                if (value is Result.Success) {
+                    emit(value.data.results)
+                }
+            }
+            .onCompletion {
+                _status.value = Done("Done")
+            }
+            .asLiveData(viewModelScope.coroutineContext)
+
+    val recipeListResult = Transformations.switchMap(_searchFilter) { // OR    _searchFilter.switchMap {
+        if (it != null && it.isNotEmpty() ) {
             return@switchMap _recipeListResult.map { list ->
-                list.filter { recipe ->
-                    recipe.title.toLowerCase().contains(it.toLowerCase())
+                list?.filter { recipe ->
+                    recipe!!.title.toLowerCase().contains(it.toLowerCase())
                 }
             }
         } else {
@@ -44,27 +66,6 @@ class RecipeViewModel(
     private val _recipeDetailEvent = MutableLiveData<Event<RecipeResult>>()
     val recipeDetailEvent: LiveData<Event<RecipeResult>>
         get() = _recipeDetailEvent
-
-    init {
-        getRecipes(foodName)
-    }
-
-    private fun getRecipes(food: String?) {
-        viewModelScope.launch {
-            try {
-                _status.value = Loading("Loading")
-                val recipes = recipeRepository.getRecipes(food) ?: return@launch
-                if (recipes is Result.Success) {
-                    _recipeListResult.value = recipes.data.results
-                } else {
-                    throw Exception(recipes.toString())
-                }
-                _status.value = Done("Done")
-            } catch (e: Exception) {
-                _status.value = Error(e.message.let { toString() })
-            }
-        }
-    }
 
     fun moveToRecipeDetail(recipe: RecipeResult) {
         _recipeDetailEvent.value = Event(recipe)

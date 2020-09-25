@@ -8,6 +8,7 @@ import com.example.savethefood.data.source.UserDataSource
 import com.example.savethefood.data.source.local.datasource.UserLocalDataSource
 import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
 
 class UserDataRepository(
     private val userLocalDataSource: UserDataSource,
@@ -45,7 +46,7 @@ class UserDataRepository(
         }
     }
 
-    override suspend fun getUser(user: UserDomain): Result<UserDomain> {
+    override suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher): Flow<Result<UserDomain>> {
         wrapEspressoIdlingResource {
             return@getUser withContext(ioDispatcher) {
                 userLocalDataSource.getUser(user.userEmail, user.userPassword)

@@ -1,6 +1,7 @@
 package com.example.savethefood.home
 
 import android.app.Application
+import android.view.View
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.R
@@ -57,6 +58,8 @@ class HomeViewModel(
     init {
         viewModelScope.launch {
             _foodList.addSource(foodDataRepository.getFoods(), _foodList::setValue)
+        }.invokeOnCompletion {
+            //TODO add loader like recipe list
         }
     }
 
@@ -75,7 +78,7 @@ class HomeViewModel(
     fun getApiFoodDetails(barcode: String) {
         viewModelScope.launch {
             try {
-                //TODO add live data for progress
+                //TODO add live data for progress and flow
                 val foodRetrieved = foodDataRepository.getApiFoodUpc(barcode)
                 if (foodRetrieved is Result.Success) {
                     val saveNewFood = foodDataRepository.saveNewFood(foodRetrieved.data)
@@ -94,6 +97,8 @@ class HomeViewModel(
             } finally {
 
             }
+        }.invokeOnCompletion {
+            //TODO add loader like recipe list and handlers (create base viemodel??)
         }
     }
 

@@ -31,9 +31,9 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = binding.drawerLayout
         val navController = findNavController(R.id.nav_host_fragment)
         val navigationView = this.findViewById<NavigationView>(R.id.navView)
-        //navigationView?.setupWithNavController(navController)
 
         //This forces the drawer menu in home and avoid the back button navigation
+        //Param topleveldest contains the set of destinations by id considered at the top level of your information hierarchy. The Up button will not be displayed when on these destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
             R.id.homeFragment,
             R.id.recipeFragment,

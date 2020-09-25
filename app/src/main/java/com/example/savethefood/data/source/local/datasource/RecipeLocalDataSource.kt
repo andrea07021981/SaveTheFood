@@ -8,6 +8,7 @@ import com.example.savethefood.data.source.local.dao.RecipeDatabaseDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
 
 class RecipeLocalDataSource internal constructor(
     private val recipeDatabaseDao: RecipeDatabaseDao,
@@ -15,7 +16,7 @@ class RecipeLocalDataSource internal constructor(
 ) : RecipeDataSource {
 
     @Throws(Exception::class)
-    override suspend fun getRecipes(foodFilter: String?): Result<RecipeDomain> = coroutineScope {
+    override fun getRecipes(foodFilter: String?): Flow<Result<RecipeDomain>> {
         TODO("No OP")
     }
 

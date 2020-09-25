@@ -14,6 +14,7 @@ import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
@@ -41,8 +42,8 @@ class RecipeDataRepository(
     }
 
     @Throws(Exception::class)
-    override suspend fun getRecipes(foodFilter: String?): Result<RecipeDomain> = withContext(ioDispatcher) {
-        wrapEspressoIdlingResource {
+    override fun getRecipes(foodFilter: String?): Flow<Result<RecipeDomain>> {
+        return wrapEspressoIdlingResource {
             recipeRemoteDataSource.getRecipes(foodFilter)
         }
     }
