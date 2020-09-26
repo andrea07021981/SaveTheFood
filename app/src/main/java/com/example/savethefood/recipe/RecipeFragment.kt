@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.EventObserver
 import com.example.savethefood.R
@@ -38,22 +39,22 @@ class RecipeFragment : Fragment() {
         if (arguments?.isEmpty == false) foodName = RecipeFragmentArgs.fromBundle(
             requireArguments()
         ).foodName
-        dataBinding  = FragmentReceipeBinding.inflate(inflater)
-        dataBinding.lifecycleOwner = this
-        dataBinding.recipeViewModel = recipeViewModel
-        //TODO manage screen landscape
-        dataBinding.recipeRecycleview.layoutManager = LinearLayoutManager(activity)
-        setHasOptionsMenu(true)
+        dataBinding  = FragmentReceipeBinding.inflate(inflater).also {
+            it.lifecycleOwner = this
+            it.recipeViewModel = recipeViewModel
+            it.recipeRecycleview.layoutManager = LinearLayoutManager(activity)
+            setHasOptionsMenu(true)
+            it.recipeRecycleview.adapter =
+                RecipeAdapter(RecipeAdapter.OnClickListener { recipeResult ->
+                    recipeViewModel.moveToRecipeDetail(recipeResult)
+                })
+        }
+
+        activateObservers()
         return dataBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        dataBinding.recipeRecycleview.adapter =
-            RecipeAdapter(RecipeAdapter.OnClickListener {
-                recipeViewModel.moveToRecipeDetail(it)
-            })
-
+    private fun activateObservers() {
         recipeViewModel.recipeDetailEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 val bundle = bundleOf("recipeResult" to it)

@@ -46,6 +46,6 @@ fun bindFoodImage(imgView: ImageView, imgUrl: String?) {
 }
 
 @BindingAdapter("htmlConverter")
-fun TextView.bindFoodDescription(food: FoodDomain) {//TODO check if we can directly bind in xml
-    text = HtmlCompat.fromHtml(food.foodDescription.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY);
+fun TextView.bindFoodDescription(html: String?) {//TODO check if we can directly bind in xml
+    html?.let { text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY); }
 }

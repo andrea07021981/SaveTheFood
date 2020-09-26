@@ -25,6 +25,7 @@ import com.example.savethefood.data.source.repository.UserDataRepository
 import com.example.savethefood.databinding.FragmentLoginBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+
 @ExperimentalCoroutinesApi
 class LoginFragment : Fragment() {
 
@@ -51,12 +52,10 @@ class LoginFragment : Fragment() {
         dataBinding = FragmentLoginBinding.inflate(inflater).also {
             it.loginViewModel = loginViewModel
             it.lifecycleOwner = this
-            //TODO fix the error after signup and come back
         }
         loginViewModel.navigateToSignUpFragment.observe(this.viewLifecycleOwner, Observer {
             if (it == true) {
-                this
-                    .findNavController()
+                findNavController()
                     .navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
                 loginViewModel.doneNavigationSignUp()
             }

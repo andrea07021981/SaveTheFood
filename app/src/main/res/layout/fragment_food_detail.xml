@@ -379,7 +379,7 @@
                         android:lineSpacingExtra="8dp"
                         android:padding="16dp"
                         tools:text="@string/long_string"
-                        app:htmlConverter="@{foodDetailViewModel.food}"
+                        app:htmlConverter="@{foodDetailViewModel.food.foodDescription}"
                         />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

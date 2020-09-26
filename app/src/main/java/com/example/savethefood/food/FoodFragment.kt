@@ -27,27 +27,34 @@ class FoodFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val dataBinding = FragmentFoodBinding.inflate(inflater)
-        dataBinding.lifecycleOwner = this
-        dataBinding.foodViewModel = foodViewModel
-        dataBinding.recyclerView.layoutManager = LinearLayoutManager(activity)
-        dataBinding.recyclerView.adapter = FoodSearchAdapter(FoodSearchAdapter.OnClickListener {
-            it.let {
-                AlertDialog.Builder(requireNotNull(activity))
-                    .setTitle("Save food")
-                    .setMessage("Save ${it.title}?")
-                    .setCancelable(false)
-                    .setNegativeButton("Cancel") { dialogInterface, _ ->
-                        dialogInterface.cancel()
-                    }
-                    .setPositiveButton("Confirm") { dialogInterface, _ ->
-                        dialogInterface.dismiss()
-                        foodViewModel.saveFoodDetail(it)
-                    }
-                    .create()
-                    .show()
-            }
-        })
+        val dataBinding = FragmentFoodBinding.inflate(inflater).also {
+            it.lifecycleOwner = this
+            it.foodViewModel = foodViewModel
+            it.recyclerView.layoutManager = LinearLayoutManager(activity)
+            it.recyclerView.adapter = FoodSearchAdapter(FoodSearchAdapter.OnClickListener { productDomain ->
+                productDomain.let {
+                    AlertDialog.Builder(requireNotNull(activity))
+                        .setTitle("Save food")
+                        .setMessage("Save ${productDomain.title}?")
+                        .setCancelable(false)
+                        .setNegativeButton("Cancel") { dialogInterface, _ ->
+                            dialogInterface.cancel()
+                        }
+                        .setPositiveButton("Confirm") { dialogInterface, _ ->
+                            dialogInterface.dismiss()
+                            foodViewModel.saveFoodDetail(it)
+                        }
+                        .create()
+                        .show()
+                }
+            })
+        }
+
+        activateObservers()
+        return dataBinding.root
+    }
+
+    private fun activateObservers() {
         foodViewModel.search.observe(this.viewLifecycleOwner, EventObserver{
             it.let {
                 val inputManager: InputMethodManager =
@@ -61,7 +68,6 @@ class FoodFragment : Fragment() {
         foodViewModel.foodDomain.observe(this.viewLifecycleOwner, Observer {
             findNavController().popBackStack()
         })
-        return dataBinding.root
     }
 }
 

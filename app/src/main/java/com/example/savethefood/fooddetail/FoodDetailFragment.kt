@@ -44,13 +44,32 @@ class FoodDetailFragment : Fragment() {
         dataBinding = FragmentFoodDetailBinding.inflate(inflater).also {
             it.lifecycleOwner = this
             it.foodDetailViewModel = foodDetailViewModel
+
+            it.recipeFab.setOnClickListener {
+                foodDetailViewModel.moveToRecipeSearch(args.foodDomain)
+            }
+
+            it.deleteFab.setOnClickListener {
+                AlertDialog.Builder(requireActivity())
+                    .setCancelable(false)
+                    .setTitle("Attention")
+                    .setMessage("Would you like to delete ${foodDetailViewModel.food.value?.foodTitle}")
+                    .setPositiveButton("OK") { dialogInterface, _ ->
+                        foodDetailViewModel.deleteFood()
+                        dialogInterface.dismiss()
+                    }
+                    .setNegativeButton("Cancel") { dialogInterface, _ -> dialogInterface.dismiss() }
+                    .create()
+                    .show()
+            }
         }
 
-        dataBinding.recipeFab.setOnClickListener {
-            foodDetailViewModel.moveToRecipeSearch(args.foodDomain)
-        }
+        activateObservers()
+        return dataBinding.root
+    }
 
-        dataBinding.foodDetailViewModel!!.recipeFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
+    private fun activateObservers() {
+        foodDetailViewModel.recipeFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 findNavController().navigate(
                     FoodDetailFragmentDirections.actionFoodDetailFragmentToRecipeFragment(
@@ -59,19 +78,6 @@ class FoodDetailFragment : Fragment() {
                 )
             }
         })
-        dataBinding.deleteFab.setOnClickListener {
-            AlertDialog.Builder(requireActivity())
-                .setCancelable(false)
-                .setTitle("Attention")
-                .setMessage("Would you like to delete ${foodDetailViewModel.food.value?.foodTitle}")
-                .setPositiveButton("OK") { dialogInterface, _ ->
-                    foodDetailViewModel.deleteFood()
-                    dialogInterface.dismiss()
-                }
-                .setNegativeButton("Cancel") { dialogInterface, _ -> dialogInterface.dismiss() }
-                .create()
-                .show()
-        }
 
         foodDetailViewModel.foodDeleted.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
@@ -82,7 +88,6 @@ class FoodDetailFragment : Fragment() {
                 }
             }
         })
-        return dataBinding.root
     }
 
     override fun onDestroy() {

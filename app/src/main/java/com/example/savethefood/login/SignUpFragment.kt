@@ -30,6 +30,11 @@ class SignUpFragment : Fragment() {
             it.lifecycleOwner = this
         }
 
+        activateObservers()
+        return dataBinding.root
+    }
+
+    private fun activateObservers() {
         signUpViewModel.loginEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 this
@@ -37,6 +42,5 @@ class SignUpFragment : Fragment() {
                     .popBackStack()
             }
         })
-        return dataBinding.root
     }
 }

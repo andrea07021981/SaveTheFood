@@ -6,18 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.databinding.FragmentRecipeCookBinding
 import com.example.savethefood.data.domain.RecipeInfoDomain
+import com.example.savethefood.home.HomeFragmentArgs
+import com.example.savethefood.recipe.RecipeFragmentArgs
 
 class RecipeCookFragment : Fragment() {
 
+    private val args: RecipeCookFragmentArgs by navArgs()
     private val recipeCookViewModel by viewModels<RecipeCookViewModel> {
-        val application = requireNotNull(activity).application
-        RecipeCookViewModel.Factory(application = application, recipe = recipeInfoSelected)
+        RecipeCookViewModel.Factory(recipe = args.recipeInfoDomain)
     }
 
-    private lateinit var recipeInfoSelected: RecipeInfoDomain
     private lateinit var dataBinding: FragmentRecipeCookBinding
 
     override fun onCreateView(
@@ -25,17 +27,15 @@ class RecipeCookFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) : View? {
-        dataBinding = FragmentRecipeCookBinding.inflate(inflater)
-        recipeInfoSelected = RecipeCookFragmentArgs.fromBundle(
-            requireArguments()
-        ).recipeInfoDomain
-        dataBinding.lifecycleOwner = this
-        dataBinding.recipeCookViewModel = recipeCookViewModel
+        dataBinding = FragmentRecipeCookBinding.inflate(inflater).also {
+            it.lifecycleOwner = this
+            it.recipeCookViewModel = recipeCookViewModel
+            it.stepRecycleView.layoutManager = LinearLayoutManager(activity)
+            it.stepRecycleView.adapter =
+                StepCookAdapter(StepCookAdapter.OnStepClickListener {
+                })
+        }
 
-        dataBinding.stepRecycleView.layoutManager = LinearLayoutManager(activity)
-        dataBinding.stepRecycleView.adapter =
-            StepCookAdapter(StepCookAdapter.OnStepClickListener {
-            })
         return dataBinding.root
     }
 
