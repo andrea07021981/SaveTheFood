@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.transition.TransitionInflater
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,6 @@ import br.com.simplepass.loadingbutton.animatedDrawables.ProgressType
 import br.com.simplepass.loadingbutton.customViews.ProgressButton
 import com.example.savethefood.R
 import com.example.savethefood.constants.*
-import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.repository.UserDataRepository
 import com.example.savethefood.databinding.FragmentLoginBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -67,7 +65,7 @@ class LoginFragment : Fragment() {
         loginViewModel.loginAuthenticationState.observe(this.viewLifecycleOwner, Observer {
             if (it is Authenticated || it is Authenticating || it is InvalidAuthentication) {
                 dataBinding.loginButton.run { morphDoneAndRevert(requireNotNull(activity), it) }
-            } else if (it is Unauthenticated){
+            } else if (it is Unauthenticated) {
                 Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
             }
         })
@@ -93,14 +91,18 @@ class LoginFragment : Fragment() {
                 Handler().run {
                     doneLoadingAnimation(fillColor, bitmap)
                     postDelayed({
-                        val bundle = bundleOf("x" to dataBinding.loginButton.x, "y" to dataBinding.loginButton.y)
+                        val bundle = bundleOf(
+                            "x" to dataBinding.loginButton.x,
+                            "y" to dataBinding.loginButton.y
+                        )
                         bundle.putParcelable("user", state.user)
                         findNavController()
                             .navigate(
                                 LoginFragmentDirections.actionLoginFragmentToHomeFragment(
                                     bundle
                                 )
-                            )}, navigateTime)
+                            )
+                    }, navigateTime)
                     loginViewModel.resetState()
                 }
             }
@@ -111,7 +113,10 @@ class LoginFragment : Fragment() {
             }
             is InvalidAuthentication -> {
                 val fillColorError = ContextCompat.getColor(context, R.color.customRed)
-                val bitmapError: Bitmap = BitmapFactory.decodeResource(resources, R.mipmap.ic_check_ko)
+                val bitmapError: Bitmap = BitmapFactory.decodeResource(
+                    resources,
+                    R.mipmap.ic_check_ko
+                )
                 Handler().run {
                     postDelayed({ doneLoadingAnimation(fillColorError, bitmapError) }, doneTime)
                     postDelayed(::revertAnimation, revertTime)
