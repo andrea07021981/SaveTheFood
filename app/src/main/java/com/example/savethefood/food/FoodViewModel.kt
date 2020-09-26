@@ -8,12 +8,11 @@ import com.example.savethefood.constants.Error
 import com.example.savethefood.constants.Loading
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.domain.ProductDomain
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import kotlinx.coroutines.launch
 
-class FoodViewmodel(
+class FoodViewModel(
     private val dataRepository: FoodDataRepository
 ) : ViewModel() {
 
@@ -79,9 +78,9 @@ class FoodViewmodel(
     ) : ViewModelProvider.NewInstanceFactory() {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(FoodViewmodel::class.java)) {
+            if (modelClass.isAssignableFrom(FoodViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return FoodViewmodel(dataRepository) as T
+                return FoodViewModel(dataRepository) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

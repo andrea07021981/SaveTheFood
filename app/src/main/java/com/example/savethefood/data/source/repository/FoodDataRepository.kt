@@ -43,7 +43,17 @@ class FoodDataRepository(
     @Throws(Exception::class)
     override suspend fun getApiFoodUpc(barcode: String): Result<FoodDomain> = coroutineScope{
         wrapEspressoIdlingResource {
-            foodRemoteDataSource.getFoodByUpc(barcode)
+            val foodRetrieved = foodRemoteDataSource.getFoodByUpc(barcode)
+            if (foodRetrieved is Result.Success) {
+                val saveNewFood = foodLocalDataSource.insertFood(foodRetrieved.data)
+                if (saveNewFood == 0L) {
+                    return@coroutineScope Result.Error("Not saved")
+                } else {
+                    return@coroutineScope Result.Success(foodRetrieved.data)
+                }
+            } else {
+                return@coroutineScope Result.Error("Not retrieved")
+            }
         }
     }
 

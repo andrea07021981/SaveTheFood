@@ -25,14 +25,10 @@ class SignUpFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) : View? {
-        dataBinding = FragmentSignupBinding.inflate(inflater)
-        dataBinding.signupViewModel = signUpViewModel
-        dataBinding.lifecycleOwner = this
-        return dataBinding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+        dataBinding = FragmentSignupBinding.inflate(inflater).also {
+            it.signupViewModel = signUpViewModel
+            it.lifecycleOwner = this
+        }
 
         signUpViewModel.loginEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
@@ -41,5 +37,6 @@ class SignUpFragment : Fragment() {
                     .popBackStack()
             }
         })
+        return dataBinding.root
     }
 }

@@ -55,11 +55,35 @@ class HomeViewModel(
     val onlineFoodEvent: LiveData<Event<Unit>>
         get() = _onlineFoodEvent
 
+    private val _status = MutableLiveData(View.VISIBLE)
+    val status: LiveData<Int>
+        get() = _status
+
     init {
-        viewModelScope.launch {
-            _foodList.addSource(foodDataRepository.getFoods(), _foodList::setValue)
-        }.invokeOnCompletion {
-            //TODO add loader like recipe list
+        initData()
+    }
+
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        println("Exception thrown within parent: $exception.")
+    }
+
+    private val childExceptionHandler = CoroutineExceptionHandler{ _, exception ->
+        println("Exception thrown in one of the children: $exception.")
+    }
+
+    /**
+     * Load all the date needed with supervisor. Start listening the foodlist data retireved from db.
+     * Every time we update the db it is notified
+     */
+    private fun initData() {
+        try {
+            viewModelScope.launch {
+                 _foodList.addSource(foodDataRepository.getFoods(), _foodList::setValue)
+            }.invokeOnCompletion {
+                _status.postValue(View.GONE)
+            }
+        } catch (e: Exception) {
+            _status.postValue(View.GONE)
         }
     }
 
@@ -76,29 +100,19 @@ class HomeViewModel(
     }
 
     fun getApiFoodDetails(barcode: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             try {
-                //TODO add live data for progress and flow
-                val foodRetrieved = foodDataRepository.getApiFoodUpc(barcode)
-                if (foodRetrieved is Result.Success) {
-                    val saveNewFood = foodDataRepository.saveNewFood(foodRetrieved.data)
-                    if (saveNewFood == 0L) {
-                        _newFoodFoodEvent.value = Result.Error("Not saved")
-                    } else {
-                        _newFoodFoodEvent.value = Result.Success(foodRetrieved.data)
-                    }
-                } else {
-                    _newFoodFoodEvent.value = Result.Error("Not retrieved")
-                }
+                _status.value = View.VISIBLE
+               supervisorScope {
+                   val apiUdcJob = launch(childExceptionHandler) { foodDataRepository.getApiFoodUpc(barcode) }
+               }
             } catch (error: JsonDataException) {
                 _newFoodFoodEvent.value = Result.Error(error.toString())
             } catch (generic: Exception) {
                 _newFoodFoodEvent.value = Result.Error(generic.toString())
-            } finally {
-
             }
         }.invokeOnCompletion {
-            //TODO add loader like recipe list and handlers (create base viemodel??)
+            _status.postValue(View.GONE)
         }
     }
 

@@ -1,7 +1,9 @@
 package com.example.savethefood.fooddetail
 
 import android.app.Application
+import android.text.Html
 import android.util.Log
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase

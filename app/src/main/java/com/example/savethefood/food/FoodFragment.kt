@@ -13,14 +13,13 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.EventObserver
-import com.example.savethefood.R
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.databinding.FragmentFoodBinding
 
 class FoodFragment : Fragment() {
 
-    private val foodViewModel by viewModels<FoodViewmodel> {
-        FoodViewmodel.FoodViewModelFactory(FoodDataRepository.getRepository(requireActivity().application))
+    private val foodViewModel by viewModels<FoodViewModel> {
+        FoodViewModel.FoodViewModelFactory(FoodDataRepository.getRepository(requireActivity().application))
     }
 
     override fun onCreateView(

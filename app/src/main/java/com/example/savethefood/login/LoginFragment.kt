@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.transition.TransitionInflater
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,10 +21,8 @@ import br.com.simplepass.loadingbutton.animatedDrawables.ProgressType
 import br.com.simplepass.loadingbutton.customViews.ProgressButton
 import com.example.savethefood.R
 import com.example.savethefood.constants.*
-import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.repository.UserDataRepository
 import com.example.savethefood.databinding.FragmentLoginBinding
-import com.example.savethefood.util.morphDoneAndRevert
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -51,16 +48,11 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) : View? {
-        dataBinding = FragmentLoginBinding.inflate(inflater)
-        dataBinding.loginViewModel = loginViewModel
-        dataBinding.lifecycleOwner = this
-        //TODO fix the error after signup and come back
-        return dataBinding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+        dataBinding = FragmentLoginBinding.inflate(inflater).also {
+            it.loginViewModel = loginViewModel
+            it.lifecycleOwner = this
+            //TODO fix the error after signup and come back
+        }
         loginViewModel.navigateToSignUpFragment.observe(this.viewLifecycleOwner, Observer {
             if (it == true) {
                 this
@@ -72,23 +64,68 @@ class LoginFragment : Fragment() {
 
         loginViewModel.loginAuthenticationState.observe(this.viewLifecycleOwner, Observer {
             if (it is Authenticated || it is Authenticating || it is InvalidAuthentication) {
-                dataBinding.loginButton.run {
-                    if (morphDoneAndRevert(requireNotNull(activity), it, resources = resources)) {
-                        val bundle = bundleOf("x" to dataBinding.loginButton.x, "y" to dataBinding.loginButton.y)
-                        bundle.putParcelable("user", (it as Authenticated).user)
+                dataBinding.loginButton.run { morphDoneAndRevert(requireNotNull(activity), it) }
+            } else if (it is Unauthenticated) {
+                Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+        return dataBinding.root
+    }
+
+    private fun ProgressButton.morphDoneAndRevert(
+        context: Context,
+        state: LoginAuthenticationStates?,
+        fillColor: Int = ContextCompat.getColor(context, R.color.customGreen),
+        bitmap: Bitmap = defaultDoneImage(context.resources),
+        doneTime: Long = 3000,
+        navigateTime: Long = 1000,
+        revertTime: Long = 4000
+    ) {
+        progressType = ProgressType.INDETERMINATE
+
+        when (state) {
+            is Authenticating -> {
+                startAnimation()
+            }
+            is Authenticated -> {
+                Handler().run {
+                    doneLoadingAnimation(fillColor, bitmap)
+                    postDelayed({
+                        val bundle = bundleOf(
+                            "x" to dataBinding.loginButton.x,
+                            "y" to dataBinding.loginButton.y
+                        )
+                        bundle.putParcelable("user", state.user)
                         findNavController()
                             .navigate(
                                 LoginFragmentDirections.actionLoginFragmentToHomeFragment(
                                     bundle
                                 )
                             )
-                        loginViewModel.resetState()
-                    }
+                    }, navigateTime)
+                    loginViewModel.resetState()
                 }
-            } else if (it is Unauthenticated){
-                Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
             }
-        })
+            is Unauthenticated -> {
+                Handler().run {
+                    postDelayed(::revertAnimation, revertTime)
+                }
+            }
+            is InvalidAuthentication -> {
+                val fillColorError = ContextCompat.getColor(context, R.color.customRed)
+                val bitmapError: Bitmap = BitmapFactory.decodeResource(
+                    resources,
+                    R.mipmap.ic_check_ko
+                )
+                Handler().run {
+                    postDelayed({ doneLoadingAnimation(fillColorError, bitmapError) }, doneTime)
+                    postDelayed(::revertAnimation, revertTime)
+                }
+            }
+        }
+
     }
 
+    private fun defaultDoneImage(resources: Resources) =
+        BitmapFactory.decodeResource(resources, R.mipmap.ic_check_ok)
 }
