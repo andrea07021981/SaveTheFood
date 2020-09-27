@@ -1,10 +1,12 @@
 package com.example.savethefood
 
 import android.app.Application
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.work.*
 import com.example.savethefood.work.RefreshDataWorker
+import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
@@ -24,6 +26,7 @@ class SaveTheFoodApplication : Application(){
     override fun onCreate() {
         super.onCreate()
         // Obtain the FirebaseAnalytics instance.
+        FirebaseApp.initializeApp(this)
         firebaseAnalytics = Firebase.analytics
 
         //Test

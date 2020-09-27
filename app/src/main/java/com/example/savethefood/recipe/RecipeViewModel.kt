@@ -4,24 +4,18 @@ import androidx.annotation.VisibleForTesting
 import androidx.arch.core.util.Function
 import androidx.lifecycle.*
 import com.example.savethefood.Event
-import com.example.savethefood.constants.ApiCallStatus
-import com.example.savethefood.constants.Done
-import com.example.savethefood.constants.Error
-import com.example.savethefood.constants.Loading
+import com.example.savethefood.constants.*
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.RecipeRepository
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
 
 
 class RecipeViewModel(
-    recipeRepository: RecipeRepository,
+    val recipeRepository: RecipeRepository,
     foodName: String?
 ) : ViewModel() {
 
@@ -33,7 +27,11 @@ class RecipeViewModel(
         get() = _status
 
     //livedata filter, every time it changes and emit signal the switch map is activated and filter the private list
-    private var _searchFilter = MutableLiveData<String?>("")
+    var searchFilter = MutableLiveData<String>("")
+        @VisibleForTesting set
+    private val _searchFilter: MutableLiveData<String>
+        get() = searchFilter
+
     var _recipeListResult: LiveData<List<RecipeResult>?> =
         recipeRepository.getRecipes(foodName)
             .onStart {
@@ -57,7 +55,7 @@ class RecipeViewModel(
         if (it != null && it.isNotEmpty() ) {
             return@switchMap _recipeListResult.map { list ->
                 list?.filter { recipe ->
-                    recipe!!.title.toLowerCase().contains(it.toLowerCase())
+                    recipe.title.toLowerCase().contains(it.toLowerCase())
                 }
             }
         } else {

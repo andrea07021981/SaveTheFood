@@ -13,7 +13,15 @@ class FakeRecipeDataSourceTest(
 ) : RecipeDataSource {
     override fun getRecipes(foodFilter: String?): Flow<Result<RecipeDomain>> {
         return flow {
-            recipeResult.filter { it.title == foodFilter }
+            foodFilter?.let { filter ->
+                recipeResult.filter {
+                    if (filter.isNotEmpty()) {
+                        it.title.toLowerCase().contains(foodFilter.toLowerCase())
+                    } else {
+                        it.title.isNotEmpty()
+                    }
+                }
+            }
         }
     }
 
