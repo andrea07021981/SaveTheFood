@@ -5,6 +5,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.domain.RecipeResult
+import com.example.savethefood.data.source.local.datasource.FakeRecipeDataSourceTest
+import com.example.savethefood.data.source.repository.FakeRecipeDataRepositoryTest
 import com.example.savethefood.viewmodel.getOrAwaitValue
 import org.hamcrest.CoreMatchers.*
 import org.junit.Assert.*
@@ -21,10 +23,12 @@ class RecipeDetailViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()//Must include it for livedata
 
     private lateinit var recipeDetailViewModel: RecipeDetailViewModel
+    private lateinit var fakeRecipeDataRepositoryTest: FakeRecipeDataRepositoryTest
 
     @Before
     fun setupViewModel() {
-        recipeDetailViewModel = RecipeDetailViewModel(ApplicationProvider.getApplicationContext(), RecipeResult())
+        fakeRecipeDataRepositoryTest = FakeRecipeDataRepositoryTest(FakeRecipeDataSourceTest(listOf()))
+        recipeDetailViewModel = RecipeDetailViewModel(fakeRecipeDataRepositoryTest, RecipeResult())
     }
 
     @Test

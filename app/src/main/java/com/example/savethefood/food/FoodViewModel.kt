@@ -42,7 +42,7 @@ class FoodViewModel(
         _search.value = Event(Unit)
         viewModelScope.launch {
             try {
-                //TODO add flow
+                //TODO add flow and use on start to show the loading
                 _status.value = Loading("Loading")
                 val foodResult = dataRepository.getApiFoodQuery(foodName.value!!)
                 if (foodResult is Result.Success) {

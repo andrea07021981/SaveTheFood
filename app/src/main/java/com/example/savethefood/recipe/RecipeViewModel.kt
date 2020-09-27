@@ -1,5 +1,6 @@
 package com.example.savethefood.recipe
 
+import androidx.annotation.VisibleForTesting
 import androidx.arch.core.util.Function
 import androidx.lifecycle.*
 import com.example.savethefood.Event
@@ -33,7 +34,7 @@ class RecipeViewModel(
 
     //livedata filter, every time it changes and emit signal the switch map is activated and filter the private list
     private var _searchFilter = MutableLiveData<String?>("")
-    private var _recipeListResult: LiveData<List<RecipeResult?>?> =
+    var _recipeListResult: LiveData<List<RecipeResult>?> =
         recipeRepository.getRecipes(foodName)
             .onStart {
                 _status.value = Loading("Loading")
@@ -50,6 +51,7 @@ class RecipeViewModel(
                 _status.value = Done("Done")
             }
             .asLiveData(viewModelScope.coroutineContext)
+        @VisibleForTesting set // this allow us to use this set only for test
 
     val recipeListResult = Transformations.switchMap(_searchFilter) { // OR    _searchFilter.switchMap {
         if (it != null && it.isNotEmpty() ) {

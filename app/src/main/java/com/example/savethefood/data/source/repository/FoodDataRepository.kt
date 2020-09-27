@@ -37,7 +37,7 @@ class FoodDataRepository(
             }
         }
     }
-    /**may throw Exception, with coroutineScope is possible Exception will cancell only the coroutines created in
+    /**may throw Exception, with coroutineScope is possible Exception will cancel only the coroutines created in
     *This scope, without touching the outer scope. We could avoid it and use the supervisor job in VM, but this way is more efficient
     */
     @Throws(Exception::class)

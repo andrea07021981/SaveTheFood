@@ -89,6 +89,7 @@ class HomeViewModel(
             try {
                 _status.value = View.VISIBLE
                supervisorScope {
+                   //TODO add flow and use on start to show the loading
                    val apiUdcJob = launch(childExceptionHandler) { foodDataRepository.getApiFoodUpc(barcode) }
                }
             } catch (error: JsonDataException) {
