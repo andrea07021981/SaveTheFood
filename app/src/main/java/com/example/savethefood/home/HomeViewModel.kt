@@ -24,6 +24,12 @@ class HomeViewModel(
     val foodList: LiveData<Result<List<FoodDomain>>>
         get() = _foodList
 
+    /*
+    Other solution
+     val foodList: LiveData<Result<List<FoodDomain>>> = liveData {
+        foodDataRepository.getFoods()
+    }
+     */
     private val _detailFoodEvent = MutableLiveData<Event<FoodDomain>>()
     val detailFoodEvent: LiveData<Event<FoodDomain>>
         get() = _detailFoodEvent

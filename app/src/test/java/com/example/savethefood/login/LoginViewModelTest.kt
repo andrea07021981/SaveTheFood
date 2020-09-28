@@ -3,6 +3,7 @@ package com.example.savethefood.login;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.savethefood.MainCoroutineRule
+import com.example.savethefood.constants.InvalidAuthentication
 import com.example.savethefood.constants.LoginAuthenticationStates
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
@@ -75,15 +76,20 @@ class LoginViewModelTest {
         loginViewModel.emailValue.value = "x"
         loginViewModel.passwordValue.value = "x"
         loginViewModel.onSignUpClick()
-        val value = loginViewModel.loginAuthenticationState.getOrAwaitValue() as Result.Error
-        assertThat(value, `is`(Result.Error("Not found")))
+        val value = loginViewModel.loginAuthenticationState.getOrAwaitValue()
+        assertThat(value, `is`(InvalidAuthentication("Not found")))
     }
 
+    /**
+     * Test user and pass empty
+     */
     @Test
-    fun login_andFail() {
+    fun login_andFail() = mainCoroutineRule.runBlockingTest{
         // Make the repository return errors.
         //TODO add error login on fragmentlogin
         fakeUserDataRepositoryTest.setReturnError(true)
+        loginViewModel.emailValue.value = ""
+        loginViewModel.passwordValue.value = ""
         loginViewModel.onSignUpClick()
 
         // Then empty and error are true (which triggers an error message to be shown).
