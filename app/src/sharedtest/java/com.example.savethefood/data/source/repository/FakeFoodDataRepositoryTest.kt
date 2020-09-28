@@ -4,18 +4,12 @@ import androidx.lifecycle.LiveData
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
+import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.local.datasource.FakeFoodDataSourceTest
-import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 
-@ExperimentalCoroutinesApi
 class FakeFoodDataRepositoryTest(
-    private val fakeFoodDataSourceTest: FakeFoodDataSourceTest
+    val fakeFoodDataSourceTest: FoodDataSource
 ) : FoodRepository{
-
-    val testDispatcher = TestCoroutineDispatcher()
-
     override suspend fun getApiFoodUpc(barcode: String): Result<FoodDomain> {
         TODO("Not yet implemented")
     }
@@ -33,15 +27,14 @@ class FakeFoodDataRepositoryTest(
     }
 
     override suspend fun saveNewFood(food: FoodDomain): Long {
-        return fakeFoodDataSourceTest.insertFood(food)
+        TODO("Not yet implemented")
     }
 
     override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> {
-        return fakeFoodDataSourceTest.getFoods()
+        TODO("Not yet implemented")
     }
 
     override suspend fun deleteFood(food: FoodDomain?): Int {
         TODO("Not yet implemented")
     }
-
 }

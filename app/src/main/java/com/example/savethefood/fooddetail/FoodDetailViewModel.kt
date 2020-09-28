@@ -57,7 +57,10 @@ class FoodDetailViewModel(
     /**
      * Factory for constructing DevByteViewModel with parameter
      */
-    class FoodDetailViewModelFactory(private val dataRepository: FoodRepository, private val foodSelected: FoodDomain) : ViewModelProvider.NewInstanceFactory() {
+    class FoodDetailViewModelFactory(
+        private val dataRepository: FoodRepository,
+        private val foodSelected: FoodDomain
+    ) : ViewModelProvider.NewInstanceFactory() {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(FoodDetailViewModel::class.java)) {

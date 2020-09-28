@@ -20,25 +20,16 @@ class HomeViewModel(
 
     val animationResourceButton = R.anim.fade_in
 
-    //TODO remove viewModelJob and scope, with new version of androidx there the viewmodescope of
-    /**
-     * A [CoroutineScope] keeps track of all coroutines started by this ViewModel.
-     *
-     * Because we pass it [viewModelJob], any coroutine started in this scope can be cancelled
-     * by calling `viewModelJob.cancel()`
-     *
-     * By default, all coroutines started in uiScope will launch in [Dispatchers.Main] which is
-     * the main thread on Android. This is a sensible default because most coroutines started by
-     * a [ViewModel] update the UI after performing some processing.
-     */
-    //Supervisor prevent a crash. If one on the children fails, it keeps working.
-    private val viewModelJob = SupervisorJob()
-    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
     private var _foodList = MediatorLiveData<Result<List<FoodDomain>>>()
     val foodList: LiveData<Result<List<FoodDomain>>>
         get() = _foodList
 
+    /*
+    Other solution
+     val foodList: LiveData<Result<List<FoodDomain>>> = liveData {
+        foodDataRepository.getFoods()
+    }
+     */
     private val _detailFoodEvent = MutableLiveData<Event<FoodDomain>>()
     val detailFoodEvent: LiveData<Event<FoodDomain>>
         get() = _detailFoodEvent
@@ -104,6 +95,7 @@ class HomeViewModel(
             try {
                 _status.value = View.VISIBLE
                supervisorScope {
+                   //TODO add flow and use on start to show the loading
                    val apiUdcJob = launch(childExceptionHandler) { foodDataRepository.getApiFoodUpc(barcode) }
                }
             } catch (error: JsonDataException) {

@@ -51,18 +51,23 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) : View? {
-        dataBinding = FragmentHomeBinding.inflate(inflater)
-        dataBinding.lifecycleOwner = this
-        dataBinding.homeViewModel = homeViewModel
-        dataBinding.foodRecycleview.layoutManager = GridLayoutManager(activity, 2)
-        setHasOptionsMenu(true)
-        dataBinding.rootLayout.addOnLayoutChangeListener(this)
+        dataBinding = FragmentHomeBinding.inflate(inflater).also {
+            it.lifecycleOwner = this
+            it.homeViewModel = homeViewModel
+            it.foodRecycleview.layoutManager = GridLayoutManager(activity, 2)
+            setHasOptionsMenu(true)
+            it.rootLayout.addOnLayoutChangeListener(this)
+            it.foodRecycleview.adapter =
+                FoodAdapter(FoodAdapter.OnClickListener {
+                    homeViewModel.moveToFoodDetail(it)
+                })
+        }
 
-        dataBinding.foodRecycleview.adapter =
-            FoodAdapter(FoodAdapter.OnClickListener {
-                homeViewModel.moveToFoodDetail(it)
-            })
+        activateObservers()
+        return dataBinding.root
+    }
 
+    private fun activateObservers() {
         homeViewModel.detailFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 val foodImageView =
@@ -95,7 +100,6 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
                 Log.d(TAG, "Added")
             }
         })
-        return dataBinding.root
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -124,7 +128,6 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         return super.onOptionsItemSelected(item)
     }
 

@@ -24,19 +24,6 @@ class SignUpViewModel(
     val loginEvent: LiveData<Event<Unit>>
         get() = _loginEvent
 
-    private var viewModelJob = Job()
-    /**
-     * A [CoroutineScope] keeps track of all coroutines started by this ViewModel.
-     *
-     * Because we pass it [viewModelJob], any coroutine started in this scope can be cancelled
-     * by calling `viewModelJob.cancel()`
-     *
-     * By default, all coroutines started in uiScope will launch in [Dispatchers.Main] which is
-     * the main thread on Android. This is a sensible default because most coroutines started by
-     * a [ViewModel] update the UI after performing some processing.
-     */
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
     init {
         userNameValue.value = ""
         emailValue.value = ""
@@ -51,7 +38,7 @@ class SignUpViewModel(
                     userPassword = passwordValue.value.toString()
                 }
                 .also {
-                    uiScope.launch {
+                    viewModelScope.launch {
                         userDataRepository.saveNewUser(user)
                         _loginEvent.value = Event(Unit)
                     }
@@ -64,11 +51,6 @@ class SignUpViewModel(
         errorEmail.value = !Patterns.EMAIL_ADDRESS.matcher(emailValue.value).matches()
         errorPassword.value = passwordValue.value.isNullOrEmpty()
         return errorUserName.value!! && errorEmail.value!! && errorPassword.value!!
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 
     /**

@@ -7,12 +7,12 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "com.example.savethefood"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -78,7 +78,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version_kotlin"
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.2.1'
     // Support libraries
     implementation "androidx.appcompat:appcompat:$version_appcompat"
     implementation "androidx.fragment:fragment:$version_fragment"
@@ -101,17 +101,14 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.2.2"
-    implementation "androidx.navigation:navigation-ui-ktx:2.2.2"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
 
     //Cards
     implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
-
-    //Material
-    implementation 'com.google.android.material:material:1.1.0'
 
     //Play service
 
@@ -136,15 +133,15 @@ dependencies {
     implementation "androidx.paging:paging-runtime:$version_paging"
 
     //Interceptor and http loggin
-    implementation 'com.squareup.okhttp3:okhttp:4.2.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.8.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.0'
 
     // Testing
     // Espresso
     // Core library
     // AndroidJUnitRunner and JUnit Rules
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test:rules:1.3.0'
     testImplementation "androidx.arch.core:core-testing:$version_arch_testing"
 
     // AndroidX Test - Instrumented testing
@@ -182,7 +179,7 @@ dependencies {
 
     //Analytics
     implementation "com.google.firebase:firebase-analytics-ktx:$version_analitycs"
-    implementation 'com.google.firebase:firebase-analytics:17.4.3'
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
 
     implementation "android.arch.work:work-runtime-ktx:$version_work"
 
@@ -192,18 +189,18 @@ dependencies {
     //Firebase crashlytics
     implementation "com.google.firebase:firebase-crashlytics:$version_crashlytics"
     // For Robolectric tests.
-    testImplementation 'com.google.dagger:hilt-android-testing:2.28-alpha'
+    testImplementation 'com.google.dagger:hilt-android-testing:2.28.3-alpha'
     // ...with Kotlin.
-    kaptTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+    kaptTest 'com.google.dagger:hilt-android-compiler:2.28.3-alpha'
     // ...with Java.
-    testAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+    testAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.28.3-alpha'
 
 
     // For instrumented tests.
-    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.28-alpha'
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.28.3-alpha'
     // ...with Kotlin.
-    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28.3-alpha'
     // ...with Java.
-    androidTestAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+    androidTestAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.28.3-alpha'
 
 }

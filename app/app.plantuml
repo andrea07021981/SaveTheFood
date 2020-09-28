@@ -1,0 +1,457 @@
+@startuml
+
+title __APP's Class Diagram__\n
+
+  namespace androidx.databinding {
+    class androidx.databinding.DataBinderMapperImpl {
+    }
+  }
+  
+
+  namespace androidx.databinding {
+    interface androidx.databinding.DataBindingComponent {
+    }
+  }
+  
+
+  namespace androidx.databinding {
+    namespace library.baseAdapters {
+      class androidx.databinding.library.baseAdapters.BR {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    class com.example.savethefood.BR {
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    class com.example.savethefood.BuildConfig {
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    class com.example.savethefood.DataBinderMapperImpl {
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace cook {
+      class com.example.savethefood.cook.RecipeCookFragmentArgs {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace data.source.local.dao {
+      class com.example.savethefood.data.source.local.dao.FoodDatabaseDao_Impl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace data.source.local.dao {
+      class com.example.savethefood.data.source.local.dao.RecipeDatabaseDao_Impl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace data.source.local.dao {
+      class com.example.savethefood.data.source.local.dao.RecipeInfoDatabaseDao_Impl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace data.source.local.dao {
+      class com.example.savethefood.data.source.local.dao.UserDatabaseDao_Impl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace data.source.local.database {
+      class com.example.savethefood.data.source.local.database.SaveTheFoodDatabase_Impl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.ActivityMainBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.EquipmentInstructionItemBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FoodItemBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FoodSearchItemBindingLandImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FoodSearchItemBindingV26Impl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentFoodBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentFoodBindingLandImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentFoodDetailBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentFoodDetailBindingLandImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentHomeBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentHomeBindingLandImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentLoginBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentReceipeBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentReceipeBindingLandImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentRecipeCookBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentRecipeCookBindingLandImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentRecipeDetailBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentRecipeDetailBindingLandImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentRecipeDetailBindingSw600dpImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentSignupBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.FragmentSplashBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.IngredientDetailBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.IngredientInstructionItemBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.IngredientItemBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.RecipeItemBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace databinding {
+      class com.example.savethefood.databinding.StepCookItemBindingImpl {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace fooddetail {
+      class com.example.savethefood.fooddetail.FoodDetailFragmentArgs {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace fooddetail {
+      class com.example.savethefood.fooddetail.FoodDetailFragmentDirections {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace generated.callback {
+      class com.example.savethefood.generated.callback.OnClickListener {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace home {
+      class com.example.savethefood.home.HomeFragmentArgs {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace home {
+      class com.example.savethefood.home.HomeFragmentDirections {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace login {
+      class com.example.savethefood.login.LoginFragmentDirections {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace recipe {
+      class com.example.savethefood.recipe.RecipeFragmentArgs {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace recipe {
+      class com.example.savethefood.recipe.RecipeFragmentDirections {
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace recipe {
+      namespace etail {
+        class com.example.savethefood.recipedetail.RecipeDetailFragmentArgs {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace recipe {
+      namespace etail {
+        class com.example.savethefood.recipedetail.RecipeDetailFragmentDirections {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.example.savethefood {
+    namespace splash {
+      class com.example.savethefood.splash.SplashFragmentDirections {
+      }
+    }
+  }
+  
+
+  androidx.databinding.DataBinderMapperImpl -up-|> androidx.databinding.MergedDataBinderMapper
+  com.example.savethefood.DataBinderMapperImpl -up-|> androidx.databinding.DataBinderMapper
+  com.example.savethefood.cook.RecipeCookFragmentArgs .up.|> androidx.navigation.NavArgs
+  com.example.savethefood.data.source.local.dao.FoodDatabaseDao_Impl .up.|> com.example.savethefood.data.source.local.dao.FoodDatabaseDao
+  com.example.savethefood.data.source.local.dao.RecipeDatabaseDao_Impl .up.|> com.example.savethefood.data.source.local.dao.RecipeDatabaseDao
+  com.example.savethefood.data.source.local.dao.RecipeInfoDatabaseDao_Impl .up.|> com.example.savethefood.data.source.local.dao.RecipeInfoDatabaseDao
+  com.example.savethefood.data.source.local.dao.UserDatabaseDao_Impl .up.|> com.example.savethefood.data.source.local.dao.UserDatabaseDao
+  com.example.savethefood.data.source.local.database.SaveTheFoodDatabase_Impl -up-|> com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
+  com.example.savethefood.data.source.local.database.SaveTheFoodDatabase_Impl o-- com.example.savethefood.data.source.local.dao.FoodDatabaseDao : _foodDatabaseDao
+  com.example.savethefood.data.source.local.database.SaveTheFoodDatabase_Impl o-- com.example.savethefood.data.source.local.dao.RecipeDatabaseDao : _recipeDatabaseDao
+  com.example.savethefood.data.source.local.database.SaveTheFoodDatabase_Impl o-- com.example.savethefood.data.source.local.dao.RecipeInfoDatabaseDao : _recipeInfoDatabaseDao
+  com.example.savethefood.data.source.local.database.SaveTheFoodDatabase_Impl o-- com.example.savethefood.data.source.local.dao.UserDatabaseDao : _userDatabaseDao
+  com.example.savethefood.databinding.ActivityMainBindingImpl -up-|> com.example.savethefood.databinding.ActivityMainBinding
+  com.example.savethefood.databinding.EquipmentInstructionItemBindingImpl -up-|> com.example.savethefood.databinding.EquipmentInstructionItemBinding
+  com.example.savethefood.databinding.FoodItemBindingImpl .up.|> com.example.savethefood.generated.callback.OnClickListener.Listener
+  com.example.savethefood.databinding.FoodItemBindingImpl -up-|> com.example.savethefood.databinding.FoodItemBinding
+  com.example.savethefood.databinding.FoodSearchItemBindingLandImpl .up.|> com.example.savethefood.generated.callback.OnClickListener.Listener
+  com.example.savethefood.databinding.FoodSearchItemBindingLandImpl -up-|> com.example.savethefood.databinding.FoodSearchItemBinding
+  com.example.savethefood.databinding.FoodSearchItemBindingV26Impl .up.|> com.example.savethefood.generated.callback.OnClickListener.Listener
+  com.example.savethefood.databinding.FoodSearchItemBindingV26Impl -up-|> com.example.savethefood.databinding.FoodSearchItemBinding
+  com.example.savethefood.databinding.FragmentFoodBindingImpl .up.|> com.example.savethefood.generated.callback.OnClickListener.Listener
+  com.example.savethefood.databinding.FragmentFoodBindingImpl -up-|> com.example.savethefood.databinding.FragmentFoodBinding
+  com.example.savethefood.databinding.FragmentFoodBindingLandImpl .up.|> com.example.savethefood.generated.callback.OnClickListener.Listener
+  com.example.savethefood.databinding.FragmentFoodBindingLandImpl -up-|> com.example.savethefood.databinding.FragmentFoodBinding
+  com.example.savethefood.databinding.FragmentFoodDetailBindingImpl -up-|> com.example.savethefood.databinding.FragmentFoodDetailBinding
+  com.example.savethefood.databinding.FragmentFoodDetailBindingLandImpl -up-|> com.example.savethefood.databinding.FragmentFoodDetailBinding
+  com.example.savethefood.databinding.FragmentHomeBindingImpl .up.|> com.example.savethefood.generated.callback.OnClickListener.Listener
+  com.example.savethefood.databinding.FragmentHomeBindingImpl -up-|> com.example.savethefood.databinding.FragmentHomeBinding
+  com.example.savethefood.databinding.FragmentHomeBindingLandImpl .up.|> com.example.savethefood.generated.callback.OnClickListener.Listener
+  com.example.savethefood.databinding.FragmentHomeBindingLandImpl -up-|> com.example.savethefood.databinding.FragmentHomeBinding
+  com.example.savethefood.databinding.FragmentLoginBindingImpl .up.|> com.example.savethefood.generated.callback.OnClickListener.Listener
+  com.example.savethefood.databinding.FragmentLoginBindingImpl -up-|> com.example.savethefood.databinding.FragmentLoginBinding
+  com.example.savethefood.databinding.FragmentReceipeBindingImpl -up-|> com.example.savethefood.databinding.FragmentReceipeBinding
+  com.example.savethefood.databinding.FragmentReceipeBindingLandImpl -up-|> com.example.savethefood.databinding.FragmentReceipeBinding
+  com.example.savethefood.databinding.FragmentRecipeCookBindingImpl -up-|> com.example.savethefood.databinding.FragmentRecipeCookBinding
+  com.example.savethefood.databinding.FragmentRecipeCookBindingLandImpl -up-|> com.example.savethefood.databinding.FragmentRecipeCookBinding
+  com.example.savethefood.databinding.FragmentRecipeDetailBindingImpl .up.|> com.example.savethefood.generated.callback.OnClickListener.Listener
+  com.example.savethefood.databinding.FragmentRecipeDetailBindingImpl -up-|> com.example.savethefood.databinding.FragmentRecipeDetailBinding
+  com.example.savethefood.databinding.FragmentRecipeDetailBindingLandImpl .up.|> com.example.savethefood.generated.callback.OnClickListener.Listener
+  com.example.savethefood.databinding.FragmentRecipeDetailBindingLandImpl -up-|> com.example.savethefood.databinding.FragmentRecipeDetailBinding
+  com.example.savethefood.databinding.FragmentRecipeDetailBindingSw600dpImpl .up.|> com.example.savethefood.generated.callback.OnClickListener.Listener
+  com.example.savethefood.databinding.FragmentRecipeDetailBindingSw600dpImpl -up-|> com.example.savethefood.databinding.FragmentRecipeDetailBinding
+  com.example.savethefood.databinding.FragmentSignupBindingImpl .up.|> com.example.savethefood.generated.callback.OnClickListener.Listener
+  com.example.savethefood.databinding.FragmentSignupBindingImpl -up-|> com.example.savethefood.databinding.FragmentSignupBinding
+  com.example.savethefood.databinding.FragmentSplashBindingImpl -up-|> com.example.savethefood.databinding.FragmentSplashBinding
+  com.example.savethefood.databinding.IngredientDetailBindingImpl -up-|> com.example.savethefood.databinding.IngredientDetailBinding
+  com.example.savethefood.databinding.IngredientInstructionItemBindingImpl -up-|> com.example.savethefood.databinding.IngredientInstructionItemBinding
+  com.example.savethefood.databinding.IngredientItemBindingImpl -up-|> com.example.savethefood.databinding.IngredientItemBinding
+  com.example.savethefood.databinding.RecipeItemBindingImpl .up.|> com.example.savethefood.generated.callback.OnClickListener.Listener
+  com.example.savethefood.databinding.RecipeItemBindingImpl -up-|> com.example.savethefood.databinding.RecipeItemBinding
+  com.example.savethefood.databinding.StepCookItemBindingImpl -up-|> com.example.savethefood.databinding.StepCookItemBinding
+  com.example.savethefood.fooddetail.FoodDetailFragmentArgs .up.|> androidx.navigation.NavArgs
+  com.example.savethefood.generated.callback.OnClickListener .up.|> android.view.View.OnClickListener
+  com.example.savethefood.generated.callback.OnClickListener o-- com.example.savethefood.generated.callback.OnClickListener.Listener : mListener
+  com.example.savethefood.home.HomeFragmentArgs .up.|> androidx.navigation.NavArgs
+  com.example.savethefood.recipe.RecipeFragmentArgs .up.|> androidx.navigation.NavArgs
+  com.example.savethefood.recipedetail.RecipeDetailFragmentArgs .up.|> androidx.navigation.NavArgs
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
