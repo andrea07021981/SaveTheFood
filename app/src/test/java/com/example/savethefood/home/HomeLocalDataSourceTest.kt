@@ -1,6 +1,7 @@
 package com.example.savethefood.home
 
 import android.content.Context
+import android.os.Looper
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -16,20 +17,28 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
+import org.hamcrest.CoreMatchers.`is`
 import org.junit.After
+import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoJUnitRunner
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.LooperMode
 import java.io.IOException
+import java.lang.Thread.sleep
 
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
+@LooperMode(LooperMode.Mode.PAUSED)
 class HomeLocalDataSourceTest {
 
     private lateinit var userDao: FoodDatabaseDao
@@ -60,17 +69,20 @@ class HomeLocalDataSourceTest {
     @Test
     @Throws(Exception::class)
     fun writeNewFood_Successful() {
-        //TODO Read mockito
-        /*val food = Mockito.mock(FoodDomain::class.java)
-        Mockito.verify(food)
-        Mockito.`when`(food.foodId != 0).thenReturn(true)*/
+        //TODO test mockito
+        shadowOf(Looper.getMainLooper()).idle()
+        val foo = mock(Foo::class.java)
+        `when`(foo.calculateTheFoo()).thenReturn(2)
+        val bar = Bar(foo)
+        assertThat(bar.calculateDoubleFoo(), `is`(4))
+
 
         val insertId = userDao.insert(FoodDomain().asDatabaseModel())
         val records = userDao.getFoods().getOrAwaitValue()
         assert(records.any { it.id == insertId.toInt() })
     }
 
-    fun test1() {
+    fun test1() { // TODO add crud fails and ok
         // GIVEN
         // WHEN
         //THEN
@@ -81,4 +93,14 @@ class HomeLocalDataSourceTest {
     fun closeDb() {
         db.close()
     }
+}
+class Foo {
+    fun calculateTheFoo(): Int {
+        sleep(1_000) // Difficult things here
+        return 1
+    }
+}
+
+class Bar(private val foo: Foo) {
+    fun calculateDoubleFoo() = foo.calculateTheFoo() * 2
 }
