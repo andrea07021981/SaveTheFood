@@ -1,0 +1,146 @@
+{
+  "id": 30004,
+  "title": "Swan Flour",
+  "price": 0.0,
+  "likes": 0,
+  "badges": [
+    "egg_free",
+    "wheat_free",
+    "grain_free",
+    "peanut_free",
+    "primal",
+    "vegetarian",
+    "nut_free",
+    "vegan",
+    "pescetarian",
+    "dairy_free",
+    "paleo",
+    "gluten_free"
+  ],
+  "importantBadges": [
+    "gluten_free",
+    "paleo",
+    "primal",
+    "wheat_free",
+    "grain_free"
+  ],
+  "nutrition": {
+    "nutrients": [
+      {
+        "title": "Calcium",
+        "amount": 0.0,
+        "unit": "mg",
+        "percentOfDailyNeeds": 0.0
+      },
+      {
+        "title": "Carbohydrates",
+        "amount": 8.0,
+        "unit": "g",
+        "percentOfDailyNeeds": 2.67
+      },
+      {
+        "title": "Calories",
+        "amount": 30.0,
+        "unit": "cal",
+        "percentOfDailyNeeds": 1.5
+      },
+      {
+        "title": "Fat",
+        "amount": 0.0,
+        "unit": "g",
+        "percentOfDailyNeeds": 0.0
+      },
+      {
+        "title": "Saturated Fat",
+        "amount": 0.0,
+        "unit": "g",
+        "percentOfDailyNeeds": 0.0
+      },
+      {
+        "title": "Trans Fat",
+        "amount": 0.0,
+        "unit": "g",
+        "percentOfDailyNeeds": 0.0
+      },
+      {
+        "title": "Iron",
+        "amount": 0.0,
+        "unit": "mg",
+        "percentOfDailyNeeds": 0.0
+      },
+      {
+        "title": "Protein",
+        "amount": 0.0,
+        "unit": "g",
+        "percentOfDailyNeeds": 0.0
+      },
+      {
+        "title": "Sodium",
+        "amount": 0.0,
+        "unit": "mg",
+        "percentOfDailyNeeds": 0.0
+      },
+      {
+        "title": "Vitamin A",
+        "amount": 0.0,
+        "unit": "IU",
+        "percentOfDailyNeeds": 0.0
+      },
+      {
+        "title": "Vitamin C",
+        "amount": 0.0,
+        "unit": "mg",
+        "percentOfDailyNeeds": 0.0
+      },
+      {
+        "title": "Net Carbohydrates",
+        "amount": 8.0,
+        "unit": "g",
+        "percentOfDailyNeeds": 2.91
+      }
+    ],
+    "caloricBreakdown": {
+      "percentProtein": 0.0,
+      "percentFat": 0.0,
+      "percentCarbs": 100.0
+    },
+    "calories": 30.0,
+    "fat": "0g",
+    "protein": "0g",
+    "carbs": "8g"
+  },
+  "serving_size": "1.0 tbsp (10 g)",
+  "number_of_servings": 34.0,
+  "servings": {
+    "number": 34.0,
+    "size": 1.01,
+    "unit": "1.0 tbsp (10 g)"
+  },
+  "spoonacularScore": 99.0,
+  "breadcrumbs": [],
+  "aisle": null,
+  "description": null,
+  "generatedText": "Swan Flour: This product is an awesome fit if you are searching for a healthy flour. This product has 1 ingredient (in our experience: the fewer ingredients, the better!) This product contains no ingredients that some research suggests you should avoid. One serving of this product provides 30 calories, 0g grams of fat, 0g grams of protein, and 8g grams of carbs.",
+  "upc": "041631000564",
+  "brand": null,
+  "ingredients": [
+    {
+      "name": "starch",
+      "safety_level": null,
+      "description": null
+    },
+    {
+      "name": "potato starch",
+      "safety_level": null,
+      "description": null
+    }
+  ],
+  "ingredientCount": 2,
+  "ingredientList": "Potato Starch",
+  "images": [
+    "https://spoonacular.com/productImages/30004-312x231.jpg",
+    "https://spoonacular.com/productImages/30004-636x393.jpg",
+    "https://spoonacular.com/productImages/30004-90x90.jpg"
+  ],
+  "imageType": "jpg"
+}
