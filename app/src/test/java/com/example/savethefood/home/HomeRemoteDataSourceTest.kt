@@ -2,6 +2,7 @@ package com.example.savethefood.home
 
 import android.app.Application
 import android.os.Looper
+import android.service.autofill.Validators.not
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.platform.app.InstrumentationRegistry
@@ -21,6 +22,9 @@ import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
+import org.hamcrest.CoreMatchers
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.IsNull
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -46,7 +50,7 @@ class HomeRemoteDataSourceTest {
 
     @Before
     fun setUp() {
-        mockWebServer.start(8080)
+        mockWebServer.start()
         IdlingRegistry.getInstance().register(
             OkHttp3IdlingResource.create(
                 "okhttp",
@@ -62,15 +66,19 @@ class HomeRemoteDataSourceTest {
     @Test
     fun testOffLine_Success() {
         // GIVEN
+        val fileName = "success_response.json"
+        var response: MockResponse? = null
         // WHEN
-        //THEN
         mockWebServer.dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest): MockResponse {
-                return MockResponse()
+                response = MockResponse()
                     .setResponseCode(200)
                     .setBody(FileReader.readStringFromFile("success_response.json"))
+                return response!!
             }
         }
+        //THEN
+        assertThat(response?.getBody().toString(), IsNull.notNullValue())
     }
 
     @Test
@@ -87,8 +95,8 @@ class HomeRemoteDataSourceTest {
             apiService.getFoodByUpc("1111")
         }.await()
 
-        print(deferred.await()) // result available immediately
-
+        val result = deferred.await() // result available immediately
+        assertThat(result.id, CoreMatchers.`is`(30004))
     }
 
     @After
