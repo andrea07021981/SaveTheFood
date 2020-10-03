@@ -1,12 +1,11 @@
 package com.example.savethefood.fooddetail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.source.local.datasource.FakeFoodDataSourceTest
+import com.example.savethefood.data.source.local.datasource.FakeLocalFoodDataSourceTest
+import com.example.savethefood.data.source.local.datasource.FakeRemoteFoodDataSourceTest
 import com.example.savethefood.data.source.repository.FakeFoodDataRepositoryTest
-import com.example.savethefood.home.HomeViewModel
 import com.example.savethefood.viewmodel.getOrAwaitValue
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.CoreMatchers.nullValue
@@ -30,7 +29,7 @@ class FoodDetailViewModelTest {
 
     @Before
     fun setupViewModel() {
-        fakeFoodDataRepositoryTest = FakeFoodDataRepositoryTest(FakeFoodDataSourceTest())
+        fakeFoodDataRepositoryTest = FakeFoodDataRepositoryTest(FakeRemoteFoodDataSourceTest(), FakeLocalFoodDataSourceTest())
         foodDetailViewModel = FoodDetailViewModel(fakeFoodDataRepositoryTest, FoodDomain())
     }
 

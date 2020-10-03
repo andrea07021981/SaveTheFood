@@ -50,7 +50,7 @@ class FoodLocalDataSource internal constructor(
 
     override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> {
         //TODO add try catch with Result.ExError
-        return foodDatabaseDao.getFoods().map {
+        return foodDatabaseDao.observeFoods().map {
             Result.Success(it.asDomainModel())
         }
     }

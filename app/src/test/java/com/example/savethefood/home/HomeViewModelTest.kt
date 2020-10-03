@@ -1,22 +1,18 @@
 package com.example.savethefood.home
 
-import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.source.local.datasource.FakeFoodDataSourceTest
+import com.example.savethefood.data.source.local.datasource.FakeLocalFoodDataSourceTest
+import com.example.savethefood.data.source.local.datasource.FakeRemoteFoodDataSourceTest
 import com.example.savethefood.data.source.repository.FakeFoodDataRepositoryTest
 import com.example.savethefood.viewmodel.getOrAwaitValue
-import org.checkerframework.common.reflection.qual.GetClass
 import org.hamcrest.CoreMatchers.*
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 class HomeViewModelTest {
@@ -30,7 +26,7 @@ class HomeViewModelTest {
 
     @Before
     fun setupViewModel() {
-        fakeFoodDataRepositoryTest = FakeFoodDataRepositoryTest(FakeFoodDataSourceTest())
+        fakeFoodDataRepositoryTest = FakeFoodDataRepositoryTest(FakeRemoteFoodDataSourceTest(), FakeLocalFoodDataSourceTest())
         homeViewModel = HomeViewModel(fakeFoodDataRepositoryTest)
     }
 

@@ -32,7 +32,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 
-@RunWith(AndroidJUnit4::class)
 @MediumTest
 @ExperimentalCoroutinesApi
 class LoginFragmentTest {

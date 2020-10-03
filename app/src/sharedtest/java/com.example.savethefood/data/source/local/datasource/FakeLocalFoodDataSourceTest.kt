@@ -2,20 +2,16 @@ package com.example.savethefood.data.source.local.datasource
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.liveData
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.FoodDataSource
 
-class FakeFoodDataSourceTest(
-    val foodList: MutableList<FoodDomain> = mutableListOf()
+class FakeLocalFoodDataSourceTest(
+    private val foodList: MutableList<FoodDomain> = mutableListOf()
 ) : FoodDataSource {
 
-    private var _foodList = MediatorLiveData<Result<List<FoodDomain>>>()
-
-    init {
-        _foodList.value = Result.Success(foodList)
-    }
     override suspend fun getFoodByUpc(barcode: String): Result<FoodDomain> {
         TODO("Not yet implemented")
     }
@@ -25,23 +21,31 @@ class FakeFoodDataSourceTest(
     }
 
     override suspend fun getFoodById(id: Int): Result<FoodDomain>{
-        TODO("Not yet implemented")
+        foodList.find {
+            it.foodId == id
+        }.also {
+            return if (it != null) {
+                Result.Success(it)
+            } else {
+                Result.Error("Not found locally")
+            }
+        }
     }
 
     override suspend fun insertFood(food: FoodDomain): Long {
-        TODO("Not yet implemented")
+        foodList.add(food).also { return food.foodId.toLong() }
     }
 
     override suspend fun updateFoods(food: FoodDomain) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> {
-        return _foodList
+    override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> = liveData {
+        foodList
     }
 
     override suspend fun getLocalFoods(): Result<List<FoodDomain>> {
-        TODO("Not yet implemented")
+        return Result.Success(foodList)
     }
 
     override suspend fun deleteFood(food: FoodDomain?): Int {

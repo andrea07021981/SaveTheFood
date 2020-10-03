@@ -1,65 +1,102 @@
 package com.example.savethefood.home
 
-import android.content.Context
+import android.app.Application
 import android.os.Looper
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import android.service.autofill.Validators.not
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.platform.app.InstrumentationRegistry
+import com.example.savethefood.FileReader
 import com.example.savethefood.SaveTheFoodApplication
-import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.asDatabaseModel
-import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
-import com.example.savethefood.data.source.remote.service.ApiEndPoint
-import com.example.savethefood.viewmodel.getOrAwaitValue
+import com.example.savethefood.data.source.remote.service.ApiClient
+import com.example.savethefood.data.source.remote.service.FoodService
+import com.jakewharton.espresso.OkHttp3IdlingResource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
+import okhttp3.Cache
+import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
 import org.hamcrest.CoreMatchers
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.IsNull
 import org.junit.After
-import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
-import org.robolectric.Shadows
-import java.io.IOException
-import java.io.InputStreamReader
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.annotation.LooperMode
+import java.io.File
+import java.net.HttpURLConnection
+
 
 @ExperimentalCoroutinesApi
-@RunWith(AndroidJUnit4::class)
+@RunWith(RobolectricTestRunner::class)
+@LooperMode(LooperMode.Mode.PAUSED)
 class HomeRemoteDataSourceTest {
 
+    @get:Rule
+    val instantExecutorRule = InstantTaskExecutorRule()
+
     private val mockWebServer = MockWebServer()
+    private lateinit var apiService: FoodService
 
     @Before
     fun setUp() {
-        ApiEndPoint.BASE_URL
-        mockWebServer.start(8080)
+        mockWebServer.start()
+        IdlingRegistry.getInstance().register(
+            OkHttp3IdlingResource.create(
+                "okhttp",
+                OkHttpProvider.getOkHttpClient(
+                    (InstrumentationRegistry.getInstrumentation().targetContext
+                        .applicationContext as SaveTheFoodApplication)
+                )
+            )
+        )
+        apiService = ApiClientTest.buildRetrofitTest(mockWebServer)
     }
 
     @Test
     fun testOffLine_Success() {
         // GIVEN
+        val fileName = "success_response.json"
+        var response: MockResponse? = null
         // WHEN
-        //THEN
-        // TODO Check userful
         mockWebServer.dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest): MockResponse {
-                return MockResponse()
+                response = MockResponse()
                     .setResponseCode(200)
                     .setBody(FileReader.readStringFromFile("success_response.json"))
+                return response!!
             }
         }
+        //THEN
+        assertThat(response?.getBody().toString(), IsNull.notNullValue())
     }
 
     @Test
-    fun testOnLine_Success() {
+    fun testOnLine_Success() = runBlocking {
         // GIVEN
         // WHEN
         //THEN
+        val response = MockResponse()
+            .setResponseCode(HttpURLConnection.HTTP_OK)
+            .setBody(FileReader.readStringFromFile("success_response.json"))
+        mockWebServer.enqueue(response)
+        shadowOf(Looper.getMainLooper()).idle()
+        val deferred = async {
+            apiService.getFoodByUpc("1111")
+        }.await()
+
+        val result = deferred.await() // result available immediately
+        assertThat(result.id, CoreMatchers.`is`(30004))
     }
 
     @After
@@ -67,19 +104,18 @@ class HomeRemoteDataSourceTest {
         mockWebServer.shutdown()
     }
 }
-object FileReader {
-    fun readStringFromFile(fileName: String): String {
-        try {
-            val inputStream = (InstrumentationRegistry.getInstrumentation().targetContext
-                .applicationContext as SaveTheFoodApplication).assets.open(fileName)
-            val builder = StringBuilder()
-            val reader = InputStreamReader(inputStream, "UTF-8")
-            reader.readLines().forEach {
-                builder.append(it)
-            }
-            return builder.toString()
-        } catch (e: IOException) {
-            throw e
+
+class OkHttpProvider {
+
+    companion object {
+
+        fun getOkHttpClient(app: Application): OkHttpClient {
+            // Install an HTTP cache in the application cache directory.
+            val cacheDir = File(app.cacheDir, "http")
+            val cache = Cache(cacheDir, 2000)
+            return OkHttpClient.Builder()
+                .cache(cache).build()
         }
     }
 }
+

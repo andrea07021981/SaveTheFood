@@ -20,5 +20,7 @@ interface FoodRepository {
 
     suspend fun getFoods(): LiveData<Result<List<FoodDomain>>>
 
+    suspend fun getLocalFoods(): Result<List<FoodDomain>>
+
     suspend fun deleteFood(food: FoodDomain?): Int
 }
