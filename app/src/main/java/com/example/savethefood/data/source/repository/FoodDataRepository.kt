@@ -115,6 +115,10 @@ class FoodDataRepository(
         }
     }
 
+    override suspend fun getLocalFoods(): Result<List<FoodDomain>> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun deleteFood(food: FoodDomain?): Int  = withContext(Dispatchers.IO) {
         wrapEspressoIdlingResource {
             foodLocalDataSource.deleteFood(food)

@@ -49,5 +49,11 @@ interface FoodDatabaseDao {
      * Selects all food
      */
     @Query("SELECT * from food_table")
+    fun observeFoods(): LiveData<List<FoodEntity>>
+
+    /**
+     * Selects all food
+     */
+    @Query("SELECT * from food_table")
     fun getFoods(): LiveData<List<FoodEntity>>
 }
