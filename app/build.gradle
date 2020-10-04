@@ -144,7 +144,7 @@ dependencies {
     implementation "androidx.paging:paging-runtime:$version_paging"
 
     //Interceptor and http loggin
-    implementation 'com.squareup.okhttp3:okhttp:4.8.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.8.0'
 
     // Testing

@@ -14,12 +14,22 @@ class FakeFoodDataRepositoryTest(
     private val fakeRemoteFoodDataSourceTest: FoodDataSource,
     private val fakeLocalFoodDataSourceTest: FoodDataSource
 ) : FoodRepository{
-    override suspend fun getApiFoodUpc(barcode: String): Result<FoodDomain> {
-        TODO("Not yet implemented")
+    override suspend fun getApiFoodUpc(barcode: String): Result<FoodDomain> = coroutineScope {
+        val foodRetrieved = fakeRemoteFoodDataSourceTest.getFoodByUpc(barcode)
+        if (foodRetrieved is Result.Success) {
+            val saveNewFood = fakeLocalFoodDataSourceTest.insertFood(foodRetrieved.data)
+            if (saveNewFood == 0L) {
+                return@coroutineScope Result.Error("Not saved")
+            } else {
+                return@coroutineScope Result.Success(foodRetrieved.data)
+            }
+        } else {
+            return@coroutineScope Result.Error("Not retrieved")
+        }
     }
 
-    override suspend fun getApiFoodQuery(query: String): Result<FoodSearchDomain>? {
-        TODO("Not yet implemented")
+    override suspend fun getApiFoodQuery(query: String): Result<FoodSearchDomain>? = coroutineScope {
+        fakeRemoteFoodDataSourceTest.getFoodByQuery(query)
     }
 
     override suspend fun getApiFoodById(id: Int): Result<FoodDomain> {
@@ -49,6 +59,6 @@ class FakeFoodDataRepositoryTest(
     }
 
     override suspend fun deleteFood(food: FoodDomain?): Int {
-        TODO("Not yet implemented")
+        return fakeLocalFoodDataSourceTest.deleteFood(food)
     }
 }

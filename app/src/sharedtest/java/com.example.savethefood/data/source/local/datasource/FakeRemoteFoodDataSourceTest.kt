@@ -22,6 +22,7 @@ class FakeRemoteFoodDataSourceTest(
 
     override suspend fun getFoodByQuery(barcode: String): Result<FoodSearchDomain>? {
         TODO("Not yet implemented")
+        //TODO parse query an test the url offline
     }
 
     override suspend fun getFoodById(id: Int): Result<FoodDomain>{
