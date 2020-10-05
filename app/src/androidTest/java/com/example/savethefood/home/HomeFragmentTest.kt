@@ -77,8 +77,9 @@ class HomeFragmentTest {
             putParcelable("user", UserDomain())
         }
 
+        //Hilt is not ready for fragmentscenario, this is another way to test a fragment with DI
         launchFragmentInHiltContainer<HomeFragment>(fragmentArgs) {
-            val orAwaitValue = (this as HomeFragment).homeViewModel.foodList.getOrAwaitValue()
+            val orAwaitValue = (this as HomeFragment).getViewModel().foodList.getOrAwaitValue()
             assert(orAwaitValue is Result.Success)
         }
 

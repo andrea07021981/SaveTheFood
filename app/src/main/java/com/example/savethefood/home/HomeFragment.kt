@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -43,10 +44,13 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
         val TAG = HomeFragment::class.java.simpleName
     }
 
-    val homeViewModel: HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
 
     private val args: HomeFragmentArgs by navArgs()
     private lateinit var dataBinding: FragmentHomeBinding
+
+    @VisibleForTesting
+    fun getViewModel() = homeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
