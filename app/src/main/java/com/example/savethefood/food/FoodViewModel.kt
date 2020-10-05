@@ -1,5 +1,6 @@
 package com.example.savethefood.food
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.constants.ApiCallStatus
@@ -10,10 +11,12 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.ProductDomain
 import com.example.savethefood.data.source.repository.FoodDataRepository
+import com.example.savethefood.data.source.repository.FoodRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FoodViewModel(
-    private val dataRepository: FoodDataRepository
+class FoodViewModel @ViewModelInject constructor(
+    private val dataRepository: FoodRepository
 ) : ViewModel() {
 
     private var _foodListResult = MutableLiveData<List<ProductDomain>?>()

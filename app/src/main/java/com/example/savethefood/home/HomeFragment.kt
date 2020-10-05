@@ -29,19 +29,21 @@ import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.fooddetail.FoodDetailViewModel
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.lang.reflect.InvocationTargetException
 
+@ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class HomeFragment : Fragment(), View.OnLayoutChangeListener {
 
     companion object {
         val TAG = HomeFragment::class.java.simpleName
     }
 
-    private val homeViewModel by viewModels<HomeViewModel>{
-        HomeViewModel.HomeViewModelFactory(FoodDataRepository.getRepository(requireActivity().application))
-    }
+    val homeViewModel: HomeViewModel by viewModels()
 
     private val args: HomeFragmentArgs by navArgs()
     private lateinit var dataBinding: FragmentHomeBinding

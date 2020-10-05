@@ -1,26 +1,24 @@
 package com.example.savethefood.data.source.repository
 
-import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.map
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.FoodDataSource
-import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
-import com.example.savethefood.data.source.local.datasource.FoodLocalDataSource
-import com.example.savethefood.data.source.remote.datasource.FoodRemoteDataSource
-import com.example.savethefood.data.source.remote.service.ApiClient
+import com.example.savethefood.di.BaseModule
 import com.example.savethefood.util.wrapEspressoIdlingResource
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class FoodDataRepository(
-    private val foodLocalDataSource: FoodDataSource,
-    private val foodRemoteDataSource: FoodDataSource,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+@ExperimentalCoroutinesApi
+class FoodDataRepository @Inject constructor(
+    var foodLocalDataSource: FoodDataSource,
+    val foodRemoteDataSource: FoodDataSource
 ) : FoodRepository {
-
+/*
     companion object {
         @Volatile
         private var INSTANCE: FoodDataRepository? = null
@@ -36,7 +34,7 @@ class FoodDataRepository(
                 }
             }
         }
-    }
+    }*/
     /**may throw Exception, with coroutineScope is possible Exception will cancel only the coroutines created in
     *This scope, without touching the outer scope. We could avoid it and use the supervisor job in VM, but this way is more efficient
     */
@@ -103,7 +101,7 @@ class FoodDataRepository(
      * Withcontext is a function that allows to easily change the context that will be used to run a part of the code inside a coroutine. This is a suspending function, so it means that it’ll suspend the coroutine until the code inside is executed, no matter the dispatcher that it’s used.
      * With that, we can make our suspending functions use a different thread:
      */
-    override suspend fun saveNewFood(food: FoodDomain) = withContext(ioDispatcher) {
+    override suspend fun saveNewFood(food: FoodDomain) = withContext(Dispatchers.IO) {
         wrapEspressoIdlingResource {
             foodLocalDataSource.insertFood(food)
         }

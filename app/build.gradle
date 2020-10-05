@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'dagger.hilt.android.plugin'
 
 configurations.all {
     resolutionStrategy {
@@ -20,12 +21,13 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.example.savethefood.CustomTestRunner"
+        buildConfigField 'String', 'BASE_FOOD_URL', "\"https://api.spoonacular.com/\""
 
         //Export DB Schema
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = ["room.schemaLocation":
+                arguments += ["room.schemaLocation":
                                      "$projectDir/schemas".toString()]
             }
         }
@@ -69,9 +71,18 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            testCoverageEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
         }
     }
 
@@ -200,20 +211,33 @@ dependencies {
 
     //Firebase crashlytics
     implementation "com.google.firebase:firebase-crashlytics:$version_crashlytics"
+
+    // Base Hilt dependencies:
+    implementation "com.google.dagger:hilt-android:$version_hilt"
+    kapt "com.google.dagger:hilt-android-compiler:$version_hilt"
+
+    // ViewModel support dependencies:
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
+
     // For Robolectric tests.
-    testImplementation 'com.google.dagger:hilt-android-testing:2.28.3-alpha'
+    testImplementation "com.google.dagger:hilt-android-testing:${version_hilt_test}"
     // ...with Kotlin.
-    kaptTest 'com.google.dagger:hilt-android-compiler:2.28.3-alpha'
+    kaptTest "com.google.dagger:hilt-android-compiler:${version_hilt_test}"
     // ...with Java.
-    testAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.28.3-alpha'
+    testAnnotationProcessor "com.google.dagger:hilt-android-compiler:${version_hilt_test}"
 
 
     // For instrumented tests.
-    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.28.3-alpha'
+    androidTestImplementation "com.google.dagger:hilt-android-testing:${version_hilt_test}"
     // ...with Kotlin.
-    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28.3-alpha'
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:${version_hilt_test}"
     // ...with Java.
-    androidTestAnnotationProcessor 'com.google.dagger:hilt-android-compiler:2.28.3-alpha'
+    androidTestAnnotationProcessor "com.google.dagger:hilt-android-compiler:${version_hilt_test}"
+
+    implementation 'androidx.hilt:hilt-work:1.0.0-alpha02'
+    // When using Java.
+    annotationProcessor 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
 
     // MockWebServer
     testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")

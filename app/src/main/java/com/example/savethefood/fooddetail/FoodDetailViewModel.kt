@@ -4,6 +4,8 @@ import android.app.Application
 import android.text.Html
 import android.util.Log
 import androidx.core.text.HtmlCompat
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
@@ -17,10 +19,11 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 import java.lang.NullPointerException
+import javax.inject.Inject
 
-class FoodDetailViewModel(
+class FoodDetailViewModel @ViewModelInject constructor(
     private val foodDataRepository: FoodRepository,
-    food: FoodDomain
+    @Assisted food: SavedStateHandle
 ) : ViewModel() {
 
     private val _food = MutableLiveData<FoodDomain>()
@@ -36,7 +39,7 @@ class FoodDetailViewModel(
         get() = _recipeFoodEvent
 
     init {
-        _food.value = food
+        _food.value = food.get<FoodDomain>("foodDomain") ?: FoodDomain()
     }
 
     fun deleteFood() {
@@ -53,10 +56,10 @@ class FoodDetailViewModel(
     fun moveToRecipeSearch(recipe: FoodDomain) {
         _recipeFoodEvent.value = Event(recipe)
     }
-
-    /**
+/*
+    *//**
      * Factory for constructing DevByteViewModel with parameter
-     */
+     *//*
     class FoodDetailViewModelFactory(
         private val dataRepository: FoodRepository,
         private val foodSelected: FoodDomain
@@ -72,5 +75,5 @@ class FoodDetailViewModel(
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
-    }
+    }*/
 }

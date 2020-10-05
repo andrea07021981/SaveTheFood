@@ -12,10 +12,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import java.lang.Exception
+import javax.inject.Inject
 
-class FoodRemoteDataSource(
-    private val foodApi: FoodService,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+class FoodRemoteDataSource @Inject constructor(
+    private val foodApi: FoodService
 ) : FoodDataSource {
 
     /**may throw Exception, with coroutineScope is possible Exception will cancell only the coroutines created in
