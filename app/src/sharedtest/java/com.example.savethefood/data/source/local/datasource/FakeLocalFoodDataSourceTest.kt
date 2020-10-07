@@ -49,6 +49,8 @@ class FakeLocalFoodDataSourceTest(
     }
 
     override suspend fun deleteFood(food: FoodDomain?): Int {
-        TODO("Not yet implemented")
+        foodList.remove(food).also {
+            return food!!.foodId
+        }
     }
 }

@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
-import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -16,14 +16,19 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.example.savethefood.MainCoroutineRuleAndroid
 import com.example.savethefood.R
+import com.example.savethefood.constants.InvalidAuthentication
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
 import com.example.savethefood.data.source.repository.FakeUserDataRepositoryTest
 import com.example.savethefood.util.DataBindingIdlingResource
 import com.example.savethefood.util.EspressoIdlingResource
 import com.example.savethefood.util.monitorFragment
+import com.example.savethefood.viewmodel.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
+import org.hamcrest.CoreMatchers
+import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -85,6 +90,8 @@ class LoginFragmentTest {
         dataBindingIdlingResource.monitorFragment(fragmentScenario)
 
         // _WHEN email and pass are displayed
+        onView(withId(R.id.etEmail)).perform(clearText(), typeText("a@a.com"))
+        onView(withId(R.id.etPassword)).perform(clearText(), typeText("a"))
         onView(withId(R.id.etEmail))
             .check(matches(isDisplayed()))
 
@@ -93,28 +100,11 @@ class LoginFragmentTest {
 
         // THEN click and login
         onView(withId(R.id.login_button)).perform(click())
+        val value = loginViewModel.loginAuthenticationState.getOrAwaitValue()
+        assertThat(value, CoreMatchers.`is`(InvalidAuthentication("Not found")))
     }
 
     @Test
-    fun clickLogin_navigateToHome() = runBlockingTest{
-        //GIVEN - A login screen and some users on fake data
-        val scenario = launchFragmentInContainer<LoginFragment>(Bundle(), R.style.AppTheme)
-
-        //Create a navcontroller and attach it to the current fragment scenario
-        val navController = mock(NavController::class.java)
-        scenario.onFragment {
-            it.view?.let { view ->
-                    Navigation.setViewNavController(view, navController)
-            }
-        }
-
-        //WHEN - User click login with right credentials
-        onView(withId(R.id.login_button)).perform(click())
-
-        //THEN - navigate to home fragment (the nested is just a container for sub navigation) with the current user
-        val bundle = bundleOf("x" to 200, "y" to 200)
-        bundle.putParcelable("user", UserDomain())
-         verify(navController)
-             .navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment(bundle))
+    fun clickLogin_navigateToHome() {
     }
 }

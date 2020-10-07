@@ -2,6 +2,7 @@ package com.example.savethefood.home
 
 import android.app.Application
 import android.view.View
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.R
@@ -14,15 +15,17 @@ import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.*
 import java.lang.Exception
 
-class HomeViewModel(
+class HomeViewModel @ViewModelInject constructor(
     private val foodDataRepository: FoodRepository
 ) : ViewModel() {
 
     val animationResourceButton = R.anim.fade_in
 
     private var _foodList = MediatorLiveData<Result<List<FoodDomain>>>()
-    val foodList: LiveData<Result<List<FoodDomain>>>
-        get() = _foodList
+    val foodList: LiveData<Result<List<FoodDomain>>> = liveData {
+        emitSource(foodDataRepository.getFoods())
+        _status.postValue(View.GONE)//Update the status after the data is loaded
+    }
 
     /*
     Other solution
@@ -51,7 +54,7 @@ class HomeViewModel(
         get() = _status
 
     init {
-        initData()
+        //initData()
     }
 
     private val handler = CoroutineExceptionHandler { _, exception ->
@@ -66,6 +69,7 @@ class HomeViewModel(
      * Load all the date needed with supervisor. Start listening the foodlist data retireved from db.
      * Every time we update the db it is notified
      */
+    @Deprecated("Removed this coroutine and livedata is loaded immediately")
     private fun initData() {
         try {
             viewModelScope.launch {

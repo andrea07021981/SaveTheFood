@@ -12,10 +12,10 @@ import com.example.savethefood.data.source.local.entity.asDomainModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class FoodLocalDataSource internal constructor(
-    private val foodDatabaseDao: FoodDatabaseDao,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+class FoodLocalDataSource  @Inject constructor(
+    private val foodDatabaseDao: FoodDatabaseDao
 ) : FoodDataSource {
 
     override suspend fun getFoodByUpc(barcode: String): Result<FoodDomain> {
@@ -39,7 +39,7 @@ class FoodLocalDataSource internal constructor(
      * This is a suspending function, so it means that it’ll suspend the coroutine until the code inside is executed, no matter the dispatcher that it’s used.
      * With that, we can make our suspending functions use a different thread:
      */
-    override suspend fun insertFood(food: FoodDomain) = withContext(ioDispatcher) {
+    override suspend fun insertFood(food: FoodDomain) = withContext(Dispatchers.IO) {
         foodDatabaseDao.insert(food.asDatabaseModel())
     }
 
@@ -60,7 +60,7 @@ class FoodLocalDataSource internal constructor(
     }
 
     override suspend fun deleteFood(food: FoodDomain?): Int {
-        return withContext(ioDispatcher) {
+        return withContext(Dispatchers.IO) {
             foodDatabaseDao.deleteFood(food = food!!.asDatabaseModel())
         }
     }

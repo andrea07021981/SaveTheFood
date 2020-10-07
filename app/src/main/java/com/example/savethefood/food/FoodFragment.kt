@@ -15,12 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.EventObserver
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.databinding.FragmentFoodBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class FoodFragment : Fragment() {
 
-    private val foodViewModel by viewModels<FoodViewModel> {
-        FoodViewModel.FoodViewModelFactory(FoodDataRepository.getRepository(requireActivity().application))
-    }
+    private val foodViewModel: FoodViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -30,7 +30,7 @@ class FoodDetailViewModelTest {
     @Before
     fun setupViewModel() {
         fakeFoodDataRepositoryTest = FakeFoodDataRepositoryTest(FakeRemoteFoodDataSourceTest(), FakeLocalFoodDataSourceTest())
-        foodDetailViewModel = FoodDetailViewModel(fakeFoodDataRepositoryTest, FoodDomain())
+        //foodDetailViewModel = FoodDetailViewModel(fakeFoodDataRepositoryTest, FoodDomain())
     }
 
     @Test

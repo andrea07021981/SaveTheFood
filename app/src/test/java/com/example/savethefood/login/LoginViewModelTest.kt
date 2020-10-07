@@ -26,7 +26,9 @@ import org.junit.Test
 
 import org.junit.runner.RunWith;
 
-
+/**
+ * Complete login viewmodel ok
+ */
 @RunWith(AndroidJUnit4::class)
 @ExperimentalCoroutinesApi
 class LoginViewModelTest {
@@ -58,15 +60,13 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun onSignInClick_userLogging_returnValidValue() {
+    fun onSignInClick_userLogging_returnValidValue() = mainCoroutineRule.runBlockingTest {
         // GIVEN I pause the rule
-        mainCoroutineRule.pauseDispatcher()//It will pause the coroutine rule
 
         // WHEN is sign up clicked
         loginViewModel.onSignUpClick()
 
         // THEN restart the dispatcher and is success login
-        mainCoroutineRule.resumeDispatcher()//Immediately execute the coroutine
         val value = loginViewModel.loginAuthenticationState.getOrAwaitValue()
         assertThat(value, `is`(equalTo(value)))
     }

@@ -17,17 +17,16 @@ import com.example.savethefood.EventObserver
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.repository.FoodDataRepository
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class FoodDetailFragment : Fragment() {
 
     private val args: FoodDetailFragmentArgs by navArgs()
 
-    private val foodDetailViewModel: FoodDetailViewModel by viewModels {
-        FoodDetailViewModel.FoodDetailViewModelFactory(
-            FoodDataRepository.getRepository(requireActivity().application),
-            args.foodDomain
-        )
-    }
+    private val foodDetailViewModel: FoodDetailViewModel by viewModels()
 
     private lateinit var dataBinding: FragmentFoodDetailBinding
 

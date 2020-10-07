@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
 import com.example.savethefood.work.RefreshDataWorker
 import com.google.firebase.FirebaseApp
@@ -11,15 +12,19 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-
-class SaveTheFoodApplication : Application(){
+@HiltAndroidApp
+class SaveTheFoodApplication : Application(), Configuration.Provider{
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
@@ -65,4 +70,9 @@ class SaveTheFoodApplication : Application(){
             ExistingPeriodicWorkPolicy.KEEP,
             repeatingRequest)
     }
+
+    override fun getWorkManagerConfiguration() =
+        Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
 }
