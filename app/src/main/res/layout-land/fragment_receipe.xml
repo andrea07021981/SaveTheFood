@@ -29,7 +29,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:listdata="@{recipeViewModel.recipeListResult}"/>
+            bind:listdata="@{recipeViewModel.recipeListResult}"/>
 
         <ImageView
             android:id="@+id/status_imageview"
@@ -40,6 +40,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:recipeApiStatus="@{recipeViewModel.status}" />
+            bind:recipeApiStatus="@{recipeViewModel.status}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

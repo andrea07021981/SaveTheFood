@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,6 +26,7 @@ import com.example.savethefood.MainActivity
 import com.example.savethefood.R
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.repository.FoodDataRepository
+import com.example.savethefood.data.succeeded
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.fooddetail.FoodDetailViewModel
 import com.google.zxing.integration.android.IntentIntegrator
@@ -43,10 +45,13 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
         val TAG = HomeFragment::class.java.simpleName
     }
 
-    val homeViewModel: HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
 
     private val args: HomeFragmentArgs by navArgs()
     private lateinit var dataBinding: FragmentHomeBinding
+
+    @VisibleForTesting
+    fun getViewModel() = homeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -98,7 +103,7 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
         })
 
         homeViewModel.newFoodFoodEvent.observe(viewLifecycleOwner, Observer {
-            if (it is Result.Success) {
+            if (it.succeeded) {
                 Log.d(TAG, "Added")
             }
         })

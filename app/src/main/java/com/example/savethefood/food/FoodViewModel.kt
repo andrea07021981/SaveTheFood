@@ -12,6 +12,7 @@ import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.ProductDomain
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.data.source.repository.FoodRepository
+import com.example.savethefood.data.succeeded
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -65,7 +66,7 @@ class FoodViewModel @ViewModelInject constructor(
             try {
                 _status.value = Loading("Loading")
                 val foodResult = dataRepository.getApiFoodById(food.id)
-                if (foodResult is Result.Success) {
+                if (foodResult.succeeded) {
                     _foodDomain.value = foodResult
                 } else {
                     throw Exception(foodResult.toString())

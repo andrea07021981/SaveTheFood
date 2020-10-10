@@ -19,6 +19,7 @@ import com.example.savethefood.data.source.local.datasource.FakeLocalFoodDataSou
 import com.example.savethefood.data.source.local.datasource.FakeRemoteFoodDataSourceTest
 import com.example.savethefood.data.source.repository.FakeFoodDataRepositoryTest
 import com.example.savethefood.data.source.repository.FoodRepository
+import com.example.savethefood.data.succeeded
 import com.example.savethefood.launchFragmentInHiltContainer
 import com.example.savethefood.util.DataBindingIdlingResource
 import com.example.savethefood.util.EspressoIdlingResource
@@ -77,9 +78,10 @@ class HomeFragmentTest {
             putParcelable("user", UserDomain())
         }
 
+        //Hilt is not ready for fragmentscenario, this is another way to test a fragment with DI
         launchFragmentInHiltContainer<HomeFragment>(fragmentArgs) {
-            val orAwaitValue = (this as HomeFragment).homeViewModel.foodList.getOrAwaitValue()
-            assert(orAwaitValue is Result.Success)
+            val orAwaitValue = (this as HomeFragment).getViewModel().foodList.getOrAwaitValue()
+            assert(orAwaitValue.succeeded)
         }
 
 
