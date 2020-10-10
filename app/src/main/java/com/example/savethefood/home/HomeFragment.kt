@@ -26,6 +26,7 @@ import com.example.savethefood.MainActivity
 import com.example.savethefood.R
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.repository.FoodDataRepository
+import com.example.savethefood.data.succeeded
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.fooddetail.FoodDetailViewModel
 import com.google.zxing.integration.android.IntentIntegrator
@@ -102,7 +103,7 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
         })
 
         homeViewModel.newFoodFoodEvent.observe(viewLifecycleOwner, Observer {
-            if (it is Result.Success) {
+            if (it.succeeded) {
                 Log.d(TAG, "Added")
             }
         })

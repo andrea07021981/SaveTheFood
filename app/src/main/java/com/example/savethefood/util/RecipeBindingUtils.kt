@@ -21,7 +21,7 @@ import com.example.savethefood.data.domain.*
 import com.example.savethefood.recipe.RecipeAdapter
 import com.example.savethefood.recipedetail.IngredientAdapter
 
-@BindingAdapter("recipeApiStatus")
+@BindingAdapter("bind:recipeApiStatus")
 fun bindStatus(statusImageView: ImageView, status: ApiCallStatus) {
     when (status){
         is Loading -> {
@@ -43,13 +43,13 @@ fun bindStatus(statusImageView: ImageView, status: ApiCallStatus) {
 }
 
 
-@BindingAdapter("listdata")
+@BindingAdapter("bind:listdata")
 fun bindRecycleView(recyclerView: RecyclerView, data: List<RecipeResult>?) {
     val adapter = recyclerView.adapter as RecipeAdapter
     adapter.submitList(data)
 }
 
-@BindingAdapter("listIngredientsInstruction")
+@BindingAdapter("bind:listIngredientsInstruction")
 fun bindIngredientInstructionsRecycleView(recyclerView: RecyclerView, data: List<IngredientsDomain>?) {
     if (recyclerView.adapter is IngredientInstructionAdapter) {
         val adapter = recyclerView.adapter as IngredientInstructionAdapter
@@ -57,7 +57,7 @@ fun bindIngredientInstructionsRecycleView(recyclerView: RecyclerView, data: List
     }
 }
 
-@BindingAdapter("listEquipmentsInstruction")
+@BindingAdapter("bind:listEquipmentsInstruction")
 fun bindEquipmentInstructionsRecycleView(recyclerView: RecyclerView, data: List<EquipmentDomain>?) {
     if (recyclerView.adapter is EquipmentInstructionAdapter) {
         val adapter = recyclerView.adapter as EquipmentInstructionAdapter
@@ -65,13 +65,13 @@ fun bindEquipmentInstructionsRecycleView(recyclerView: RecyclerView, data: List<
     }
 }
 
-@BindingAdapter("listIngredients")
+@BindingAdapter("bind:listIngredients")
 fun bindIngredientsRecycleView(recyclerView: RecyclerView, data: List<ExtendedIngredientDomain>?) {
     val adapter = recyclerView.adapter as IngredientAdapter
     adapter.submitList(data)
 }
 
-@BindingAdapter("listSteps")
+@BindingAdapter("bind:listSteps")
 fun bindStepsRecycleView(recyclerView: RecyclerView, data: RecipeInfoDomain) {
     val adapter = recyclerView.adapter as StepCookAdapter
     //TODO check if there's always one recipeAnalyzedInstructions
@@ -80,7 +80,7 @@ fun bindStepsRecycleView(recyclerView: RecyclerView, data: RecipeInfoDomain) {
 /**
  * Uses the Glide library to load an image by URL into an [ImageView]
  */
-@BindingAdapter("imageRecipeUrl")
+@BindingAdapter("bind:imageRecipeUrl")
 fun bindRecipeImage(imgView: ImageView, recipeResult: RecipeResult?) {
     recipeResult?.let {
         val imgUri = recipeResult
@@ -103,7 +103,7 @@ fun bindRecipeImage(imgView: ImageView, recipeResult: RecipeResult?) {
 /**
  * Uses the Glide library to load an image by URL into an [ImageView]
  */
-@BindingAdapter("imageIngredientUrl")
+@BindingAdapter("bind:imageIngredientUrl")
 fun bindIngredientImage(imgView: ImageView, imgUrl: String?) {
     val imgUri = UrlImagesPath.INGREDIENTS
         .plus(imgUrl)
@@ -123,7 +123,7 @@ fun bindIngredientImage(imgView: ImageView, imgUrl: String?) {
 /**
  *  set the starts 0 out of 100
  */
-@BindingAdapter("starsValue")
+@BindingAdapter("bind:starsValue")
 fun AppCompatRatingBar.starsValue(recipe: RecipeInfoDomain?) {
     numStars = when(recipe?.recipeSpoonacularScore?.toInt()) {
         in 0..20 -> 1
@@ -138,7 +138,7 @@ fun AppCompatRatingBar.starsValue(recipe: RecipeInfoDomain?) {
 /**
  *  set the health 0 out of 100
  */
-@BindingAdapter("healthValue")
+@BindingAdapter("bind:healthValue")
 fun TextView.healthValue(recipe: RecipeInfoDomain?) {
     text = when(recipe?.recipeHealthScore?.toInt()) {
         in 0..20 -> "POOR"
@@ -153,7 +153,7 @@ fun TextView.healthValue(recipe: RecipeInfoDomain?) {
 /**
  *  Format the minutes
  */
-@BindingAdapter("formattedText")
+@BindingAdapter("bind:formattedText")
 fun TextView.formattedText(minutes: Int?) {
     text = minutes?.let {
         String.format(context.getString(

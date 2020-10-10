@@ -10,6 +10,7 @@ import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.local.datasource.FakeLocalFoodDataSourceTest
 import com.example.savethefood.data.source.local.datasource.FakeRemoteFoodDataSourceTest
 import com.example.savethefood.data.source.repository.FakeFoodDataRepositoryTest
+import com.example.savethefood.data.succeeded
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -63,7 +64,7 @@ class HomeRepositoryTest {
     @Test
     fun testGetFoodApi_success() = mainCoroutineRule.runBlockingTest{
         val food = foodRepository.getApiFoodById(1)
-        assert(food is Result.Success)
+        assert(food.succeeded)
     }
 
     @Test
@@ -75,7 +76,7 @@ class HomeRepositoryTest {
     @Test
     fun testGetFoodDao_success() = mainCoroutineRule.runBlockingTest{
         val food = foodRepository.getApiFoodById(2)
-        assert(food is Result.Success)
+        assert(food.succeeded)
     }
 
     @Test
