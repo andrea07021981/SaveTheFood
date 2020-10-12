@@ -104,6 +104,7 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
 
         homeViewModel.newFoodFoodEvent.observe(viewLifecycleOwner, Observer {
             if (it.succeeded) {
+                //TODO show a dialog with some info, editable and with the date if not present in barcode
                 Log.d(TAG, "Added")
             }
         })
