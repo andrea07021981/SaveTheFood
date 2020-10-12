@@ -3,7 +3,7 @@ package com.example.savethefood.data.domain
 import android.os.Parcelable
 import com.example.savethefood.data.source.local.entity.FoodEntity
 import kotlinx.android.parcel.Parcelize
-
+import java.util.*
 
 
 //Food
@@ -21,11 +21,12 @@ data class FoodDomain(
     var proteins: String?,
     var carbs: String?,
     var ingredientList: String?,
-    var servingSize: String?
+    var servingSize: String?,
+    var bestBefore: Date
 
 ) : Parcelable {
 
-    constructor() : this("", "",0,"", 0.0, 0.0, 0.0, "", "", "", "", "")
+    constructor() : this("", "",0,"", 0.0, 0.0, 0.0, "", "", "", "", "", Date())
 }
 
 fun FoodDomain.asDatabaseModel(): FoodEntity {
@@ -41,6 +42,7 @@ fun FoodDomain.asDatabaseModel(): FoodEntity {
         proteins = proteins,
         carbs = carbs,
         ingredientList = ingredientList,
-        servingSize = servingSize
+        servingSize = servingSize,
+        foodBestBefore = bestBefore.time
     )
 }

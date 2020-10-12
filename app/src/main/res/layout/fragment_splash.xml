@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!-- Data to make available to the XML via data binding. In this case,
-         the whole ViewModel, so that we can access the LiveData,
-         click handlers, and state variables. -->
+    xmlns:bind="http://schemas.android.com/tools">
+
     <data>
         <variable
             name="splashViewModel"
@@ -27,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:loadViewAnimation="@{splashViewModel.animationResource}"
+            bind:loadViewAnimation="@{splashViewModel.animationResource}"
             app:srcCompat="@drawable/ic_food" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,6 +4,7 @@ import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.local.entity.FoodEntity
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.util.*
 
 /**
  * Convert Network results to database objects
@@ -61,7 +62,8 @@ fun NetworkFood.asDomainModel(): FoodDomain {
         proteins = nutrition?.protein,
         carbs = nutrition?.carbs,
         ingredientList = ingredientList,
-        servingSize = servingSize
+        servingSize = servingSize,
+        bestBefore = Date()
     )
 }
 
@@ -78,6 +80,7 @@ fun NetworkFood.asDatabaseModel(): FoodEntity {
         proteins = nutrition?.protein,
         carbs = nutrition?.carbs,
         ingredientList = ingredientList,
-        servingSize = servingSize
+        servingSize = servingSize,
+        foodBestBefore = Date().time
     )
 }

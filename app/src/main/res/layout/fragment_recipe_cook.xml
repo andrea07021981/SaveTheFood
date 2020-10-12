@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!-- Data to make available to the XML via data binding. In this case,
-         the whole ViewModel, so that we can access the LiveData,
-         click handlers, and state variables. -->
+    xmlns:bind="http://schemas.android.com/tools">
     <data>
         <variable
             name="recipeCookViewModel"
@@ -23,7 +21,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:layout_gravity="center"
-            app:listSteps="@{recipeCookViewModel.recipeInfoDomain}"
+            bind:listSteps="@{recipeCookViewModel.recipeInfoDomain}"
             tools:listitem="@layout/step_cook_item"/>
     </FrameLayout>
 </layout>

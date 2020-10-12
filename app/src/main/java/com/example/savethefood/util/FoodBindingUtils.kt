@@ -17,12 +17,12 @@ import com.example.savethefood.food.FoodSearchAdapter
 /**
  * Needs to be used with [NumberOfSetsConverters.setArrayToString].
  */
-@BindingAdapter("numberOfSets")
+@BindingAdapter("bind:numberOfSets")
 fun setNumberOfSets(view: EditText, value: String) {
     view.setText(value)
 }
 
-@BindingAdapter("listFoods")
+@BindingAdapter("bind:listFoods")
 fun bindRecycleView(recyclerView: RecyclerView, data: List<ProductDomain>?) {
     val adapter = recyclerView.adapter as FoodSearchAdapter
     adapter.submitList(data)
@@ -31,7 +31,7 @@ fun bindRecycleView(recyclerView: RecyclerView, data: List<ProductDomain>?) {
 /**
  * Uses the Glide library to load an image by URL into an [ImageView]
  */
-@BindingAdapter("imageFoodUrl")
+@BindingAdapter("bind:imageFoodUrl")
 fun bindFoodImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
@@ -45,7 +45,7 @@ fun bindFoodImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
-@BindingAdapter("htmlConverter")
+@BindingAdapter("bind:htmlConverter")
 fun TextView.bindFoodDescription(html: String?) {//TODO check if we can directly bind in xml
     html?.let { text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY); }
 }

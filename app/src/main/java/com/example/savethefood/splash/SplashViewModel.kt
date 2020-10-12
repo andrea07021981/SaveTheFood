@@ -9,7 +9,7 @@ import com.example.savethefood.R
 
 class SplashViewModel : ViewModel() {
 
-    val animationResource = R.anim.shake_anim
+    val animationResource = R.anim.bounce
 
     private val _loginEvent = MutableLiveData<Event<Unit>>()
     val loginEvent: LiveData<Event<Unit>>

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!-- Data to make available to the XML via data binding. In this case,
-         the whole ViewModel, so that we can access the LiveData,
-         click handlers, and state variables. -->
+    xmlns:bind="http://schemas.android.com/tools">
     <data>
         <variable
             name="loginViewModel"
@@ -52,7 +50,7 @@
                 app:layout_constraintHorizontal_bias="0.59"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chef_imageview"
-                app:loadViewAnimation="@{loginViewModel.animationResourceView}">
+                bind:loadViewAnimation="@{loginViewModel.animationResourceView}">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -70,7 +68,7 @@
                         android:textColorHint="@color/colorAccent"
                         app:boxStrokeColor="@color/colorAccent"
                         app:errorEnabled="true"
-                        app:hasError="@{safeUnbox(loginViewModel.errorEmail)}"
+                        bind:hasError="@{safeUnbox(loginViewModel.errorEmail)}"
                         app:hintTextColor="@color/colorAccent"
                         app:layout_constraintBottom_toTopOf="@+id/layoutPassword"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +99,7 @@
                         android:textColorHint="@color/colorAccent"
                         app:boxStrokeColor="@color/colorAccent"
                         app:errorEnabled="true"
-                        app:hasError="@{safeUnbox(loginViewModel.errorPassword)}"
+                        bind:hasError="@{safeUnbox(loginViewModel.errorPassword)}"
                         app:hintTextColor="@color/colorAccent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +145,7 @@
                 app:spinning_bar_color="#FFFFFF"
                 app:spinning_bar_padding="2dp"
                 app:spinning_bar_width="3dp"
-                app:loadViewAnimation="@{loginViewModel.animationResourceButton}"/>
+                bind:loadViewAnimation="@{loginViewModel.animationResourceButton}"/>
 
             <TextView
                 android:id="@+id/textView"

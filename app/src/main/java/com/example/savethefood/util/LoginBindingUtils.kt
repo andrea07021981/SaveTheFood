@@ -25,13 +25,13 @@ import com.example.savethefood.login.LoginFragmentDirections
 import com.google.android.material.textfield.TextInputLayout
 
 
-@BindingAdapter("loadViewAnimation")
+@BindingAdapter("bind:loadViewAnimation")
 fun View.animation(@AnimRes resource: Int) {
     val animation = AnimationUtils.loadAnimation(context, resource)
     startAnimation(animation)
 }
 
-@BindingAdapter("hasError")
+@BindingAdapter("bind:hasError")
 fun TextInputLayout.hasError(error: Boolean) {
     when (error) {
         true -> setError("Mandatory field")
@@ -42,7 +42,7 @@ fun TextInputLayout.hasError(error: Boolean) {
 /**
  * This bindiadapter display the login status using [LoginAuthenticationStates]
  */
-@BindingAdapter("loginStatus")
+@BindingAdapter("bind:loginStatus")
 fun bindStatus(context: View, status: LoginAuthenticationStates?) {
     when (status) {
         is Authenticated -> {

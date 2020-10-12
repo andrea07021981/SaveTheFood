@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.savethefood.data.domain.FoodDomain
+import java.sql.Date
+import java.util.*
 
 @Entity(tableName = "food_table")
 data class FoodEntity(
@@ -41,7 +43,10 @@ data class FoodEntity(
     var ingredientList: String?,
 
     @ColumnInfo(name = "serving_size")
-    var servingSize: String?
+    var servingSize: String?,
+
+    @ColumnInfo(name = "best_before")
+    var foodBestBefore: Long
 
 )
 
@@ -58,7 +63,8 @@ fun FoodEntity.asDomainModel(): FoodDomain {
         proteins = proteins,
         carbs = carbs,
         ingredientList = ingredientList,
-        servingSize = servingSize
+        servingSize = servingSize,
+        bestBefore = Date(foodBestBefore)
     )
 }
 
@@ -76,7 +82,8 @@ fun List<FoodEntity>.asDomainModel(): List<FoodDomain> {
             proteins = it.proteins,
             carbs = it.carbs,
             ingredientList = it.ingredientList,
-            servingSize = it.servingSize
+            servingSize = it.servingSize,
+            bestBefore = Date(it.foodBestBefore)
         )
     }
 

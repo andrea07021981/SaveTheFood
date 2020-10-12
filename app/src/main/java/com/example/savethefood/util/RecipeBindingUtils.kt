@@ -44,7 +44,7 @@ fun bindStatus(statusImageView: ImageView, status: ApiCallStatus) {
 
 
 @BindingAdapter("bind:listdata")
-fun bindRecycleView(recyclerView: RecyclerView, data: List<RecipeResult>?) {
+fun bindRecipeRecycleView(recyclerView: RecyclerView, data: List<RecipeResult>?) {
     val adapter = recyclerView.adapter as RecipeAdapter
     adapter.submitList(data)
 }

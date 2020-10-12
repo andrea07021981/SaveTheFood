@@ -55,7 +55,7 @@
                         tools:srcCompat="@tools:sample/backgrounds/scenic"
                         app:layout_collapseMode="parallax"
                         android:transitionName="foodImage"
-                        app:imageUrl="@{recipeDetailViewModel.recipeDetail.recipeImage}"
+                        bind:imageUrl="@{recipeDetailViewModel.recipeDetail.recipeImage}"
                         />
 
                     <androidx.appcompat.widget.Toolbar
@@ -174,7 +174,7 @@
                                     android:gravity="center"
                                     android:textStyle="bold"
                                     android:textSize="15sp"
-                                    app:formattedText="@{recipeDetailViewModel.recipeDetail.recipePreparationMinutes}"
+                                    bind:formattedText="@{recipeDetailViewModel.recipeDetail.recipePreparationMinutes}"
                                     tools:text="00.00" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
@@ -216,7 +216,7 @@
                                     android:gravity="center"
                                     android:textSize="15sp"
                                     android:textStyle="bold"
-                                    app:healthValue="@{recipeDetailViewModel.recipeDetail}"
+                                    bind:healthValue="@{recipeDetailViewModel.recipeDetail}"
                                     tools:text="AVERAGE" />
                             </LinearLayout>
                         </androidx.cardview.widget.CardView>
@@ -282,7 +282,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            app:htmlConverter="@{recipeDetailViewModel.recipeDetail.recipeSummary}"
+                            bind:htmlConverter="@{recipeDetailViewModel.recipeDetail.recipeSummary}"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView2"

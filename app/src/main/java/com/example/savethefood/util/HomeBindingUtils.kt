@@ -15,7 +15,7 @@ import com.example.savethefood.data.domain.FoodDomain
 /**
  * Binding adapter used to hide the spinner once data is available
  */
-@BindingAdapter("goneIfNotNull")
+@BindingAdapter("bind:goneIfNotNull")
 fun goneIfNotNull(view: View, it: Any?) {
     view.visibility = if (it != null) View.GONE else View.VISIBLE
 }
@@ -23,7 +23,7 @@ fun goneIfNotNull(view: View, it: Any?) {
 /**
  * Uses the Glide library to load an image by URL into an [ImageView]
  */
-@BindingAdapter("imageUrl")
+@BindingAdapter("bind:imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
     imgUrl?.let {
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
@@ -37,8 +37,8 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
-@BindingAdapter("listdata")
-fun bindRecycleView(recyclerView: RecyclerView, data: Result<List<FoodDomain>>?) {
+@BindingAdapter("bind:listdata")
+fun bindFoodRecycleView(recyclerView: RecyclerView, data: Result<List<FoodDomain>>?) {
     val adapter = recyclerView.adapter as FoodAdapter
     when (data) {
         is Result.Success -> adapter.submitList(data.data)
