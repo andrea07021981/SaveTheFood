@@ -22,7 +22,9 @@
         app:strokeColor="@color/colorAccent"
         app:strokeWidth="5dp"
         app:cardElevation="4dp"
-        app:cardCornerRadius="3dp">
+        app:cardCornerRadius="6dp"
+        android:translationZ="20dp"
+        android:layout_margin="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,7 +33,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.4"
+                android:alpha="0.7"
                 android:scaleType="centerCrop"
                 android:transitionName="recipeImage"
                 bind:imageRecipeUrl="@{recipeItem}"
@@ -50,8 +52,9 @@
                 android:layout_marginBottom="16dp"
                 android:fontFamily="cursive"
                 android:text="@{recipeItem.title}"
-                android:textSize="20sp"
+                android:textSize="25sp"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 android:paddingStart="10sp"
                 android:paddingEnd="10sp"
                 android:transitionName="recipeTitle"

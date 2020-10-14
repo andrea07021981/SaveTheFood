@@ -1,11 +1,14 @@
 package com.example.savethefood.util
 
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -161,4 +164,26 @@ fun TextView.formattedText(minutes: Int?) {
             it.div(60),
             it.rem(60)))
     }
+}
+
+@BindingAdapter("bind:adaptColor")
+fun TextView.setColor(firstPhoto: Bitmap) {
+    Palette.from(firstPhoto)
+        .generate { palette ->
+            palette?.let {
+                var swatch = palette.vibrantSwatch;
+                if (swatch == null && palette.swatches.size > 0) {
+                    swatch = palette.swatches[0];
+                }
+
+                var titleTextColor = Color.WHITE;
+
+                if (swatch != null) {
+                    titleTextColor = swatch.titleTextColor;
+                    //titleTextColor = ColorUtils.setAlphaComponent(titleTextColor, 255);
+                }
+                setTextColor(titleTextColor);
+
+            }
+        };
 }

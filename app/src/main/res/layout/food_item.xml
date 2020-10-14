@@ -22,6 +22,7 @@
         app:strokeColor="@color/colorAccent"
         app:strokeWidth="5dp"
         app:cardElevation="4dp"
+        android:translationZ="20dp"
         app:cardCornerRadius="3dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout

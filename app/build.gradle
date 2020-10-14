@@ -111,6 +111,7 @@ dependencies {
 
     // Room and Lifecycle dependencies
     implementation "androidx.room:room-runtime:$version_room"
+    implementation 'androidx.palette:palette-ktx:1.0.0'
     kapt "androidx.room:room-compiler:$version_room"
     implementation "androidx.room:room-ktx:$version_room"
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
@@ -202,7 +203,7 @@ dependencies {
 
     //Analytics
     implementation "com.google.firebase:firebase-analytics-ktx:$version_analitycs"
-    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation "com.google.firebase:firebase-analytics:$version_analitycs"
 
     implementation "android.arch.work:work-runtime-ktx:$version_work"
 
