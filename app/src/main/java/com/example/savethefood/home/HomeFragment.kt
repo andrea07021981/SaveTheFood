@@ -65,8 +65,8 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
             setHasOptionsMenu(true)
             it.rootLayout.addOnLayoutChangeListener(this)
             it.foodRecycleview.adapter =
-                FoodAdapter(FoodAdapter.OnClickListener {
-                    homeViewModel.moveToFoodDetail(it)
+                FoodAdapter(FoodAdapter.OnClickListener { food ->
+                    homeViewModel.moveToFoodDetail(food)
                 })
         }
 

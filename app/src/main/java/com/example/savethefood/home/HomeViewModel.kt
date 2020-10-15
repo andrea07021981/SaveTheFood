@@ -119,6 +119,7 @@ class HomeViewModel @ViewModelInject constructor(
     /*
      * Factory for constructing DevByteViewModel with parameter
      */
+    @Deprecated("added DI with hilt")
     class HomeViewModelFactory(
         private val dataRepository: FoodRepository
     ) : ViewModelProvider.NewInstanceFactory() {

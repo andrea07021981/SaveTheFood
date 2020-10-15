@@ -74,10 +74,10 @@
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_left"
+            app:enterAnim="@anim/flipping"
+            app:exitAnim="@anim/flipping"
+            app:popEnterAnim="@anim/flipping"
+            app:popExitAnim="@anim/flipping"
             app:popUpTo="@id/loginFragment" />
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
