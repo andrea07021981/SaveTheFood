@@ -31,6 +31,7 @@
                 app:srcCompat="@drawable/ic_food" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
@@ -48,11 +49,11 @@
                     android:id="@+id/constraintLayout2"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:layout_constraintVertical_weight="1"
                     app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_weight="1">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/layoutEmail"
@@ -117,14 +118,16 @@
                     android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:layout_constraintVertical_weight="1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+                    app:layout_constraintVertical_weight="1">
 
                     <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
                         android:id="@+id/login_button"
+                        style="@style/button"
+                        android:stateListAnimator="@null"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:layout_marginStart="56dp"
@@ -135,6 +138,8 @@
                         android:text="@string/log_in"
                         android:textColor="@android:color/white"
                         android:transitionName="login_button"
+                        android:translationZ="20dp"
+                        android:elevation="2dp"
                         app:finalCornerAngle="50dp"
                         app:initialCornerAngle="40dp"
                         app:layout_constraintBottom_toTopOf="@+id/textView"
@@ -164,6 +169,8 @@
 
                     <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
                         android:id="@+id/signUp_button"
+                        style="@style/button"
+                        android:stateListAnimator="@null"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginStart="56dp"
@@ -174,6 +181,8 @@
                         android:text="@string/sign_up"
                         android:textColor="@android:color/white"
                         android:transitionName="login_button"
+                        android:translationZ="20dp"
+                        android:elevation="2dp"
                         app:finalCornerAngle="50dp"
                         app:initialCornerAngle="40dp"
                         app:layout_constraintBottom_toBottomOf="parent"

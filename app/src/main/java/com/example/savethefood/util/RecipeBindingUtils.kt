@@ -165,25 +165,3 @@ fun TextView.formattedText(minutes: Int?) {
             it.rem(60)))
     }
 }
-
-@BindingAdapter("bind:adaptColor")
-fun TextView.setColor(firstPhoto: Bitmap) {
-    Palette.from(firstPhoto)
-        .generate { palette ->
-            palette?.let {
-                var swatch = palette.vibrantSwatch;
-                if (swatch == null && palette.swatches.size > 0) {
-                    swatch = palette.swatches[0];
-                }
-
-                var titleTextColor = Color.WHITE;
-
-                if (swatch != null) {
-                    titleTextColor = swatch.titleTextColor;
-                    //titleTextColor = ColorUtils.setAlphaComponent(titleTextColor, 255);
-                }
-                setTextColor(titleTextColor);
-
-            }
-        };
-}
