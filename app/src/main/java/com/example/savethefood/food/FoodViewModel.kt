@@ -4,17 +4,17 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.constants.ApiCallStatus
-import com.example.savethefood.constants.Done
-import com.example.savethefood.constants.Error
-import com.example.savethefood.constants.Loading
+import com.example.savethefood.constants.ApiCallStatus.*
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.ProductDomain
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.data.source.repository.FoodRepository
 import com.example.savethefood.data.succeeded
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.Error
 
 class FoodViewModel @ViewModelInject constructor(
     private val dataRepository: FoodRepository
@@ -56,7 +56,7 @@ class FoodViewModel @ViewModelInject constructor(
                 }
                 _status.value = Done("Done")
             } catch (e: Exception) {
-                _status.value = Error(toString())
+                _status.value = ApiCallStatus.Error(toString())
             }
         }
     }
@@ -73,11 +73,12 @@ class FoodViewModel @ViewModelInject constructor(
                 }
                 _status.value = Done("Done")
             } catch (e: Exception) {
-                _status.value = Error(toString())
+                _status.value = ApiCallStatus.Error(toString())
             }
         }
     }
 
+    @ExperimentalCoroutinesApi
     class FoodViewModelFactory(
         private val dataRepository: FoodDataRepository
     ) : ViewModelProvider.NewInstanceFactory() {

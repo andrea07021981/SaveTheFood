@@ -5,6 +5,7 @@ import androidx.arch.core.util.Function
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.constants.*
+import com.example.savethefood.constants.ApiCallStatus.*
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeResult
@@ -12,6 +13,7 @@ import com.example.savethefood.data.source.repository.RecipeRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.Error
 
 
 class RecipeViewModel(
@@ -38,7 +40,7 @@ class RecipeViewModel(
                 _status.value = Loading("Loading")
             }
             .catch {
-                _status.value = Error("Error Loading") //TODO create a class with Errors
+                _status.value = ApiCallStatus.Error("Error Loading") //TODO create a class with Errors
             }
             .transform { value ->
                 if (value is Result.Success) {

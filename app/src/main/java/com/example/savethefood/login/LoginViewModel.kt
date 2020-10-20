@@ -7,6 +7,7 @@ import androidx.lifecycle.*
 import com.example.savethefood.BuildConfig
 import com.example.savethefood.R
 import com.example.savethefood.constants.*
+import com.example.savethefood.constants.LoginAuthenticationStates.*
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.repository.UserRepository
@@ -65,7 +66,8 @@ class LoginViewModel(
                 })
                 .onEach { result ->
                     when (result) {
-                        is Result.Success -> _loginAuthenticationState.value = Authenticated(user = result.data)
+                        is Result.Success -> _loginAuthenticationState.value =
+                            Authenticated(user = result.data)
                         is Result.Error -> _loginAuthenticationState.value = InvalidAuthentication(result.message)
                         is Result.ExError -> _loginAuthenticationState.value = InvalidAuthentication(result.exception.toString())
                         is Result.Loading -> _loginAuthenticationState.value = Authenticating()
@@ -77,7 +79,7 @@ class LoginViewModel(
     }
 
     fun resetState() {
-        _loginAuthenticationState.value = Idle()
+        _loginAuthenticationState.value = Idle
     }
 
     fun doneNavigationSignUp() {

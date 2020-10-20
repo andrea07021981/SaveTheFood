@@ -21,6 +21,7 @@ import br.com.simplepass.loadingbutton.animatedDrawables.ProgressType
 import br.com.simplepass.loadingbutton.customViews.ProgressButton
 import com.example.savethefood.R
 import com.example.savethefood.constants.*
+import com.example.savethefood.constants.LoginAuthenticationStates.*
 import com.example.savethefood.data.source.repository.UserDataRepository
 import com.example.savethefood.databinding.FragmentLoginBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi

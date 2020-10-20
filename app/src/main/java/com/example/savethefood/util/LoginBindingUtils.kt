@@ -21,6 +21,7 @@ import br.com.simplepass.loadingbutton.customViews.CircularProgressButton
 import br.com.simplepass.loadingbutton.customViews.ProgressButton
 import com.example.savethefood.R
 import com.example.savethefood.constants.*
+import com.example.savethefood.constants.LoginAuthenticationStates.*
 import com.example.savethefood.login.LoginFragmentDirections
 import com.google.android.material.textfield.TextInputLayout
 
@@ -54,5 +55,7 @@ fun bindStatus(context: View, status: LoginAuthenticationStates?) {
         is InvalidAuthentication -> {
             Toast.makeText(context.context, "Error Login", Toast.LENGTH_SHORT).show()
         }
+        is Idle -> Toast.makeText(context.context, "Idle state", Toast.LENGTH_SHORT).show()
+        is Authenticating -> Toast.makeText(context.context, "Authenticating", Toast.LENGTH_SHORT).show()
     }
 }

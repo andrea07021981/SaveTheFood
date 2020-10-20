@@ -4,9 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.constants.ApiCallStatus
-import com.example.savethefood.constants.Done
-import com.example.savethefood.constants.Error
-import com.example.savethefood.constants.Loading
+import com.example.savethefood.constants.ApiCallStatus.*
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.RecipeInfoDomain
@@ -17,6 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlin.Error
 
 class RecipeDetailViewModel(
     private val recipeRepository: RecipeRepository,
@@ -60,7 +59,7 @@ class RecipeDetailViewModel(
                 }
                 _status.value = Done("Done")
             } catch (e: Exception) {
-                _status.value = Error(toString())
+                _status.value = ApiCallStatus.Error(toString())
                 _recipeDetail.value = null
             }
         }

@@ -14,8 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
 import com.example.savethefood.constants.ApiCallStatus
-import com.example.savethefood.constants.Done
-import com.example.savethefood.constants.Loading
+import com.example.savethefood.constants.ApiCallStatus.*
 import com.example.savethefood.constants.UrlImagesPath
 import com.example.savethefood.cook.EquipmentInstructionAdapter
 import com.example.savethefood.cook.IngredientInstructionAdapter
@@ -23,6 +22,7 @@ import com.example.savethefood.cook.StepCookAdapter
 import com.example.savethefood.data.domain.*
 import com.example.savethefood.recipe.RecipeAdapter
 import com.example.savethefood.recipedetail.IngredientAdapter
+import kotlin.Error
 
 @BindingAdapter("bind:recipeApiStatus")
 fun bindStatus(statusImageView: ImageView, status: ApiCallStatus) {
@@ -31,16 +31,12 @@ fun bindStatus(statusImageView: ImageView, status: ApiCallStatus) {
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.loading_animation)
         }
-        is Error -> {
+        is ApiCallStatus.Error -> {
             statusImageView.visibility = View.VISIBLE
             statusImageView.setImageResource(R.drawable.ic_broken_image)
         }
         is Done -> {
             statusImageView.visibility = View.GONE
-        }
-        else ->{
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_broken_image)
         }
     }
 }
@@ -163,5 +159,5 @@ fun TextView.formattedText(minutes: Int?) {
             R.string.format__date,
             it.div(60),
             it.rem(60)))
-    }
+    } ?: "--"
 }
