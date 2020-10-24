@@ -11,6 +11,7 @@ import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.local.entity.asDomainModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

@@ -58,6 +58,7 @@ class LoginViewModel(
         }
     }
 
+    // TODO remove flow, use call direct and repository send the different states _loginAuthenticationState.value = userDataRepository.getUse... Move login auth state in repo and all this code
     private fun doLogin() {
         viewModelScope.launch {
             userDataRepository.getUser(user = UserDomain().apply {

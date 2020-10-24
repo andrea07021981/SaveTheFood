@@ -7,16 +7,15 @@ import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.di.BaseModule
 import com.example.savethefood.util.wrapEspressoIdlingResource
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+//TODO Repository should receive base data (Network domain ex), and convert
 @ExperimentalCoroutinesApi
 class FoodDataRepository @Inject constructor(
-    var foodLocalDataSource: FoodDataSource,
-    val foodRemoteDataSource: FoodDataSource
+    private val foodLocalDataSource: FoodDataSource,
+    private val foodRemoteDataSource: FoodDataSource
 ) : FoodRepository {
 /*
     companion object {
@@ -109,6 +108,7 @@ class FoodDataRepository @Inject constructor(
 
     override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> = withContext(Dispatchers.IO) {
         wrapEspressoIdlingResource {
+            delay(2000) // TEST long time
             foodLocalDataSource.getFoods()
         }
     }

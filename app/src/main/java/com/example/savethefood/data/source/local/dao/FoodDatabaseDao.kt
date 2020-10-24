@@ -6,6 +6,8 @@ import com.example.savethefood.data.source.local.entity.FoodEntity
 
 /**
  * Defines methods for using the entities class with Room.
+ * TODO convert where possible with flow https://www.raywenderlich.com/9799571-kotlin-flow-for-android-getting-started
+ * Plantrepositoruy in advance coroutine google
  */
 @Dao
 interface FoodDatabaseDao {
