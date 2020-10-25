@@ -61,21 +61,19 @@ class LoginViewModel(
     // TODO remove flow, use call direct and repository send the different states _loginAuthenticationState.value = userDataRepository.getUse... Move login auth state in repo and all this code
     private fun doLogin() {
         viewModelScope.launch {
-            userDataRepository.getUser(user = UserDomain().apply {
-                    userEmail = emailValue.value.toString()
-                    userPassword = passwordValue.value.toString()
-                })
-                .onEach { result ->
-                    when (result) {
-                        is Result.Success -> _loginAuthenticationState.value =
-                            Authenticated(user = result.data)
-                        is Result.Error -> _loginAuthenticationState.value = InvalidAuthentication(result.message)
-                        is Result.ExError -> _loginAuthenticationState.value = InvalidAuthentication(result.exception.toString())
-                        is Result.Loading -> _loginAuthenticationState.value = Authenticating()
-                    }
+            _loginAuthenticationState.value = Authenticating()
+
+            val result = userDataRepository.getUser(user = UserDomain().apply {
+                userEmail = emailValue.value.toString()
+                userPassword = passwordValue.value.toString()
+            })
+            when (result) {
+                    is Result.Success -> _loginAuthenticationState.value =
+                        Authenticated(user = result.data)
+                    is Result.Error -> _loginAuthenticationState.value = InvalidAuthentication(result.message)
+                    is Result.ExError -> _loginAuthenticationState.value = InvalidAuthentication(result.exception.toString())
+                    is Result.Loading -> _loginAuthenticationState.value = Authenticating()
                 }
-                .onCompletion { Log.d(TAG, "Done") }
-                .launchIn(viewModelScope)
         }
     }
 

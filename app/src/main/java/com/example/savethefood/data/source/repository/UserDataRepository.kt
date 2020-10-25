@@ -6,6 +6,7 @@ import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.UserDataSource
 import com.example.savethefood.data.source.local.datasource.UserLocalDataSource
+import com.example.savethefood.data.source.local.entity.asDomainModel
 import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
@@ -46,10 +47,18 @@ class UserDataRepository(
         }
     }
 
-    override suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher): Flow<Result<UserDomain>> {
+    override suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher): Result<UserDomain> = withContext(ioDispatcher){
         wrapEspressoIdlingResource {
-            return@getUser withContext(ioDispatcher) {
-                userLocalDataSource.getUser(user.userEmail, user.userPassword)
+            try {
+                val userDb = userLocalDataSource.getUser(user.userEmail, user.userPassword)
+                delay(2000) //TODO TEST remove
+                if (userDb != null) {
+                    Result.Success(userDb.asDomainModel())
+                } else {
+                    Result.Error("User Not found")
+                }
+            } catch (e: Exception) {
+                Result.ExError(e)
             }
         }
     }

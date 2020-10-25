@@ -12,5 +12,5 @@ interface UserRepository {
      */
     suspend fun saveNewUser(user: UserDomain)
 
-    suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher = Dispatchers.IO): Flow<Result<UserDomain>>
+    suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher = Dispatchers.IO): Result<UserDomain>
 }

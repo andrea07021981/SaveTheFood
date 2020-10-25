@@ -8,10 +8,21 @@ import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.di.BaseModule
 import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
-//TODO Repository should receive base data (Network domain ex), and convert
+//TODO Repository should receive base data (Network domain ex), and convert THEN EMIT
+
+/**
+ *
+ *
+ * TODO DATASOURCE RETURN BASE DATA, REPO EMIT LOADING, RESULT, ETC, VIEWMODEL EXPOSE LIVEDATA
+ *
+ *
+ *
+ *
+ *
+ */
 @ExperimentalCoroutinesApi
 class FoodDataRepository @Inject constructor(
     private val foodLocalDataSource: FoodDataSource,
@@ -34,6 +45,16 @@ class FoodDataRepository @Inject constructor(
             }
         }
     }*/
+
+    override fun test(): Flow<Int> = flow {
+        (1..10).asFlow()
+            .onStart {
+                emit(0)
+            }
+            .onCompletion {
+                emit(-1)
+            }
+    }
     /**may throw Exception, with coroutineScope is possible Exception will cancel only the coroutines created in
     *This scope, without touching the outer scope. We could avoid it and use the supervisor job in VM, but this way is more efficient
     */
@@ -109,6 +130,7 @@ class FoodDataRepository @Inject constructor(
     override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> = withContext(Dispatchers.IO) {
         wrapEspressoIdlingResource {
             delay(2000) // TEST long time
+            //TODO CHANGE TO FLOW, MAP TO CHANGE THE DATA OBJECT FROM NETWORKD TO APP OBJECT AND EMIT
             foodLocalDataSource.getFoods()
         }
     }

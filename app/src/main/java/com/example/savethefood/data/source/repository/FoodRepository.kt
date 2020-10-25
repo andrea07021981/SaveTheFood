@@ -5,6 +5,7 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
 
 interface FoodRepository {
     @Throws(Exception::class)
@@ -23,4 +24,6 @@ interface FoodRepository {
     suspend fun getLocalFoods(): Result<List<FoodDomain>>
 
     suspend fun deleteFood(food: FoodDomain?): Int
+
+    fun test(): Flow<Int>
 }

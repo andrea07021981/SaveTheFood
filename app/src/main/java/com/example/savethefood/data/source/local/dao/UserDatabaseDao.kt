@@ -42,6 +42,6 @@ interface UserDatabaseDao {
      * Selects and returns the user with given email and pass.(IMP: MUST BE SUSPENDED IN ORDER TO WORK WITH COROUTINES AND FLOW)
      */
     @Query("SELECT * from user_table WHERE email = :userEmail AND password = :userPassword")
-    fun getUser(userEmail: String, userPassword: String): Flow<UserEntity?>
+    fun getUser(userEmail: String, userPassword: String): UserEntity?
 }
 
