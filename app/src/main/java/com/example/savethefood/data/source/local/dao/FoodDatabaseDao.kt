@@ -3,6 +3,7 @@ package com.example.savethefood.data.source.local.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.savethefood.data.source.local.entity.FoodEntity
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Defines methods for using the entities class with Room.
@@ -51,7 +52,7 @@ interface FoodDatabaseDao {
      * Selects all food
      */
     @Query("SELECT * from food_table")
-    fun observeFoods(): LiveData<List<FoodEntity>>
+    fun observeFoods(): Flow<List<FoodEntity>?>
 
     /**
      * Selects all food

@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
+import com.example.savethefood.data.source.local.entity.FoodEntity
+import kotlinx.coroutines.flow.Flow
 
 interface FoodDataSource {
 
@@ -20,7 +22,7 @@ interface FoodDataSource {
 
     suspend fun updateFoods(food: FoodDomain)
 
-    suspend fun getFoods(): LiveData<Result<List<FoodDomain>>>
+    suspend fun getFoods(): Flow<List<FoodEntity>?>
 
     suspend fun getLocalFoods(): Result<List<FoodDomain>>
 

@@ -7,6 +7,9 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.FoodDataSource
+import com.example.savethefood.data.source.local.entity.FoodEntity
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class FakeLocalFoodDataSourceTest(
     private val foodList: MutableList<FoodDomain> = mutableListOf()
@@ -40,7 +43,7 @@ class FakeLocalFoodDataSourceTest(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> = liveData {
+    override suspend fun getFoods(): Flow<List<FoodEntity>> = flow {
         foodList
     }
 

@@ -5,6 +5,7 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.UserDataSource
 import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
+import com.example.savethefood.data.source.local.entity.asDomainModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -31,8 +32,13 @@ class FakeUserDataRepositoryTest(
         fakeUserDataRepositoryTest.saveUser(user)
     }
 
-    override suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher): Flow<Result<UserDomain>> {
-        return fakeUserDataRepositoryTest.getUser(user.userEmail, user.userPassword)
+    override suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher): Result<UserDomain> {
+        val userFound = fakeUserDataRepositoryTest.getUser(user.userEmail, user.userPassword)
+        return if (userFound != null) {
+            Result.Success(userFound.asDomainModel())
+        } else {
+            Result.Error("Not found")
+        }
     }
 
     @VisibleForTesting

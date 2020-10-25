@@ -6,11 +6,13 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.FoodDataSource
+import com.example.savethefood.data.source.local.entity.FoodEntity
 import com.example.savethefood.data.source.remote.datatransferobject.asDomainModel
 import com.example.savethefood.data.source.remote.service.FoodService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -61,7 +63,7 @@ class FoodRemoteDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> {
+    override suspend fun getFoods(): Flow<List<FoodEntity>> {
         TODO("No OP")
     }
 

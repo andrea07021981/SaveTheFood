@@ -9,9 +9,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.savethefood.MainCoroutineRule
-import com.example.savethefood.constants.Done
-import com.example.savethefood.constants.Error
-import com.example.savethefood.constants.Loading
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.local.datasource.FakeRecipeDataSourceTest
