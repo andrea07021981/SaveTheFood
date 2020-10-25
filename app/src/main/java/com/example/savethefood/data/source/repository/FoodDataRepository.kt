@@ -5,6 +5,7 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.FoodDataSource
+import com.example.savethefood.data.source.local.entity.asDomainModel
 import com.example.savethefood.di.BaseModule
 import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.*
@@ -46,15 +47,6 @@ class FoodDataRepository @Inject constructor(
         }
     }*/
 
-    override fun test(): Flow<Int> = flow {
-        (1..10).asFlow()
-            .onStart {
-                emit(0)
-            }
-            .onCompletion {
-                emit(-1)
-            }
-    }
     /**may throw Exception, with coroutineScope is possible Exception will cancel only the coroutines created in
     *This scope, without touching the outer scope. We could avoid it and use the supervisor job in VM, but this way is more efficient
     */
@@ -127,11 +119,24 @@ class FoodDataRepository @Inject constructor(
         }
     }
 
-    override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> = withContext(Dispatchers.IO) {
+    override suspend fun getFoods(): Flow<Result<List<FoodDomain>>> {
         wrapEspressoIdlingResource {
-            delay(2000) // TEST long time
+            delay(1000) // TEST long time
             //TODO CHANGE TO FLOW, MAP TO CHANGE THE DATA OBJECT FROM NETWORKD TO APP OBJECT AND EMIT
-            foodLocalDataSource.getFoods()
+            return foodLocalDataSource.getFoods()
+                .onEach {
+                    check(it != null)
+                }
+                .catch {
+                    Result.ExError(Exception(""))
+                }
+                .map {
+                    if (it!!.isNotEmpty()) {
+                        Result.Success(it.asDomainModel())
+                    } else {
+                        Result.Error("No data")
+                    }
+                }
         }
     }
 

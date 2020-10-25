@@ -31,15 +31,10 @@ class HomeViewModel @ViewModelInject constructor(
 
     private var _foodList = MediatorLiveData<Result<List<FoodDomain>>>()
     val foodList: LiveData<Result<List<FoodDomain>>> = liveData { //TODO keep live data, but get foods emit, change to flows and collect like https://medium.com/androiddevelopers/livedata-with-coroutines-and-flow-part-iii-livedata-and-coroutines-patterns-592485a4a85a
-        emitSource(foodDataRepository.getFoods()) // Change to flow repo and data source, in repo do the oneach, onstart, etc and manage all here with databinding emitSource(foodDataRepository.getFoods().asLiveData())   TO TEST CHANGE CALL TO SCANNER AND ADD MEEDIATELY
+        emitSource(foodDataRepository.getFoods().asLiveData()) // Change to flow repo and data source, in repo do the oneach, onstart, etc and manage all here with databinding emitSource(foodDataRepository.getFoods().asLiveData())   TO TEST CHANGE CALL TO SCANNER AND ADD MEEDIATELY
         _status.postValue(View.GONE)//Update the status after the data is loaded
     }
 
-    val testa = liveData {
-        foodDataRepository.test().collect {
-            emit(it)
-        }
-    }
     /*
     Other solution
      val foodList: LiveData<Result<List<FoodDomain>>> = liveData {
@@ -90,7 +85,7 @@ class HomeViewModel @ViewModelInject constructor(
     private fun initData() {
         try {
             viewModelScope.launch {
-                 _foodList.addSource(foodDataRepository.getFoods(), _foodList::setValue)
+                 //_foodList.addSource(foodDataRepository.getFoods(), _foodList::setValue)
             }.invokeOnCompletion {
                 _status.postValue(View.GONE)
             }

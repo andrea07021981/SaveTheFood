@@ -9,6 +9,10 @@ import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.succeeded
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.withContext
 
 class FakeFoodDataRepositoryTest(
@@ -51,8 +55,14 @@ class FakeFoodDataRepositoryTest(
         fakeLocalFoodDataSourceTest.insertFood(food)
     }
 
-    override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> {
-        return fakeLocalFoodDataSourceTest.getFoods()
+    override suspend fun getFoods(): Flow<Result<List<FoodDomain>>> = flow{
+        fakeLocalFoodDataSourceTest.getFoods()
+            .map {
+                Result.Success(it)
+            }
+            .transform {
+                emit(it)
+            }
     }
 
     override suspend fun getLocalFoods(): Result<List<FoodDomain>> {

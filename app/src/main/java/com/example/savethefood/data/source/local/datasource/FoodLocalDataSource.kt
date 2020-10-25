@@ -8,12 +8,17 @@ import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.local.dao.FoodDatabaseDao
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodSearchDomain
+import com.example.savethefood.data.source.local.entity.FoodEntity
 import com.example.savethefood.data.source.local.entity.asDomainModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.jvm.Throws
 
 class FoodLocalDataSource  @Inject constructor(
     private val foodDatabaseDao: FoodDatabaseDao
@@ -49,11 +54,8 @@ class FoodLocalDataSource  @Inject constructor(
         foodDatabaseDao.updateAll(food.asDatabaseModel())
     }
 
-    override suspend fun getFoods(): LiveData<Result<List<FoodDomain>>> {
-        //TODO add try catch with Result.ExError
-        return foodDatabaseDao.observeFoods().map {
-            Result.Success(it.asDomainModel())
-        }
+    override suspend fun getFoods(): Flow<List<FoodEntity>?> {
+        return foodDatabaseDao.observeFoods()
     }
 
     override suspend fun getLocalFoods(): Result<List<FoodDomain>> {

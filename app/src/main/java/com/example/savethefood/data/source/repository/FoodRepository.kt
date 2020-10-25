@@ -19,11 +19,9 @@ interface FoodRepository {
 
     suspend fun saveNewFood(food: FoodDomain): Long
 
-    suspend fun getFoods(): LiveData<Result<List<FoodDomain>>>
+    suspend fun getFoods(): Flow<Result<List<FoodDomain>>>
 
     suspend fun getLocalFoods(): Result<List<FoodDomain>>
 
     suspend fun deleteFood(food: FoodDomain?): Int
-
-    fun test(): Flow<Int>
 }
