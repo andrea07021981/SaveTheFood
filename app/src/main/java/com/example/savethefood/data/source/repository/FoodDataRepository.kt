@@ -19,7 +19,7 @@ import javax.inject.Inject
  *
  * TODO DATASOURCE RETURN BASE DATA, REPO EMIT LOADING, RESULT, ETC, VIEWMODEL EXPOSE LIVEDATA
  *
- *
+ * TODO use emit here
  *
  *
  *
@@ -119,11 +119,28 @@ class FoodDataRepository @Inject constructor(
         }
     }
 
+    /*remove flow from database, here do like fish override suspend fun getFoods(): Flow<Result<List<FoodDomain>>> = flow {
+    try {
+        emit(kotlin.Result.Loading)
+        val authResultAwait = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+        if (authResultAwait.user != null) {
+            emit(kotlin.Result.Success(authResultAwait.user!!))
+        } else {
+            emit(kotlin.Result.Error("Login Failed"))
+        }
+    } catch (e: Exception) {
+        //Print the message but send a login failed info
+        e.printStackTrace()
+        emit(kotlin.Result.Error("Login Error"))
+    }*/
     override suspend fun getFoods(): Flow<Result<List<FoodDomain>>> {
         wrapEspressoIdlingResource {
             delay(1000) // TEST long time
-            //TODO CHANGE TO FLOW, MAP TO CHANGE THE DATA OBJECT FROM NETWORKD TO APP OBJECT AND EMIT
+            //TODO DO LIKE RECIPE
             return foodLocalDataSource.getFoods()
+                .onStart {
+                    Result.Loading
+                }
                 .onEach {
                     check(it != null)
                 }
@@ -137,6 +154,11 @@ class FoodDataRepository @Inject constructor(
                         Result.Error("No data")
                     }
                 }
+                .flowOn(Dispatchers.IO)
+                // We can tell flow to make the buffer "conflated". It removes the buffer from flowOn
+                // and only shares the last value, as our UI discards any intermediate values in the
+                // buffer.
+                .conflate()
         }
     }
 

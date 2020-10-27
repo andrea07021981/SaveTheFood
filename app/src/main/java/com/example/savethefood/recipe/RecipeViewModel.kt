@@ -53,15 +53,17 @@ class RecipeViewModel(
             .asLiveData(viewModelScope.coroutineContext)
         @VisibleForTesting set // this allow us to use this set only for test
 
-    val recipeListResult = Transformations.switchMap(_searchFilter) { // OR    _searchFilter.switchMap {
-        if (it != null && it.isNotEmpty() ) {
-            return@switchMap _recipeListResult.map { list ->
-                list?.filter { recipe ->
-                    recipe.title.toLowerCase().contains(it.toLowerCase())
-                }
+    val recipeListResult = _searchFilter.switchMap { // OR    _searchFilter.switchMap {
+        liveData {
+            if (it != null && it.isNotEmpty() ) {
+                 emit(_recipeListResult.map { list ->
+                    list?.filter { recipe ->
+                        recipe.title.toLowerCase().contains(it.toLowerCase())
+                    }
+                })
+            } else {
+                 emit(_recipeListResult)
             }
-        } else {
-            return@switchMap _recipeListResult
         }
     }
 
