@@ -57,6 +57,10 @@ class HomeViewModel @ViewModelInject constructor(
     val onlineFoodEvent: LiveData<Event<Unit>>
         get() = _onlineFoodEvent
 
+    private val _bestBeforeFoodEvent = MutableLiveData<Event<Unit>>()
+    val bestBeforeFoodEvent: LiveData<Event<Unit>>
+        get() = _bestBeforeFoodEvent
+
 
     init {
         // TODO, move offer emit, oneanch, catch, map in repository, datasource only suspend
