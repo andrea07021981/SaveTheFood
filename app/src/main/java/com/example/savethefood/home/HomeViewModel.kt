@@ -57,8 +57,14 @@ class HomeViewModel @ViewModelInject constructor(
     val onlineFoodEvent: LiveData<Event<Unit>>
         get() = _onlineFoodEvent
 
+    private val _bestBeforeFoodEvent = MutableLiveData<Event<Unit>>()
+    val bestBeforeFoodEvent: LiveData<Event<Unit>>
+        get() = _bestBeforeFoodEvent
+
 
     init {
+        // TODO, move offer emit, oneanch, catch, map in repository, datasource only suspend
+        
         //TODO move to this structure, Result in fragment as observer or databinding (better)??? https://www.droidcon.com/news-detail?content-id=/repository/collaboration/Groups/spaces/droidcon_hq/Documents/public/news/android-news/Using%20LiveData%20and%20Flow%20in%20MVVM%20-%20Part%20II
 
         //TODO move all live data only in VM, repo and data source with flow (when no one shot) https://proandroiddev.com/no-more-livedata-in-your-repository-there-are-better-options-25a7557b0730
