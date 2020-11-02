@@ -101,7 +101,7 @@ class RecipeViewModelTest {
                     .asLiveData()
             //Then the new task event is triggered and the array is not empty
             recipeViewModel.recipeListResult.observeForever {
-                assertFalse(it!!.isNotEmpty())
+                assertFalse(it != null)
             }
         }
     }

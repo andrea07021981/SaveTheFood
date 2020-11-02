@@ -154,6 +154,7 @@ class FoodDataRepository @Inject constructor(
                         Result.Error("No data")
                     }
                 }
+                // FLOWON is the correct way to change the context. The collection remains in main thread, but this flow goes in IO concurrently
                 .flowOn(Dispatchers.IO)
                 // We can tell flow to make the buffer "conflated". It removes the buffer from flowOn
                 // and only shares the last value, as our UI discards any intermediate values in the
