@@ -23,6 +23,7 @@ class RecipeRemoteDataSource(
     override  fun getRecipes(foodFilter: String?): Flow<Result<RecipeDomain>> = flow {
         emit(Result.Loading)
         try {
+            //NEVER USE THE WITHCONTEXT TO CHANGE THE CONTEXT, USE FLOW ON WHICH EXECUTE IN A SECOND THREAD AND CONTEXT
             val recipes = if (foodFilter.isNullOrEmpty()) foodApi.getRecipes() else foodApi.getRecipesByIngredient(foodFilter)
             emit(Result.Success(recipes.asDomainModel()))
         } catch (error: Exception) {

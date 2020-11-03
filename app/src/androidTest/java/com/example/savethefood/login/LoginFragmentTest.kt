@@ -16,7 +16,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.example.savethefood.MainCoroutineRuleAndroid
 import com.example.savethefood.R
-import com.example.savethefood.constants.InvalidAuthentication
+import com.example.savethefood.constants.LoginAuthenticationStates
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
 import com.example.savethefood.data.source.repository.FakeUserDataRepositoryTest
@@ -101,7 +101,7 @@ class LoginFragmentTest {
         // THEN click and login
         onView(withId(R.id.login_button)).perform(click())
         val value = loginViewModel.loginAuthenticationState.getOrAwaitValue()
-        assertThat(value, CoreMatchers.`is`(InvalidAuthentication("Not found")))
+        assertThat(value, CoreMatchers.`is`(LoginAuthenticationStates.InvalidAuthentication("Not found")))
     }
 
     @Test

@@ -25,6 +25,7 @@ import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.robolectric.Shadows.shadowOf
 import org.robolectric.annotation.LooperMode
+import java.util.*
 
 @ExperimentalCoroutinesApi
 class HomeRepositoryTest {
@@ -51,10 +52,10 @@ class HomeRepositoryTest {
     @Before
     fun createRepository() = mainCoroutineRule.runBlockingTest{
         fakeRemoteDataSourceTest = mock(FakeRemoteFoodDataSourceTest::class.java)
-        foodFromApi = Result.Success(FoodDomain("1", "1",1,"", 0.0, 0.0, 0.0, "", "", "", "", ""))
+        foodFromApi = Result.Success(FoodDomain("1", "1",1,"", 0.0, 0.0, 0.0, "", "", "", "", "", Date()))
         `when`(fakeRemoteDataSourceTest.getFoodById(1)).thenReturn(foodFromApi) // Set the mock to return the data from api when 1
         fakeLocalFoodDataSourceTest = mock(FakeLocalFoodDataSourceTest::class.java)
-        foodFromDao = Result.Success((FoodDomain("2", "2",2,"", 0.0, 0.0, 0.0, "", "", "", "", "")))
+        foodFromDao = Result.Success((FoodDomain("2", "2",2,"", 0.0, 0.0, 0.0, "", "", "", "", "", Date())))
         `when`(fakeLocalFoodDataSourceTest.getFoodById(2)).thenReturn(foodFromDao) // Set the mock to return the data from dao when 1
         `when`(fakeLocalFoodDataSourceTest.getFoodById(0)).thenReturn(Result.Error("No Data")) // Set the mock to return no value found
         `when`(fakeRemoteDataSourceTest.getFoodById(0)).thenReturn(Result.Error("No Data")) // Set the mock to return no value found
