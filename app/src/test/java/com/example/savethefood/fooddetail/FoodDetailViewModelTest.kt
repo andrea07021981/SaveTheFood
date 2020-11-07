@@ -1,12 +1,15 @@
 package com.example.savethefood.fooddetail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.savethefood.MainCoroutineRule
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.local.datasource.FakeLocalFoodDataSourceTest
 import com.example.savethefood.data.source.local.datasource.FakeRemoteFoodDataSourceTest
 import com.example.savethefood.data.source.repository.FakeFoodDataRepositoryTest
 import com.example.savethefood.viewmodel.getOrAwaitValue
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.CoreMatchers.nullValue
 import org.junit.Assert.assertThat
@@ -14,9 +17,14 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito
 
+@ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 class FoodDetailViewModelTest {
+
+    @get:Rule
+    var mainCoroutineRule = MainCoroutineRule()
 
     // Executes each task synchronously using Architecture Components.
     @get:Rule
@@ -29,8 +37,9 @@ class FoodDetailViewModelTest {
 
     @Before
     fun setupViewModel() {
+        val foodDomain = Mockito.mock(SavedStateHandle::class.java)
         fakeFoodDataRepositoryTest = FakeFoodDataRepositoryTest(FakeRemoteFoodDataSourceTest(), FakeLocalFoodDataSourceTest())
-        //foodDetailViewModel = FoodDetailViewModel(fakeFoodDataRepositoryTest, FoodDomain())
+        foodDetailViewModel = FoodDetailViewModel(fakeFoodDataRepositoryTest, foodDomain)
     }
 
     @Test

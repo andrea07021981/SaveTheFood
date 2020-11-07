@@ -50,6 +50,13 @@ class UserDataRepository(
     override suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher): Result<UserDomain> = withContext(ioDispatcher){
         wrapEspressoIdlingResource {
             try {
+                // TODO user elvis to retrieve online if offline is null !!!!!!  https://en.paradigmadigital.com/dev/android-testing-how-to-perform-unit-tests/
+                /*userLocalDataSource.getUser(user.userEmail, user.userPassword).let {
+                    return@withContext Result.Success(it.asDomainModel())
+                } ?: kotlin.run {
+                    userLocalDataSource.getUserFromAPI().....
+                    .......
+                }*/
                 val userDb = userLocalDataSource.getUser(user.userEmail, user.userPassword)
                 delay(2000) //TODO TEST remove
                 if (userDb != null) {

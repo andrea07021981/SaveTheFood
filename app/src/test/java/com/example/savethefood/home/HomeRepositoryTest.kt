@@ -49,6 +49,7 @@ class HomeRepositoryTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
+    // TODO Follow the test here and use any to set up the then return https://en.paradigmadigital.com/dev/android-testing-how-to-perform-unit-tests/
     @Before
     fun createRepository() = mainCoroutineRule.runBlockingTest{
         fakeRemoteDataSourceTest = mock(FakeRemoteFoodDataSourceTest::class.java)

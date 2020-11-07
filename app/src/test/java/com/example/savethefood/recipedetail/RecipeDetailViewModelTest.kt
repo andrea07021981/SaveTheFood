@@ -13,7 +13,9 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.mockito.Mockito.*
 import org.junit.runner.RunWith
+import org.mockito.Mockito
 
 @RunWith(AndroidJUnit4::class)
 class RecipeDetailViewModelTest {
@@ -34,7 +36,8 @@ class RecipeDetailViewModelTest {
     @Test
     fun moveToRecipeSearch_recipeSearchEvent() {
         //When adding a new task
-        //recipeDetailViewModel.moveToCookDetail(RecipeInfoDomain()) //TODO create default constructor with values
+        val recipe = Mockito.mock(RecipeInfoDomain::class.java)
+        recipeDetailViewModel.moveToCookDetail(recipe)
 
         //Then the new task event is triggered
         val value = recipeDetailViewModel.recipeCookingtEvent.getOrAwaitValue()

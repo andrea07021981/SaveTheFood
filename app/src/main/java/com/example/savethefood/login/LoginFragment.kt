@@ -7,13 +7,13 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Handler
 import android.transition.TransitionInflater
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -28,49 +28,45 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
 @ExperimentalCoroutinesApi
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
 
-    companion object {
-        private val TAG = LoginFragment::class.java.name
-    }
-
-    private val loginViewModel by viewModels<LoginViewModel> {
+    override val viewModel by viewModels<LoginViewModel> {
         LoginViewModel.LoginViewModelFactory(UserDataRepository.getRepository(requireActivity().application))
     }
-
-    private lateinit var dataBinding: FragmentLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(R.transition.custommove)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) : View? {
-        dataBinding = FragmentLoginBinding.inflate(inflater).also {
-            it.loginViewModel = loginViewModel
+    override fun init() {
+        dataBinding.also {
+            it.loginViewModel = viewModel
             it.lifecycleOwner = this
         }
-        loginViewModel.navigateToSignUpFragment.observe(this.viewLifecycleOwner, Observer {
+        viewModel.navigateToSignUpFragment.observe(this.viewLifecycleOwner, Observer {
             if (it == true) {
                 findNavController()
                     .navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
-                loginViewModel.doneNavigationSignUp()
+                viewModel.doneNavigationSignUp()
             }
         })
 
-        loginViewModel.loginAuthenticationState.observe(this.viewLifecycleOwner, Observer {
+        viewModel.loginAuthenticationState.observe(this.viewLifecycleOwner, Observer {
             if (it is Authenticated || it is Authenticating || it is InvalidAuthentication) {
                 dataBinding.loginButton.run { morphDoneAndRevert(requireNotNull(activity), it) }
             } else if (it is Unauthenticated) {
                 Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
             }
         })
-        return dataBinding.root
+        Log.d(classTag, "Init done")
     }
+
+    override val layoutRes: Int
+        get() = R.layout.fragment_login
+
+    override val classTag: String
+        get() = LoginFragment::class.java.simpleName
 
     private fun ProgressButton.morphDoneAndRevert(
         context: Context,
@@ -103,7 +99,7 @@ class LoginFragment : Fragment() {
                                 )
                             )
                     }, navigateTime)
-                    loginViewModel.resetState()
+                    viewModel.resetState()
                 }
             }
             is Unauthenticated -> {

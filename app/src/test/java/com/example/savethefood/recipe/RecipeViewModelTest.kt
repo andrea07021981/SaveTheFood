@@ -100,9 +100,8 @@ class RecipeViewModelTest {
                 flowRequest
                     .asLiveData()
             //Then the new task event is triggered and the array is not empty
-            recipeViewModel.recipeListResult.observeForever {
-                assertFalse(it != null)
-            }
+            val orAwaitValue = recipeViewModel.recipeListResult.getOrAwaitValue()
+            assertFalse(orAwaitValue.value != null)
         }
     }
 
