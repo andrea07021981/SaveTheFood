@@ -1,4 +1,4 @@
-package com.example.savethefood.login
+package com.example.savethefood
 
 import android.os.Bundle
 import android.view.LayoutInflater

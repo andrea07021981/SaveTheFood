@@ -8,9 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.transition.TransitionInflater
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -19,11 +16,13 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import br.com.simplepass.loadingbutton.animatedDrawables.ProgressType
 import br.com.simplepass.loadingbutton.customViews.ProgressButton
+import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
 import com.example.savethefood.constants.*
 import com.example.savethefood.constants.LoginAuthenticationStates.*
 import com.example.savethefood.data.source.repository.UserDataRepository
 import com.example.savethefood.databinding.FragmentLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
@@ -42,7 +41,6 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
     override fun init() {
         dataBinding.also {
             it.loginViewModel = viewModel
-            it.lifecycleOwner = this
         }
         viewModel.navigateToSignUpFragment.observe(this.viewLifecycleOwner, Observer {
             if (it == true) {

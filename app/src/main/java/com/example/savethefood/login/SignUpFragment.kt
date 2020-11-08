@@ -7,35 +7,34 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.savethefood.BaseFragment
 import com.example.savethefood.EventObserver
+import com.example.savethefood.R
 import com.example.savethefood.data.source.repository.UserDataRepository
 import com.example.savethefood.databinding.FragmentSignupBinding
 
-class SignUpFragment : Fragment() {
+class SignUpFragment : BaseFragment<SignUpViewModel, FragmentSignupBinding>() {
 
     //We can use by viewModels when the VM is not shared with other fragments
-    private val signUpViewModel by viewModels<SignUpViewModel>() {
-        SignUpViewModel.SignUpViewModelFactory(UserDataRepository.getRepository(requireActivity().application))
-    }
+    override val viewModel by viewModels<SignUpViewModel>() {
+            SignUpViewModel.SignUpViewModelFactory(UserDataRepository.getRepository(requireActivity().application))
+        }
 
-    private lateinit var dataBinding: FragmentSignupBinding
+    override val layoutRes: Int
+        get() = R.layout.fragment_signup
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) : View? {
-        dataBinding = FragmentSignupBinding.inflate(inflater).also {
-            it.signupViewModel = signUpViewModel
-            it.lifecycleOwner = this
+    override val classTag: String
+        get() = SignUpFragment::class.java.simpleName
+
+    override fun init() {
+        dataBinding.also {
+            it.signupViewModel = viewModel
         }
 
         activateObservers()
-        return dataBinding.root
     }
-
     private fun activateObservers() {
-        signUpViewModel.loginEvent.observe(this.viewLifecycleOwner, EventObserver {
+        viewModel.loginEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 this
                     .findNavController()
