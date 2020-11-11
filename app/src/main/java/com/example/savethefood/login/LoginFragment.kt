@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import br.com.simplepass.loadingbutton.animatedDrawables.ProgressType
 import br.com.simplepass.loadingbutton.customViews.ProgressButton
 import com.example.savethefood.BaseFragment
+import com.example.savethefood.EventObserver
 import com.example.savethefood.R
 import com.example.savethefood.constants.*
 import com.example.savethefood.constants.LoginAuthenticationStates.*
@@ -42,11 +43,10 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
         dataBinding.also {
             it.loginViewModel = viewModel
         }
-        viewModel.navigateToSignUpFragment.observe(this.viewLifecycleOwner, Observer {
-            if (it == true) {
+        viewModel.navigateToSignUpFragment.observe(this.viewLifecycleOwner, EventObserver {
+            it.let {
                 findNavController()
                     .navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
-                viewModel.doneNavigationSignUp()
             }
         })
 

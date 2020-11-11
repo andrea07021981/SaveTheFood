@@ -6,6 +6,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.BuildConfig
+import com.example.savethefood.Event
 import com.example.savethefood.R
 import com.example.savethefood.constants.*
 import com.example.savethefood.constants.LoginAuthenticationStates.*
@@ -42,8 +43,8 @@ class LoginViewModel (
     val loginAuthenticationState: LiveData<LoginAuthenticationStates>
         get() = _loginAuthenticationState
 
-    private val _navigateToSignUpFragment = MutableLiveData<Boolean>()
-    val navigateToSignUpFragment: LiveData<Boolean>
+    private val _navigateToSignUpFragment = MutableLiveData<Event<Unit>>()
+    val navigateToSignUpFragment: LiveData<Event<Unit>>
         get() = _navigateToSignUpFragment
 
     init {
@@ -85,12 +86,8 @@ class LoginViewModel (
         _loginAuthenticationState.value = Idle
     }
 
-    fun doneNavigationSignUp() {
-        _navigateToSignUpFragment.value = null
-    }
-
     fun moveToSignUp() {
-        _navigateToSignUpFragment.value = true
+        _navigateToSignUpFragment.value = Event(Unit)
     }
 
     /**
