@@ -31,8 +31,8 @@ class RecipeDetailViewModel(
     val status: LiveData<ApiCallStatus>
         get() = _status
 
-    private var _recipeDetail = MutableLiveData<RecipeInfoDomain>()
-    val recipeDetail: LiveData<RecipeInfoDomain>
+    private var _recipeDetail = MutableLiveData<RecipeInfoDomain?>()
+    val recipeDetail: LiveData<RecipeInfoDomain?>
         get() = _recipeDetail
 
     private val _recipeListEvent = MutableLiveData<Event<Unit>>()
