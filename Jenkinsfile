@@ -5,6 +5,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Running Build'
+                chmod +x gradlew
+                ./gradlew clean
+                ./gradlew assembleRelease
             }
         }
         stage('Test') {
