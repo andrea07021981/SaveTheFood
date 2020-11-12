@@ -30,7 +30,7 @@ buildscript {
         version_fragmentTest = '1.3.0-beta01'
         version_mockito = '3.5.13'
         version_dex_maker = '2.12.1'
-        version_work = "1.0.0-alpha11"
+        version_work = "2.3.0-beta02"
         version_analitycs = "17.6.0"
         version_auth = "19.4.0"
         version_crashlytics = "17.2.2"
