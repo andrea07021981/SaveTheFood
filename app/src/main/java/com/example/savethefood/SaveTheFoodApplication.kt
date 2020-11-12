@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltAndroidApp
-class SaveTheFoodApplication : Application(), Configuration.Provider{
+class SaveTheFoodApplication : Application() {
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
     @Inject
@@ -40,6 +40,12 @@ class SaveTheFoodApplication : Application(), Configuration.Provider{
             param(FirebaseAnalytics.Param.ITEM_NAME, "test")
             param(FirebaseAnalytics.Param.CONTENT_TYPE, "image")
         }
+
+        // Workmanager
+        val configuration = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
+        WorkManager.initialize(this, configuration)
         delayedInit()
     }
 
@@ -71,8 +77,8 @@ class SaveTheFoodApplication : Application(), Configuration.Provider{
             repeatingRequest)
     }
 
-    override fun getWorkManagerConfiguration() =
+/*    override fun getWorkManagerConfiguration() =
         Configuration.Builder()
             .setWorkerFactory(workerFactory)
-            .build()
+            .build()*/
 }
