@@ -16,8 +16,10 @@ import com.example.savethefood.data.domain.FoodDomain
  * Binding adapter used to hide the spinner once data is available
  */
 @BindingAdapter("bind:goneIfNotNull")
-fun goneIfNotNull(view: View, it: Any?) {
-    view.visibility = if (it != null) View.GONE else View.VISIBLE
+fun goneIfNotNull(view: View, it: Result<List<FoodDomain>>?) {
+    view.visibility = it.let { result ->
+        if (result is Result.Loading) View.VISIBLE else View.GONE
+    }
 }
 
 /**
