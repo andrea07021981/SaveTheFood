@@ -31,7 +31,7 @@ pipeline {
             steps {
                 echo 'Running Build'
                 sh 'chmod +x gradlew'
-                sh './gradlew assembleRelease'
+                sh './gradlew assembleDebug'
             }
         }
         stage('Test') {
