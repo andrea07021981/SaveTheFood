@@ -76,6 +76,9 @@ android {
             testCoverageEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+            lintOptions {
+                abortOnError false
+            }
         }
 
         release {
@@ -103,7 +106,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     // Support libraries
     implementation "androidx.appcompat:appcompat:$version_appcompat"
-    implementation "androidx.fragment:fragment:$version_fragment"
+    implementation "androidx.fragment:fragment-ktx:$version_fragment"
     implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
 
     // Android KTX
