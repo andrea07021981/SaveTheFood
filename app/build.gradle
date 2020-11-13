@@ -243,4 +243,6 @@ dependencies {
     // MockWebServer
     testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
     testImplementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
+
+    testImplementation 'org.apache.maven:maven-ant-tasks:2.1.3'
 }

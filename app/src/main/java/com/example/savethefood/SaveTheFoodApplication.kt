@@ -23,6 +23,7 @@ import javax.inject.Inject
 class SaveTheFoodApplication : Application() {
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
+
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
 
@@ -41,11 +42,7 @@ class SaveTheFoodApplication : Application() {
             param(FirebaseAnalytics.Param.CONTENT_TYPE, "image")
         }
 
-        // Workmanager
-        val configuration = Configuration.Builder()
-            .setWorkerFactory(workerFactory)
-            .build()
-        WorkManager.initialize(this, configuration)
+
         delayedInit()
     }
 
@@ -56,6 +53,11 @@ class SaveTheFoodApplication : Application() {
     }
 
     private fun setUpRecurringWork() {
+        // Workmanager
+        val configuration = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
+        WorkManager.initialize(this, configuration)
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.UNMETERED)
             .setRequiresBatteryNotLow(true)

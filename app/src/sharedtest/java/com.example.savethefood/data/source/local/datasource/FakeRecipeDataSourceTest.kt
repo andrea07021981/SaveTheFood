@@ -7,6 +7,7 @@ import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.RecipeDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.util.*
 
 class FakeRecipeDataSourceTest(
     private val recipeResult: List<RecipeResult>
@@ -16,7 +17,7 @@ class FakeRecipeDataSourceTest(
             foodFilter?.let { filter ->
                 recipeResult.filter {
                     if (filter.isNotEmpty()) {
-                        it.title.toLowerCase().contains(foodFilter.toLowerCase())
+                        it.title.toLowerCase(Locale.getDefault()).contains(foodFilter.toLowerCase(Locale.getDefault()))
                     } else {
                         it.title.isNotEmpty()
                     }

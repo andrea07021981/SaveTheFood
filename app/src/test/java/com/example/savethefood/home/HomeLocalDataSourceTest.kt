@@ -71,11 +71,6 @@ class HomeLocalDataSourceTest {
     fun writeNewFood_Successful() {
         //TODO test mockito
         shadowOf(Looper.getMainLooper()).idle()
-        val foo = mock(Foo::class.java)
-        `when`(foo.calculateTheFoo()).thenReturn(2)
-        val bar = Bar(foo)
-        assertThat(bar.calculateDoubleFoo(), `is`(4))
-
 
         val insertId = userDao.insert(FoodDomain().asDatabaseModel())
         val records = userDao.getFoods().getOrAwaitValue()
@@ -93,14 +88,4 @@ class HomeLocalDataSourceTest {
     fun closeDb() {
         db.close()
     }
-}
-class Foo {
-    fun calculateTheFoo(): Int {
-        sleep(1_000) // Difficult things here
-        return 1
-    }
-}
-
-class Bar(private val foo: Foo) {
-    fun calculateDoubleFoo() = foo.calculateTheFoo() * 2
 }
