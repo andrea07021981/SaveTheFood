@@ -34,9 +34,21 @@ pipeline {
                 sh './gradlew assembleDebug'
             }
         }
-        stage('Test') {
+        stage('Unit Test') {
             steps {
-                echo 'Testing'
+                echo 'Unit Testing'
+                sh 'chmod +x gradlew'
+                sh './gradlew test'
+            }
+        }
+        stage('Integration Test') {
+            steps {
+                echo 'Integration Testing'
+            }
+        }
+        stage('UI Test') {
+            steps {
+                echo 'Unit Testing'
             }
         }
         stage('Deploy') {
