@@ -24,7 +24,7 @@ pipeline {
                 echo 'Running Build'
                 sh 'chmod +x gradlew'
                 sh './gradlew clean'
-                sh './gradlew build'
+                sh './gradlew build -x test'
             }
         }
         stage('Assemble') {
