@@ -53,6 +53,13 @@ pipeline {
         }
         stage('Deploy') {
             steps {
+                echo 'Running Build'
+                sh 'chmod +x gradlew'
+                sh './gradlew assembleRelease'
+            }
+        }
+        stage('Deploy') {
+            steps {
                 echo 'Deploying'
             }
         }
