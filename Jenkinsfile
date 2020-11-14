@@ -60,9 +60,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Running Build'
-                sh 'chmod +x gradlew'
-                sh './gradlew installRelease'
+                echo 'Deploy Release Build'
             }
         }
     }
