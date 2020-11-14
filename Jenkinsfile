@@ -51,16 +51,18 @@ pipeline {
                 echo 'Unit Testing'
             }
         }
-        stage('Deploy') {
+        stage('Release') {
             steps {
-                echo 'Running Build'
+                echo 'Release Build'
                 sh 'chmod +x gradlew'
                 sh './gradlew assembleRelease'
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying'
+                echo 'Running Build'
+                sh 'chmod +x gradlew'
+                sh './gradlew installRelease'
             }
         }
     }
