@@ -75,7 +75,6 @@ class MainActivity : AppCompatActivity() {
         navigationView: NavigationView,
         navController: NavController
     ) {
-        //TODO ORGANIZE CODE
         val toggle = ActionBarDrawerToggle(
             this,
             drawerLayout,

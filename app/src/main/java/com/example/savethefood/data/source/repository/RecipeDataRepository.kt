@@ -15,6 +15,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
@@ -44,7 +45,8 @@ class RecipeDataRepository(
     @Throws(Exception::class)
     override fun getRecipes(foodFilter: String?): Flow<Result<RecipeDomain>> {
         return wrapEspressoIdlingResource {
-            recipeRemoteDataSource.getRecipes(foodFilter)
+            // TODO use CacheOnSuccess like advance coroutines and change from flow to suspend and coroutine
+            recipeRemoteDataSource.getRecipes(foodFilter).flowOn(ioDispatcher)
         }
     }
 

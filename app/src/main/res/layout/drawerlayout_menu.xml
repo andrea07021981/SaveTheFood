@@ -13,25 +13,6 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-<com.example.savethefood.util.DrawerContent
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/menu"
-    android:layout_width="180dp"
-    android:layout_height="match_parent"
-    android:layout_gravity="start"
-    app:layoutDescription="@xml/scene_menu"
-    android:background="@color/colorPrimaryDark">
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/colorPrimary"
-        android:backgroundTint="@color/colorPrimary"
-        app:itemTextColor="@color/colorAccentBright"
-        app:itemIconTint="@color/colorAccentBright"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/menu_drawer" />
-</com.example.savethefood.util.DrawerContent>
+<TextView android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

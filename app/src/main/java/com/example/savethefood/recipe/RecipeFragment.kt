@@ -14,13 +14,14 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.EventObserver
 import com.example.savethefood.R
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.RecipeDataRepository
 import com.example.savethefood.databinding.FragmentReceipeBinding
 
-
+// TODO add tablayout, recipe online and recipe saved (need room data entities)
 class RecipeFragment : Fragment() {
 
     private var foodName: String? = null
@@ -48,6 +49,12 @@ class RecipeFragment : Fragment() {
                 RecipeAdapter(RecipeAdapter.OnClickListener { recipeResult ->
                     recipeViewModel.moveToRecipeDetail(recipeResult)
                 })
+            it.recipeRecycleview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    recipeViewModel.reloadList()
+                }
+            })
         }
 
         activateObservers()

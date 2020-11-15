@@ -31,7 +31,6 @@
     <string name="health">Health</string>
     <string name="price">Price</string>
 
-    <!--TODO USE CURRENCY-->
     <string name="format_price"><xliff:g id="price">%.2f</xliff:g> $</string>
     <string name="about_recipe">About Recipe</string>
     <string name="cook_now">COOK NOW</string>

@@ -33,7 +33,7 @@ class UserDataRepository(
     }
 
     /**
-     * SAve locally for now, TODO save online, retrieve data and save locally
+     * SAve locally for now, TODO save online, retrieve data and save locally Firebase
      */
     override suspend fun saveNewUser(user: UserDomain) {
         wrapEspressoIdlingResource {

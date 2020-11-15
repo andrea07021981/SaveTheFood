@@ -124,8 +124,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.1"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.1"
 
     //Cards
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -153,7 +153,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
 
     // Paging library
-    implementation "androidx.paging:paging-runtime:$version_paging"
+    implementation "androidx.paging:paging-runtime-ktx:$version_paging"
 
     //Interceptor and http loggin
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
