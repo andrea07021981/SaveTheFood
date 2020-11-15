@@ -42,7 +42,7 @@ import java.lang.reflect.InvocationTargetException
 class HomeFragment : Fragment(), View.OnLayoutChangeListener {
 
     companion object {
-        val TAG = HomeFragment::class.java.simpleName
+        val TAG: String = HomeFragment::class.java.simpleName
     }
 
     private val homeViewModel: HomeViewModel by viewModels()

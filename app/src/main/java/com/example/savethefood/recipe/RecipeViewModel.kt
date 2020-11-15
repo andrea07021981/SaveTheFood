@@ -17,7 +17,7 @@ import kotlin.Error
 
 
 class RecipeViewModel(
-    val recipeRepository: RecipeRepository,
+    private val recipeRepository: RecipeRepository,
     foodName: String?
 ) : ViewModel() {
 
@@ -31,9 +31,16 @@ class RecipeViewModel(
     //livedata filter, every time it changes and emit signal the switch map is activated and filter the private list
     var searchFilter = MutableLiveData<String>("")
         @VisibleForTesting set
+
     private val _searchFilter: MutableLiveData<String>
         get() = searchFilter
 
+    private val _reload = MutableLiveData<Boolean>(true)
+    val reload: LiveData<Boolean>
+        get() = _reload
+
+    // We could also use liveData { ....onCollect() { emit(value)}}
+    // TODO move all operations in repository, here only aslivedata
     var _recipeListResult: LiveData<List<RecipeResult>?> =
         recipeRepository.getRecipes(foodName)
             .onStart {
@@ -51,14 +58,14 @@ class RecipeViewModel(
                 _status.value = Done("Done")
             }
             .asLiveData(viewModelScope.coroutineContext)
-        @VisibleForTesting set // this allow us to use this set only for test
+     @VisibleForTesting set // this allow us to use this set only for test
 
     val recipeListResult = _searchFilter.switchMap { // OR    _searchFilter.switchMap {
         liveData {
             if (it != null && it.isNotEmpty() ) {
                  emit(_recipeListResult.map { list ->
                     list?.filter { recipe ->
-                        recipe.title.toLowerCase().contains(it.toLowerCase())
+                        recipe.title.toLowerCase(Locale.getDefault()).contains(it.toLowerCase(Locale.getDefault()))
                     }
                 })
             } else {
@@ -77,6 +84,10 @@ class RecipeViewModel(
 
     fun updateDataList(filter: String) {
        _searchFilter.value = filter
+    }
+
+    fun reloadList() {
+        // TODO Reload using a variable and _reload.switchMap {..} search online android flow reload data
     }
 
     class RecipeViewModelFactory(

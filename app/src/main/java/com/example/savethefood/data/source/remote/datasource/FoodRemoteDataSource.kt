@@ -20,6 +20,19 @@ class FoodRemoteDataSource @Inject constructor(
     private val foodApi: FoodService
 ) : FoodDataSource {
 
+    //Callbackflow is a good way to emit values inside listeners, We could use send(), it is asynchronous
+    // IMPORTANT, IF WE USE COROUTINE, FOLLOW THIS ONE https://medium.com/androiddevelopers/livedata-with-coroutines-and-flow-part-iii-livedata-and-coroutines-patterns-592485a4a85a
+    /*
+    suspend fun doOneShot(param: String) : Result<String> =
+    suspendCancellableCoroutine { continuation ->
+        api.addOnCompleteListener { result ->
+            continuation.resume(result)
+        }.addOnFailureListener { error ->
+            continuation.resumeWithException(error)
+        }.fetchSomething(param)
+      }
+     */
+
     /**may throw Exception, with coroutineScope is possible Exception will cancell only the coroutines created in
      *This scope, without touching the outer scope. We could avoid it and use the supervisor job in VM, but this way is more efficient
      */

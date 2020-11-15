@@ -1,7 +1,7 @@
 package com.example.savethefood.constants
 
 sealed class ApiCallStatus(
-    open val message: String //TODO we don't need this property
+    open val message: String
 ) {
 
     // Initial state, we are loading data

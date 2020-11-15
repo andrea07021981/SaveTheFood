@@ -1,5 +1,6 @@
 package com.example.savethefood.data.source.local.dao
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.savethefood.data.source.local.entity.FoodEntity
@@ -50,6 +51,7 @@ interface FoodDatabaseDao {
 
     /**
      * Selects all food
+     * Whenever data in this table changes, the query executes again and Flow emits fresh data, different from suspend and coroutine one shot. Create simple example
      */
     @Query("SELECT * from food_table")
     fun observeFoods(): Flow<List<FoodEntity>?>
@@ -57,6 +59,7 @@ interface FoodDatabaseDao {
     /**
      * Selects all food
      */
+    @VisibleForTesting
     @Query("SELECT * from food_table")
     fun getFoods(): LiveData<List<FoodEntity>>
 }
