@@ -25,16 +25,11 @@ class HomeViewModel @ViewModelInject constructor(
 
     val animationResourceButton = R.anim.fade_in
 
-    private val _status = MutableLiveData(View.VISIBLE)
-    val status: LiveData<Int>
-        get() = _status
-
     private var _foodList = MediatorLiveData<Result<List<FoodDomain>>>()
 
     //TODO like plantrepository in advanced coroutine codelab,
     val foodList: LiveData<Result<List<FoodDomain>>> = liveData { //TODO keep live data, but get foods emit, change to flows and collect like https://medium.com/androiddevelopers/livedata-with-coroutines-and-flow-part-iii-livedata-and-coroutines-patterns-592485a4a85a
         emitSource(foodDataRepository.getFoods().asLiveData(Dispatchers.IO)) // Change to flow repo and data source, in repo do the oneach, onstart, etc and manage all here with databinding emitSource(foodDataRepository.getFoods().asLiveData())   TO TEST CHANGE CALL TO SCANNER AND ADD MEEDIATELY
-        _status.postValue(View.GONE)//Update the status after the data is loaded
     }
 
     /*
@@ -95,10 +90,8 @@ class HomeViewModel @ViewModelInject constructor(
             viewModelScope.launch {
                  //_foodList.addSource(foodDataRepository.getFoods(), _foodList::setValue)
             }.invokeOnCompletion {
-                _status.postValue(View.GONE)
             }
         } catch (e: Exception) {
-            _status.postValue(View.GONE)
         }
     }
 
@@ -117,7 +110,6 @@ class HomeViewModel @ViewModelInject constructor(
     fun getApiFoodDetails(barcode: String) {
         viewModelScope.launch(handler) {
             try {
-                _status.value = View.VISIBLE
                supervisorScope {
                    //TODO add flow and use on start to show the loading
                    val apiUdcJob = launch(childExceptionHandler) { foodDataRepository.getApiFoodUpc(barcode) }
@@ -128,7 +120,6 @@ class HomeViewModel @ViewModelInject constructor(
                 _newFoodFoodEvent.value = Result.Error(generic.toString())
             }
         }.invokeOnCompletion {
-            _status.postValue(View.GONE)
         }
     }
 

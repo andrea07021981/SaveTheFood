@@ -10,6 +10,7 @@ import com.example.savethefood.di.BaseModule
 import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import java.io.IOException
 import javax.inject.Inject
 
 //TODO Repository should receive base data (Network domain ex), and convert THEN EMIT
@@ -62,7 +63,7 @@ class FoodDataRepository @Inject constructor(
                     return@coroutineScope Result.Success(foodRetrieved.data)
                 }
             } else {
-                return@coroutineScope Result.Error("Not retrieved")
+                return@coroutineScope foodRetrieved
             }
         }
     }
@@ -136,7 +137,7 @@ class FoodDataRepository @Inject constructor(
     override suspend fun getFoods(): Flow<Result<List<FoodDomain>>> {
         wrapEspressoIdlingResource {
             delay(1000) // TEST long time
-            //TODO DO LIKE RECIPE
+            //TODO DO LIKE RECIPE. Moreover add a retry in case of error, with a custom number of attempts (maybe retryWhen() or retry()?)
             return foodLocalDataSource.getFoods()
                 .onStart {
                     Result.Loading
@@ -152,6 +153,13 @@ class FoodDataRepository @Inject constructor(
                         Result.Success(it.asDomainModel())
                     } else {
                         Result.Error("No data")
+                    }
+                }.retryWhen {cause, attempt ->
+                    if (cause is IOException && attempt < 5) {    // retry on IOException
+                        delay(1000)                     // delay for one second before retry
+                        true
+                    } else {                                      // do not retry otherwise
+                        false
                     }
                 }
                 // FLOWON is the correct way to change the context. The collection remains in main thread, but this flow goes in IO concurrently

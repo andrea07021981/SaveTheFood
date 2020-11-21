@@ -20,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 
+//TODO add meal plan for next weeks in menu drawer
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         ), drawerLayout)
 
         // prevent nav gesture if not on start destination
-        //TODO BAck navigation doesn't work
+        //TODO Back navigation doesn't work
         setupActionBarWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, _: Bundle? ->
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)

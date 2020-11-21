@@ -17,9 +17,9 @@ import com.example.savethefood.data.domain.FoodDomain
  */
 @BindingAdapter("bind:goneIfNotNull")
 fun goneIfNotNull(view: View, it: Result<List<FoodDomain>>?) {
-    view.visibility = it.let { result ->
+    view.visibility = it?.let { result ->
         if (result is Result.Loading) View.VISIBLE else View.GONE
-    }
+    } ?: View.VISIBLE
 }
 
 /**
