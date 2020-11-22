@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import java.lang.Exception
 import javax.inject.Inject
 
+// TODO this class will be used to save and retrieve food from personal backend
 class FoodRemoteDataSource @Inject constructor(
     private val foodApi: FoodService
 ) : FoodDataSource {
@@ -36,15 +37,17 @@ class FoodRemoteDataSource @Inject constructor(
     /**may throw Exception, with coroutineScope is possible Exception will cancell only the coroutines created in
      *This scope, without touching the outer scope. We could avoid it and use the supervisor job in VM, but this way is more efficient
      */
+    @Deprecated("No network food")
     @Throws(Exception::class)
     override suspend fun getFoodByUpc(barcode: String): Result<FoodDomain> = coroutineScope{
-        try {
+        /*try {
             val foodData = foodApi.getFoodByUpc(barcode).await()
             Log.d("JSON RESULT", foodData.id.toString())
             return@coroutineScope Result.Success(foodData.asDomainModel())
         } catch (e: Exception) {
             return@coroutineScope Result.ExError(e)
-        }
+        }*/
+        return@coroutineScope Result.Success(FoodDomain())
     }
 
     @Throws(Exception::class)
@@ -58,13 +61,15 @@ class FoodRemoteDataSource @Inject constructor(
         }
     }
 
+    @Deprecated("No network now")
     override suspend fun getFoodById(id: Int): Result<FoodDomain> = coroutineScope{
-        try {
+        /*try {
             val foodData = foodApi.getFoodById(id)
             return@coroutineScope Result.Success(foodData.asDomainModel())
         } catch (e: Exception) {
             return@coroutineScope Result.Error(e.toString())
-        }
+        }*/
+        return@coroutineScope Result.Success(FoodDomain())
     }
 
 

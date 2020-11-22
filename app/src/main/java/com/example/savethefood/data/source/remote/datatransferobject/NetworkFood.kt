@@ -10,6 +10,7 @@ import java.util.*
  * Convert Network results to database objects
  */
 
+@Deprecated("Removed API call for foods")
 @JsonClass(generateAdapter = true)
 data class NetworkFood(
     val badges: List<String>?,
@@ -29,14 +30,14 @@ data class NetworkFood(
     @Json(name = "spoonacular_score")val spoonacularScore: Double?,
     val title: String
 )
-
+@Deprecated("Removed API call for foods")
 @JsonClass(generateAdapter = true)
 data class Ingredient(
     val description: Any?,
     val name: String?,
     @Json(name = "safety_level")val safetyLevel: Any?
 )
-
+@Deprecated("Removed API call for foods")
 @JsonClass(generateAdapter = true)
 data class Nutrition(
     val calories: Double?,
@@ -45,10 +46,10 @@ data class Nutrition(
     val protein: String?
 )
 
-
-/**
+/*
+*//**
 * Convert Network results to database objects
-*/
+*//*
 fun NetworkFood.asDomainModel(): FoodDomain {
     return FoodDomain(
         foodId = id,
@@ -83,4 +84,4 @@ fun NetworkFood.asDatabaseModel(): FoodEntity {
         servingSize = servingSize,
         foodBestBefore = Date().time
     )
-}
+}*/

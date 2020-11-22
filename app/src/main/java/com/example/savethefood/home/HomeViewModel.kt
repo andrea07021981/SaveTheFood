@@ -14,10 +14,13 @@ import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.data.source.repository.FoodRepository
+import com.example.savethefood.util.FoodImage
+import com.example.savethefood.util.StorageType
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import java.lang.Exception
+import java.util.*
 
 class HomeViewModel @ViewModelInject constructor(
     private val foodDataRepository: FoodRepository
@@ -104,7 +107,14 @@ class HomeViewModel @ViewModelInject constructor(
     }
 
     fun navigateToOnlineSearch() {
-        _onlineFoodEvent.value = Event(Unit)
+        viewModelScope.launch {
+            foodDataRepository.saveNewFood(
+                FoodDomain(
+                "Apple", "Apple Gala", 2, FoodImage.APPLE, 2.0, 20.3,200.0, StorageType.FRIDGE, Date()
+                )
+            )
+        }
+        //_onlineFoodEvent.value = Event(Unit)
     }
 
     fun getApiFoodDetails(barcode: String) {

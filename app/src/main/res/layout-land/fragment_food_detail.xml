@@ -52,7 +52,7 @@
                     tools:srcCompat="@tools:sample/backgrounds/scenic"
                     app:layout_collapseMode="parallax"
                     android:transitionName="foodImage"
-                    bind:imageUrl="@{foodDetailViewModel.food.foodImgUrl}"
+                    bind:imageUrl="@{foodDetailViewModel.food.foodImg}"
                     />
 
                 <androidx.appcompat.widget.Toolbar
@@ -71,7 +71,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             >
 
-            <androidx.cardview.widget.CardView
+            <!--<androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:elevation="16dp"
@@ -381,7 +381,7 @@
                         android:text="@{foodDetailViewModel.food.foodDescription}"
                         />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>-->
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
