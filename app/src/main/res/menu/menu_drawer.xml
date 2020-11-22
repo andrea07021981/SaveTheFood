@@ -3,14 +3,27 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_diet"
-        android:title="Food"/>
+        android:title="Food"
+        android:contentDescription="Food"/>
     <item
         android:id="@+id/recipeFragment"
         android:icon="@drawable/ic_dish"
-        android:title="Recipes"/>
+        android:title="Recipes"
+        android:contentDescription="Recipes"/>
+
+    <item
+        android:id="@+id/divider"
+        android:title=""/>
 
     <item
         android:id="@+id/mapFragment"
         android:icon="@drawable/ic_baseline_map_24"
-        android:title="Map"/>
+        android:title="Map"
+        android:contentDescription="Map"/>
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Settings"
+        android:contentDescription="Settings"/>
 </menu>

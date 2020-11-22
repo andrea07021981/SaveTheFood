@@ -30,10 +30,9 @@ class SignUpFragment : BaseFragment<SignUpViewModel, FragmentSignupBinding>() {
         dataBinding.also {
             it.signupViewModel = viewModel
         }
-
-        activateObservers()
     }
-    private fun activateObservers() {
+
+    override fun activateObservers() {
         viewModel.loginEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 this

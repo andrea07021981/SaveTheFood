@@ -1,6 +1,7 @@
 package com.example.savethefood.home
 
 import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -20,10 +21,10 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
-import com.example.savethefood.EventObserver
-import com.example.savethefood.MainActivity
-import com.example.savethefood.R
+import com.example.savethefood.*
+import com.example.savethefood.FragmentCallback
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.data.succeeded
@@ -39,43 +40,51 @@ import java.lang.reflect.InvocationTargetException
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class HomeFragment : Fragment(), View.OnLayoutChangeListener {
+class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), FragmentCallback {
+
+    override val viewModel by viewModels<HomeViewModel>()
+
+    override val layoutRes: Int
+        get() = R.layout.fragment_home
+
+    override val classTag: String
+        get() = HomeFragment::class.java.simpleName
 
     companion object {
         val TAG: String = HomeFragment::class.java.simpleName
     }
 
-    private val homeViewModel: HomeViewModel by viewModels()
-
     private val args: HomeFragmentArgs by navArgs()
-    private lateinit var dataBinding: FragmentHomeBinding
 
     @VisibleForTesting
-    fun getViewModel() = homeViewModel
+    fun getHomeViewModel() = viewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) : View? {
-        dataBinding = FragmentHomeBinding.inflate(inflater).also {
-            it.lifecycleOwner = this
-            it.homeViewModel = homeViewModel
-            it.foodRecycleview.layoutManager = GridLayoutManager(activity, 2)
+    override fun init() {
+        super.init()
+        dataBinding.also {
+            it.homeViewModel = viewModel
+            it.foodRecycleview.layoutManager = LinearLayoutManager(activity)
             setHasOptionsMenu(true)
-            it.rootLayout.addOnLayoutChangeListener(this)
             it.foodRecycleview.adapter =
                 FoodAdapter(FoodAdapter.OnClickListener { food ->
-                    homeViewModel.moveToFoodDetail(food)
+                    viewModel.moveToFoodDetail(food)
                 })
         }
 
-        activateObservers()
-        return dataBinding.root
+        //Animate the fab
+        (requireNotNull(activity) as MainActivity).btn_add.apply {
+            animate()
+                .setDuration(1000.toLong())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        this@apply.show()
+                    }
+                }).start()
+        }
     }
 
-    private fun activateObservers() {
-        homeViewModel.detailFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
+    override fun activateObservers() {
+        viewModel.detailFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 val foodImageView =
                     dataBinding.foodRecycleview.findViewById<ImageView>(R.id.food_imageview)
@@ -90,19 +99,19 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
             }
         })
 
-        homeViewModel.barcodeFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
+        viewModel.barcodeFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 FragmentIntentIntegrator(this).initiateScan()
             }
         })
 
-        homeViewModel.onlineFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
+        viewModel.onlineFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFoodFragment())
             }
         })
 
-        homeViewModel.newFoodFoodEvent.observe(viewLifecycleOwner, Observer {
+        viewModel.newFoodFoodEvent.observe(viewLifecycleOwner, Observer {
             if (it.succeeded) {
                 //TODO show a dialog with some info, editable and with the date if not present in barcode
                 Log.d(TAG, "Added")
@@ -116,7 +125,7 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
         //TODO forced value, emulator can't read barcode
         //041631000564
         result?.let {
-            homeViewModel.getApiFoodDetails(it.contents ?: "041631000564")
+            viewModel.getApiFoodDetails(it.contents ?: "041631000564")
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -132,75 +141,16 @@ class HomeFragment : Fragment(), View.OnLayoutChangeListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.overflow_menu, menu)
+        inflater.inflate(R.menu.menu_toolbar, menu)
+        val searchItem = menu.findItem(R.id.action_search)
+        //TODO add search here and switchmap
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return super.onOptionsItemSelected(item)
     }
 
-    /**
-     * Reveal animation for the view
-     */
-    private fun animateTransition(params: Bundle?) {
-        dataBinding.lifecycleOwner = this
-        // Check if the runtime version is at least Lollipop
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // get the center for the clipping circle
-            val cx = dataBinding.rootLayout.width / 2
-            val cy = dataBinding.rootLayout.height / 2
-            val xPosition = params?.getFloat("x")?.toInt() ?: 0
-            val yPosition = params?.getFloat("y")?.toInt() ?: 0
-
-            // get the final radius for the clipping circle
-            val finalRadius = Math.hypot(cx.toDouble(), cy.toDouble()).toFloat()
-
-            // create the animator for this view (the start radius is zero)
-            val anim = ViewAnimationUtils.createCircularReveal(
-                dataBinding.rootLayout,
-                xPosition,
-                yPosition,
-                0f,
-                finalRadius
-            )
-            // make the view visible and start the animation
-            dataBinding.rootLayout.visibility = View.VISIBLE
-            anim.addListener(object : Animator.AnimatorListener {
-                override fun onAnimationRepeat(p0: Animator?) {
-                }
-
-                override fun onAnimationEnd(p0: Animator?) {
-                }
-
-                override fun onAnimationCancel(p0: Animator?) {
-                }
-
-                override fun onAnimationStart(p0: Animator?) {
-                    //TODO START ANIMATION FOR THE VIEW CHILDREN
-                }
-
-            })
-            anim.start()
-        }
-        dataBinding.rootLayout.removeOnLayoutChangeListener(this)
-    }
-
-    override fun onLayoutChange(
-        p0: View?,
-        p1: Int,
-        p2: Int,
-        p3: Int,
-        p4: Int,
-        p5: Int,
-        p6: Int,
-        p7: Int,
-        p8: Int
-    ) {
-        try {
-            animateTransition(
-                args.params)
-        } catch (e: InvocationTargetException) {
-            e.printStackTrace()
-        }
+    override fun onAddClicked() {
+        viewModel.navigateToOnlineSearch()
     }
 }
