@@ -60,7 +60,8 @@ class RecipeViewModel(
             .asLiveData(viewModelScope.coroutineContext)
      @VisibleForTesting set // this allow us to use this set only for test
 
-    val recipeListResult = _searchFilter.switchMap { // OR    _searchFilter.switchMap {
+    // This is the observable property, it changes every time the month filter changes (the original values never changes)
+    val recipeListResult = _searchFilter.switchMap { // OR    _searchFilter.switchMap { used to refresh/trigger changed livedata
         liveData {
             if (it != null && it.isNotEmpty() ) {
                  emit(_recipeListResult.map { list ->

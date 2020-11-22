@@ -106,3 +106,22 @@ class LoginViewModel (
         }
     }
 }
+/**
+ * TODO Add in generic base VM to load, a
+
+launchDataLoad { plantRepository.loadFoods() }
+
+private fun launchDataLoad(block: suspend () -> Unit): Job {
+    return viewModelScope.launch {
+        try {
+            _spinner.value = true
+            block()
+        } catch (error: Throwable) {
+            _snackbar.value = error.message
+        } finally {
+            _spinner.value = false
+        }
+    }
+}
+ *
+        **/

@@ -3,7 +3,12 @@ package com.example.savethefood.data.source.local.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.source.local.database.FoodImageConverter
+import com.example.savethefood.data.source.local.database.StorageTypeConverter
+import com.example.savethefood.util.FoodImage
+import com.example.savethefood.util.StorageType
 import java.sql.Date
 import java.util.*
 
@@ -18,8 +23,9 @@ data class FoodEntity(
     @ColumnInfo(name = "description")
     val description: String?,
 
-    @ColumnInfo(name = "img_url")
-    val imgUrl: String,
+    @TypeConverters(FoodImageConverter::class)
+    @ColumnInfo(name = "img")
+    val img: FoodImage,
 
     @ColumnInfo(name = "likes")
     val likes: Double?,
@@ -27,27 +33,15 @@ data class FoodEntity(
     @ColumnInfo(name = "price")
     val price: Double?,
 
-    @ColumnInfo(name = "calories")
-    val calories: Double?,
+    @ColumnInfo(name = "quantity")
+    val quantity: Double?,
 
-    @ColumnInfo(name = "fat")
-    val fat: String?,
-
-    @ColumnInfo(name = "proteins")
-    val proteins: String?,
-
-    @ColumnInfo(name = "carbs")
-    val carbs: String?,
-
-    @ColumnInfo(name = "ingredients")
-    var ingredientList: String?,
-
-    @ColumnInfo(name = "serving_size")
-    var servingSize: String?,
+    @TypeConverters(StorageTypeConverter::class)
+    @ColumnInfo(name = "storage")
+    val storageType: StorageType,
 
     @ColumnInfo(name = "best_before")
     var foodBestBefore: Long
-
 )
 
 fun FoodEntity.asDomainModel(): FoodDomain {
@@ -55,15 +49,11 @@ fun FoodEntity.asDomainModel(): FoodDomain {
         foodId = id,
         foodTitle = title,
         foodDescription = description,
-        foodImgUrl = imgUrl,
+        foodImg = img,
         likes = likes,
         price = price,
-        calories = calories,
-        fat = fat,
-        proteins = proteins,
-        carbs = carbs,
-        ingredientList = ingredientList,
-        servingSize = servingSize,
+        quantity = quantity,
+        storageType = storageType,
         bestBefore = Date(foodBestBefore)
     )
 }
@@ -74,15 +64,11 @@ fun List<FoodEntity>.asDomainModel(): List<FoodDomain> {
             foodId = it.id,
             foodTitle = it.title,
             foodDescription = it.description,
-            foodImgUrl = it.imgUrl,
+            foodImg = it.img,
             likes = it.likes,
             price = it.price,
-            calories = it.calories,
-            fat = it.fat,
-            proteins = it.proteins,
-            carbs = it.carbs,
-            ingredientList = it.ingredientList,
-            servingSize = it.servingSize,
+            quantity = it.quantity,
+            storageType = it.storageType,
             bestBefore = Date(it.foodBestBefore)
         )
     }

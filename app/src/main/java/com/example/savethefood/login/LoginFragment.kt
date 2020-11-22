@@ -28,11 +28,17 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
 @ExperimentalCoroutinesApi
-class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
+class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
 
     override val viewModel by viewModels<LoginViewModel> {
         LoginViewModel.LoginViewModelFactory(UserDataRepository.getRepository(requireActivity().application))
     }
+
+    override val layoutRes: Int
+        get() = R.layout.fragment_login
+
+    override val classTag: String
+        get() = LoginFragment::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +49,11 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
         dataBinding.also {
             it.loginViewModel = viewModel
         }
+        Log.d(classTag, "Init done")
+    }
+
+
+    override fun activateObservers() {
         viewModel.navigateToSignUpFragment.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 findNavController()
@@ -57,14 +68,7 @@ class LoginFragment : BaseFragment<LoginViewModel,FragmentLoginBinding>() {
                 Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
             }
         })
-        Log.d(classTag, "Init done")
     }
-
-    override val layoutRes: Int
-        get() = R.layout.fragment_login
-
-    override val classTag: String
-        get() = LoginFragment::class.java.simpleName
 
     private fun ProgressButton.morphDoneAndRevert(
         context: Context,

@@ -1,9 +1,11 @@
 package com.example.savethefood.data.source.local.database
 
 import android.content.Context
+import androidx.databinding.adapters.Converters
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.savethefood.data.source.local.dao.FoodDatabaseDao
@@ -24,6 +26,7 @@ import com.example.savethefood.data.source.local.entity.UserEntity
  * so you can reuse it.
  */
 @Database(entities = [UserEntity::class, FoodEntity::class, RecipeEntity::class, RecipeInfoEntity::class], version = 2, exportSchema = false)
+@TypeConverters(FoodImageConverter::class, StorageTypeConverter::class)
 abstract class SaveTheFoodDatabase : RoomDatabase() {
 
     /**

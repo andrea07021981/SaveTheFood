@@ -18,16 +18,16 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:translationZ="20dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp"
         app:cardUseCompatPadding="true"
         app:strokeColor="@color/colorAccent"
-        app:strokeWidth="5dp"
-        app:cardElevation="4dp"
-        android:translationZ="20dp"
-        app:cardCornerRadius="3dp">
+        app:strokeWidth="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="100dp">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/left_well"
@@ -46,46 +46,83 @@
 
             <ImageView
                 android:id="@+id/food_imageview"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="16dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
                 android:adjustViewBounds="false"
                 android:cropToPadding="false"
-                android:scaleType="matrix"
+                android:scaleType="centerCrop"
                 android:transitionName="foodImage"
-                bind:imageUrl="@{foodDomain.foodImgUrl}"
-                app:layout_constraintBottom_toTopOf="@+id/food_textview"
-                app:layout_constraintDimensionRatio="h,6:3"
-                app:layout_constraintEnd_toStartOf="@+id/right_well"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/left_well"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                app:layout_constraintVertical_bias="0.26999998"
+                bind:imageUrl="@{foodDomain.foodImg}"
+                tools:srcCompat="@drawable/ic_apple_1" />
 
-
-            <View
-                android:id="@+id/clickableOverlay"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="150dp"
                 android:layout_height="0dp"
-                android:background="?attr/selectableItemBackground"
-                android:onClick="@{() -> foodCallback.onClick(foodDomain)}"
+                android:layout_marginStart="16dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/food_imageview"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/food_textview"
+                <TextView
+                    android:id="@+id/food_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@{foodDomain.foodTitle}"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:text="Burger" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    bind:formatDate="@{foodDomain.bestBefore}"
+                    tools:text="2 days in" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="@{foodDomain.foodTitle}"
-                android:transitionName="foodTitle"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/right_well"
-                app:layout_constraintStart_toStartOf="@+id/left_well" />
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/linearLayout"
+                tools:layout_editor_absoluteY="26dp">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="end"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    bind:formatQuantity="@{foodDomain.quantity}"
+                    tools:text="300 g" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="@{foodDomain.storageType.type}"
+                    tools:text="Fridge" />
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

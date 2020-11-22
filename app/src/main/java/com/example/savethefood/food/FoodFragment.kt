@@ -18,6 +18,7 @@ import com.example.savethefood.databinding.FragmentFoodBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@Deprecated("For now it's not used to search food with spoon api")
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class FoodFragment : Fragment() {

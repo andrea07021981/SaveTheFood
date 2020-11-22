@@ -30,14 +30,23 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" >
+        <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
 
     <style name="customExpanded" parent="TextAppearance.AppCompat.Title">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">20sp</item>
         <item name="android:padding">10dp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <!--To Change SearchView Text & Mic-->
+        <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/darker_gray</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 </resources>
