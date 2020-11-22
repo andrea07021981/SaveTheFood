@@ -2,41 +2,34 @@ package com.example.savethefood.home
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.Activity
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
-import android.os.Build
-import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.TransitionInflater
 import com.example.savethefood.*
 import com.example.savethefood.FragmentCallback
-import com.example.savethefood.data.Result
-import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.data.succeeded
 import com.example.savethefood.databinding.FragmentHomeBinding
-import com.example.savethefood.fooddetail.FoodDetailViewModel
+import com.example.savethefood.util.configSearchView
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import java.lang.reflect.InvocationTargetException
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -71,8 +64,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
                 })
         }
 
-        //Animate the fab
-        (requireNotNull(activity) as MainActivity).btn_add.apply {
+        //Set tittle and Animate the fab
+        with(requireNotNull(activity) as MainActivity) {
+            btn_add.apply {
             animate()
                 .setDuration(1000.toLong())
                 .setListener(object : AnimatorListenerAdapter() {
@@ -80,6 +74,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
                         this@apply.show()
                     }
                 }).start()
+            }
         }
     }
 
@@ -92,7 +87,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
                     dataBinding.foodRecycleview.findViewById<TextView>(R.id.food_textview)
                 val extras = FragmentNavigatorExtras(
                     foodImageView to "foodImage",
-                    foodTextview to "foodTitle")
+                    foodTextview to "foodTitle"
+                )
                 val bundle = bundleOf("foodDomain" to it)
                 findNavController()
                     .navigate(R.id.foodDetailFragment, bundle, null, extras)
@@ -120,7 +116,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val result: IntentResult? = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        val result: IntentResult? =
+            IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
 
         //TODO forced value, emulator can't read barcode
         //041631000564
@@ -143,7 +140,12 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_toolbar, menu)
         val searchItem = menu.findItem(R.id.action_search)
-        //TODO add search here and switchmap
+        searchItem.configSearchView(
+            requireNotNull(activity),
+            "Search Food"
+        ) {
+            Log.d(TAG, "Value searched: $it")
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

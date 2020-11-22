@@ -20,6 +20,7 @@ import com.example.savethefood.R
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.RecipeDataRepository
 import com.example.savethefood.databinding.FragmentReceipeBinding
+import com.example.savethefood.util.configSearchView
 
 // TODO add tablayout, recipe online and recipe saved (need room data entities)
 class RecipeFragment : Fragment() {
@@ -79,34 +80,11 @@ class RecipeFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_toolbar, menu)
         val searchItem = menu.findItem(R.id.action_search)
-
-        val searchManager =
-            activity?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-
-        if (searchItem != null) {
-            searchView = searchItem.actionView as SearchView
-        }
-        searchView?.setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
-
-        //Manage search view
-        //making the searchview consume all the toolbar when open
-        searchView?.let { it ->
-            it.maxWidth= Int.MAX_VALUE
-            it.queryHint = "Search Recipes"
-            searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-                override fun onQueryTextChange(newText: String): Boolean {
-                    //action while typing
-                    dataBinding.recipeViewModel?.updateDataList(newText)
-                    return false
-                }
-
-                override fun onQueryTextSubmit(query: String): Boolean {
-                    //action when type Enter
-                    return false
-                }
-
-            })
+        searchItem.configSearchView(
+            requireNotNull(activity),
+        "Search Recipes"
+        ) {
+            dataBinding.recipeViewModel?.updateDataList(it)
         }
     }
 
