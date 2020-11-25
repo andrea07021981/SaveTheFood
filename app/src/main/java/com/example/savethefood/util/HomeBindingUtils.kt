@@ -1,6 +1,7 @@
 package com.example.savethefood.util
 
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.graphics.drawable.toDrawable
@@ -57,11 +58,12 @@ fun bindFoodRecycleView(recyclerView: RecyclerView, data: Result<List<FoodDomain
         is Result.Success -> adapter.submitList(data.data)
         else -> adapter.submitList(listOf())
     }
+    recyclerView.scheduleLayoutAnimation();
 }
 
 @BindingAdapter("bind:formatDate")
 fun TextView.bindFormatDate(date: Date) {
-    //TODO add formatter
+    //TODO add formatter, change also color
     text = "11 days is"
 }
 

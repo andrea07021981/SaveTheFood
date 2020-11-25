@@ -1,26 +1,15 @@
 package com.example.savethefood.home
 
-import android.app.Application
-import android.util.Log
-import android.view.View
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.R
-import com.example.savethefood.constants.ApiCallStatus
-import com.example.savethefood.constants.ApiCallStatus.*
 import com.example.savethefood.data.Result
-import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.data.source.repository.FoodRepository
-import com.example.savethefood.util.FoodImage
-import com.example.savethefood.util.StorageType
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
 import java.lang.Exception
-import java.util.*
 
 class HomeViewModel @ViewModelInject constructor(
     private val foodDataRepository: FoodRepository
@@ -53,14 +42,9 @@ class HomeViewModel @ViewModelInject constructor(
     val newFoodFoodEvent: LiveData<Result<FoodDomain>>
         get() = _newFoodFoodEvent
 
-    private val _onlineFoodEvent = MutableLiveData<Event<Unit>>()
-    val onlineFoodEvent: LiveData<Event<Unit>>
-        get() = _onlineFoodEvent
-
-    private val _bestBeforeFoodEvent = MutableLiveData<Event<Unit>>()
-    val bestBeforeFoodEvent: LiveData<Event<Unit>>
-        get() = _bestBeforeFoodEvent
-
+    private val _addFoodEvent = MutableLiveData<Event<Unit>>()
+    val addFoodEvent: LiveData<Event<Unit>>
+        get() = _addFoodEvent
 
     init {
         // TODO, move offer emit, oneanch, catch, map in repository, datasource only suspend
@@ -106,15 +90,8 @@ class HomeViewModel @ViewModelInject constructor(
         _barcodeFoodEvent.value = Event(Unit)
     }
 
-    fun navigateToOnlineSearch() {
-        viewModelScope.launch {
-            foodDataRepository.saveNewFood(
-                FoodDomain(
-                "Apple", "Apple Gala", 2, FoodImage.APPLE, 2.0, 20.3,200.0, StorageType.FRIDGE, Date()
-                )
-            )
-        }
-        //_onlineFoodEvent.value = Event(Unit)
+    fun navigateToAddFood() {
+        _addFoodEvent.value = Event(Unit)
     }
 
     fun getApiFoodDetails(barcode: String) {
