@@ -12,81 +12,48 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
+import com.example.savethefood.BaseFragment
 import com.example.savethefood.EventObserver
+import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.repository.FoodDataRepository
+import com.example.savethefood.home.FoodAdapter
+import com.example.savethefood.home.HomeFragment
+import com.example.savethefood.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class FoodDetailFragment : Fragment() {
+class FoodDetailFragment : BaseFragment<FoodDetailViewModel,FragmentFoodDetailBinding>() {
 
     private val args: FoodDetailFragmentArgs by navArgs()
 
-    private val foodDetailViewModel: FoodDetailViewModel by viewModels()
+    override val viewModel by viewModels<FoodDetailViewModel>()
 
-    private lateinit var dataBinding: FragmentFoodDetailBinding
+    override val layoutRes: Int
+        get() = R.layout.fragment_food_detail
+
+    override val classTag: String
+        get() = FoodDetailFragment::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) : View? {
-        dataBinding = FragmentFoodDetailBinding.inflate(inflater).also {
-            it.lifecycleOwner = this
-            it.foodDetailViewModel = foodDetailViewModel
-
-            it.recipeFab.setOnClickListener {
-                foodDetailViewModel.moveToRecipeSearch(args.foodDomain)
-            }
-
-            it.deleteFab.setOnClickListener {
-                AlertDialog.Builder(requireActivity())
-                    .setCancelable(false)
-                    .setTitle("Attention")
-                    .setMessage("Would you like to delete ${foodDetailViewModel.food.value?.foodTitle}")
-                    .setPositiveButton("OK") { dialogInterface, _ ->
-                        foodDetailViewModel.deleteFood()
-                        dialogInterface.dismiss()
-                    }
-                    .setNegativeButton("Cancel") { dialogInterface, _ -> dialogInterface.dismiss() }
-                    .create()
-                    .show()
-            }
+    override fun init() {
+        super.init()
+        dataBinding.also {
+            it.foodDetailViewModel = viewModel
         }
-
-        activateObservers()
-        return dataBinding.root
     }
 
-    private fun activateObservers() {
-        foodDetailViewModel.recipeFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
-            it.let {
-                findNavController().navigate(
-                    FoodDetailFragmentDirections.actionFoodDetailFragmentToRecipeFragment(
-                        it.foodTitle
-                    )
-                )
-            }
-        })
+    override fun activateObservers() {
 
-        foodDetailViewModel.foodDeleted.observe(this.viewLifecycleOwner, EventObserver {
-            it.let {
-                if (it) {
-                    findNavController().popBackStack()
-                } else {
-                    Toast.makeText(requireNotNull(activity), "Not deleted", Toast.LENGTH_LONG).show()
-                }
-            }
-        })
     }
 
     override fun onDestroy() {

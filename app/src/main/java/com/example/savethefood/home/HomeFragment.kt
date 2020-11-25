@@ -6,8 +6,10 @@ import android.app.Activity
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
@@ -22,6 +24,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.*
 import com.example.savethefood.FragmentCallback
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.succeeded
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.util.configSearchView
@@ -30,6 +33,10 @@ import com.google.zxing.integration.android.IntentResult
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+
+// TODO Home must host the tablayout. Use Homeviewmodel for all tabs and switchMap to filter by StorageType
+// https://www.javatpoint.com/android-tablayout
+
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -62,6 +69,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
                 FoodAdapter(FoodAdapter.OnClickListener { food ->
                     viewModel.moveToFoodDetail(food)
                 })
+            //it.foodRecycleview.scheduleLayoutAnimation()
         }
 
         //Set tittle and Animate the fab
@@ -101,9 +109,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
             }
         })
 
-        viewModel.onlineFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
+        viewModel.addFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFoodFragment())
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddFoodFragment())
             }
         })
 
@@ -153,6 +161,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
     }
 
     override fun onAddClicked() {
-        viewModel.navigateToOnlineSearch()
+        viewModel.navigateToAddFood()
     }
 }

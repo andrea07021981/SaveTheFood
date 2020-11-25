@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.Error
 
+@Deprecated("No online foood search")
 class FoodViewModel @ViewModelInject constructor(
     private val dataRepository: FoodRepository
 ) : ViewModel() {

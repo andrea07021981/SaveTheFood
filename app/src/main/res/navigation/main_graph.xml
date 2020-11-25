@@ -29,8 +29,8 @@
             android:name="params"
             app:argType="android.os.Bundle" />
         <action
-            android:id="@+id/action_homeFragment_to_foodFragment"
-            app:destination="@id/foodFragment" />
+            android:id="@+id/action_homeFragment_to_addFoodFragment"
+            app:destination="@id/addFoodFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeFragment"
@@ -99,14 +99,14 @@
         android:name="com.example.savethefood.login.SignUpFragment"
         android:label="SignUpFragment" />
     <fragment
-        android:id="@+id/foodFragment"
-        android:name="com.example.savethefood.food.FoodFragment"
-        android:label="FoodFragment"
-        tools:layout="@layout/fragment_food"/>
-    <fragment
         android:id="@+id/mapFragment"
         android:name="com.example.savethefood.map.MapFragment"
         android:label="MapFragment"
         tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/addFoodFragment"
+        android:name="com.example.savethefood.addfood.AddFoodFragment"
+        tools:layout="@layout/fragment_add_food"
+        android:label="AddFoodFragment" />
 
 </navigation>
