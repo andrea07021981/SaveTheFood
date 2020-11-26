@@ -9,6 +9,7 @@ import androidx.collection.ArraySet
 import com.example.savethefood.R
 import kotlinx.android.synthetic.main.adapter_food_spinner.view.*
 
+// ADD two way data binding observers
 /**
  * Custom adapter for food spinner
  * @param   ctx         current context
