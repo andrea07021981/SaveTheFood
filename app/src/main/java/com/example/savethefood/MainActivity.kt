@@ -1,7 +1,5 @@
 package com.example.savethefood
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -16,14 +14,12 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.savethefood.databinding.ActivityMainBinding
-import com.example.savethefood.generated.callback.OnClickListener
-import com.example.savethefood.home.HomeFragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 internal interface FragmentCallback {
-    fun onAddClicked()
+    fun onAddClicked(view: View)
 }
 
 //TODO add meal plan for next weeks in menu drawer
@@ -42,7 +38,8 @@ class MainActivity : AppCompatActivity() {
             val navHostFragment = supportFragmentManager.primaryNavigationFragment as NavHostFragment
             val currentFragment = navHostFragment.childFragmentManager.primaryNavigationFragment as Fragment
             if (currentFragment is FragmentCallback) {
-                currentFragment.onAddClicked()
+                currentFragment.onAddClicked(binding.btnAdd)
+                binding.btnAdd.isExpanded = true
             }
         }
         setUpNavigation(binding)
