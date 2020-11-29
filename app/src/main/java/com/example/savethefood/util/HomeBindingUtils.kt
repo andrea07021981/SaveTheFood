@@ -63,7 +63,7 @@ fun bindFoodRecycleView(recyclerView: RecyclerView, data: Result<List<FoodDomain
 
 @BindingAdapter("bind:formatDate")
 fun TextView.bindFormatDate(date: Date) {
-    //TODO add formatter, change also color
+    //TODO add formatter, change also color use <xliff:
     text = "11 days is"
 }
 

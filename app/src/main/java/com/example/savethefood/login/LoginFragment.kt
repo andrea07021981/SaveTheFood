@@ -63,7 +63,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
 
         viewModel.loginAuthenticationState.observe(this.viewLifecycleOwner, Observer {
             if (it is Authenticated || it is Authenticating || it is InvalidAuthentication) {
-                dataBinding.loginButton.run { morphDoneAndRevert(requireNotNull(activity), it) }
+                dataBinding.loginButton.run { morphDoneAndRevert(requireContext(), it) }
             } else if (it is Unauthenticated) {
                 Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
             }

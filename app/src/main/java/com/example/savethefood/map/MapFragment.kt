@@ -53,7 +53,7 @@ class MapFragment : Fragment() {
     ): View? {
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
-            requireNotNull(activity));
+            requireNotNull(activity))
 
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
