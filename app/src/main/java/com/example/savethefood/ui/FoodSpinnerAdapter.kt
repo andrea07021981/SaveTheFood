@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.collection.ArraySet
 import com.example.savethefood.R
 import kotlinx.android.synthetic.main.adapter_food_spinner.view.*
 
@@ -17,8 +16,8 @@ import kotlinx.android.synthetic.main.adapter_food_spinner.view.*
  */
 class FoodSpinnerAdapter(
     ctx: Context,
-    foodItems: ArraySet<FoodItem>
-) : ArrayAdapter<FoodItem>(ctx, 0, foodItems.toList()) {
+    foodItems: List<FoodItem>
+) : ArrayAdapter<FoodItem>(ctx, 0, foodItems) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         return createItemView(position, convertView, parent);
