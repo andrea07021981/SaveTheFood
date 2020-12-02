@@ -1,12 +1,22 @@
 package com.example.savethefood.addfood
 
+import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.collection.ArraySet
 import androidx.collection.arraySetOf
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
+import androidx.lifecycle.*
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.ui.FoodItem
+import com.example.savethefood.ui.FoodSpinnerAdapter
 import com.example.savethefood.util.FoodImage
+
 
 class AddFoodViewModel(
 
@@ -14,17 +24,14 @@ class AddFoodViewModel(
 
     var foodItem = FoodDomain()
 
+    var _selectedItem = MutableLiveData<FoodItem>()
+    val selectedItem: LiveData<FoodItem?>
+        get() = _selectedItem
+
     private var _foodsItems = arraySetOf<FoodItem>()
 
     val foodItems: ArraySet<FoodItem>
         get() = _foodsItems
-
-    // TODO use two way databinding and change this way with observable
-    var spinnerSelectedPosition: Int = 0
-        set(value) {
-            field = value
-            foodItem.foodImg = _foodsItems.elementAt(2).img
-        }
 
     init {
         _foodsItems = getCustomSet()

@@ -3,6 +3,7 @@ package com.example.savethefood.util
 import android.view.View
 import android.widget.*
 import android.widget.AdapterView.*
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.collection.ArraySet
 import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
@@ -61,4 +62,29 @@ fun Spinner.bindBindAdapter(list: ArraySet<FoodItem>) {
         context,
         list.sortedBy(FoodItem::name)
     )
+}
+
+
+@BindingAdapter(value = ["selectedValue", "selectedValueAttrChanged"], requireAll = false)
+fun bindSpinnerData(
+    pAppCompatSpinner: AppCompatSpinner,
+    newSelectedValue: FoodItem?,
+    newTextAttrChanged: InverseBindingListener
+) {
+    pAppCompatSpinner.onItemSelectedListener = object : OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
+            newTextAttrChanged.onChange()
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>?) {}
+    }
+    if (newSelectedValue != null) {
+        val pos = (pAppCompatSpinner.adapter as FoodSpinnerAdapter).getPosition(newSelectedValue)
+        pAppCompatSpinner.setSelection(pos, true)
+    }
+}
+
+@InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
+fun captureSelectedValue(pAppCompatSpinner: AppCompatSpinner): FoodItem? {
+    return pAppCompatSpinner.selectedItem as FoodItem
 }

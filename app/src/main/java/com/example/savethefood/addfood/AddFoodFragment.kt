@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentAddFoodBinding
@@ -53,6 +54,6 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
     }
 
     override fun activateObservers() {
-
+        viewModel.selectedItem.observe(viewLifecycleOwner, { Log.d(classTag, "${it?.name}") })
     }
 }
