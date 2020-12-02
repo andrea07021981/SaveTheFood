@@ -16,12 +16,13 @@ abstract class BaseFragment<VM : ViewModel, DB : ViewDataBinding>() : Fragment()
 
     protected abstract val layoutRes: Int
 
-    protected lateinit var dataBinding: DB
+    private var _dataBinding: DB? = null
+    protected val dataBinding get() = _dataBinding!!
 
     protected abstract val classTag: String
 
     fun init(inflater: LayoutInflater, container: ViewGroup) {
-        dataBinding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
+        _dataBinding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
         dataBinding.lifecycleOwner = this
     }
 
@@ -38,4 +39,9 @@ abstract class BaseFragment<VM : ViewModel, DB : ViewDataBinding>() : Fragment()
     }
 
     open fun refresh() {}
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _dataBinding = null
+    }
 }
