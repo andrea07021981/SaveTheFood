@@ -3,12 +3,9 @@ package com.example.savethefood.home
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.transition.Explode
 import android.util.Log
 import android.view.*
-import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
@@ -21,22 +18,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.*
-import com.example.savethefood.FragmentCallback
 import com.example.savethefood.data.succeeded
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.util.configSearchView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.transition.MaterialFadeThrough
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlin.math.hypot
+
 
 // TODO Home must host the tablayout. Use Homeviewmodel for all tabs and switchMap to filter by StorageType
 // https://www.javatpoint.com/android-tablayout
-
+// TODO add weekly recipe scheduler
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint

@@ -17,7 +17,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/chef_imageview"
@@ -127,19 +127,19 @@
                     <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
                         android:id="@+id/login_button"
                         style="@style/button"
-                        android:stateListAnimator="@null"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:layout_marginStart="56dp"
                         android:layout_marginTop="32dp"
                         android:layout_marginEnd="24dp"
                         android:background="@drawable/custom_rounded_corners"
+                        android:elevation="2dp"
                         android:onClick="@{() -> loginViewModel.onSignUpClick()}"
+                        android:stateListAnimator="@null"
                         android:text="@string/log_in"
                         android:textColor="@android:color/white"
                         android:transitionName="login_button"
                         android:translationZ="20dp"
-                        android:elevation="2dp"
                         app:finalCornerAngle="50dp"
                         app:initialCornerAngle="40dp"
                         app:layout_constraintBottom_toTopOf="@+id/textView"
@@ -170,19 +170,19 @@
                     <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
                         android:id="@+id/signUp_button"
                         style="@style/button"
-                        android:stateListAnimator="@null"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginStart="56dp"
                         android:layout_marginEnd="56dp"
                         android:layout_marginBottom="24dp"
                         android:background="@drawable/custom_rounded_corners"
+                        android:elevation="2dp"
                         android:onClick="@{() -> loginViewModel.moveToSignUp()}"
+                        android:stateListAnimator="@null"
                         android:text="@string/sign_up"
                         android:textColor="@android:color/white"
                         android:transitionName="login_button"
                         android:translationZ="20dp"
-                        android:elevation="2dp"
                         app:finalCornerAngle="50dp"
                         app:initialCornerAngle="40dp"
                         app:layout_constraintBottom_toBottomOf="parent"

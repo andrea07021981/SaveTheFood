@@ -1,18 +1,22 @@
 package com.example.savethefood.util
 
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.View
+import android.widget.*
+import android.widget.AdapterView.*
+import androidx.collection.ArraySet
 import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
-import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.ProductDomain
 import com.example.savethefood.food.FoodSearchAdapter
+import com.example.savethefood.ui.FoodItem
+import com.example.savethefood.ui.FoodSpinnerAdapter
 
 /**
  * Needs to be used with [NumberOfSetsConverters.setArrayToString].
@@ -46,6 +50,15 @@ fun bindFoodImage(imgView: ImageView, imgUrl: String?) {
 }
 
 @BindingAdapter("bind:htmlConverter")
-fun TextView.bindFoodDescription(html: String?) {//TODO check if we can directly bind in xml
+fun TextView.bindFoodDescription(html: String?) {//TODO check if we can directly bind in xml with binding exp https://developer.android.com/topic/libraries/data-binding/expressions
     html?.let { text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY); }
+}
+
+
+@BindingAdapter("bind:spinnerAdapter")
+fun Spinner.bindBindAdapter(list: ArraySet<FoodItem>) {
+    adapter = FoodSpinnerAdapter(
+        context,
+        list.sortedBy(FoodItem::name)
+    )
 }
