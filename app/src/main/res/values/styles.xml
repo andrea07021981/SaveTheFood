@@ -49,4 +49,9 @@
         <item name="android:textColorHint">@android:color/darker_gray</item>
         <item name="android:textColorPrimary">@android:color/white</item>
     </style>
+
+    <style name="FormTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/colorPrimary</item>
+        <item name="boxStrokeWidth">1dp</item>
+    </style>
 </resources>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/tools">
+    xmlns:bind="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -49,16 +50,81 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/spinner"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layout_name"
+                        style="@style/FormTextInputLayoutStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
                         android:layout_margin="24dp"
-                        android:spinnerMode="dialog"
-                        bind:spinnerAdapter="@{addFoodViewModel.foodItems}"
-                        bind:selectedValue="@={addFoodViewModel._selectedItem}"/>
+                        android:layout_alignParentTop="true"
+                        android:textColorHint="@color/colorAccent"
+                        app:errorEnabled="true"
+                        app:hintTextColor="@color/colorAccent">
 
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Food name"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            tools:text="Apple"
+                            android:nextFocusDown="@id/et_description"
+                            android:textColor="@color/colorAccent" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layout_description"
+                        style="@style/FormTextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:textColorHint="@color/colorAccent"
+                        app:errorEnabled="true"
+                        app:hintTextColor="@color/colorAccent"
+                        android:layout_below="@+id/layout_name">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Food Description"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:singleLine="true"
+                            tools:text="Apple"
+                            android:textColor="@color/colorAccent" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:padding="10dip"
+                        android:id="@+id/linear_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/layout_description">
+
+                        <TextView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dip"
+                            android:text="Food Image:"
+                            android:layout_marginBottom="5dp" />
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/spinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:spinnerMode="dialog"
+                            bind:spinnerAdapter="@{addFoodViewModel.foodItems}"
+                            bind:selectedValue="@={addFoodViewModel.selectedItem}"/>
+                    </LinearLayout>
                     <Button
                         android:id="@+id/save_button"
                         android:layout_width="match_parent"

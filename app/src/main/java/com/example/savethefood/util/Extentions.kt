@@ -5,6 +5,12 @@ import android.app.SearchManager
 import android.content.Context
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.savethefood.data.Result
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 /**
  * Extension function to create a SearchView Item and manage the text inserted
@@ -38,6 +44,19 @@ fun MenuItem.configSearchView(activity: Activity, hint: String = "Type Value", b
                 }
 
             })
+        }
+    }
+}
+
+fun ViewModel.launchDataLoad(loader: MutableLiveData<Result<Boolean>>, block: suspend () -> Unit): Job {
+    return viewModelScope.launch {
+        try {
+            loader.value = Result.Loading
+            block()
+        } catch (error: Exception) {
+            loader.value = Result.ExError(error)
+        } finally {
+            loader.value = Result.Idle
         }
     }
 }

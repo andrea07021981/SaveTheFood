@@ -26,13 +26,15 @@ sealed class Result<out R> {
     data class ExError(val exception: Exception) : Result<Nothing>()
     data class Error(val message: String) : Result<Nothing>()
     object Loading : Result<Nothing>()
+    object Idle : Result<Nothing>()
 
     override fun toString(): String {
         return when (this) {
             is Success<*> -> "Success[data=$data]"
             is ExError -> "Exception[exception=$exception]"
             is Error -> "Error[exception=$message]"
-            Loading -> "Loading"
+            is Loading -> "Loading"
+            Idle -> "Idle"
         }
     }
 }

@@ -12,7 +12,7 @@ buildscript {
         version_archlifecycle = '2.3.0-beta01'
         version_room = "2.2.5"
         version_appcompat = "1.2.0"
-        version_fragment = "1.3.0-alpha08"
+        version_fragment = "1.3.0-beta02"
         version_junit = "4.13"
         version_junit_test = "1.1.1"
         version_espresso = "3.3.0"
@@ -27,7 +27,6 @@ buildscript {
         version_robolectric = '4.3'
         version_hamcrest = '1.3'
         version_arch_testing = '2.1.0'
-        version_fragmentTest = '1.3.0-beta01'
         version_mockito = '3.5.13'
         version_dex_maker = '2.12.1'
         version_work = "2.3.0-beta02"

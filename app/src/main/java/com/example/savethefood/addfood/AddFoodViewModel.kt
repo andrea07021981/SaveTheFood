@@ -24,9 +24,11 @@ class AddFoodViewModel(
 
     var foodItem = FoodDomain()
 
-    var _selectedItem = MutableLiveData<FoodItem>()
-    val selectedItem: LiveData<FoodItem?>
-        get() = _selectedItem
+    var selectedItem = MutableLiveData<FoodItem>()
+        set(value) {
+            field = value
+            foodItem.foodImg = value.value?.img ?: FoodImage.EMPTY
+        }
 
     private var _foodsItems = arraySetOf<FoodItem>()
 
@@ -37,7 +39,7 @@ class AddFoodViewModel(
         _foodsItems = getCustomSet()
     }
 
-    // TO change to sorted set or treeset
+    // TODO change to sorted set or treeset
     private fun getCustomSet(): ArraySet<FoodItem> {
         val customObjects = arraySetOf<FoodItem>()
         customObjects
