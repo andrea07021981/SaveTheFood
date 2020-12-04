@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.viewModels
+import androidx.transition.Visibility
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentAddFoodBinding
@@ -24,7 +25,7 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
         super.onCreate(savedInstanceState)
         enterTransition = MaterialFadeThrough().apply {
             addTarget(R.id.food_item_root)
-            duration = 1500
+            duration = resources.getInteger(android.R.integer.config_longAnimTime).toLong()
         }
     }
 

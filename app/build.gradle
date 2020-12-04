@@ -124,8 +124,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.1"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.1"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.2"
 
     //Cards
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -186,7 +186,7 @@ dependencies {
 
     // Testing code should not be included in the main code.
     // Once https://issuetracker.google.com/128612536 is fixed this can be fixed.
-    debugImplementation "androidx.fragment:fragment-testing:$version_fragmentTest"
+    debugImplementation "androidx.fragment:fragment-testing:$version_fragment"
     implementation "androidx.test:core:$version_androidX_test_core"
 
     // Dependencies for Android instrumented unit tests
