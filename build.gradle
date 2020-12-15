@@ -7,7 +7,7 @@ buildscript {
         version_navigation = '1.0.0'
         version_constraint_layout = "2.0.4"
         version_gradle = '4.1.0'
-        version_kotlin = "1.4.10"
+        version_kotlin = "1.4.21"
         version_lifecycle_extensions = '2.2.0'
         version_archlifecycle = '2.3.0-beta01'
         version_room = "2.2.5"
@@ -46,7 +46,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
         classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:$version_navigation"
         classpath 'com.google.gms:google-services:4.3.4'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
         classpath "com.google.dagger:hilt-android-gradle-plugin:$version_hilt"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

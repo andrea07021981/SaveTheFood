@@ -33,6 +33,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 // https://www.javatpoint.com/android-tablayout
 // TODO add weekly recipe scheduler
 
+// TODO also add different adapter https://proandroiddev.com/understanding-kotlin-sealed-classes-65c0adad7015
+
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), FragmentCallback {
