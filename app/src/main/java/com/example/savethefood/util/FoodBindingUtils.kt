@@ -76,7 +76,9 @@ fun bindSpinnerData(
             newTextAttrChanged.onChange()
         }
 
-        override fun onNothingSelected(parent: AdapterView<*>?) {}
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+
+        }
     }
     if (newSelectedValue != null) {
         val pos = (pAppCompatSpinner.adapter as FoodSpinnerAdapter).getPosition(newSelectedValue)

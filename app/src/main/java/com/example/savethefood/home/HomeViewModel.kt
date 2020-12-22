@@ -19,11 +19,12 @@ class HomeViewModel @ViewModelInject constructor(
 
     private var _foodList = MediatorLiveData<Result<List<FoodDomain>>>()
 
-    //TODO like plantrepository in advanced coroutine codelab,
+    //TODO like plantrepository in advanced coroutine codelab
+    // Addsource and livedata is similart to mediatorlivedata
     val foodList: LiveData<Result<List<FoodDomain>>> = liveData { //TODO keep live data, but get foods emit, change to flows and collect like https://medium.com/androiddevelopers/livedata-with-coroutines-and-flow-part-iii-livedata-and-coroutines-patterns-592485a4a85a
         emitSource(foodDataRepository.getFoods().asLiveData(Dispatchers.IO)) // Change to flow repo and data source, in repo do the oneach, onstart, etc and manage all here with databinding emitSource(foodDataRepository.getFoods().asLiveData())   TO TEST CHANGE CALL TO SCANNER AND ADD MEEDIATELY
     }
-
+   // TODO can also use dTransformations distinct https://proandroiddev.com/livedata-transformations-4f120ac046fc
     /*
     Other solution
      val foodList: LiveData<Result<List<FoodDomain>>> = liveData {
