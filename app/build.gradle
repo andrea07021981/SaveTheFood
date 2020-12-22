@@ -74,15 +74,68 @@ android {
         debug {
             minifyEnabled false
             testCoverageEnabled true
+            buildConfigField 'String', 'ENVIRONMENT', '"LOCAL"';
+            buildConfigField "String", "ENV", '"http://debug_env"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
         }
 
-        release {
+        /**
+         * The `initWith` property allows you to copy configurations from other build types,
+         * then configure only the settings you want to change. This one copies the debug build
+         * type, and then changes the manifest placeholder and application ID.
+         */
+        staging {
+            initWith debug
+            // Add parameters for pre prod
+            buildConfigField 'String', 'ENVIRONMENT', '"STAGE"';
+            buildConfigField "String", "ENV", '"http://stage_env"'
+        }
+
+        production {
             minifyEnabled true
             shrinkResources true
+            buildConfigField 'String', 'ENVIRONMENT', '"PROD"';
+            buildConfigField "String", "ENV", '"http://prod_env"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+        }
+    }
+
+    flavorDimensions "version"
+
+    // If you need to add more flavors, consider using flavor dimensions.
+    productFlavors {
+        mock {
+            dimension "version"
+            applicationIdSuffix = ".mock"
+        }
+        prod {
+        }
+    }
+
+    def build_param = "${build}"
+    if (build_param == "devCI") {
+        // Exclude all except mockDebug flavor
+        android.variantFilter { variant ->
+            if (variant.getFlavors().get(0).name != 'mock' || variant.buildType.name != 'debug') {
+                variant.setIgnore(true)
+            }
+        }
+    } else if (build_param == "releaseCI") {
+        // Exclude all except prodRelease flavor
+        android.variantFilter { variant ->
+            if (variant.getFlavors().get(0).name != 'prod' || variant.buildType.name != 'release') {
+                variant.setIgnore(true)
+            }
+        }
+    } else {
+        // Normal local machine dev
+        // Exclude mockRelease as it's not needed.
+        android.variantFilter { variant ->
+            if(variant.buildType.name == 'release' && variant.getFlavors().get(0).name == 'mock') {
+                variant.setIgnore(true)
+            }
         }
     }
 
@@ -114,7 +167,8 @@ dependencies {
     implementation 'androidx.palette:palette-ktx:1.0.0'
     kapt "androidx.room:room-compiler:$version_room"
     implementation "androidx.room:room-ktx:$version_room"
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation "com.google.maps.android:maps-ktx:$version_map"
+    implementation "com.google.maps.android:maps-utils-ktx:$version_map"
     implementation 'com.google.android.gms:play-services-location:17.1.0'
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_archlifecycle"
