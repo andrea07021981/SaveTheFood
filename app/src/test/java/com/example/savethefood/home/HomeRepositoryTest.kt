@@ -11,6 +11,8 @@ import com.example.savethefood.data.source.local.datasource.FakeLocalFoodDataSou
 import com.example.savethefood.data.source.local.datasource.FakeRemoteFoodDataSourceTest
 import com.example.savethefood.data.source.repository.FakeFoodDataRepositoryTest
 import com.example.savethefood.data.succeeded
+import com.example.savethefood.util.FoodImage
+import com.example.savethefood.util.StorageType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -53,10 +55,10 @@ class HomeRepositoryTest {
     @Before
     fun createRepository() = mainCoroutineRule.runBlockingTest{
         fakeRemoteDataSourceTest = mock(FakeRemoteFoodDataSourceTest::class.java)
-        foodFromApi = Result.Success(FoodDomain("1", "1",1,"", 0.0, 0.0, 0.0, "", "", "", "", "", Date()))
+        foodFromApi = Result.Success(FoodDomain("1","1",1, FoodImage.EMPTY, 2.0, 0.0, 1.0, StorageType.UNKNOWN, Date()))
         `when`(fakeRemoteDataSourceTest.getFoodById(1)).thenReturn(foodFromApi) // Set the mock to return the data from api when 1
         fakeLocalFoodDataSourceTest = mock(FakeLocalFoodDataSourceTest::class.java)
-        foodFromDao = Result.Success((FoodDomain("2", "2",2,"", 0.0, 0.0, 0.0, "", "", "", "", "", Date())))
+        foodFromDao = Result.Success((FoodDomain("2","2",1, FoodImage.EMPTY, 2.0, 0.0, 1.0, StorageType.UNKNOWN, Date())))
         `when`(fakeLocalFoodDataSourceTest.getFoodById(2)).thenReturn(foodFromDao) // Set the mock to return the data from dao when 1
         `when`(fakeLocalFoodDataSourceTest.getFoodById(0)).thenReturn(Result.Error("No Data")) // Set the mock to return no value found
         `when`(fakeRemoteDataSourceTest.getFoodById(0)).thenReturn(Result.Error("No Data")) // Set the mock to return no value found
