@@ -47,7 +47,7 @@ interface FoodDatabaseDao {
      * Selects and returns the user with given userId.
      */
     @Query("SELECT * from food_table WHERE id = :key")
-    fun getFoodWithId(key: Long): LiveData<FoodEntity>
+    fun getFoodWithId(key: Long): LiveData<FoodEntity> // TODO REMOVE ALL THE LIVE DATA NOT IN VIEWMODELS AND USE FLOW IF KEEP MONITORED IS NEEDED, OTHERWISE ONE SHOW WITH SUSPEND FOLLOW https://proandroiddev.com/no-more-livedata-in-your-repository-there-are-better-options-25a7557b0730
 
     /**
      * Selects all food

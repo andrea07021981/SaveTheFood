@@ -26,7 +26,9 @@ abstract class BaseFragment<VM : ViewModel, DB : ViewDataBinding>() : Fragment()
         dataBinding.lifecycleOwner = this
     }
 
-    open fun init() {}
+    open fun init() {
+
+    }
 
     protected abstract fun activateObservers()
 
@@ -38,7 +40,9 @@ abstract class BaseFragment<VM : ViewModel, DB : ViewDataBinding>() : Fragment()
         return dataBinding.root
     }
 
-    open fun refresh() {}
+    open fun refresh() {
+
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

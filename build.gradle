@@ -7,13 +7,13 @@ buildscript {
         version_navigation = '1.0.0'
         version_constraint_layout = "2.0.4"
         version_gradle = '4.1.0'
-        version_kotlin = "1.4.10"
+        version_kotlin = "1.4.21"
         version_lifecycle_extensions = '2.2.0'
         version_archlifecycle = '2.3.0-beta01'
         version_room = "2.2.5"
         version_appcompat = "1.2.0"
         version_fragment = "1.3.0-beta02"
-        version_junit = "4.13"
+        version_junit = "4.13.1"
         version_junit_test = "1.1.1"
         version_espresso = "3.3.0"
         version_moshi = "1.9.3"
@@ -24,17 +24,18 @@ buildscript {
         version_paging = "2.1.2"
         version_androidX_test_ext_kotlin_runner = '1.1.2'
         version_androidX_test_core = '1.3.0'
-        version_robolectric = '4.3'
+        version_robolectric = '4.4'
         version_hamcrest = '1.3'
         version_arch_testing = '2.1.0'
         version_mockito = '3.5.13'
         version_dex_maker = '2.12.1'
         version_work = "2.3.0-beta02"
-        version_analitycs = "17.6.0"
-        version_auth = "19.4.0"
-        version_crashlytics = "17.2.2"
+        version_analitycs = "18.0.0"
+        version_auth = "20.0.1"
+        version_crashlytics = "17.3.0"
         version_hilt = "2.28.3-alpha"
         version_hilt_test = "2.28.3-alpha"
+        version_map = "2.1.1"
     }
     repositories {
         google()
@@ -46,7 +47,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
         classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:$version_navigation"
         classpath 'com.google.gms:google-services:4.3.4'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
         classpath "com.google.dagger:hilt-android-gradle-plugin:$version_hilt"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
  * @param   hint        Hint for the edit text
  * @param   block       High Order function to manage the text change
  */
+// TODO add onchange like change password
 fun MenuItem.configSearchView(activity: Activity, hint: String = "Type Value", block: (String) -> Unit) {
     val searchView = actionView as SearchView
     val searchManager = activity.getSystemService(Context.SEARCH_SERVICE) as SearchManager

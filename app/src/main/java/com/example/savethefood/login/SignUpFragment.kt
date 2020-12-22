@@ -12,7 +12,7 @@ import com.example.savethefood.EventObserver
 import com.example.savethefood.R
 import com.example.savethefood.data.source.repository.UserDataRepository
 import com.example.savethefood.databinding.FragmentSignupBinding
-
+//TODO Add ontext change to the strenght password and use library https://github.com/nulab/zxcvbn4j/issues/75 and binding, customview like 
 class SignUpFragment : BaseFragment<SignUpViewModel, FragmentSignupBinding>() {
 
     //We can use by viewModels when the VM is not shared with other fragments

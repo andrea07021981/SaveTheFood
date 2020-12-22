@@ -71,7 +71,7 @@ class RecipeFragment : Fragment() {
             }
         })
 
-        recipeViewModel.recipeListResult.observe(this.viewLifecycleOwner, Observer {
+        recipeViewModel.recipeListResult.observe(this.viewLifecycleOwner, {
             (dataBinding.recipeRecycleview.adapter as RecipeAdapter).notifyDataSetChanged()
         })
     }
