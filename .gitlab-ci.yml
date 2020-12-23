@@ -76,4 +76,5 @@ debugUnitTests:
   interruptible: true
   stage: test
   script:
-    - ./gradlew -Pci --console=plain :app:testMockDebugUnitTest -Pbuild=devCI
+    #- ./gradlew -Pci --console=plain :app:testMockDebugUnitTest -Pbuild=devCI
+    - ./gradlew test -Pbuild=devCI
