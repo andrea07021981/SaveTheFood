@@ -31,14 +31,12 @@ import org.mockito.Mockito.mock
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoJUnitRunner
 import org.robolectric.Shadows.shadowOf
-import org.robolectric.annotation.LooperMode
 import java.io.IOException
 import java.lang.Thread.sleep
 
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
-@LooperMode(LooperMode.Mode.PAUSED)
 class HomeLocalDataSourceTest {
 
     private lateinit var userDao: FoodDatabaseDao
@@ -70,7 +68,7 @@ class HomeLocalDataSourceTest {
     @Throws(Exception::class)
     fun writeNewFood_Successful() {
         //TODO test mockito
-        shadowOf(Looper.getMainLooper()).idle()
+        //shadowOf(Looper.getMainLooper()).idle()
 
         val insertId = userDao.insert(FoodDomain().asDatabaseModel())
         val records = userDao.getFoods().getOrAwaitValue()

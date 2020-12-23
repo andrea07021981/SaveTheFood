@@ -1,8 +1,6 @@
 package com.example.savethefood.home
 
-import android.os.Looper
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.savethefood.MainCoroutineRule
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
@@ -14,19 +12,13 @@ import com.example.savethefood.data.succeeded
 import com.example.savethefood.util.FoodImage
 import com.example.savethefood.util.StorageType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
-import org.mockito.Mockito.*
-import org.robolectric.Shadows.shadowOf
-import org.robolectric.annotation.LooperMode
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 import java.util.*
 
 @ExperimentalCoroutinesApi

@@ -32,14 +32,12 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows.shadowOf
-import org.robolectric.annotation.LooperMode
 import java.io.File
 import java.net.HttpURLConnection
 
 
 @ExperimentalCoroutinesApi
 @RunWith(RobolectricTestRunner::class)
-@LooperMode(LooperMode.Mode.PAUSED)
 class HomeRemoteDataSourceTest {
 
     @get:Rule
@@ -90,7 +88,6 @@ class HomeRemoteDataSourceTest {
             .setResponseCode(HttpURLConnection.HTTP_OK)
             .setBody(FileReader.readStringFromFile("success_response.json"))
         mockWebServer.enqueue(response)
-        shadowOf(Looper.getMainLooper()).idle()
         val deferred = async {
             apiService.getFoodByUpc("1111")
         }.await()

@@ -72,8 +72,8 @@ assembleDebug:
       - app/build/outputs/
 
 # Run all tests, if any fails, interrupt the pipeline(fail it)
-debugTests:
+debugUnitTests:
   interruptible: true
   stage: test
   script:
-    - ./gradlew -Pci --console=plain :app:test -Pbuild=devCI
+    - ./gradlew -Pci --console=plain :app:testMockDebugUnitTest -Pbuild=devCI
