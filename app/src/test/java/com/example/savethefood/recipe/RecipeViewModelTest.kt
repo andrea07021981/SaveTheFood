@@ -16,6 +16,7 @@ import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTe
 import com.example.savethefood.data.source.repository.FakeRecipeDataRepositoryTest
 import com.example.savethefood.data.source.repository.FakeUserDataRepositoryTest
 import com.example.savethefood.viewmodel.getOrAwaitValue
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
@@ -77,7 +78,7 @@ class RecipeViewModelTest {
     fun updateDataList_listOfRecipes_returnEvent() {
         // runBlockingTest gives you finer control over virtual time if you need it
         // runBlocking is good for testing non-delays
-        mainCoroutineRule.launch {
+        mainCoroutineRule.launch(Dispatchers.Default) {
             recipeViewModel.searchFilter.value = ""
             //Given a list of results
             val flowRequest = fakeRecipeDataRepositoryTest.getRecipes("")
