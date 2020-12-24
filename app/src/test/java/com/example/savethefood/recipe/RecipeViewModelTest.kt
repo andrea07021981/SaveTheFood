@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.*
@@ -76,7 +77,7 @@ class RecipeViewModelTest {
     fun updateDataList_listOfRecipes_returnEvent() {
         // runBlockingTest gives you finer control over virtual time if you need it
         // runBlocking is good for testing non-delays
-        mainCoroutineRule.runBlockingTest {
+        mainCoroutineRule.launch {
             recipeViewModel.searchFilter.value = ""
             //Given a list of results
             val flowRequest = fakeRecipeDataRepositoryTest.getRecipes("")
