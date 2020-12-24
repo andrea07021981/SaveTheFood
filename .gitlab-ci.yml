@@ -77,4 +77,4 @@ debugUnitTests:
   stage: test
   script:
     #- ./gradlew -Pci --console=plain :app:testMockDebugUnitTest -Pbuild=devCI
-    - ./gradlew test -Pbuild=devCI
+    - ./gradlew test --scan -Pbuild=devCI
