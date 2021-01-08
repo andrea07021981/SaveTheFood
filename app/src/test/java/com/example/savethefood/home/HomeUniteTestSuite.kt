@@ -8,8 +8,8 @@ import org.junit.runners.Suite
 @ExperimentalCoroutinesApi
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
-    HomeLocalDataSourceTest::class,
-    HomeRemoteDataSourceTest::class,
+    //HomeLocalDataSourceTest::class,
+    //omeRemoteDataSourceTest::class,
     HomeRepositoryTest::class,
     HomeViewModelTest::class)
 class UnitTestSuite

@@ -104,7 +104,7 @@ android {
 
     flavorDimensions "version"
 
-    // If you need to add more flavors, consider using flavor dimensions.
+    // If you need to add more flavors, consider using flavor dimensions. Need mock for google json
     productFlavors {
         mock {
             dimension "version"
