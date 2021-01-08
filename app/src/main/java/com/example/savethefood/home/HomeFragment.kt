@@ -95,17 +95,17 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
     override fun activateObservers() {
         viewModel.detailFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
-                val foodImageView =
-                    dataBinding.foodRecycleview.findViewById<ImageView>(R.id.food_imageview)
-                val foodTextview =
-                    dataBinding.foodRecycleview.findViewById<TextView>(R.id.food_textview)
-                val extras = FragmentNavigatorExtras(
-                    foodImageView to "foodImage",
-                    foodTextview to "foodTitle"
-                )
-                val bundle = bundleOf("foodDomain" to it)
-                findNavController()
-                    .navigate(R.id.foodDetailFragment, bundle, null, extras)
+                with(dataBinding.foodRecycleview) {
+                    val foodImageView = findViewById<ImageView>(R.id.food_imageview)
+                    val foodTextView = findViewById<TextView>(R.id.food_textview)
+                    val extras = FragmentNavigatorExtras(
+                        foodImageView to "foodImage",
+                        foodTextView to "foodTitle"
+                    )
+                    val bundle = bundleOf("foodDomain" to it)
+                    findNavController()
+                        .navigate(R.id.foodDetailFragment, bundle, null, extras)
+                }
             }
         })
 

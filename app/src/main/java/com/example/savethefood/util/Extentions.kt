@@ -4,10 +4,13 @@ import android.app.Activity
 import android.app.SearchManager
 import android.content.Context
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.data.Result
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch

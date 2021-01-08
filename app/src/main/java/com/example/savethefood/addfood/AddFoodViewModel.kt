@@ -1,6 +1,6 @@
 package com.example.savethefood.addfood
 
-import android.util.Log
+import android.util.*
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener

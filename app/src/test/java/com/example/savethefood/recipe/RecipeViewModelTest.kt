@@ -2,7 +2,11 @@ package com.example.savethefood.recipe
 
 import android.os.Build
 import android.os.Looper
+import android.util.SparseArray
+import android.util.SparseIntArray
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.collection.arrayMapOf
+import androidx.collection.arraySetOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -10,6 +14,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.savethefood.MainCoroutineRule
 import com.example.savethefood.data.Result
+import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.local.datasource.FakeRecipeDataSourceTest
 import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
@@ -34,6 +39,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
+/* TODO move to instrumented test
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
@@ -109,3 +115,4 @@ class RecipeViewModelTest {
 
     }
 }
+*/
