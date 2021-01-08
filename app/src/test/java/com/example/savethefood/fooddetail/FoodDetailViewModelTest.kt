@@ -19,6 +19,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito
 
+/* TODO move to instrumented
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 class FoodDetailViewModelTest {
@@ -53,3 +54,5 @@ class FoodDetailViewModelTest {
             value.getContentIfNotHandled(), not(nullValue()))
     }
 }
+
+ */
