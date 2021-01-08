@@ -14,6 +14,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+/* TODO move to instrumented
 @RunWith(AndroidJUnit4::class)
 class HomeViewModelTest {
 
@@ -54,3 +55,5 @@ class HomeViewModelTest {
             value.getContentIfNotHandled(), not(nullValue()))
     }
 }
+
+ */

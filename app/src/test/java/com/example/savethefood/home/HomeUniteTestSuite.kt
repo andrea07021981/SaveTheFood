@@ -10,6 +10,6 @@ import org.junit.runners.Suite
 @Suite.SuiteClasses(
     //HomeLocalDataSourceTest::class,
     //omeRemoteDataSourceTest::class,
-    HomeRepositoryTest::class,
-    HomeViewModelTest::class)
+    HomeRepositoryTest::class)
+    //HomeViewModelTest::class)
 class UnitTestSuite
