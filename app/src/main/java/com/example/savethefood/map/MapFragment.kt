@@ -11,7 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
+import com.example.savethefood.databinding.FragmentMapBinding
 import com.example.savethefood.login.LoginFragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -22,12 +25,20 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class MapFragment : Fragment() {
+class MapFragment : BaseFragment<MapViewModel, FragmentMapBinding>() {
     //TODO This class allows the user to save local places where he found particular food  Then we can use geofence to let him know when he's near
     companion object {
         const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
         private val TAG = MapFragment::class.java.name
     }
+
+    override val viewModel by viewModels<MapViewModel>()
+
+    override val layoutRes: Int
+        get() = R.layout.fragment_map
+
+    override val classTag: String
+        get() = MapFragment::class.java.simpleName
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var locationGranted: Boolean = false
@@ -46,16 +57,14 @@ class MapFragment : Fragment() {
         requestPermissions()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun activateObservers() {
+
+    }
+
+    override fun init() {
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
             requireNotNull(activity))
-
-        return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
     private fun requestPermissions() {

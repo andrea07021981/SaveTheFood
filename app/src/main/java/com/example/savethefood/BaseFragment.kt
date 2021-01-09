@@ -17,13 +17,18 @@ abstract class BaseFragment<VM : ViewModel, DB : ViewDataBinding>() : Fragment()
     protected abstract val layoutRes: Int
 
     private var _dataBinding: DB? = null
-    protected val dataBinding get() = _dataBinding!!
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    protected val dataBinding: DB
+        get() = _dataBinding!!
 
     protected abstract val classTag: String
 
-    fun init(inflater: LayoutInflater, container: ViewGroup) {
+    private fun baseInit(inflater: LayoutInflater, container: ViewGroup) {
         _dataBinding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
-        dataBinding.lifecycleOwner = this
+        _dataBinding?.let {
+            it.lifecycleOwner = this
+        }
     }
 
     open fun init() {
@@ -34,7 +39,7 @@ abstract class BaseFragment<VM : ViewModel, DB : ViewDataBinding>() : Fragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        init(inflater, container!!)
+        baseInit(inflater, container!!)
         init()
         activateObservers()
         return dataBinding.root

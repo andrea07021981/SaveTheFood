@@ -31,6 +31,9 @@ android {
                                      "$projectDir/schemas".toString()]
             }
         }
+        buildFeatures {
+            viewBinding true
+        }
         packagingOptions {
             exclude "**/attach_hotspot_windows.dll"
             exclude "META-INF/licenses/**"
