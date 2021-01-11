@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        setSupportActionBar(binding.toolbar)
         binding.btnAdd.setOnClickListener {
             val navHostFragment = supportFragmentManager.primaryNavigationFragment as NavHostFragment
             val currentFragment = navHostFragment.childFragmentManager.primaryNavigationFragment as Fragment
@@ -49,7 +50,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpNavigation(binding: ActivityMainBinding) {
-        val navView = binding.navView
         navController = findNavController(R.id.nav_host_fragment) as NavHostController
         val graphs = {
             setOf(
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
             binding.toolbar.updateVisibility(destination.id)
         }
 
-        navView.setupWithNavController(navController)
+        binding.navView.setupWithNavController(navController)
     }
 
     private fun animateFab(destination: NavDestination) {

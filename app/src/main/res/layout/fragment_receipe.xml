@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".recipe.RecipeFragment"
-        android:background="@color/colorAccent">
+        android:background="@color/colorAccentBright">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recipe_recycleview"

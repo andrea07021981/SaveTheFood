@@ -18,12 +18,12 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="200sp"
+        android:translationZ="20dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4dp"
         app:cardUseCompatPadding="true"
         app:strokeColor="@color/colorAccent"
         app:strokeWidth="5dp"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="6dp"
-        android:translationZ="20dp"
         android:layout_margin="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
