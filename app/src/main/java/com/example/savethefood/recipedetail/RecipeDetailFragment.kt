@@ -1,50 +1,52 @@
 package com.example.savethefood.recipedetail
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.savethefood.BaseFragment
 import com.example.savethefood.EventObserver
-import com.example.savethefood.databinding.FragmentRecipeDetailBinding
+import com.example.savethefood.R
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.RecipeDataRepository
+import com.example.savethefood.databinding.FragmentRecipeDetailBinding
 
-class RecipeDetailFragment : Fragment() {
+class RecipeDetailFragment : BaseFragment<RecipeDetailViewModel, FragmentRecipeDetailBinding>() {
 
-    private val recipeDetailViewModel by viewModels<RecipeDetailViewModel> {
+    private lateinit var recipeSelected: RecipeResult
+
+    override val viewModel by viewModels<RecipeDetailViewModel> {
         RecipeDetailViewModel.RecipeDetailViewModelFactory(RecipeDataRepository.getRepository(requireActivity().application), recipeSelected)
     }
 
-    private lateinit var recipeSelected: RecipeResult
-    private lateinit var dataBinding: FragmentRecipeDetailBinding
+    override val layoutRes: Int
+        get() = R.layout.fragment_recipe_detail
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) : View? {
-        dataBinding = FragmentRecipeDetailBinding.inflate(inflater)
-        recipeSelected = RecipeDetailFragmentArgs.fromBundle(
-            requireArguments()
-        ).recipeResult
-        dataBinding.lifecycleOwner = this
-        dataBinding.recipeDetailViewModel = recipeDetailViewModel
+    override val classTag: String
+        get() = RecipeDetailFragment::class.java.simpleName
 
-        dataBinding.ingredientRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        dataBinding.ingredientRecyclerView.adapter =
-            IngredientAdapter(
-                IngredientAdapter.OnIngredientClickListener {
-                    //TODO OPEN ALER DIALOG WITH CUSTOM LAYOUT INGREDIENT DETAIL
-                })
-        dataBinding.maintoolbar.setNavigationOnClickListener {
-            recipeDetailViewModel.backToRecipeList()
+    override fun init() {
+        if (arguments?.isEmpty == false) {
+            recipeSelected = RecipeDetailFragmentArgs.fromBundle(
+                requireArguments()
+            ).recipeResult
         }
+        dataBinding.also {
+            it.recipeDetailViewModel = viewModel
 
-        recipeDetailViewModel.recipeListEvent.observe(this.viewLifecycleOwner, EventObserver {
+            it.ingredientRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            it.ingredientRecyclerView.adapter =
+                IngredientAdapter(
+                    IngredientAdapter.OnIngredientClickListener {
+                        //TODO OPEN ALER DIALOG WITH CUSTOM LAYOUT INGREDIENT DETAIL
+                    })
+            it.maintoolbar.setNavigationOnClickListener {
+                viewModel.backToRecipeList()
+            }
+        }
+    }
+
+    override fun activateObservers() {
+        viewModel.recipeListEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 findNavController()
                     .popBackStack()
@@ -52,8 +54,7 @@ class RecipeDetailFragment : Fragment() {
         })
 
         //TODO add save recipe into DB
-        
-        recipeDetailViewModel.recipeCookingtEvent.observe(this.viewLifecycleOwner, EventObserver {
+        viewModel.recipeCookingtEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 findNavController()
                     .navigate(
@@ -63,7 +64,5 @@ class RecipeDetailFragment : Fragment() {
                     )
             }
         })
-        return dataBinding.root
     }
-
 }
