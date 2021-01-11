@@ -32,7 +32,10 @@ android {
             }
         }
         buildFeatures {
-            viewBinding true
+            viewBinding true // View binding is a very much simpler version/a subset of data binding.
+                            //The difference between the two is that view binding is only for view
+                            // references and not for binding UI with data sources
+            dataBinding true
         }
         packagingOptions {
             exclude "**/attach_hotspot_windows.dll"
@@ -140,11 +143,6 @@ android {
                 variant.setIgnore(true)
             }
         }
-    }
-
-    // Enables data binding.
-    dataBinding {
-        enabled = true
     }
 
     // Enable parcellable

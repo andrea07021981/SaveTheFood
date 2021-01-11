@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import com.example.savethefood.R
-import kotlinx.android.synthetic.main.adapter_food_spinner.view.*
+import com.example.savethefood.databinding.AdapterFoodSpinnerBinding
 
 // ADD two way data binding observers
 /**
- * Custom adapter for food spinner
+ * Custom adapter for food spinner. We can use the viewbinding instead databinding since we don't
+ * need to bind data in layout
  * @param   ctx         current context
  * @param   foodItems   list of items
  */
@@ -27,19 +27,15 @@ class FoodSpinnerAdapter(
         return createItemView(position, convertView, parent);
     }
 
-    private fun createItemView(position: Int, recycledView: View?, parent: ViewGroup):View {
+    private fun createItemView(position: Int, convertView: View?, parent: ViewGroup):View {
         val foodItem = getItem(position)
-
-        val view = recycledView ?: LayoutInflater.from(context).inflate(
-            R.layout.adapter_food_spinner,
-            parent,
-            false
-        )
-
+        val viewDataBinding  = convertView?.let {
+            AdapterFoodSpinnerBinding.bind(it)
+        } ?: AdapterFoodSpinnerBinding.inflate(LayoutInflater.from(context), parent, false)
         foodItem?.let {
-            view.icon.setImageResource(context.resources.getIdentifier(foodItem.img.id, "drawable", context.packageName))
-            view.title.text = foodItem.name
+            viewDataBinding.icon.setImageResource(context.resources.getIdentifier(foodItem.img.id, "drawable", context.packageName))
+            viewDataBinding.title.text = foodItem.name
         }
-        return view
+        return viewDataBinding.root
     }
 }

@@ -1,11 +1,14 @@
 package com.example.savethefood
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -14,9 +17,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.savethefood.databinding.ActivityMainBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 
 internal interface FragmentCallback {
     fun onAddClicked(view: View)
@@ -59,14 +60,31 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.homeFragment, R.id.mapFragment, R.id.recipeFragment -> {
-                    cordinatorBottom.visibility = View.VISIBLE
+                    binding.cordinatorBottom.visibility = View.VISIBLE
                 }
-                else -> cordinatorBottom.visibility = View.GONE
+                else -> binding.cordinatorBottom.visibility = View.GONE
             }
-            toolbar.updateVisibility(destination.id)
+            animateFab(destination)
+            binding.toolbar.updateVisibility(destination.id)
         }
 
         navView.setupWithNavController(navController)
+    }
+
+    private fun animateFab(destination: NavDestination) {
+        binding.btnAdd.apply {
+            animate()
+                .setDuration(1000.toLong())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        if (destination.id == R.id.homeFragment) {
+                            this@apply.show()
+                        } else {
+                            this@apply.hide()
+                        }
+                    }
+                }).start()
+        }
     }
 
     private fun Toolbar.updateVisibility(id: Int) {

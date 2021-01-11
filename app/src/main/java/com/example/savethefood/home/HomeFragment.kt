@@ -24,8 +24,6 @@ import com.example.savethefood.util.configSearchView
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
@@ -76,19 +74,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
                     viewModel.moveToFoodDetail(food)
                 })
             //it.foodRecycleview.scheduleLayoutAnimation()
-        }
-
-        //Set tittle and Animate the fab
-        with(requireNotNull(activity) as MainActivity) {
-            btn_add.apply {
-            animate()
-                .setDuration(1000.toLong())
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        this@apply.show()
-                    }
-                }).start()
-            }
         }
     }
 
