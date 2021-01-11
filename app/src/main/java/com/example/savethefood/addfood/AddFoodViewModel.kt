@@ -1,20 +1,11 @@
 package com.example.savethefood.addfood
 
-import android.util.*
-import android.view.View
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
-import androidx.appcompat.widget.AppCompatSpinner
 import androidx.collection.ArraySet
 import androidx.collection.arraySetOf
-import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
-import androidx.databinding.InverseBindingListener
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.ui.FoodItem
-import com.example.savethefood.ui.FoodSpinnerAdapter
 import com.example.savethefood.util.FoodImage
 
 

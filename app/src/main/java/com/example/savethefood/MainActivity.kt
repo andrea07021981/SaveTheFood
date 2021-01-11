@@ -19,6 +19,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.savethefood.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+const val FAB_DURATION = 1_000
 internal interface FragmentCallback {
     fun onAddClicked(view: View)
 }
@@ -33,7 +34,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.btnAdd.setOnClickListener {
             val navHostFragment = supportFragmentManager.primaryNavigationFragment as NavHostFragment
@@ -74,13 +76,15 @@ class MainActivity : AppCompatActivity() {
     private fun animateFab(destination: NavDestination) {
         binding.btnAdd.apply {
             animate()
-                .setDuration(1000.toLong())
+                .setDuration(FAB_DURATION.toLong())
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
                         if (destination.id == R.id.homeFragment) {
+                            binding.navView.menu.getItem(2).isVisible = true
                             this@apply.show()
                         } else {
                             this@apply.hide()
+                            binding.navView.menu.getItem(2).isVisible = false
                         }
                     }
                 }).start()

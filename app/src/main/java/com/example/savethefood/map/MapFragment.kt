@@ -43,28 +43,34 @@ class MapFragment : BaseFragment<MapViewModel, FragmentMapBinding>() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var locationGranted: Boolean = false
     private lateinit var map: GoogleMap
-    private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        map = googleMap
-        requestPermissions()
-    }
+    private lateinit var callback: OnMapReadyCallback
 
     override fun activateObservers() {
 
     }
 
     override fun init() {
+        dataBinding.also {
+            it.mapViewModel = viewModel
+        }
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
             requireNotNull(activity))
+
+        // Prepare Map callback SAM
+        callback = OnMapReadyCallback { googleMap ->
+            /**
+             * Manipulates the map once available.
+             * This callback is triggered when the map is ready to be used.
+             * This is where we can add markers or lines, add listeners or move the camera.
+             * In this case, we just add a marker near Sydney, Australia.
+             * If Google Play services is not installed on the device, the user will be prompted to
+             * install it inside the SupportMapFragment. This method will only be triggered once the
+             * user has installed Google Play services and returned to the app.
+             */
+            map = googleMap
+            requestPermissions()
+        }
     }
 
     private fun requestPermissions() {
