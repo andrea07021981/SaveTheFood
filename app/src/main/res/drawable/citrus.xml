@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <path
+        android:fillColor="#FFD600"
+        android:pathData="M44,24c0,1-1.119,3-2.5,3S39,25.656,39,24s1.119-3,2.5-3S44,23,44,24z" />
+    <path
+        android:fillColor="#FFD600"
+        android:pathData="M42,24c0,19-22.567,19-24.5,19S6,39,6,24C6,8,15.567,5,17.5,5S42,5,42,24z" />
+    <path
+        android:fillColor="#FFF59D"
+        android:pathData="M18,9c5.42,0,10,6.869,10,15s-4.58,15-10,15S8,32.131,8,24S12.58,9,18,9 M18,5C10.268,5,4,13.507,4,24 s6.268,19,14,19s14-8.507,14-19S25.732,5,18,5L18,5z" />
+    <path
+        android:fillColor="#FFF59D"
+        android:pathData="M 17 6.001 H 19 V 40.001 H 17 V 6.001 Z" />
+    <path
+        android:fillColor="#FFF59D"
+        android:pathData="M 6 22.999 H 30 V 24.999 H 6 V 22.999 Z" />
+    <path
+        android:strokeColor="#FFF59D"
+        android:strokeWidth="2"
+        android:pathData="M 27 12.999 L 18 23.999 L 10 12.999 " />
+    <path
+        android:strokeColor="#FFF59D"
+        android:strokeWidth="2"
+        android:pathData="M 10 34.999 L 18 23.999 L 26 34.999 " />
+    <path
+        android:fillColor="#FFA000"
+        android:pathData="M 34 28 C 34.5522847498 28 35 28.4477152502 35 29 C 35 29.5522847498 34.5522847498 30 34 30 C 33.4477152502 30 33 29.5522847498 33 29 C 33 28.4477152502 33.4477152502 28 34 28 Z" />
+    <path
+        android:fillColor="#FFA000"
+        android:pathData="M 35 32 C 35.5522847498 32 36 32.4477152502 36 33 C 36 33.5522847498 35.5522847498 34 35 34 C 34.4477152502 34 34 33.5522847498 34 33 C 34 32.4477152502 34.4477152502 32 35 32 Z" />
+    <path
+        android:fillColor="#FFA000"
+        android:pathData="M 38 29 C 38.5522847498 29 39 29.4477152502 39 30 C 39 30.5522847498 38.5522847498 31 38 31 C 37.4477152502 31 37 30.5522847498 37 30 C 37 29.4477152502 37.4477152502 29 38 29 Z" />
+</vector>

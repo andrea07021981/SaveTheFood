@@ -12,11 +12,8 @@ class FoodImageConverter{
     }
 
     @TypeConverter
-    fun toFoodImage(value: String): FoodImage = when(value){
-        "ic_apple_1" -> FoodImage.APPLE
-        "ic_apple_1" -> FoodImage.MEAT
-        else -> FoodImage.EMPTY
-    }
+    fun toFoodImage(value: String): FoodImage =
+        FoodImage.values().find { it.id == value} ?: FoodImage.EMPTY
 }
 
 class StorageTypeConverter{

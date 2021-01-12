@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="addFoodViewModel"
             type="com.example.savethefood.addfood.AddFoodViewModel" />
@@ -45,6 +44,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="8dp"
+                    android:paddingBottom="16dp"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +70,7 @@
                             android:inputType="text"
                             android:singleLine="true"
                             tools:text="Apple"
+                            android:text="@={addFoodViewModel.foodItem.foodTitle}"
                             android:nextFocusDown="@id/et_description"
                             android:textColor="@color/colorAccent" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -96,6 +97,7 @@
                             android:inputType="text"
                             android:singleLine="true"
                             tools:text="Apple"
+                            android:text="@={addFoodViewModel.foodItem.foodDescription}"
                             android:textColor="@color/colorAccent" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,8 +130,6 @@
                     <Button
                         android:id="@+id/save_button"
                         android:layout_width="match_parent"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginEnd="24dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="24dp"
                         android:layout_alignParentBottom="true"
