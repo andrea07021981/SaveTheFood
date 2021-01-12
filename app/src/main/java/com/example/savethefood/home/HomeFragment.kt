@@ -64,12 +64,11 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
     }
 
     override fun init() {
-        super.init()
-        dataBinding.also {
-            it.homeViewModel = viewModel
-            it.foodRecycleview.layoutManager = LinearLayoutManager(activity)
+        with(dataBinding) {
+            homeViewModel = viewModel
+            foodRecycleview.layoutManager = LinearLayoutManager(activity)
             setHasOptionsMenu(true)
-            it.foodRecycleview.adapter =
+            foodRecycleview.adapter =
                 FoodAdapter(FoodAdapter.OnClickListener { food ->
                     viewModel.moveToFoodDetail(food)
                 })

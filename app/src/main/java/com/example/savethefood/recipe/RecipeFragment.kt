@@ -7,11 +7,13 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.EventObserver
 import com.example.savethefood.R
+import com.example.savethefood.cook.RecipeCookFragmentArgs
 import com.example.savethefood.data.source.repository.RecipeDataRepository
 import com.example.savethefood.databinding.FragmentReceipeBinding
 import com.example.savethefood.util.configSearchView
@@ -37,15 +39,15 @@ class RecipeFragment : BaseFragment<RecipeViewModel, FragmentReceipeBinding>() {
                 requireArguments()
             ).foodName
         }
-        dataBinding.also {
-            it.recipeViewModel = viewModel
-            it.recipeRecycleview.layoutManager = LinearLayoutManager(activity)
+        with(dataBinding) {
+            recipeViewModel = viewModel
+            recipeRecycleview.layoutManager = LinearLayoutManager(activity)
             setHasOptionsMenu(true)
-            it.recipeRecycleview.adapter =
+            recipeRecycleview.adapter =
                 RecipeAdapter(RecipeAdapter.OnClickListener { recipeResult ->
                     viewModel.moveToRecipeDetail(recipeResult)
                 })
-            it.recipeRecycleview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            recipeRecycleview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     viewModel.reloadList()

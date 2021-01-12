@@ -1,42 +1,37 @@
 package com.example.savethefood.cook
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.savethefood.BaseFragment
+import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentRecipeCookBinding
-import com.example.savethefood.data.domain.RecipeInfoDomain
-import com.example.savethefood.home.HomeFragmentArgs
-import com.example.savethefood.recipe.RecipeFragmentArgs
 
-class RecipeCookFragment : Fragment() {
+class RecipeCookFragment : BaseFragment<RecipeCookViewModel, FragmentRecipeCookBinding>() {
 
     private val args: RecipeCookFragmentArgs by navArgs()
-    private val recipeCookViewModel by viewModels<RecipeCookViewModel> {
+
+    override val viewModel by viewModels<RecipeCookViewModel> {
         RecipeCookViewModel.Factory(recipe = args.recipeInfoDomain)
     }
 
-    private lateinit var dataBinding: FragmentRecipeCookBinding
+    override val layoutRes: Int
+        get() = R.layout.fragment_recipe_cook
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) : View? {
-        dataBinding = FragmentRecipeCookBinding.inflate(inflater).also {
-            it.lifecycleOwner = this
-            it.recipeCookViewModel = recipeCookViewModel
-            it.stepRecycleView.layoutManager = LinearLayoutManager(activity)
-            it.stepRecycleView.adapter =
+    override val classTag: String
+        get() = RecipeCookFragment::class.java.simpleName
+
+    override fun init() {
+        with(dataBinding) {
+            recipeCookViewModel = viewModel
+            stepRecycleView.layoutManager = LinearLayoutManager(activity)
+            stepRecycleView.adapter =
                 StepCookAdapter(StepCookAdapter.OnStepClickListener {
                 })
         }
+    }
+    override fun activateObservers() {
 
-        return dataBinding.root
     }
 
 }

@@ -16,7 +16,7 @@ class SplashViewModel : ViewModel() {
         get() = _loginEvent
 
     init {
-        val timer = object: CountDownTimer(1000, 1000) {
+        val timer = object: CountDownTimer(2000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
 
             }

@@ -32,9 +32,9 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
     override fun init() {
         super.init()
 
-        dataBinding.also {
-            it.addFoodViewModel = viewModel
-            it.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener
+        with(dataBinding) {
+            addFoodViewModel = viewModel
+            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener
             {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,

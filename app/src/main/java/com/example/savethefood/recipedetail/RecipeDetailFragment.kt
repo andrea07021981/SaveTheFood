@@ -30,16 +30,15 @@ class RecipeDetailFragment : BaseFragment<RecipeDetailViewModel, FragmentRecipeD
                 requireArguments()
             ).recipeResult
         }
-        dataBinding.also {
-            it.recipeDetailViewModel = viewModel
-
-            it.ingredientRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-            it.ingredientRecyclerView.adapter =
+        with(dataBinding) {
+            recipeDetailViewModel = viewModel
+            ingredientRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            ingredientRecyclerView.adapter =
                 IngredientAdapter(
                     IngredientAdapter.OnIngredientClickListener {
                         //TODO OPEN ALER DIALOG WITH CUSTOM LAYOUT INGREDIENT DETAIL
                     })
-            it.maintoolbar.setNavigationOnClickListener {
+            maintoolbar.setNavigationOnClickListener {
                 viewModel.backToRecipeList()
             }
         }

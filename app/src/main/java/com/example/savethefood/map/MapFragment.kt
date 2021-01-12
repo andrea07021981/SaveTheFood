@@ -50,8 +50,8 @@ class MapFragment : BaseFragment<MapViewModel, FragmentMapBinding>() {
     }
 
     override fun init() {
-        dataBinding.also {
-            it.mapViewModel = viewModel
+        with(dataBinding) {
+            mapViewModel = viewModel
         }
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(

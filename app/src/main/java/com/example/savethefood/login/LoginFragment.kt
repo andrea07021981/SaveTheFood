@@ -46,8 +46,8 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
     }
 
     override fun init() {
-        dataBinding.also {
-            it.loginViewModel = viewModel
+        with(dataBinding) {
+            loginViewModel = viewModel
         }
         Log.d(classTag, "Init done")
     }

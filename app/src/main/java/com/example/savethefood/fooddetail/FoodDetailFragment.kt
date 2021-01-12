@@ -32,9 +32,8 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel,FragmentFoodDetailBi
     }
 
     override fun init() {
-        super.init()
-        dataBinding.also {
-            it.foodDetailViewModel = viewModel
+        with(dataBinding) {
+            foodDetailViewModel = viewModel
         }
     }
 

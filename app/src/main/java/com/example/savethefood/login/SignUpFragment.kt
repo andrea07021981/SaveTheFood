@@ -27,8 +27,8 @@ class SignUpFragment : BaseFragment<SignUpViewModel, FragmentSignupBinding>() {
         get() = SignUpFragment::class.java.simpleName
 
     override fun init() {
-        dataBinding.also {
-            it.signupViewModel = viewModel
+        with(dataBinding) {
+            signupViewModel = viewModel
         }
     }
 

@@ -10,29 +10,27 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentSplashBinding
 
-class SplashFragment : Fragment() {
+class SplashFragment : BaseFragment<SplashViewModel, FragmentSplashBinding>() {
 
-    private val splashViewModel by viewModels<SplashViewModel>()
+    override val viewModel by viewModels<SplashViewModel>()
 
-    private lateinit var dataBinding: FragmentSplashBinding
+    override val layoutRes: Int
+        get() = R.layout.fragment_splash
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) : View? {
-        dataBinding = FragmentSplashBinding.inflate(inflater);
-        dataBinding.splashViewModel = splashViewModel
-        dataBinding.lifecycleOwner = this
-        return dataBinding.root
+    override val classTag: String
+        get() = SplashFragment::class.java.simpleName
+
+    override fun init() {
+        with(dataBinding) {
+            splashViewModel = viewModel
+        }
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        splashViewModel.loginEvent.observe(this.viewLifecycleOwner, Observer {
+    override fun activateObservers() {
+        viewModel.loginEvent.observe(this.viewLifecycleOwner, {
             it.let {
                 val extras = FragmentNavigatorExtras(
                     dataBinding.chefImageview to "chef_imageview"
