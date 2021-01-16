@@ -18,6 +18,9 @@ import com.example.savethefood.data.domain.ProductDomain
 import com.example.savethefood.food.FoodSearchAdapter
 import com.example.savethefood.ui.FoodItem
 import com.example.savethefood.ui.FoodSpinnerAdapter
+import com.example.savethefood.addfood.FoodTypeAdapter
+import com.example.savethefood.data.domain.RecipeResult
+import com.example.savethefood.recipe.RecipeAdapter
 
 /**
  * Needs to be used with [NumberOfSetsConverters.setArrayToString].
@@ -55,38 +58,10 @@ fun TextView.bindFoodDescription(html: String?) {//TODO check if we can directly
     html?.let { text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY); }
 }
 
-
-@BindingAdapter("bind:spinnerAdapter")
-fun Spinner.bindBindAdapter(list: ArraySet<FoodItem>) {
-    adapter = FoodSpinnerAdapter(
-        context,
-        list.sortedBy(FoodItem::name)
-    )
-}
-
-
-@BindingAdapter(value = ["selectedValue", "selectedValueAttrChanged"], requireAll = false)
-fun bindSpinnerData(
-    pAppCompatSpinner: AppCompatSpinner,
-    newSelectedValue: FoodItem?,
-    newTextAttrChanged: InverseBindingListener
-) {
-    pAppCompatSpinner.onItemSelectedListener = object : OnItemSelectedListener {
-        override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
-            newTextAttrChanged.onChange()
-        }
-
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-
-        }
+@BindingAdapter("bind:foodListData")
+fun bindFoodListData(recyclerView: RecyclerView, data: Set<FoodItem>?) {
+    data?.let {
+        val adapter = recyclerView.adapter as FoodTypeAdapter
+        adapter.submitList(data.sortedBy(FoodItem::name))
     }
-    if (newSelectedValue != null) {
-        val pos = (pAppCompatSpinner.adapter as FoodSpinnerAdapter).getPosition(newSelectedValue)
-        pAppCompatSpinner.setSelection(pos, true)
-    }
-}
-
-@InverseBindingAdapter(attribute = "selectedValue", event = "selectedValueAttrChanged")
-fun captureSelectedValue(pAppCompatSpinner: AppCompatSpinner): FoodItem? {
-    return pAppCompatSpinner.selectedItem as FoodItem
 }

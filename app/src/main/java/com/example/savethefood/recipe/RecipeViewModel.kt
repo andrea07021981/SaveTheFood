@@ -62,16 +62,14 @@ class RecipeViewModel(
 
     // This is the observable property, it changes every time the month filter changes (the original values never changes)
     val recipeListResult = _searchFilter.switchMap { // OR    _searchFilter.switchMap { used to refresh/trigger changed livedata
-        liveData {
-            if (it != null && it.isNotEmpty() ) {
-                 emit(_recipeListResult.map { list ->
-                    list?.filter { recipe ->
-                        recipe.title.toLowerCase(Locale.getDefault()).contains(it.toLowerCase(Locale.getDefault()))
-                    }
-                })
-            } else {
-                 emit(_recipeListResult)
+        if (it != null && it.isNotEmpty() ) {
+             _recipeListResult.map { list ->
+                list?.filter { recipe ->
+                    recipe.title.toLowerCase(Locale.getDefault()).contains(it.toLowerCase(Locale.getDefault()))
+                }
             }
+        } else {
+             _recipeListResult
         }
     }
 

@@ -116,16 +116,38 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dip"
-                            android:text="Food Image:"
+                            android:text="Food Type:"
                             android:layout_marginBottom="5dp" />
-
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/spinner"
-                            android:layout_width="match_parent"
+                        <LinearLayout
                             android:layout_height="wrap_content"
-                            android:spinnerMode="dialog"
-                            bind:spinnerAdapter="@{addFoodViewModel.foodItems}"
-                            bind:selectedValue="@={addFoodViewModel.selectedItem}"/>
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal" >
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                bind:imageUrl="@{addFoodViewModel.foodItem.foodImg}"
+                                tools:src="@drawable/ic_apple_1"/>
+
+                            <TextView
+                                android:id="@+id/title"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="match_parent"
+                                android:text="@{addFoodViewModel.foodItem.foodImg.name()}"
+                                tools:text="Apple"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:gravity="center" />
+
+                            <ImageButton
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:onClick="@{() -> addFoodViewModel.openFoodDialog()}"
+                                android:background="@android:color/transparent"
+                                android:src="@drawable/ic_baseline_search_24"/>
+                        </LinearLayout>
                     </LinearLayout>
                     <Button
                         android:id="@+id/save_button"

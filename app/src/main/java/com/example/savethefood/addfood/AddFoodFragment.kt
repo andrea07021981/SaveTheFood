@@ -5,13 +5,13 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.fragment.app.viewModels
-import androidx.transition.Visibility
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentAddFoodBinding
 import com.google.android.material.transition.MaterialFadeThrough
 
 class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>() {
+
 
     override val viewModel by viewModels<AddFoodViewModel>()
 
@@ -34,26 +34,12 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
 
         with(dataBinding) {
             addFoodViewModel = viewModel
-            spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener
-            {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    Log.d("CLick", id.toString())
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    Log.d("CLick", "nothing")
-                }
-
-            }
         }
     }
 
     override fun activateObservers() {
-
+        viewModel.openFoodTypeDialog.observe(viewLifecycleOwner) {
+            SearchableFragment().show(parentFragmentManager, classTag)
+        }
     }
 }
