@@ -15,23 +15,30 @@
             type="com.example.savethefood.addfood.FoodTypeAdapter.OnClickListener" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:orientation="horizontal"
-        android:padding="16dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp">
+
+        <View
+            android:id="@+id/clickableOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="@{() -> foodCallback.onClick(foodItem)}" />
 
         <ImageView
             android:id="@+id/icon"
             android:layout_width="32dp"
             android:layout_height="match_parent"
-            bind:imageUrl="@{foodItem.img}"
+            android:layout_margin="16dp"
+            bind:imageLocalUrl="@{foodItem.img}"
             tools:src="@drawable/ic_apple_1" />
 
         <TextView
             android:id="@+id/title"
+            android:layout_toEndOf="@+id/icon"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@{foodItem.name}"
@@ -40,5 +47,5 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center" />
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

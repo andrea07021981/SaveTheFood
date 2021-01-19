@@ -4,18 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.collection.ArraySet
-import androidx.collection.arraySetOf
+import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentSearchableBinding
-import com.example.savethefood.ui.FoodItem
-import com.example.savethefood.util.FoodImage
-import kotlinx.android.synthetic.main.fragment_food.*
-import okhttp3.internal.notify
 
 class SearchableFragment : DialogFragment() {
 
@@ -34,14 +30,30 @@ class SearchableFragment : DialogFragment() {
     ): View {
         val view = FragmentSearchableBinding.inflate(inflater, container, false)
         with(view) {
+            lifecycleOwner = viewLifecycleOwner
             addFoodViewModel = viewModel
             foodsRecycleview.layoutManager = LinearLayoutManager(activity)
             foodsRecycleview.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             foodsRecycleview.adapter = FoodTypeAdapter(
                 FoodTypeAdapter.OnClickListener {
-
+                    setFragmentResult("result", bundleOf("foodItem" to it))
+                    dismiss()
                 }
             )
+
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    viewModel.updateFilter(query ?: "")
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    viewModel.updateFilter(newText ?: "")
+                    return false
+                }
+
+            })
+            searchView.setQuery("", true)
         }
         return view.root
     }

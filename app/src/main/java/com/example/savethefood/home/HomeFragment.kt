@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.*
+import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.succeeded
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.util.configSearchView
@@ -77,21 +78,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
     }
 
     override fun activateObservers() {
-        viewModel.detailFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
-            it.let {
-                with(dataBinding.foodRecycleview) {
-                    val foodImageView = findViewById<ImageView>(R.id.food_imageview)
-                    val foodTextView = findViewById<TextView>(R.id.food_textview)
-                    val extras = FragmentNavigatorExtras(
-                        foodImageView to "foodImage",
-                        foodTextView to "foodTitle"
-                    )
-                    val bundle = bundleOf("foodDomain" to it)
-                    findNavController()
-                        .navigate(R.id.foodDetailFragment, bundle, null, extras)
-                }
-            }
-        })
+        viewModel.detailFoodEvent.observe(viewLifecycleOwner, ::navigateTo)
 
         viewModel.barcodeFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
@@ -111,6 +98,22 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
                 Log.d(TAG, "Added")
             }
         })
+    }
+
+    override fun <T> navigateTo(event: Event<T>?) {
+        event.let {
+            with(dataBinding.foodRecycleview) {
+                val foodImageView = findViewById<ImageView>(R.id.food_imageview)
+                val foodTextView = findViewById<TextView>(R.id.food_textview)
+                val extras = FragmentNavigatorExtras(
+                    foodImageView to "foodImage",
+                    foodTextView to "foodTitle"
+                )
+                val bundle = bundleOf("foodDomain" to it)
+                findNavController()
+                    .navigate(R.id.foodDetailFragment, bundle, null, extras)
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

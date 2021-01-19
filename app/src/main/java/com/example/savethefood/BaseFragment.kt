@@ -4,10 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 
 // TODO add as base fragment everywhere. Create same way a generic baseVM
 abstract class BaseFragment<VM : ViewModel, DB : ViewDataBinding>() : Fragment() {
@@ -45,9 +50,9 @@ abstract class BaseFragment<VM : ViewModel, DB : ViewDataBinding>() : Fragment()
         return dataBinding.root
     }
 
-    open fun refresh() {
+    open fun refresh() {}
 
-    }
+    open fun <T> navigateTo(event: Event<T>?) {}
 
     override fun onDestroyView() {
         super.onDestroyView()

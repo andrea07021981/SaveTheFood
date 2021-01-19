@@ -13,30 +13,20 @@ class AddFoodViewModel(
 
 ) : ViewModel() {
 
-    var foodItem = FoodDomain()
-    // TODO use this one when dialog close or pass foodItem to dialog
-    var selectedItem = MutableLiveData<FoodItem>()
-        set(value) {
-            field = value
-            foodItem.foodImg = value.value?.img ?: FoodImage.EMPTY
-        }
+    private val _foodItem = MutableLiveData(FoodDomain())
+    val foodItem: LiveData<FoodDomain>
+        get() = _foodItem
 
-    var foodTypeFilter = MutableLiveData("")
-
-    private val _foodTypeFilter: MutableLiveData<String>
-        get() = foodTypeFilter
-
+    private val foodTypeFilter = MutableLiveData<String>()
     private var _foodsItems: ArraySet<FoodItem>? = null
-
-    // TODO review it
-    val foodItems: LiveData<Set<FoodItem>> = _foodTypeFilter.switchMap { filter ->
+    val foodItems = foodTypeFilter.switchMap { filter ->
         liveData {
             if (filter.isNullOrEmpty()) {
-                _foodsItems
+                emit(_foodsItems)
             } else {
-                _foodsItems?.filter {
-                    it.name.contains(filter)
-                }
+                emit(_foodsItems?.filter {
+                    it.name.contains(filter.toUpperCase())
+                })
             }
         }
     }
@@ -48,6 +38,16 @@ class AddFoodViewModel(
     private val _openFoodTypeDialog = MutableLiveData<Event<Unit>>()
     val openFoodTypeDialog: LiveData<Event<Unit>>
         get() = _openFoodTypeDialog
+
+    fun updateFilter(filter: String) {
+        foodTypeFilter.value = filter
+    }
+
+    fun updateFood(foodItem: FoodItem) {
+        // TODO search if we can use bindable and observable.
+        // MutableLiveData notify only when the object change
+        _foodItem.value = _foodItem.value?.copy(foodImg = foodItem.img)
+    }
 
     // TODO change to sorted set or treeset
     private fun getCustomSet(): ArraySet<FoodItem> {

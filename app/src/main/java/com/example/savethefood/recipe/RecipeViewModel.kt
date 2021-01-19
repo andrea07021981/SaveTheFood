@@ -1,17 +1,14 @@
 package com.example.savethefood.recipe
 
 import androidx.annotation.VisibleForTesting
-import androidx.arch.core.util.Function
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.constants.*
 import com.example.savethefood.constants.ApiCallStatus.*
 import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.RecipeRepository
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.Error
 
@@ -29,11 +26,7 @@ class RecipeViewModel(
         get() = _status
 
     //livedata filter, every time it changes and emit signal the switch map is activated and filter the private list
-    var searchFilter = MutableLiveData<String>("")
-        @VisibleForTesting set
-
-    private val _searchFilter: MutableLiveData<String>
-        get() = searchFilter
+    private val searchFilter= MutableLiveData<String>("")
 
     private val _reload = MutableLiveData<Boolean>(true)
     val reload: LiveData<Boolean>
@@ -61,7 +54,7 @@ class RecipeViewModel(
      @VisibleForTesting set // this allow us to use this set only for test
 
     // This is the observable property, it changes every time the month filter changes (the original values never changes)
-    val recipeListResult = _searchFilter.switchMap { // OR    _searchFilter.switchMap { used to refresh/trigger changed livedata
+    val recipeListResult = searchFilter.switchMap { // OR    _searchFilter.switchMap { used to refresh/trigger changed livedata
         if (it != null && it.isNotEmpty() ) {
              _recipeListResult.map { list ->
                 list?.filter { recipe ->
@@ -82,7 +75,7 @@ class RecipeViewModel(
     }
 
     fun updateDataList(filter: String) {
-       _searchFilter.value = filter
+       searchFilter.value = filter
     }
 
     fun reloadList() {

@@ -57,7 +57,7 @@
                 app:layout_constraintStart_toStartOf="@+id/left_well"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.26999998"
-                bind:imageUrl="@{foodDomain.foodImg}"
+                bind:imageLocalUrl="@{foodDomain.foodImg}"
                 tools:srcCompat="@drawable/ic_apple_1" />
 
             <LinearLayout

@@ -134,6 +134,9 @@ class FoodDataRepository @Inject constructor(
         e.printStackTrace()
         emit(kotlin.Result.Error("Login Error"))
     }*/
+    // In coroutines, a flow is a type that can emit multiple values sequentially,
+    // as opposed to suspend functions that return only a single value. For example, you can use a flow to receive live updates from a database
+    // TODO remove all suspend where we use flow, no needed
     override suspend fun getFoods(): Flow<Result<List<FoodDomain>>> {
         wrapEspressoIdlingResource {
             delay(1000) // TEST long time

@@ -29,8 +29,8 @@ fun goneIfNotNull(view: View, it: Result<List<FoodDomain>>?) {
 /**
  * Uses the Glide library to load an image by URL into an [ImageView]
  */
-@BindingAdapter("bind:imageUrl")
-fun ImageView.bindImage(img: FoodImage?) {
+@BindingAdapter("bind:imageLocalUrl")
+fun ImageView.bindImageLocalUrl(img: FoodImage?) {
     setImageResource(img?.let {
             resources.getIdentifier(img.id, "drawable", context.packageName)
     } ?: R.drawable.ic_broken_image)

@@ -126,7 +126,7 @@
                             <ImageView
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
-                                bind:imageUrl="@{addFoodViewModel.foodItem.foodImg}"
+                                bind:imageLocalUrl="@{addFoodViewModel.foodItem.foodImg}"
                                 tools:src="@drawable/ic_apple_1"/>
 
                             <TextView

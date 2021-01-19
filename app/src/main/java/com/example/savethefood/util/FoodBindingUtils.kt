@@ -59,9 +59,9 @@ fun TextView.bindFoodDescription(html: String?) {//TODO check if we can directly
 }
 
 @BindingAdapter("bind:foodListData")
-fun bindFoodListData(recyclerView: RecyclerView, data: Set<FoodItem>?) {
+fun bindFoodListData(recyclerView: RecyclerView, data: Collection<FoodItem>?) {
     data?.let {
         val adapter = recyclerView.adapter as FoodTypeAdapter
-        adapter.submitList(data.sortedBy(FoodItem::name))
+        adapter.submitList(data.toList())
     }
 }
