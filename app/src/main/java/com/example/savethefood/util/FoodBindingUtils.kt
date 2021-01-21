@@ -1,26 +1,18 @@
 package com.example.savethefood.util
 
-import android.view.View
 import android.widget.*
 import android.widget.AdapterView.*
-import androidx.appcompat.widget.AppCompatSpinner
-import androidx.collection.ArraySet
 import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
-import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
 import com.example.savethefood.data.domain.ProductDomain
 import com.example.savethefood.food.FoodSearchAdapter
-import com.example.savethefood.ui.FoodItem
-import com.example.savethefood.ui.FoodSpinnerAdapter
+import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.addfood.FoodTypeAdapter
-import com.example.savethefood.data.domain.RecipeResult
-import com.example.savethefood.recipe.RecipeAdapter
 
 /**
  * Needs to be used with [NumberOfSetsConverters.setArrayToString].

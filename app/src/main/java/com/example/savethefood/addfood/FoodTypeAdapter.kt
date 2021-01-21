@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.databinding.FoodTypeItemBinding
-import com.example.savethefood.ui.FoodItem
+import com.example.savethefood.data.domain.FoodItem
 
 class FoodTypeAdapter(
     private val onClickListener: OnClickListener

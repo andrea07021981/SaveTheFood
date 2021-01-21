@@ -8,7 +8,7 @@
 
         <variable
             name="foodItem"
-            type="com.example.savethefood.ui.FoodItem" />
+            type="com.example.savethefood.data.domain.FoodItem" />
 
         <variable
             name="foodCallback"

@@ -41,4 +41,8 @@
     <string name="food">Food</string>
     <string name="save">Save</string>
     <string name="online">Online</string>
+    <string name="best_before">Best before</string>
+    <string name="food_type">Food Type:</string>
+    <string name="food_description">Food Description</string>
+    <string name="food_name">Food name</string>
 </resources>

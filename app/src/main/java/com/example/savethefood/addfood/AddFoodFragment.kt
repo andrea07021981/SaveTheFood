@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentAddFoodBinding
-import com.example.savethefood.ui.FoodItem
+import com.example.savethefood.data.domain.FoodItem
 import com.google.android.material.transition.MaterialFadeThrough
 
 const val REQUEST_KEY = "request"

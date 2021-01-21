@@ -19,10 +19,10 @@
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:translationZ="20dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="4dp"
@@ -42,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:paddingBottom="16dp"
                     android:orientation="vertical"
@@ -55,7 +55,7 @@
                         style="@style/FormTextInputLayoutStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="24dp"
+                        android:layout_margin="16dp"
                         android:layout_alignParentTop="true"
                         android:textColorHint="@color/colorAccent"
                         app:errorEnabled="true"
@@ -65,7 +65,7 @@
                             android:id="@+id/et_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Food name"
+                            android:hint="@string/food_name"
                             android:imeOptions="actionNext"
                             android:inputType="text"
                             android:singleLine="true"
@@ -80,9 +80,9 @@
                         style="@style/FormTextInputLayoutStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginEnd="24dp"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
                         android:textColorHint="@color/colorAccent"
                         app:errorEnabled="true"
                         app:hintTextColor="@color/colorAccent"
@@ -92,7 +92,7 @@
                             android:id="@+id/et_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Food Description"
+                            android:hint="@string/food_description"
                             android:imeOptions="actionDone"
                             android:inputType="text"
                             android:singleLine="true"
@@ -106,9 +106,9 @@
                         android:padding="10dip"
                         android:id="@+id/food_layout"
                         android:layout_width="fill_parent"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginEnd="24dp"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/layout_description">
 
@@ -116,7 +116,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dip"
-                            android:text="Food Type:"
+                            android:text="@string/food_type"
                             android:layout_marginBottom="5dp" />
                         <LinearLayout
                             android:layout_height="wrap_content"
@@ -150,15 +150,26 @@
                         </LinearLayout>
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/best_before_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/best_before"
+                        tools:text="Best before"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@id/food_layout"/>
+
                     <DatePicker
                         android:id="@+id/editTextDate2"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="120dp"
                         android:datePickerMode="spinner"
                         android:calendarViewShown="false"
                         android:layout_marginStart="24dp"
                         android:layout_marginEnd="24dp"
-                        android:layout_below="@id/food_layout"
+                        android:layout_below="@id/best_before_textview"
                         android:ems="10"
                         android:inputType="date" />
 

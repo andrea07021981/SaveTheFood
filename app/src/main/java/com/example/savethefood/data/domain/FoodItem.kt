@@ -1,4 +1,4 @@
-package com.example.savethefood.ui
+package com.example.savethefood.data.domain
 
 import android.os.Parcelable
 import com.example.savethefood.util.FoodImage

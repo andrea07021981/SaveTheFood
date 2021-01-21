@@ -5,7 +5,7 @@ import androidx.collection.arraySetOf
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.ui.FoodItem
+import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.util.FoodImage
 
 
