@@ -19,6 +19,7 @@ import com.example.savethefood.databinding.FragmentReceipeBinding
 import com.example.savethefood.util.configSearchView
 
 // TODO add tablayout, recipe online and recipe saved (need room data entities)
+// TODO use paging library
 class RecipeFragment : BaseFragment<RecipeViewModel, FragmentReceipeBinding>() {
 
     private var foodName: String? = null

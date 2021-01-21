@@ -2,8 +2,6 @@ package com.example.savethefood.addfood
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.AdapterView
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.example.savethefood.BaseFragment
@@ -12,6 +10,8 @@ import com.example.savethefood.databinding.FragmentAddFoodBinding
 import com.example.savethefood.ui.FoodItem
 import com.google.android.material.transition.MaterialFadeThrough
 
+const val REQUEST_KEY = "request"
+const val BUNDLE_KEY = "foodItem"
 class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>() {
 
 
@@ -41,9 +41,9 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
 
     override fun onResume() {
         super.onResume()
-        setFragmentResultListener("result") { _, bundle ->
+        setFragmentResultListener(REQUEST_KEY) { _, bundle ->
             // We use a String here, but any type that can be put in a Bundle is supported
-            val result = bundle.get("foodItem") as FoodItem
+            val result = bundle.get(BUNDLE_KEY) as FoodItem
             viewModel.updateFood(result)
         }
     }
@@ -52,8 +52,8 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
             SearchableFragment().show(parentFragmentManager, classTag)
         }
 
-        viewModel.foodItem.observe(viewLifecycleOwner) {
-            Log.d(classTag, "Updated item")
+        viewModel.foodDomain.observe(viewLifecycleOwner) {
+            Log.d(classTag, "Updated item: $it")
         }
     }
 }

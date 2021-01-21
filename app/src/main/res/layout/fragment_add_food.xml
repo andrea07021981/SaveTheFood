@@ -70,7 +70,7 @@
                             android:inputType="text"
                             android:singleLine="true"
                             tools:text="Apple"
-                            android:text="@={addFoodViewModel.foodItem.foodTitle}"
+                            android:text="@={addFoodViewModel.foodDomain.foodTitle}"
                             android:nextFocusDown="@id/et_description"
                             android:textColor="@color/colorAccent" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -97,14 +97,14 @@
                             android:inputType="text"
                             android:singleLine="true"
                             tools:text="Apple"
-                            android:text="@={addFoodViewModel.foodItem.foodDescription}"
+                            android:text="@={addFoodViewModel.foodDomain.foodDescription}"
                             android:textColor="@color/colorAccent" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
                         android:orientation="vertical"
                         android:padding="10dip"
-                        android:id="@+id/linear_layout"
+                        android:id="@+id/food_layout"
                         android:layout_width="fill_parent"
                         android:layout_marginStart="24dp"
                         android:layout_marginEnd="24dp"
@@ -126,7 +126,7 @@
                             <ImageView
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
-                                bind:imageLocalUrl="@{addFoodViewModel.foodItem.foodImg}"
+                                bind:imageLocalUrl="@{addFoodViewModel.foodDomain.foodImg}"
                                 tools:src="@drawable/ic_apple_1"/>
 
                             <TextView
@@ -134,7 +134,7 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="match_parent"
-                                android:text="@{addFoodViewModel.foodItem.foodImg.name()}"
+                                android:text="@{addFoodViewModel.foodDomain.foodImg.name()}"
                                 tools:text="Apple"
                                 android:textColor="@color/colorAccent"
                                 android:textSize="18sp"
@@ -149,6 +149,19 @@
                                 android:src="@drawable/ic_baseline_search_24"/>
                         </LinearLayout>
                     </LinearLayout>
+
+                    <DatePicker
+                        android:id="@+id/editTextDate2"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:datePickerMode="spinner"
+                        android:calendarViewShown="false"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_below="@id/food_layout"
+                        android:ems="10"
+                        android:inputType="date" />
+
                     <Button
                         android:id="@+id/save_button"
                         android:layout_width="match_parent"

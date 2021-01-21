@@ -13,9 +13,16 @@ class AddFoodViewModel(
 
 ) : ViewModel() {
 
-    private val _foodItem = MutableLiveData(FoodDomain())
-    val foodItem: LiveData<FoodDomain>
+    private val _foodItem = MutableLiveData(FoodItem(FoodImage.EMPTY))
+    val foodItem: LiveData<FoodItem>
         get() = _foodItem
+
+    private val _foodDomain = FoodDomain()
+    val foodDomain: LiveData<FoodDomain> = Transformations.map(_foodItem) {
+        _foodDomain.apply {
+            foodImg = it.img
+        }
+    }
 
     private val foodTypeFilter = MutableLiveData<String>()
     private var _foodsItems: ArraySet<FoodItem>? = null
@@ -44,9 +51,7 @@ class AddFoodViewModel(
     }
 
     fun updateFood(foodItem: FoodItem) {
-        // TODO search if we can use bindable and observable.
-        // MutableLiveData notify only when the object change
-        _foodItem.value = _foodItem.value?.copy(foodImg = foodItem.img)
+        _foodItem.value = foodItem
     }
 
     // TODO change to sorted set or treeset

@@ -36,7 +36,7 @@ class SearchableFragment : DialogFragment() {
             foodsRecycleview.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             foodsRecycleview.adapter = FoodTypeAdapter(
                 FoodTypeAdapter.OnClickListener {
-                    setFragmentResult("result", bundleOf("foodItem" to it))
+                    setFragmentResult(REQUEST_KEY, bundleOf(BUNDLE_KEY to it))
                     dismiss()
                 }
             )
