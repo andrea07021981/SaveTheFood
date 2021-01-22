@@ -1,18 +1,25 @@
 package com.example.savethefood.util
 
+import android.os.Build
 import android.widget.*
 import android.widget.AdapterView.*
+import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseMethod
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
+import com.example.savethefood.addfood.FoodTypeAdapter
+import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.data.domain.ProductDomain
 import com.example.savethefood.food.FoodSearchAdapter
-import com.example.savethefood.data.domain.FoodItem
-import com.example.savethefood.addfood.FoodTypeAdapter
+import com.google.android.material.textfield.TextInputEditText
+import java.util.*
+
 
 /**
  * Needs to be used with [NumberOfSetsConverters.setArrayToString].
@@ -40,7 +47,8 @@ fun bindFoodImage(imgView: ImageView, imgUrl: String?) {
             .apply(
                 RequestOptions()
                     .placeholder(R.drawable.loading_animation)
-                    .error(R.drawable.ic_broken_image))
+                    .error(R.drawable.ic_broken_image)
+            )
             .into(imgView)
     }
 }
@@ -55,5 +63,21 @@ fun bindFoodListData(recyclerView: RecyclerView, data: Collection<FoodItem>?) {
     data?.let {
         val adapter = recyclerView.adapter as FoodTypeAdapter
         adapter.submitList(data.toList())
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@BindingAdapter("bind:year", "bind:month", "bind:day", "bind:onDateChanged")
+fun bindDate(
+    view: DatePicker, year: Int, month: Int,
+    day: Int, block: (Calendar) -> Unit
+) {
+    view.init(year, month, day
+    ) { _, currentYear, monthOfYear, dayOfMonth ->
+        val calendar = Calendar.getInstance().apply {
+            set(currentYear, monthOfYear, dayOfMonth)
+            time
+        }
+        block(calendar)
     }
 }

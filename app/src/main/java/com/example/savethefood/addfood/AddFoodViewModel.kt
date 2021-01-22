@@ -1,5 +1,6 @@
 package com.example.savethefood.addfood
 
+import android.util.Log
 import androidx.collection.ArraySet
 import androidx.collection.arraySetOf
 import androidx.lifecycle.*
@@ -7,6 +8,7 @@ import com.example.savethefood.Event
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.util.FoodImage
+import java.util.*
 
 
 class AddFoodViewModel(
@@ -45,6 +47,11 @@ class AddFoodViewModel(
     private val _openFoodTypeDialog = MutableLiveData<Event<Unit>>()
     val openFoodTypeDialog: LiveData<Event<Unit>>
         get() = _openFoodTypeDialog
+
+
+    val updateBestBefore: (Calendar) -> Unit = { date ->
+        _foodDomain.bestBefore = date.time
+    }
 
     fun updateFilter(filter: String) {
         foodTypeFilter.value = filter

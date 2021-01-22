@@ -34,154 +34,182 @@
             app:strokeColor="@color/colorAccent"
             app:strokeWidth="5dp">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:paddingBottom="16dp"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layout_name"
-                        style="@style/FormTextInputLayoutStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:layout_alignParentTop="true"
-                        android:textColorHint="@color/colorAccent"
-                        app:errorEnabled="true"
-                        app:hintTextColor="@color/colorAccent">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/food_name"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:singleLine="true"
-                            tools:text="Apple"
-                            android:text="@={addFoodViewModel.foodDomain.foodTitle}"
-                            android:nextFocusDown="@id/et_description"
-                            android:textColor="@color/colorAccent" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layout_description"
-                        style="@style/FormTextInputLayoutStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:textColorHint="@color/colorAccent"
-                        app:errorEnabled="true"
-                        app:hintTextColor="@color/colorAccent"
-                        android:layout_below="@+id/layout_name">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_description"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/food_description"
-                            android:imeOptions="actionDone"
-                            android:inputType="text"
-                            android:singleLine="true"
-                            tools:text="Apple"
-                            android:text="@={addFoodViewModel.foodDomain.foodDescription}"
-                            android:textColor="@color/colorAccent" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content" >
 
                     <LinearLayout
-                        android:orientation="vertical"
-                        android:padding="10dip"
-                        android:id="@+id/food_layout"
-                        android:layout_width="fill_parent"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/layout_description">
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:paddingBottom="16dp"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dip"
-                            android:text="@string/food_type"
-                            android:layout_marginBottom="5dp" />
-                        <LinearLayout
-                            android:layout_height="wrap_content"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layout_name"
+                            style="@style/FormTextInputLayoutStyle"
                             android:layout_width="match_parent"
-                            android:orientation="horizontal" >
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:textColorHint="@color/colorAccent"
+                            app:errorEnabled="true"
+                            app:hintTextColor="@color/colorAccent">
 
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                bind:imageLocalUrl="@{addFoodViewModel.foodDomain.foodImg}"
-                                tools:src="@drawable/ic_apple_1"/>
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/food_name"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:singleLine="true"
+                                tools:text="Apple"
+                                android:text="@={addFoodViewModel.foodDomain.foodTitle}"
+                                android:nextFocusDown="@id/et_description"
+                                android:textColor="@color/colorAccent" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layout_description"
+                            style="@style/FormTextInputLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:textColorHint="@color/colorAccent"
+                            app:errorEnabled="true"
+                            app:hintTextColor="@color/colorAccent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_description"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/food_description"
+                                android:imeOptions="actionDone"
+                                android:inputType="text"
+                                android:singleLine="true"
+                                tools:text="Apple"
+                                android:text="@={addFoodViewModel.foodDomain.foodDescription}"
+                                android:textColor="@color/colorAccent" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:padding="10dip"
+                            android:id="@+id/food_layout"
+                            android:layout_width="fill_parent"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/title"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="match_parent"
-                                android:text="@{addFoodViewModel.foodDomain.foodImg.name()}"
-                                tools:text="Apple"
-                                android:textColor="@color/colorAccent"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:gravity="center" />
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dip"
+                                android:text="@string/food_type"
+                                android:layout_marginBottom="5dp" />
+                            <LinearLayout
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal" >
 
-                            <ImageButton
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:onClick="@{() -> addFoodViewModel.openFoodDialog()}"
-                                android:background="@android:color/transparent"
-                                android:src="@drawable/ic_baseline_search_24"/>
+                                <ImageView
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    bind:imageLocalUrl="@{addFoodViewModel.foodDomain.foodImg}"
+                                    tools:src="@drawable/ic_apple_1"/>
+
+                                <TextView
+                                    android:id="@+id/title"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:text="@{addFoodViewModel.foodDomain.foodImg.name()}"
+                                    tools:text="Apple"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center" />
+
+                                <ImageButton
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:onClick="@{() -> addFoodViewModel.openFoodDialog()}"
+                                    android:background="@android:color/transparent"
+                                    android:src="@drawable/ic_baseline_search_24"/>
+                            </LinearLayout>
                         </LinearLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layout_price"
+                            style="@style/FormTextInputLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:textColorHint="@color/colorAccent"
+                            app:errorEnabled="true"
+                            app:hintTextColor="@color/colorAccent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_price"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/food_price"
+                                android:imeOptions="actionDone"
+                                android:inputType="text"
+                                android:singleLine="true"
+                                tools:text="Apple"
+                                android:text="bind data from vm"
+                                android:textColor="@color/colorAccent" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:id="@+id/best_before_textview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/best_before"
+                            tools:text="Best before"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="8dp"/>
+
+                        <DatePicker
+                            android:id="@+id/editTextDate2"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:datePickerMode="spinner"
+                            android:calendarViewShown="false"
+                            android:layout_marginStart="16dp"
+                            bind:day="@{addFoodViewModel.foodDomain.bestBefore.day}"
+                            bind:month="@{addFoodViewModel.foodDomain.bestBefore.month}"
+                            bind:onDateChanged="@{addFoodViewModel.updateBestBefore}"
+                            bind:year="@{addFoodViewModel.foodDomain.bestBefore.year}"
+                            android:layout_marginEnd="16dp"
+                            android:ems="10"
+                            android:inputType="date" />
+
+                        <Button
+                            android:id="@+id/save_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="24dp"
+                            android:text="@string/save"/>
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/best_before_textview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/best_before"
-                        tools:text="Best before"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginEnd="24dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_below="@id/food_layout"/>
-
-                    <DatePicker
-                        android:id="@+id/editTextDate2"
-                        android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:datePickerMode="spinner"
-                        android:calendarViewShown="false"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginEnd="24dp"
-                        android:layout_below="@id/best_before_textview"
-                        android:ems="10"
-                        android:inputType="date" />
-
-                    <Button
-                        android:id="@+id/save_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="24dp"
-                        android:layout_alignParentBottom="true"
-                        android:text="SAVE"/>
-                </RelativeLayout>
-            </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
