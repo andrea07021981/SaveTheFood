@@ -90,20 +90,20 @@ fun bindDate(
     }
 }
 
-@BindingAdapter("bind:price")
+@BindingAdapter("bind:doubleToString")
 fun TextInputEditText.bindTextDouble(value: Double?) {
     value?.let {
         setText(value.toString())
     }
 }
 
-@InverseBindingAdapter(attribute = "bind:price")
+@InverseBindingAdapter(attribute = "bind:doubleToString")
 fun TextInputEditText.getDoubleFromBinding(): Double? {
     val result=text.toString()
     return result.toDoubleOrNull()
 }
 
-@BindingAdapter(value = ["priceAttrChanged"])
+@BindingAdapter(value = ["doubleToStringAttrChanged"])
 fun setListener(view: TextInputEditText, textAttrChanged: InverseBindingListener?) {
     if (textAttrChanged != null) {
         view.addTextChangedListener(object : TextWatcher {

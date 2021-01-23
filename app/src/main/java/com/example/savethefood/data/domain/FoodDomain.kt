@@ -17,7 +17,7 @@ data class FoodDomain(
     var foodImg: FoodImage,
     var likes: Double?,
     var price: Double?,
-    var quantity: Double?,
+    var quantity: Double?, // TODO add a quantity type field (unit and weight (gr kg)), then change quantity based on type
     var storageType: StorageType,
     var bestBefore: Date
 ) : Parcelable {

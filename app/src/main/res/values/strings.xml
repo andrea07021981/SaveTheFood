@@ -46,4 +46,5 @@
     <string name="food_description">Food Description</string>
     <string name="food_name">Food name</string>
     <string name="food_price">Food Price</string>
+    <string name="quantity">Quantity</string>
 </resources>

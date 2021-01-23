@@ -173,7 +173,32 @@
                                 android:singleLine="true"
                                 tools:text="Apple"
                                 bind:decimals="@{2}"
-                                bind:price="@={addFoodViewModel.foodDomain.price}"
+                                bind:doubleToString="@={addFoodViewModel.foodDomain.price}"
+                                android:textColor="@color/colorAccent" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layout_quantity"
+                            style="@style/FormTextInputLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:textColorHint="@color/colorAccent"
+                            app:errorEnabled="true"
+                            app:hintTextColor="@color/colorAccent">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_quantity"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/quantity"
+                                android:imeOptions="actionDone"
+                                android:inputType="number"
+                                android:singleLine="true"
+                                tools:text="2"
+                                bind:doubleToString="@={addFoodViewModel.foodDomain.quantity}"
                                 android:textColor="@color/colorAccent" />
                         </com.google.android.material.textfield.TextInputLayout>
 
