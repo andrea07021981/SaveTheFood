@@ -6,8 +6,10 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.local.database.FoodImageConverter
+import com.example.savethefood.data.source.local.database.QuantityTypeConverter
 import com.example.savethefood.data.source.local.database.StorageTypeConverter
 import com.example.savethefood.util.FoodImage
+import com.example.savethefood.util.QuantityType
 import com.example.savethefood.util.StorageType
 import java.sql.Date
 import java.util.*
@@ -33,6 +35,10 @@ data class FoodEntity(
     @ColumnInfo(name = "price")
     val price: Double?,
 
+    @TypeConverters(QuantityTypeConverter::class)
+    @ColumnInfo(name = "quantity_type")
+    val quantityType: QuantityType,
+
     @ColumnInfo(name = "quantity")
     val quantity: Double?,
 
@@ -52,6 +58,7 @@ fun FoodEntity.asDomainModel(): FoodDomain {
         foodImg = img,
         likes = likes,
         price = price,
+        quantityType = quantityType,
         quantity = quantity,
         storageType = storageType,
         bestBefore = Date(foodBestBefore)
@@ -67,6 +74,7 @@ fun List<FoodEntity>.asDomainModel(): List<FoodDomain> {
             foodImg = it.img,
             likes = it.likes,
             price = it.price,
+            quantityType = it.quantityType,
             quantity = it.quantity,
             storageType = it.storageType,
             bestBefore = Date(it.foodBestBefore)

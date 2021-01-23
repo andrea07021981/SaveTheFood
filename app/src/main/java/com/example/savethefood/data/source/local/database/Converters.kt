@@ -2,8 +2,10 @@ package com.example.savethefood.data.source.local.database
 
 import androidx.room.TypeConverter
 import com.example.savethefood.util.FoodImage
+import com.example.savethefood.util.QuantityType
 import com.example.savethefood.util.StorageType
 
+// TODO add generic class and replace these
 class FoodImageConverter{
 
     @TypeConverter
@@ -29,5 +31,20 @@ class StorageTypeConverter{
         "Freezer" -> StorageType.FREEZER
         "Dry" -> StorageType.DRY
         else -> StorageType.UNKNOWN
+    }
+}
+
+class QuantityTypeConverter{
+
+    @TypeConverter
+    fun fromQuantityType(value: QuantityType): String {
+        return value.name
+    }
+
+    @TypeConverter
+    fun toQuantityType(value: String): QuantityType = when(value){
+        "Unit" -> QuantityType.UNIT
+        "Weight" -> QuantityType.WEIGHT
+        else -> QuantityType.UNIT
     }
 }

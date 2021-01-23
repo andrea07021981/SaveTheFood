@@ -141,3 +141,9 @@ enum class StorageType(val type: String) {
     FREEZER("Freezer"),
     DRY("Dry");
 }
+
+enum class QuantityType(val type: String) {
+    UNKNOWN("Unknown"),
+    UNIT("unit"),
+    WEIGHT("weight")
+}
