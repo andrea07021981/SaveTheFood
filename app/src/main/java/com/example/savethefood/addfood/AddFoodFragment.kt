@@ -1,6 +1,7 @@
 package com.example.savethefood.addfood
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.Log
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -9,6 +10,8 @@ import com.example.savethefood.R
 import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.databinding.FragmentAddFoodBinding
 import com.google.android.material.transition.MaterialFadeThrough
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 const val REQUEST_KEY = "request"
 const val BUNDLE_KEY = "foodItem"

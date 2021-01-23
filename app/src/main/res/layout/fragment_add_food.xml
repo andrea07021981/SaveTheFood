@@ -169,10 +169,11 @@
                                 android:layout_height="wrap_content"
                                 android:hint="@string/food_price"
                                 android:imeOptions="actionDone"
-                                android:inputType="text"
+                                android:inputType="numberDecimal"
                                 android:singleLine="true"
                                 tools:text="Apple"
-                                android:text="bind data from vm"
+                                bind:decimals="@{2}"
+                                bind:price="@={addFoodViewModel.foodDomain.price}"
                                 android:textColor="@color/colorAccent" />
                         </com.google.android.material.textfield.TextInputLayout>
 

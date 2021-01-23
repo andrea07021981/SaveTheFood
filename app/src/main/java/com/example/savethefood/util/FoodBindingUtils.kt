@@ -1,6 +1,11 @@
 package com.example.savethefood.util
 
+import android.graphics.drawable.Drawable
 import android.os.Build
+import android.text.Editable
+import android.text.InputFilter
+import android.text.Spanned
+import android.text.TextWatcher
 import android.widget.*
 import android.widget.AdapterView.*
 import androidx.annotation.RequiresApi
@@ -8,7 +13,7 @@ import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
-import androidx.databinding.InverseMethod
+import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -19,6 +24,8 @@ import com.example.savethefood.data.domain.ProductDomain
 import com.example.savethefood.food.FoodSearchAdapter
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 /**
@@ -72,7 +79,8 @@ fun bindDate(
     view: DatePicker, year: Int, month: Int,
     day: Int, block: (Calendar) -> Unit
 ) {
-    view.init(year, month, day
+    view.init(
+        year, month, day
     ) { _, currentYear, monthOfYear, dayOfMonth ->
         val calendar = Calendar.getInstance().apply {
             set(currentYear, monthOfYear, dayOfMonth)
@@ -80,4 +88,41 @@ fun bindDate(
         }
         block(calendar)
     }
+}
+
+@BindingAdapter("bind:price")
+fun TextInputEditText.bindTextDouble(value: Double?) {
+    value?.let {
+        setText(value.toString())
+    }
+}
+
+@InverseBindingAdapter(attribute = "bind:price")
+fun TextInputEditText.getDoubleFromBinding(): Double? {
+    val result=text.toString()
+    return result.toDoubleOrNull()
+}
+
+@BindingAdapter(value = ["priceAttrChanged"])
+fun setListener(view: TextInputEditText, textAttrChanged: InverseBindingListener?) {
+    if (textAttrChanged != null) {
+        view.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun afterTextChanged(editable: Editable) {
+                textAttrChanged.onChange()
+            }
+        })
+    }
+}
+
+@BindingAdapter("bind:decimals")
+fun TextInputEditText.setDecimals(decimals: Int) {
+    val pattern: Pattern = Pattern.compile(
+        "[0-9]{0,9}+((\\.[0-9]{0," + (decimals - 1) + "})?)||(\\.)?"
+    )
+    filters = arrayOf(InputFilter { _, _, _, dest, _, _ ->
+        val matcher: Matcher = pattern.matcher(dest)
+        if (!matcher.matches()) "" else null
+    })
 }
