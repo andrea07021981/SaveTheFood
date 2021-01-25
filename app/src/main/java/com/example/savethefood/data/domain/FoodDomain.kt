@@ -18,7 +18,7 @@ data class FoodDomain(
     var foodImg: FoodImage,
     var likes: Double?,
     var price: Double?,
-    val quantityType: QuantityType,
+    var quantityType: QuantityType,
     var quantity: Double?,
     var storageType: StorageType,
     var bestBefore: Date

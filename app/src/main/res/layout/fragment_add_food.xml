@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.example.savethefood.util.QuantityType"/>
+        <import type="com.example.savethefood.util.FoodBindingUtilsKt"/>
         <variable
             name="addFoodViewModel"
             type="com.example.savethefood.addfood.AddFoodViewModel" />
@@ -217,7 +217,7 @@
                                 android:layout_marginStart="16dp"
                                 android:layout_marginEnd="16dp"
                                 android:background="@drawable/switch_group"
-                                android:checkedButton="@+id/offer"
+                                bind:quantityType="@={addFoodViewModel.foodDomain.quantityType}"
                                 android:orientation="horizontal"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -228,7 +228,6 @@
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:checked="@{addFoodViewModel.foodDomain.quantityType.equals(QuantityType.UNIT)}"
                                     android:background="@drawable/switch_on"
                                     android:button="@null"
                                     android:gravity="center"
@@ -240,7 +239,6 @@
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:checked="@{addFoodViewModel.foodDomain.quantityType.equals(QuantityType.UNIT)}"
                                     android:background="@drawable/switch_on"
                                     android:button="@null"
                                     android:gravity="center"

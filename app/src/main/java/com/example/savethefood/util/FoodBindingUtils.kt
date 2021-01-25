@@ -1,10 +1,8 @@
 package com.example.savethefood.util
 
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.text.Editable
 import android.text.InputFilter
-import android.text.Spanned
 import android.text.TextWatcher
 import android.widget.*
 import android.widget.AdapterView.*
@@ -113,6 +111,32 @@ fun setListener(view: TextInputEditText, textAttrChanged: InverseBindingListener
                 textAttrChanged.onChange()
             }
         })
+    }
+}
+
+@BindingAdapter("bind:quantityType")
+fun RadioGroup.bindQuantityType(selectedButtonId: QuantityType) {
+    when (selectedButtonId) {
+        QuantityType.WEIGHT -> check(R.id.kg_radio_button)
+        QuantityType.UNIT -> check(R.id.unit_radio_button)
+    }
+}
+
+@InverseBindingAdapter(attribute = "bind:quantityType")
+fun RadioGroup.getQuantityType(): QuantityType {
+    return when (checkedRadioButtonId) {
+        R.id.kg_radio_button -> QuantityType.WEIGHT
+        R.id.unit_radio_button -> QuantityType.UNIT
+        else -> QuantityType.UNIT
+    }
+}
+
+@BindingAdapter(value = ["quantityTypeAttrChanged"])
+fun setListener(view: RadioGroup, typeAttrChanged: InverseBindingListener?) {
+    if (typeAttrChanged != null) {
+        view.setOnCheckedChangeListener { group, checkedId ->
+            typeAttrChanged.onChange()
+        }
     }
 }
 
