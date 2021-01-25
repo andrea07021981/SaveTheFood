@@ -116,6 +116,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
         }
     }
 
+    @Deprecated("Removed scanner view")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val result: IntentResult? =
             IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
@@ -128,6 +129,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    @Deprecated("Removed scanner view")
     inner class FragmentIntentIntegrator(
         private val fragment: Fragment
     ) : IntentIntegrator(fragment.activity) {

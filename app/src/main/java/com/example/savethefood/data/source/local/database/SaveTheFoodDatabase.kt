@@ -16,6 +16,7 @@ import com.example.savethefood.data.source.local.entity.FoodEntity
 import com.example.savethefood.data.source.local.entity.RecipeEntity
 import com.example.savethefood.data.source.local.entity.RecipeInfoEntity
 import com.example.savethefood.data.source.local.entity.UserEntity
+import com.example.savethefood.util.QuantityType
 
 
 /**
@@ -26,7 +27,7 @@ import com.example.savethefood.data.source.local.entity.UserEntity
  * so you can reuse it.
  */
 @Database(entities = [UserEntity::class, FoodEntity::class, RecipeEntity::class, RecipeInfoEntity::class], version = 2, exportSchema = false)
-@TypeConverters(FoodImageConverter::class, StorageTypeConverter::class)
+@TypeConverters(FoodImageConverter::class, StorageTypeConverter::class, QuantityTypeConverter::class)
 abstract class SaveTheFoodDatabase : RoomDatabase() {
 
     /**

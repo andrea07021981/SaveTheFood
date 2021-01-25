@@ -131,7 +131,7 @@ enum class FoodImage(val id: String) {
     WATERMELON("watermelon"),
     WINE_BOTTLE("wine_bottle"),
     WINE_GLASS("wine_glass"),
-    WRAP("wrap");
+    WRAP("wrap")
 
 }
 
@@ -139,11 +139,10 @@ enum class StorageType(val type: String) {
     UNKNOWN("Unknown"),
     FRIDGE("Fridge"),
     FREEZER("Freezer"),
-    DRY("Dry");
+    DRY("Dry")
 }
 
 enum class QuantityType(val type: String) {
-    UNKNOWN("Unknown"),
     UNIT("unit"),
     WEIGHT("weight")
 }

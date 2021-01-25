@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.example.savethefood.util.QuantityType"/>
         <variable
             name="addFoodViewModel"
             type="com.example.savethefood.addfood.AddFoodViewModel" />
@@ -168,7 +169,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/food_price"
-                                android:imeOptions="actionDone"
+                                android:imeOptions="actionNext"
                                 android:inputType="numberDecimal"
                                 android:singleLine="true"
                                 tools:text="Apple"
@@ -177,30 +178,76 @@
                                 android:textColor="@color/colorAccent" />
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/layout_quantity"
-                            style="@style/FormTextInputLayoutStyle"
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
                             android:layout_marginBottom="16dp"
-                            android:textColorHint="@color/colorAccent"
-                            app:errorEnabled="true"
-                            app:hintTextColor="@color/colorAccent">
+                            android:orientation="horizontal">
 
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/et_quantity"
-                                android:layout_width="match_parent"
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/layout_quantity"
+                                style="@style/FormTextInputLayoutStyle"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/quantity"
-                                android:imeOptions="actionDone"
-                                android:inputType="number"
-                                android:singleLine="true"
-                                tools:text="2"
-                                bind:doubleToString="@={addFoodViewModel.foodDomain.quantity}"
-                                android:textColor="@color/colorAccent" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                                android:layout_marginStart="16dp"
+                                android:textColorHint="@color/colorAccent"
+                                app:hintTextColor="@color/colorAccent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/toggle"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/et_quantity"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/quantity"
+                                    android:imeOptions="actionDone"
+                                    android:inputType="number"
+                                    android:singleLine="true"
+                                    android:textColor="@color/colorAccent"
+                                    bind:doubleToString="@={addFoodViewModel.foodDomain.quantity}"
+                                    tools:text="2" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <RadioGroup
+                                android:id="@+id/toggle"
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:background="@drawable/switch_group"
+                                android:checkedButton="@+id/offer"
+                                android:orientation="horizontal"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/layout_quantity">
+
+                                <RadioButton
+                                    android:id="@+id/kg_radio_button"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:checked="@{addFoodViewModel.foodDomain.quantityType.equals(QuantityType.UNIT)}"
+                                    android:background="@drawable/switch_on"
+                                    android:button="@null"
+                                    android:gravity="center"
+                                    android:text="Kg"
+                                    android:textColor="@android:color/white" />
+
+                                <RadioButton
+                                    android:id="@+id/unit_radio_button"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:checked="@{addFoodViewModel.foodDomain.quantityType.equals(QuantityType.UNIT)}"
+                                    android:background="@drawable/switch_on"
+                                    android:button="@null"
+                                    android:gravity="center"
+                                    android:text="Unit"
+                                    android:textColor="@android:color/white" />
+                            </RadioGroup>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
                             android:id="@+id/best_before_textview"

@@ -38,12 +38,11 @@ class QuantityTypeConverter{
 
     @TypeConverter
     fun fromQuantityType(value: QuantityType): String {
-        return value.name
+        return value.type
     }
 
     @TypeConverter
     fun toQuantityType(value: String): QuantityType = when(value){
-        "Unit" -> QuantityType.UNIT
         "Weight" -> QuantityType.WEIGHT
         else -> QuantityType.UNIT
     }

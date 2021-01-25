@@ -19,11 +19,11 @@ data class FoodDomain(
     var likes: Double?,
     var price: Double?,
     val quantityType: QuantityType,
-    var quantity: Double?, // TODO add a quantity type field (unit and weight (gr kg)), then change quantity based on type
+    var quantity: Double?,
     var storageType: StorageType,
     var bestBefore: Date
 ) : Parcelable {
-    constructor() : this("", "",0, FoodImage.EMPTY, 0.0, 0.0, QuantityType.UNKNOWN, 0.0, StorageType.UNKNOWN, Date())
+    constructor() : this("", "",0, FoodImage.EMPTY, 0.0, 0.0, QuantityType.UNIT, 0.0, StorageType.UNKNOWN, Date())
 }
 
 fun FoodDomain.asDatabaseModel(): FoodEntity {
