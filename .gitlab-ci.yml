@@ -57,22 +57,41 @@ before_script:
 # Check linting
 lintDebug:
   interruptible: true
-  stage: build
+  stage: lint
   script:
     - ./gradlew -Pci --console=plain :app:lintMockDebug -PbuildDir=lint
 
 lintStaging:
   interruptible: true
-  stage: build
+  stage: lint
   script:
     - ./gradlew -Pci --console=plain :app:lintMockStaging -PbuildDir=lint
 
 lintProduction:
   interruptible: true
-  stage: build
+  stage: lint
   script:
     - ./gradlew -Pci --console=plain :app:lintMockProduction -PbuildDir=lint
 
+
+# Clean and build Project for stages
+clean:
+  interruptible: true
+  stage: build
+  script:
+    - ./gradlew clean -Pbuild=devCI
+  artifacts:
+    paths:
+      - app/build/outputs/
+
+build:
+  interruptible: true
+  stage: build
+  script:
+    - ./gradlew build -Pbuild=devCI
+  artifacts:
+    paths:
+      - app/build/outputs/
 
 # Make Project for stages
 assembleDebug:
