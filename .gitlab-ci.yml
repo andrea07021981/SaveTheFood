@@ -116,7 +116,7 @@ assembleProduction:
   interruptible: true
   stage: build
   script:
-    - ./gradlew assembleProduction -Pbuild=devCI
+    - ./gradlew assembleProduction -Pbuild=releaseCI
   artifacts:
     paths:
       - app/build/outputs/
