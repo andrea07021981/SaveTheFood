@@ -61,7 +61,20 @@ lintDebug:
   script:
     - ./gradlew -Pci --console=plain :app:lintMockDebug -PbuildDir=lint
 
-# Make Project
+lintStaging:
+  interruptible: true
+  stage: build
+  script:
+    - ./gradlew -Pci --console=plain :app:lintMockStaging -PbuildDir=lint
+
+lintProduction:
+  interruptible: true
+  stage: build
+  script:
+    - ./gradlew -Pci --console=plain :app:lintMockProduction -PbuildDir=lint
+
+
+# Make Project for stages
 assembleDebug:
   interruptible: true
   stage: build
@@ -70,6 +83,25 @@ assembleDebug:
   artifacts:
     paths:
       - app/build/outputs/
+
+assembleStaging:
+  interruptible: true
+  stage: build
+  script:
+    - ./gradlew assembleStaging -Pbuild=devCI
+  artifacts:
+    paths:
+      - app/build/outputs/
+
+assembleProduction:
+  interruptible: true
+  stage: build
+  script:
+    - ./gradlew assembleProduction -Pbuild=devCI
+  artifacts:
+    paths:
+      - app/build/outputs/
+
 
 # Run all tests, if any fails, interrupt the pipeline(fail it)
 debugUnitTests:
