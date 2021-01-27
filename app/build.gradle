@@ -132,7 +132,7 @@ android {
     } else if (build_param == "releaseCI") {
         // Exclude all except prodRelease flavor
         android.variantFilter { variant ->
-            if (variant.getFlavors().get(0).name != 'prod' || variant.buildType.name != 'release') {
+            if (variant.getFlavors().get(0).name != 'prod' || variant.buildType.name != 'production') {
                 variant.setIgnore(true)
             }
         }
