@@ -15,6 +15,10 @@ import java.util.regex.Pattern
 
 const val REQUEST_KEY = "request"
 const val BUNDLE_KEY = "foodItem"
+
+// TODO add steppers (barcode, details review (or no barcode readed), save)
+// android stepper navigation component
+// Add home transition animation between gridlist and linear
 class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>() {
 
 

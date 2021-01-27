@@ -53,7 +53,7 @@ fun MenuItem.configSearchView(activity: Activity, hint: String = "Type Value", b
 }
 
 // TODO replace result with ApiCallStatus?
-fun <T> ViewModel.launchDataLoad(loader: MutableLiveData<Result<T>>, block: suspend () -> Unit): Job {
+inline fun <T> ViewModel.launchDataLoad(loader: MutableLiveData<Result<T>>, crossinline block: suspend () -> Unit): Job {
     return viewModelScope.launch {
         try {
             loader.value = Result.Loading
