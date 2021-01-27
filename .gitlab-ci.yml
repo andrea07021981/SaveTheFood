@@ -55,19 +55,19 @@ before_script:
 
 # Basic android and gradle stuff
 # Check linting
-lintDebug:
+lintMockDebug:
   interruptible: true
   stage: lint
   script:
     - ./gradlew -Pci --console=plain :app:lintMockDebug -PbuildDir=lint
 
-lintStaging:
+lintMockStaging:
   interruptible: true
   stage: lint
   script:
     - ./gradlew -Pci --console=plain :app:lintMockStaging -PbuildDir=lint
 
-lintProduction:
+lintMockProduction:
   interruptible: true
   stage: lint
   script:
