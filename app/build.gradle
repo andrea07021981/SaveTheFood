@@ -114,11 +114,9 @@ android {
     productFlavors {
         mock {
             dimension "version"
-            applicationIdSuffix = ".mock"
         }
         prod {
             dimension "version"
-            applicationIdSuffix = ".prod"
         }
     }
 
