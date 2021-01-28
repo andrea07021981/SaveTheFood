@@ -29,7 +29,7 @@ buildscript {
         version_arch_testing = '2.1.0'
         version_mockito = '3.5.13'
         version_dex_maker = '2.12.1'
-        version_work = "2.3.0-beta02"
+        version_work = "2.5.0"
         version_analitycs = "18.0.0"
         version_auth = "20.0.1"
         version_crashlytics = "17.3.0"

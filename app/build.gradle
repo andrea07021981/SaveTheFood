@@ -114,7 +114,7 @@ android {
     productFlavors {
         mock {
             dimension "version"
-            applicationIdSuffix = ".mock"
+            applicationId = "com.example.savethefood.addfood.mock"
         }
         prod {
             dimension "version"
@@ -262,7 +262,7 @@ dependencies {
     implementation "com.google.firebase:firebase-analytics-ktx:$version_analitycs"
     implementation "com.google.firebase:firebase-analytics:$version_analitycs"
 
-    implementation "android.arch.work:work-runtime-ktx:$version_work"
+    implementation "androidx.work:work-runtime-ktx:$version_work"
 
     //Firebase Auth
     implementation "com.google.firebase:firebase-auth-ktx:$version_auth"
