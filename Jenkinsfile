@@ -51,11 +51,11 @@ pipeline {
                 echo 'Unit Testing'
             }
         }
-        stage('Release') {
+        stage('Prod') {
             steps {
-                echo 'Release Build'
+                echo 'Prod Build'
                 sh 'chmod +x gradlew'
-                sh './gradlew assembleRelease'
+                sh './gradlew assembleProd'
             }
         }
         stage('Deploy') {
