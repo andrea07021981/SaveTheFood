@@ -12,10 +12,10 @@ pipeline {
             steps {
                 echo 'Preparation'
                 withCredentials([file(credentialsId: 'googleservicesdev', variable: 'googleservicesdev')]) {
-                    sh "cp \$googleservicesdev /Users/andreafranco/.jenkins/workspace/FirstSaveTheFoodBuild/app/src/dev/google-services.json"
+                    sh "cp \$googleservicesdev /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/dev/google-services.json"
                 }
                 withCredentials([file(credentialsId: 'MAPSAPI', variable: 'MAPSAPI')]) {
-                    sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/FirstSaveTheFoodBuild/app/src/dev/res/values/google_maps_api.xml"
+                    sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/dev/res/values/google_maps_api.xml"
                 }
             }
         }
