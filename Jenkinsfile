@@ -12,14 +12,14 @@ pipeline {
             steps {
                 echo 'Preparation'
                 withCredentials([file(credentialsId: 'googleservices', variable: 'googleservices')]) {
-                    sh "cp \$googleservices /Users/andreafranco/.jenkins/workspace/FirstSaveTheFoodBuild/app/google-services.json"
+                    sh "cp \$googleservices /Users/andreafranco/.jenkins/workspace/FirstSaveTheFoodBuild/app/src/dev/google-services.json"
                 }
                 withCredentials([file(credentialsId: 'MAPSAPI', variable: 'MAPSAPI')]) {
-                    sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/FirstSaveTheFoodBuild/app/src/main/res/values/google_maps_api.xml"
+                    sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/FirstSaveTheFoodBuild/app/src/dev/res/values/google_maps_api.xml"
                 }
             }
         }
-        stage('Build') {
+        stage('Build App') {
             steps {
                 echo 'Running Build'
                 sh 'chmod +x gradlew'
@@ -27,11 +27,25 @@ pipeline {
                 sh './gradlew build -x test'
             }
         }
-        stage('Assemble') {
+        stage('Assemble Dev') {
             steps {
                 echo 'Running Build'
                 sh 'chmod +x gradlew'
-                sh './gradlew assembleDebug'
+                sh './gradlew assembleDev'
+            }
+        }
+        stage('Assemble Uat') {
+            steps {
+                echo 'Running Build'
+                sh 'chmod +x gradlew'
+                sh './gradlew assembleUat'
+            }
+        }
+        stage('Assemble Prod') {
+            steps {
+                echo 'Running Build'
+                sh 'chmod +x gradlew'
+                sh './gradlew assembleProd'
             }
         }
         stage('Unit Test') {
@@ -49,13 +63,6 @@ pipeline {
         stage('UI Test') {
             steps {
                 echo 'Unit Testing'
-            }
-        }
-        stage('Prod') {
-            steps {
-                echo 'Prod Build'
-                sh 'chmod +x gradlew'
-                sh './gradlew assembleProd'
             }
         }
         stage('Deploy') {
