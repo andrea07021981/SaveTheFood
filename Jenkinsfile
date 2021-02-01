@@ -10,13 +10,30 @@ pipeline {
     stages {
         stage('Preparation') {
             steps {
-                echo 'Preparation'
+                echo 'Preparation Dev'
                 withCredentials([file(credentialsId: 'googleservicesdev', variable: 'googleservicesdev')]) {
                     sh "cp \$googleservicesdev /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/dev/google-services.json"
                 }
                 withCredentials([file(credentialsId: 'MAPSAPI', variable: 'MAPSAPI')]) {
                     sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/dev/res/values/google_maps_api.xml"
                 }
+
+                echo 'Preparation Uat'
+                withCredentials([file(credentialsId: '$googleservicesuat', variable: '$googleservicesuat')]) {
+                    sh "cp \$googleservicesuat /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/uat/google-services.json"
+                }
+                withCredentials([file(credentialsId: 'MAPSAPI', variable: 'MAPSAPI')]) {
+                    sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/uat/res/values/google_maps_api.xml"
+                }
+
+                echo 'Preparation Prod'
+                withCredentials([file(credentialsId: 'googleservicesdev', variable: 'googleservicesdev')]) {
+                    sh "cp \$googleservicesdev /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/prod/google-services.json"
+                }
+                withCredentials([file(credentialsId: 'MAPSAPI', variable: 'MAPSAPI')]) {
+                    sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/prod/res/values/google_maps_api.xml"
+                }
+
             }
         }
         stage('Build App') {
@@ -32,6 +49,22 @@ pipeline {
                 echo 'Running Build'
                 sh 'chmod +x gradlew'
                 sh './gradlew assembleDev'
+            }
+        }
+
+        stage('Assemble Uat') {
+            steps {
+                echo 'Running Build'
+                sh 'chmod +x gradlew'
+                sh './gradlew assembleUat'
+            }
+        }
+
+        stage('Assemble Prod') {
+            steps {
+                echo 'Running Build'
+                sh 'chmod +x gradlew'
+                sh './gradlew assembleProd'
             }
         }
 
