@@ -11,8 +11,8 @@ pipeline {
         stage('Preparation') {
             steps {
                 echo 'Preparation'
-                withCredentials([file(credentialsId: 'googleservices', variable: 'googleservices')]) {
-                    sh "cp \$googleservices /Users/andreafranco/.jenkins/workspace/FirstSaveTheFoodBuild/app/src/dev/google-services.json"
+                withCredentials([file(credentialsId: 'googleservicesdev', variable: 'googleservicesdev')]) {
+                    sh "cp \googleservicesdev /Users/andreafranco/.jenkins/workspace/FirstSaveTheFoodBuild/app/src/dev/google-services.json"
                 }
                 withCredentials([file(credentialsId: 'MAPSAPI', variable: 'MAPSAPI')]) {
                     sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/FirstSaveTheFoodBuild/app/src/dev/res/values/google_maps_api.xml"
@@ -34,41 +34,6 @@ pipeline {
                 sh './gradlew assembleDev'
             }
         }
-        stage('Assemble Uat') {
-            steps {
-                echo 'Running Build'
-                sh 'chmod +x gradlew'
-                sh './gradlew assembleUat'
-            }
-        }
-        stage('Assemble Prod') {
-            steps {
-                echo 'Running Build'
-                sh 'chmod +x gradlew'
-                sh './gradlew assembleProd'
-            }
-        }
-        stage('Unit Test') {
-            steps {
-                echo 'Unit Testing'
-                sh 'chmod +x gradlew'
-                sh './gradlew test'
-            }
-        }
-        stage('Integration Test') {
-            steps {
-                echo 'Integration Testing'
-            }
-        }
-        stage('UI Test') {
-            steps {
-                echo 'Unit Testing'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploy Release Build'
-            }
-        }
+
     }
 }
