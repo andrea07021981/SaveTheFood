@@ -19,7 +19,7 @@ pipeline {
                 }
 
                 echo 'Preparation Uat'
-                withCredentials([file(credentialsId: '$googleservicesuat', variable: '$googleservicesuat')]) {
+                withCredentials([file(credentialsId: 'googleservicesuat', variable: 'googleservicesuat')]) {
                     sh "cp \$googleservicesuat /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/uat/google-services.json"
                 }
                 withCredentials([file(credentialsId: 'MAPSAPI', variable: 'MAPSAPI')]) {
@@ -27,7 +27,7 @@ pipeline {
                 }
 
                 echo 'Preparation Prod'
-                withCredentials([file(credentialsId: '$googleservices', variable: '$googleservices')]) {
+                withCredentials([file(credentialsId: 'googleservices', variable: 'googleservices')]) {
                     sh "cp \$googleservices /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/prod/google-services.json"
                 }
                 withCredentials([file(credentialsId: 'MAPSAPI', variable: 'MAPSAPI')]) {
