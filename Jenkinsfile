@@ -36,6 +36,13 @@ pipeline {
 
             }
         }
+        stage('Lint App') {
+            steps {
+                echo 'Running Lint'
+                sh 'chmod +x gradlew'
+                sh './gradlew lint'
+            }
+        }
         stage('Build App') {
             steps {
                 echo 'Running Build'
@@ -46,7 +53,7 @@ pipeline {
         }
         stage('Assemble Dev') {
             steps {
-                echo 'Running Build'
+                echo 'Running Assemble Dev'
                 sh 'chmod +x gradlew'
                 sh './gradlew assembleDev'
             }
@@ -54,7 +61,7 @@ pipeline {
 
         stage('Assemble Uat') {
             steps {
-                echo 'Running Build'
+                echo 'Running Assemble Uat'
                 sh 'chmod +x gradlew'
                 sh './gradlew assembleUat'
             }
@@ -62,11 +69,32 @@ pipeline {
 
         stage('Assemble Prod') {
             steps {
-                echo 'Running Build'
+                echo 'Running Assemble Prod'
                 sh 'chmod +x gradlew'
                 sh './gradlew assembleProd'
             }
         }
-
+        stage('Unit Test') {
+            steps {
+                echo 'Unit Testing'
+                sh 'chmod +x gradlew'
+                sh './gradlew test'
+            }
+        }
+        stage('Integration Test') {
+            steps {
+                echo 'Integration Testing'
+            }
+        }
+        stage('UI Test') {
+            steps {
+                echo 'Unit Testing'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploy Release Build'
+            }
+        }
     }
 }
