@@ -1,3 +1,6 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -13,6 +16,14 @@ configurations.all {
     }
 }
 android {
+    signingConfigs {
+        config {
+            storeFile file('/Users/andreafranco/.android/debug.keystore')
+            storePassword 'android'
+            keyAlias 'android'
+            keyPassword 'android'
+        }
+    }
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
     defaultConfig {
@@ -78,76 +89,72 @@ android {
 
     buildTypes {
         debug {
+            versionNameSuffix getCurrentVersionSuffix()
             minifyEnabled false
             testCoverageEnabled true
-            buildConfigField 'String', 'ENVIRONMENT', '"LOCAL"';
-            buildConfigField "String", "ENV", '"http://debug_env"'
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            testProguardFiles getDefaultProguardFile("proguard-android.txt"), "proguardTest-rules.pro"
+            signingConfig signingConfigs.debug
         }
 
-        /**
-         * The `initWith` property allows you to copy configurations from other build types,
-         * then configure only the settings you want to change. This one copies the debug build
-         * type, and then changes the manifest placeholder and application ID.
-         */
-        staging {
-            initWith debug
-            // Add parameters for pre prod
-            buildConfigField 'String', 'ENVIRONMENT', '"STAGE"';
-            buildConfigField "String", "ENV", '"http://stage_env"'
-        }
-
-        production {
+        release {
             minifyEnabled true
-            shrinkResources true
-            buildConfigField 'String', 'ENVIRONMENT', '"PROD"';
-            buildConfigField "String", "ENV", '"http://prod_env"'
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguardTest-rules.pro'
+            versionNameSuffix getCurrentVersionSuffix()
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
 
-    flavorDimensions "version"
-
-    // If you need to add more flavors, consider using flavor dimensions. Need mock for google json
+    flavorDimensions "server"
     productFlavors {
-        mock {
-            dimension "version"
-        }
         prod {
-            dimension "version"
+            dimension "server"
+            buildConfigField "String", "BASE_URL", '"http://production.com/api/"'
         }
-    }
-
-    def build_param = "${build}"
-    if (build_param == "devCI") {
-        // Exclude all except mockDebug flavor
-        android.variantFilter { variant ->
-            if (variant.getFlavors().get(0).name != 'mock' || variant.buildType.name != 'debug') {
-                variant.setIgnore(true)
-            }
+        uat {
+            applicationIdSuffix ".uat"
+            dimension "server"
+            buildConfigField "String", "BASE_URL", '"http://qa.com/api/"'
         }
-    } else if (build_param == "releaseCI") {
-        // Exclude all except prodRelease flavor
-        android.variantFilter { variant ->
-            if (variant.getFlavors().get(0).name != 'prod' || variant.buildType.name != 'production') {
-                variant.setIgnore(true)
-            }
-        }
-    } else {
-        // Normal local machine dev
-        // Exclude mockRelease as it's not needed.
-        android.variantFilter { variant ->
-            if(variant.buildType.name == 'release') {
-                variant.setIgnore(true)
-            }
+        dev {
+            applicationIdSuffix ".dev"
+            dimension "server"
+            buildConfigField "String", "BASE_URL", '"http://dev.com/api/"'
         }
     }
 
     // Enable parcellable
     androidExtensions {
         experimental = true
+    }
+}
+
+def getCurrentVersionSuffix() {
+    def currentFlavor = getCurrentFlavor()
+    if (currentFlavor == "prod") {
+        return "-prod"
+    } else if (currentFlavor == "uat") {
+        return "-uat"
+    } else if (currentFlavor == "dev") {
+        return "-dev"
+    }
+}
+
+def getCurrentFlavor() {
+    String taskRequestName = getGradle().getStartParameter().getTaskRequests().toString()
+
+    Pattern pattern
+
+    if (taskRequestName.contains("assemble"))
+        pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+    else
+        pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
+
+    Matcher matcher = pattern.matcher(taskRequestName)
+
+    if (matcher.find()) {
+        return matcher.group(1).toLowerCase()
+    } else {
+        return ""
     }
 }
 
@@ -159,7 +166,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$version_appcompat"
     implementation "androidx.fragment:fragment-ktx:$version_fragment"
     implementation "androidx.constraintlayout:constraintlayout:$version_constraint_layout"
-    implementation 'com.google.android.gms:play-services-basement:17.0.0'
+    implementation 'com.google.android.gms:play-services-basement:17.5.0'
 
     // Android KTX
     implementation "androidx.core:core-ktx:$version_core"
@@ -180,8 +187,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.2"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.2"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.3"
 
     //Cards
     implementation 'androidx.cardview:cardview:1.0.0'
