@@ -109,16 +109,19 @@ android {
         prod {
             dimension "server"
             buildConfigField "String", "BASE_URL", '"http://production.com/api/"'
+            resValue "string", "app_name", "Save The Food"
         }
         uat {
             applicationIdSuffix ".uat"
             dimension "server"
             buildConfigField "String", "BASE_URL", '"http://qa.com/api/"'
+            resValue "string", "app_name", "Save The Food Uat"
         }
         dev {
             applicationIdSuffix ".dev"
             dimension "server"
             buildConfigField "String", "BASE_URL", '"http://dev.com/api/"'
+            resValue "string", "app_name", "Save The Food Dev"
         }
     }
 
