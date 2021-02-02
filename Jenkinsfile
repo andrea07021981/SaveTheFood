@@ -11,10 +11,6 @@ pipeline {
         stage('Preparation') {
             steps {
                 echo 'Preparation Dev'
-                def folder = new File( '/Users/andreafranco/.jenkins/workspace/SaveTheFoodMasterPipeline_master' )
-                if (folder.exists()) {
-                    echo 'Folder exist'
-                }
                 withCredentials([file(credentialsId: 'googleservicesdev', variable: 'googleservicesdev')]) {
                     sh "cp \$googleservicesdev /Users/andreafranco/.jenkins/workspace/SaveTheFoodMasterPipeline_master/app/src/dev/google-services.json"
                 }
