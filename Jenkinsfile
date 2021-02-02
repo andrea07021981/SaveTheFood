@@ -12,26 +12,26 @@ pipeline {
             steps {
                 echo 'Preparation Dev'
                 withCredentials([file(credentialsId: 'googleservicesdev', variable: 'googleservicesdev')]) {
-                    sh "cp \$googleservicesdev /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/dev/google-services.json"
+                    sh "cp \$googleservicesdev /Users/andreafranco/.jenkins/workspace/SaveTheFoodMasterPipeline_master/app/src/dev/google-services.json"
                 }
                 withCredentials([file(credentialsId: 'MAPSAPI', variable: 'MAPSAPI')]) {
-                    sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/dev/res/values/google_maps_api.xml"
+                    sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/SaveTheFoodMasterPipeline_master/app/src/dev/res/values/google_maps_api.xml"
                 }
 
                 echo 'Preparation Uat'
                 withCredentials([file(credentialsId: 'googleservicesuat', variable: 'googleservicesuat')]) {
-                    sh "cp \$googleservicesuat /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/uat/google-services.json"
+                    sh "cp \$googleservicesuat /Users/andreafranco/.jenkins/workspace/SaveTheFoodMasterPipeline_master/app/src/uat/google-services.json"
                 }
                 withCredentials([file(credentialsId: 'MAPSAPI', variable: 'MAPSAPI')]) {
-                    sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/uat/res/values/google_maps_api.xml"
+                    sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/SaveTheFoodMasterPipeline_master/app/src/uat/res/values/google_maps_api.xml"
                 }
 
                 echo 'Preparation Prod'
                 withCredentials([file(credentialsId: 'googleservices', variable: 'googleservices')]) {
-                    sh "cp \$googleservices /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/prod/google-services.json"
+                    sh "cp \$googleservices /Users/andreafranco/.jenkins/workspace/SaveTheFoodMasterPipeline_master/app/src/prod/google-services.json"
                 }
                 withCredentials([file(credentialsId: 'MAPSAPI', variable: 'MAPSAPI')]) {
-                    sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/Save_The_Food_master/app/src/prod/res/values/google_maps_api.xml"
+                    sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/SaveTheFoodMasterPipeline_master/app/src/prod/res/values/google_maps_api.xml"
                 }
 
             }
