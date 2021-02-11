@@ -104,54 +104,6 @@
                                 android:textColor="@color/colorAccent" />
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:padding="10dip"
-                            android:id="@+id/food_layout"
-                            android:layout_width="fill_parent"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dip"
-                                android:text="@string/food_type"
-                                android:layout_marginBottom="5dp" />
-                            <LinearLayout
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:orientation="horizontal" >
-
-                                <ImageView
-                                    android:layout_width="32dp"
-                                    android:layout_height="32dp"
-                                    bind:imageLocalUrl="@{addFoodViewModel.foodDomain.foodImg}"
-                                    tools:src="@drawable/ic_apple_1"/>
-
-                                <TextView
-                                    android:id="@+id/title"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="1"
-                                    android:layout_height="match_parent"
-                                    android:text="@{addFoodViewModel.foodDomain.foodImg.name()}"
-                                    tools:text="Apple"
-                                    android:textColor="@color/colorAccent"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold"
-                                    android:gravity="center" />
-
-                                <ImageButton
-                                    android:layout_width="32dp"
-                                    android:layout_height="32dp"
-                                    android:onClick="@{() -> addFoodViewModel.openFoodDialog()}"
-                                    android:background="@android:color/transparent"
-                                    android:src="@drawable/ic_baseline_search_24"/>
-                            </LinearLayout>
-                        </LinearLayout>
-
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/layout_price"
                             style="@style/FormTextInputLayoutStyle"
@@ -228,22 +180,24 @@
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:background="@drawable/switch_on"
-                                    android:button="@null"
+                                    android:text="KG"
+                                    android:background="@drawable/radio_button_left"
+                                    android:button="@android:color/transparent"
                                     android:gravity="center"
-                                    android:text="Kg"
-                                    android:textColor="@android:color/white" />
+                                    android:padding="8dp"
+                                    android:textColor="@drawable/radio_button_text" />
 
                                 <RadioButton
                                     android:id="@+id/unit_radio_button"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:background="@drawable/switch_on"
-                                    android:button="@null"
+                                    android:text="UNIT"
+                                    android:background="@drawable/radio_button_right"
+                                    android:button="@android:color/transparent"
                                     android:gravity="center"
-                                    android:text="Unit"
-                                    android:textColor="@android:color/white" />
+                                    android:padding="8dp"
+                                    android:textColor="@drawable/radio_button_text" />
                             </RadioGroup>
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -272,6 +226,138 @@
                             android:ems="10"
                             android:inputType="date" />
 
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:padding="10dip"
+                            android:id="@+id/food_layout"
+                            android:layout_width="fill_parent"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dip"
+                                android:text="@string/food_type"
+                                android:layout_marginBottom="5dp" />
+                            <LinearLayout
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal" >
+
+                                <ImageView
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    bind:imageLocalUrl="@{addFoodViewModel.foodDomain.foodImg}"
+                                    tools:src="@drawable/ic_apple_1"/>
+
+                                <TextView
+                                    android:id="@+id/title"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="match_parent"
+                                    android:text="@{addFoodViewModel.foodDomain.foodImg.name()}"
+                                    tools:text="Apple"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    android:gravity="center" />
+
+                                <ImageButton
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    android:onClick="@{() -> addFoodViewModel.openFoodDialog()}"
+                                    android:background="@android:color/transparent"
+                                    android:src="@drawable/ic_baseline_search_24"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <LinearLayout
+                                android:id="@+id/input_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="20dp"
+                                android:background="@drawable/rounded_container"
+                                android:orientation="vertical">
+
+
+                                <RadioGroup
+                                    android:id="@+id/storage_radio_group"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginStart="16dp"
+                                    android:layout_marginEnd="16dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:background="@drawable/switch_group"
+                                    android:orientation="horizontal">
+
+                                    <RadioButton
+                                        android:id="@+id/freeze_button"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:text="Freezer"
+                                        android:background="@drawable/radio_button_left"
+                                        android:button="@android:color/transparent"
+                                        android:gravity="center"
+                                        android:padding="8dp"
+                                        android:textColor="@drawable/radio_button_text" />
+
+                                    <RadioButton
+                                        android:id="@+id/fridge_button"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:text="Fridge"
+                                        android:background="@drawable/radio_button_center"
+                                        android:button="@android:color/transparent"
+                                        android:gravity="center"
+                                        android:padding="8dp"
+                                        android:textColor="@drawable/radio_button_text"/>
+
+                                    <RadioButton
+                                        android:id="@+id/dry_button"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:text="Dry"
+                                        android:background="@drawable/radio_button_right"
+                                        android:button="@android:color/transparent"
+                                        android:gravity="center"
+                                        android:padding="8dp"
+                                        android:textColor="@drawable/radio_button_text" />
+                                </RadioGroup>
+                            </LinearLayout>
+
+                            <View
+                                android:id="@+id/view"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="30dp"
+                                android:layout_alignBottom="@+id/view"
+                                android:background="@android:color/white"
+                                android:includeFontPadding="false"
+                                android:layout_marginBottom="12dp"
+                                android:paddingStart="5dp"
+                                android:paddingEnd="5dp"
+                                android:text="Name"
+                                android:textSize="13sp"
+                                android:textColor="@color/colorAccent"
+                                android:textAppearance="@android:style/TextAppearance.Medium" />
+                        </RelativeLayout>
                         <Button
                             android:id="@+id/save_button"
                             android:layout_width="match_parent"

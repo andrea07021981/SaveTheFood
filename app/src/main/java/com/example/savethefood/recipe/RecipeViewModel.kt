@@ -54,17 +54,20 @@ class RecipeViewModel(
      @VisibleForTesting set // this allow us to use this set only for test
 
     // This is the observable property, it changes every time the month filter changes (the original values never changes)
-    val recipeListResult = searchFilter.switchMap { // OR    _searchFilter.switchMap { used to refresh/trigger changed livedata
-        if (it != null && it.isNotEmpty() ) {
-             _recipeListResult.map { list ->
-                list?.filter { recipe ->
-                    recipe.title.toLowerCase(Locale.getDefault()).contains(it.toLowerCase(Locale.getDefault()))
+    val recipeListResult = Transformations.distinctUntilChanged(
+        Transformations.map(searchFilter) { // OR    _searchFilter.switchMap { used to refresh/trigger changed livedata
+            if (it != null && it.isNotEmpty()) {
+                _recipeListResult.map { list ->
+                    list?.filter { recipe ->
+                        recipe.title.toLowerCase(Locale.getDefault())
+                            .contains(it.toLowerCase(Locale.getDefault()))
+                    }
                 }
+            } else {
+                _recipeListResult
             }
-        } else {
-             _recipeListResult
         }
-    }
+    )
 
     private val _recipeDetailEvent = MutableLiveData<Event<RecipeResult>>()
     val recipeDetailEvent: LiveData<Event<RecipeResult>>
