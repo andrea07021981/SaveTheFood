@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="ContainerView">
+        <attr name="childView" format="reference" />
+    </declare-styleable>
+</resources>

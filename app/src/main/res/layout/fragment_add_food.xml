@@ -202,7 +202,7 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <TextView
-                            android:id="@+id/best_before_textview"
+                            android:id="@+id/best_before_text_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/best_before"
@@ -230,6 +230,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
+
 
                             <LinearLayout
                                 android:id="@+id/food_type_layout"
