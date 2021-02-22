@@ -29,9 +29,6 @@ data class FoodEntity(
     @ColumnInfo(name = "img")
     val img: FoodImage,
 
-    @ColumnInfo(name = "likes")
-    val likes: Double?,
-
     @ColumnInfo(name = "price")
     val price: Double?,
 
@@ -56,7 +53,6 @@ fun FoodEntity.asDomainModel(): FoodDomain {
         foodTitle = title,
         foodDescription = description,
         foodImg = img,
-        likes = likes,
         price = price,
         quantityType = quantityType,
         quantity = quantity,
@@ -72,7 +68,6 @@ fun List<FoodEntity>.asDomainModel(): List<FoodDomain> {
             foodTitle = it.title,
             foodDescription = it.description,
             foodImg = it.img,
-            likes = it.likes,
             price = it.price,
             quantityType = it.quantityType,
             quantity = it.quantity,

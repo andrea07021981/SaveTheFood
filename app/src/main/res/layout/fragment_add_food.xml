@@ -201,30 +201,56 @@
                             </RadioGroup>
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <TextView
-                            android:id="@+id/best_before_text_view"
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/best_before"
-                            tools:text="Best before"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="8dp"/>
+                            android:orientation="vertical">
 
-                        <DatePicker
-                            android:id="@+id/editTextDate2"
-                            android:layout_width="match_parent"
-                            android:layout_height="120dp"
-                            android:datePickerMode="spinner"
-                            android:calendarViewShown="false"
-                            android:layout_marginStart="16dp"
-                            bind:day="@{addFoodViewModel.foodDomain.bestBefore.day}"
-                            bind:month="@{addFoodViewModel.foodDomain.bestBefore.month}"
-                            bind:onDateChanged="@{addFoodViewModel.updateBestBefore}"
-                            bind:year="@{addFoodViewModel.foodDomain.bestBefore.year}"
-                            android:layout_marginEnd="16dp"
-                            android:ems="10"
-                            android:inputType="date" />
+
+                            <LinearLayout
+                                android:id="@+id/best_before_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="16dp"
+                                android:background="@drawable/rounded_container"
+                                android:orientation="vertical">
+
+                                <DatePicker
+                                    android:id="@+id/editTextDate2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="120dp"
+                                    android:datePickerMode="spinner"
+                                    android:calendarViewShown="false"
+                                    android:layout_marginStart="16dp"
+                                    bind:day="@{addFoodViewModel.foodDomain.bestBefore.day}"
+                                    bind:month="@{addFoodViewModel.foodDomain.bestBefore.month}"
+                                    bind:onDateChanged="@{addFoodViewModel.updateBestBefore}"
+                                    bind:year="@{addFoodViewModel.foodDomain.bestBefore.year}"
+                                    android:layout_marginEnd="16dp"
+                                    android:ems="10"
+                                    android:inputType="date" />
+                            </LinearLayout>
+                            <View
+                                android:id="@+id/best_before_view"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="24dp"
+                                android:layout_alignBottom="@+id/best_before_view"
+                                android:background="@android:color/white"
+                                android:includeFontPadding="false"
+                                android:layout_marginBottom="16dp"
+                                android:paddingStart="5dp"
+                                android:paddingEnd="5dp"
+                                android:text="Best Before"
+                                android:textSize="12sp"
+                                android:textColor="@color/colorAccent"
+                                android:textAppearance="@android:style/TextAppearance.Medium" />
+                        </RelativeLayout>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -236,7 +262,7 @@
                                 android:id="@+id/food_type_layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="20dp"
+                                android:layout_margin="16dp"
                                 android:background="@drawable/rounded_container"
                                 android:orientation="vertical">
 
@@ -284,15 +310,15 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="30dp"
+                                android:layout_marginStart="24dp"
                                 android:layout_alignBottom="@+id/food_type_view"
                                 android:background="@android:color/white"
                                 android:includeFontPadding="false"
-                                android:layout_marginBottom="12dp"
+                                android:layout_marginBottom="16dp"
                                 android:paddingStart="5dp"
                                 android:paddingEnd="5dp"
                                 android:text="Food Type"
-                                android:textSize="13sp"
+                                android:textSize="12sp"
                                 android:textColor="@color/colorAccent"
                                 android:textAppearance="@android:style/TextAppearance.Medium" />
                         </RelativeLayout>
@@ -302,12 +328,11 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
-
                             <LinearLayout
                                 android:id="@+id/input_layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="20dp"
+                                android:layout_margin="16dp"
                                 android:background="@drawable/rounded_container"
                                 android:orientation="vertical">
 
@@ -369,15 +394,15 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="30dp"
+                                android:layout_marginStart="24dp"
                                 android:layout_alignBottom="@+id/view"
                                 android:background="@android:color/white"
                                 android:includeFontPadding="false"
-                                android:layout_marginBottom="12dp"
+                                android:layout_marginBottom="16dp"
                                 android:paddingStart="5dp"
                                 android:paddingEnd="5dp"
-                                android:text="Name"
-                                android:textSize="13sp"
+                                android:text="Storage type"
+                                android:textSize="12sp"
                                 android:textColor="@color/colorAccent"
                                 android:textAppearance="@android:style/TextAppearance.Medium" />
                         </RelativeLayout>

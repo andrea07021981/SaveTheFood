@@ -16,14 +16,13 @@ data class FoodDomain(
     var foodDescription: String? = "",
     var foodId: Int,
     var foodImg: FoodImage,
-    var likes: Double?,
     var price: Double?,
     var quantityType: QuantityType,
     var quantity: Double?,
     var storageType: StorageType,
     var bestBefore: Date
 ) : Parcelable {
-    constructor() : this("", "",0, FoodImage.EMPTY, 0.0, 0.0, QuantityType.UNIT, 0.0, StorageType.UNKNOWN, Date())
+    constructor() : this("", "",0, FoodImage.EMPTY,0.0, QuantityType.UNIT, 0.0, StorageType.UNKNOWN, Date())
 }
 
 fun FoodDomain.asDatabaseModel(): FoodEntity {
@@ -31,7 +30,6 @@ fun FoodDomain.asDatabaseModel(): FoodEntity {
         title = foodTitle,
         description = foodDescription,
         img = foodImg,
-        likes = likes,
         price = price,
         quantityType = quantityType,
         quantity = quantity,

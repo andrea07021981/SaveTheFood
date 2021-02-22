@@ -22,7 +22,6 @@ data class NetworkFood(
     val ingredientCount: Any?,
     val ingredientList: String?,
     val ingredients: List<Ingredient>?,
-    val likes: Double?,
     @Json(name = "number_of_servings")val numberOfServings: Double?,
     val nutrition: Nutrition?,
     val price: Double?,
