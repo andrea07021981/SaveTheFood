@@ -4,14 +4,29 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import androidx.core.view.children
+import androidx.core.view.get
 import com.example.savethefood.R
+import com.example.savethefood.addfood.AddFoodViewModel
+import com.example.savethefood.databinding.ContainerViewBinding
+import com.example.savethefood.databinding.DatePickerLayoutBinding
+import kotlinx.android.synthetic.main.container_view.view.*
 
 /**
  * UI custom container for UI forms
+ *
+ * Example of UI
+ * <com.example.savethefood.ui.ContainerView
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+app:addFoodViewModel="@{addFoodViewModel}"
+app:childView="@layout/date_picker_layout"/>
  */
 class ContainerView : RelativeLayout {
+
+    private lateinit var binding: ContainerViewBinding
+    private lateinit var datePickerBinding: DatePickerLayoutBinding
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -31,7 +46,7 @@ class ContainerView : RelativeLayout {
 
     private fun init(attrs: AttributeSet?, defStyle: Int) {
         // Load attributes
-        val parent = inflate(context, R.layout.container_view, this)
+        binding = ContainerViewBinding.inflate(LayoutInflater.from(context), this, false)
 
         val a = context.obtainStyledAttributes(
             attrs, R.styleable.ContainerView, defStyle, 0
@@ -42,14 +57,24 @@ class ContainerView : RelativeLayout {
                 R.styleable.ContainerView_childView,
                 0
             )
-            //TODO find a way to pass the binded values
-            with(parent.findViewById<LinearLayout>(R.id.container_layout)) {
+            //TODO generalize the add child and vm. Create custom UIs for children?
+            datePickerBinding = DatePickerLayoutBinding.inflate(
+                LayoutInflater.from(context),
+                this,
+                false
+            )
+            with(binding.root) {
                 addView(
-                    LayoutInflater.from(context).inflate(childView, this, false)
+                    datePickerBinding.root,
+                    0
                 )
             }
         }
         a.recycle()
+    }
+
+    fun setAddFoodViewModel(viewModel: AddFoodViewModel) {
+        datePickerBinding.addFoodViewModel = viewModel
     }
 
     override fun onDraw(canvas: Canvas) {
