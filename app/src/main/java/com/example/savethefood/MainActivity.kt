@@ -20,7 +20,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.savethefood.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-const val FAB_DURATION = 1_000
+const val FAB_DURATION = 500
 internal interface FragmentCallback {
     fun onAddClicked(view: View)
 }

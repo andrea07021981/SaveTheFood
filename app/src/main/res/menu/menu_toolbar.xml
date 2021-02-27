@@ -5,15 +5,13 @@
 
     <item
         android:id="@+id/action_search"
-        android:orderInCategory="100"
         android:title="Search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/action_filter"
+        android:id="@+id/filterFragment"
         android:icon="@drawable/ic_baseline_sort_24"
-        android:orderInCategory="100"
         android:title="Filter"
         app:showAsAction="always"/>
 </menu>

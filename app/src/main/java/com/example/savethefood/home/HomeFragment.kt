@@ -1,7 +1,5 @@
 package com.example.savethefood.home
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -16,9 +14,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.*
-import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.succeeded
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.util.configSearchView
@@ -154,7 +152,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
+        return (NavigationUI.onNavDestinationSelected(item, findNavController())
+                || super.onOptionsItemSelected(item))
     }
 
     override fun onAddClicked(view: View) {

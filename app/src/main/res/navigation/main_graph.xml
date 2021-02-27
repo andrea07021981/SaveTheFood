@@ -109,4 +109,10 @@
         tools:layout="@layout/fragment_add_food"
         android:label="AddFoodFragment" />
 
+    <dialog
+        android:id="@+id/filterFragment"
+        android:name="com.example.savethefood.home.FilterFragment"
+        android:label="FilterFragment"
+        tools:layout="@layout/fragment_filter"/>
+
 </navigation>
