@@ -61,6 +61,10 @@ class AddFoodViewModel(
         _foodItem.value = foodItem
     }
 
+    fun save() {
+        // TODO check values
+    }
+
     // TODO change to sorted set or treeset
     private fun getCustomSet(): ArraySet<FoodItem> {
         val customObjects = arraySetOf<FoodItem>()

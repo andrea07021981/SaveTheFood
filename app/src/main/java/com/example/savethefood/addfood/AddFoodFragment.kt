@@ -3,12 +3,16 @@ package com.example.savethefood.addfood
 import android.os.Bundle
 import android.text.InputFilter
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
 import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.databinding.FragmentAddFoodBinding
+import com.example.savethefood.home.HomeFragment
+import com.example.savethefood.util.configSearchView
 import com.google.android.material.transition.MaterialFadeThrough
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -16,7 +20,7 @@ import java.util.regex.Pattern
 const val REQUEST_KEY = "request"
 const val BUNDLE_KEY = "foodItem"
 
-// TODO add steppers (barcode, details review (or no barcode readed), save)
+// TODO add steppers for cooking phases
 // android stepper navigation component
 // Add home transition animation between gridlist and linear
 class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>() {
@@ -43,6 +47,7 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
 
         with(dataBinding) {
             addFoodViewModel = viewModel
+            setHasOptionsMenu(true)
         }
     }
 
@@ -54,6 +59,7 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
             viewModel.updateFood(result)
         }
     }
+
     override fun activateObservers() {
         viewModel.openFoodTypeDialog.observe(viewLifecycleOwner) {
             SearchableFragment().show(parentFragmentManager, classTag)
@@ -62,5 +68,10 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
         viewModel.foodDomain.observe(viewLifecycleOwner) {
             Log.d(classTag, "Updated item: $it")
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_barcode, menu)
     }
 }

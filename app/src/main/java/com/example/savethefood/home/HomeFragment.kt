@@ -34,6 +34,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 // TODO also add different adapter https://proandroiddev.com/understanding-kotlin-sealed-classes-65c0adad7015
 
+// TODO add filter for foods with bottomsheetdialog fragment
+
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), FragmentCallback {
