@@ -136,7 +136,6 @@ enum class FoodImage(val id: String) {
 }
 
 enum class StorageType(val type: String) {
-    UNKNOWN("Unknown"),
     FRIDGE("Fridge"),
     FREEZER("Freezer"),
     DRY("Dry")

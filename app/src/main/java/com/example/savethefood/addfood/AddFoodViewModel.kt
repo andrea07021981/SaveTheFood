@@ -1,6 +1,5 @@
 package com.example.savethefood.addfood
 
-import android.util.Log
 import androidx.collection.ArraySet
 import androidx.collection.arraySetOf
 import androidx.hilt.lifecycle.ViewModelInject
@@ -11,6 +10,9 @@ import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.data.source.repository.FoodRepository
 import com.example.savethefood.util.FoodImage
+import com.example.savethefood.util.StorageType
+import com.example.savethefood.util.isValidDouble
+import com.example.savethefood.util.launchDataLoad
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -30,14 +32,22 @@ class AddFoodViewModel @ViewModelInject constructor(
     private val _foodDomain = FoodDomain()
     val foodDomain: LiveData<FoodDomain> = Transformations.map(_foodItem) {
         _foodDomain.apply {
-            foodImg = it.img
+            img = it.img
         }
     }
+
+    val errorName = MutableLiveData<Boolean>()
+    val errorDescription = MutableLiveData<Boolean>()
+    val errorPrice = MutableLiveData<Boolean>()
+    val errorQuantity = MutableLiveData<Boolean>()
 
     private val _barcodeFoodEvent = MutableLiveData<Event<Unit>>()
     val barcodeFoodEvent: LiveData<Event<Unit>>
         get() = _barcodeFoodEvent
 
+    private val _saveFoodEvent = MutableLiveData<Result<FoodDomain>>()
+    val saveFoodEvent: LiveData<Result<FoodDomain>>
+        get() = _saveFoodEvent
 
     private val _newFoodFoodEvent = MutableLiveData<Result<FoodDomain>>()
     val newFoodFoodEvent: LiveData<Result<FoodDomain>>
@@ -79,7 +89,20 @@ class AddFoodViewModel @ViewModelInject constructor(
     }
 
     fun save() {
-        // TODO check values
+        errorName.value = _foodDomain.title.isNullOrBlank()
+        errorDescription.value = _foodDomain.description.isNullOrBlank()
+        errorPrice.value = _foodDomain.price.isValidDouble().not()
+        errorQuantity.value = _foodDomain.quantity.isValidDouble().not()
+
+        if (errorName.value == false &&
+            errorDescription.value == false &&
+            errorPrice.value == false &&
+            errorQuantity.value == false
+        ) {
+            launchDataLoad(_saveFoodEvent) {
+                foodDataRepository.saveNewFood(_foodDomain)
+            }
+        }
     }
 
     // TODO change to sorted set or treeset

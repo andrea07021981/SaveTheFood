@@ -57,7 +57,7 @@
                 app:layout_constraintStart_toStartOf="@+id/left_well"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.26999998"
-                bind:imageLocalUrl="@{foodDomain.foodImg}"
+                bind:imageLocalUrl="@{foodDomain.img}"
                 tools:srcCompat="@drawable/ic_apple_1" />
 
             <LinearLayout
@@ -78,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:text="@{foodDomain.foodTitle}"
+                    android:text="@{foodDomain.title}"
                     android:transitionName="foodTitle"
                     android:textSize="18sp"
                     android:textStyle="bold"

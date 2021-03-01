@@ -17,7 +17,7 @@ interface FoodRepository {
 
     suspend fun refreshData()
 
-    suspend fun saveNewFood(food: FoodDomain): Long
+    suspend fun saveNewFood(food: FoodDomain): Result<FoodDomain>
 
     suspend fun getFoods(): Flow<Result<List<FoodDomain>>>
 

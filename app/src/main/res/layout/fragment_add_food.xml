@@ -63,6 +63,8 @@
                             android:layout_margin="16dp"
                             android:textColorHint="@color/colorAccent"
                             app:errorEnabled="true"
+                            app:errorIconDrawable="@null"
+                            bind:hasError="@{safeUnbox(addFoodViewModel.errorName)}"
                             app:hintTextColor="@color/colorAccent">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -74,7 +76,7 @@
                                 android:inputType="text"
                                 android:singleLine="true"
                                 tools:text="Apple"
-                                android:text="@={addFoodViewModel.foodDomain.foodTitle}"
+                                android:text="@={addFoodViewModel.foodDomain.title}"
                                 android:nextFocusDown="@id/et_description"
                                 android:textColor="@color/colorAccent" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -89,6 +91,7 @@
                             android:layout_marginBottom="16dp"
                             android:textColorHint="@color/colorAccent"
                             app:errorEnabled="true"
+                            bind:hasError="@{safeUnbox(addFoodViewModel.errorDescription)}"
                             app:hintTextColor="@color/colorAccent">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -100,7 +103,7 @@
                                 android:inputType="text"
                                 android:singleLine="true"
                                 tools:text="Apple"
-                                android:text="@={addFoodViewModel.foodDomain.foodDescription}"
+                                android:text="@={addFoodViewModel.foodDomain.description}"
                                 android:textColor="@color/colorAccent" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,6 +117,7 @@
                             android:layout_marginBottom="16dp"
                             android:textColorHint="@color/colorAccent"
                             app:errorEnabled="true"
+                            bind:hasError="@{safeUnbox(addFoodViewModel.errorPrice)}"
                             app:hintTextColor="@color/colorAccent">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -139,15 +143,17 @@
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/layout_quantity"
                                 style="@style/FormTextInputLayoutStyle"
-                                android:layout_width="0dp"
+                                android:layout_width="151dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
                                 android:textColorHint="@color/colorAccent"
+                                app:errorEnabled="true"
                                 app:hintTextColor="@color/colorAccent"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/toggle"
+                                app:layout_constraintHorizontal_bias="0.5"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent">
+                                app:layout_constraintTop_toTopOf="parent"
+                                bind:hasError="@{safeUnbox(addFoodViewModel.errorQuantity)}">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/et_quantity"
@@ -166,25 +172,26 @@
                                 android:id="@+id/toggle"
                                 android:layout_width="150dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginBottom="8dp"
                                 android:background="@drawable/switch_group"
-                                bind:quantityType="@={addFoodViewModel.foodDomain.quantityType}"
                                 android:orientation="horizontal"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/layout_quantity">
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toEndOf="@+id/layout_quantity"
+                                app:layout_constraintTop_toTopOf="parent"
+                                bind:quantityType="@={addFoodViewModel.foodDomain.quantityType}">
 
                                 <RadioButton
                                     android:id="@+id/kg_radio_button"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:text="KG"
                                     android:background="@drawable/radio_button_left"
                                     android:button="@android:color/transparent"
                                     android:gravity="center"
                                     android:padding="8dp"
+                                    android:text="KG"
                                     android:textColor="@drawable/radio_button_text" />
 
                                 <RadioButton
@@ -192,11 +199,11 @@
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:text="UNIT"
                                     android:background="@drawable/radio_button_right"
                                     android:button="@android:color/transparent"
                                     android:gravity="center"
                                     android:padding="8dp"
+                                    android:text="UNIT"
                                     android:textColor="@drawable/radio_button_text" />
                             </RadioGroup>
                         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -206,7 +213,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
-
 
                             <LinearLayout
                                 android:id="@+id/best_before_layout"
@@ -278,7 +284,7 @@
                                     <ImageView
                                         android:layout_width="32dp"
                                         android:layout_height="32dp"
-                                        bind:imageLocalUrl="@{addFoodViewModel.foodDomain.foodImg}"
+                                        bind:imageLocalUrl="@{addFoodViewModel.foodDomain.img}"
                                         tools:src="@drawable/ic_apple_1"/>
 
                                     <TextView
@@ -286,7 +292,7 @@
                                         android:layout_width="0dp"
                                         android:layout_weight="1"
                                         android:layout_height="match_parent"
-                                        android:text="@{addFoodViewModel.foodDomain.foodImg.name()}"
+                                        android:text="@{addFoodViewModel.foodDomain.img.name()}"
                                         tools:text="Apple"
                                         android:textColor="@color/colorAccent"
                                         android:textSize="18sp"
@@ -345,6 +351,7 @@
                                     android:layout_marginStart="16dp"
                                     android:layout_marginEnd="16dp"
                                     android:layout_marginBottom="16dp"
+                                    bind:storageType="@={addFoodViewModel.foodDomain.storageType}"
                                     android:background="@drawable/switch_group"
                                     android:orientation="horizontal">
 

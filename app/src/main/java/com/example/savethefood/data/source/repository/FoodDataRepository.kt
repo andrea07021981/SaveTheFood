@@ -1,12 +1,10 @@
 package com.example.savethefood.data.source.repository
 
-import androidx.lifecycle.LiveData
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.local.entity.asDomainModel
-import com.example.savethefood.di.BaseModule
 import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -92,7 +90,7 @@ class FoodDataRepository @Inject constructor(
             val localFoods = foodLocalDataSource.getLocalFoods()
             if (localFoods is Result.Success) {
                 for (food in localFoods.data) {
-                    val foodById = foodRemoteDataSource.getFoodById(food.foodId)
+                    val foodById = foodRemoteDataSource.getFoodById(food.id)
                     if (foodById is Result.Success) {
                         //TODO change, create a fooddomain container like devbytes and pass one shot, are varargs
                         foodLocalDataSource.updateFoods(foodById.data)
@@ -114,9 +112,14 @@ class FoodDataRepository @Inject constructor(
      * Withcontext is a function that allows to easily change the context that will be used to run a part of the code inside a coroutine. This is a suspending function, so it means that it’ll suspend the coroutine until the code inside is executed, no matter the dispatcher that it’s used.
      * With that, we can make our suspending functions use a different thread:
      */
-    override suspend fun saveNewFood(food: FoodDomain) = withContext(Dispatchers.IO) {
+    override suspend fun saveNewFood(food: FoodDomain): Result<FoodDomain> = withContext(Dispatchers.IO) {
         wrapEspressoIdlingResource {
-            foodLocalDataSource.insertFood(food)
+            val insertFoodId = foodLocalDataSource.insertFood(food)
+            if (insertFoodId > 0) {
+                return@withContext Result.Success(food)
+            } else {
+                return@withContext Result.Error("Error saving food")
+            }
         }
     }
 

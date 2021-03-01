@@ -60,7 +60,7 @@ class FoodAdapter(
         }
 
         override fun areContentsTheSame(oldItem: FoodDomain, newItem: FoodDomain): Boolean {
-            return oldItem.foodId == newItem.foodId
+            return oldItem.id == newItem.id
         }
     }
 

@@ -53,15 +53,19 @@ fun MenuItem.configSearchView(activity: Activity, hint: String = "Type Value", b
 }
 
 // TODO replace result with ApiCallStatus?
-inline fun <T> ViewModel.launchDataLoad(loader: MutableLiveData<Result<T>>, crossinline block: suspend () -> Unit): Job {
+inline fun <T> ViewModel.launchDataLoad(loader: MutableLiveData<Result<T>>, crossinline block: suspend () -> Result<T>): Job {
     return viewModelScope.launch {
         try {
             loader.value = Result.Loading
-            block()
+            loader.value = block()
         } catch (error: Exception) {
             loader.value = Result.ExError(error)
         } finally {
             loader.value = Result.Idle
         }
     }
+}
+
+fun Double?.isValidDouble(): Boolean {
+    return this != null && this != 0.0
 }

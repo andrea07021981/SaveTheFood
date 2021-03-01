@@ -12,7 +12,6 @@ import com.example.savethefood.util.FoodImage
 import com.example.savethefood.util.QuantityType
 import com.example.savethefood.util.StorageType
 import java.sql.Date
-import java.util.*
 
 @Entity(tableName = "food_table")
 data class FoodEntity(
@@ -49,10 +48,10 @@ data class FoodEntity(
 
 fun FoodEntity.asDomainModel(): FoodDomain {
     return FoodDomain(
-        foodId = id,
-        foodTitle = title,
-        foodDescription = description,
-        foodImg = img,
+        id = id,
+        title = title,
+        description = description,
+        img = img,
         price = price,
         quantityType = quantityType,
         quantity = quantity,
@@ -64,10 +63,10 @@ fun FoodEntity.asDomainModel(): FoodDomain {
 fun List<FoodEntity>.asDomainModel(): List<FoodDomain> {
     return map {
         FoodDomain(
-            foodId = it.id,
-            foodTitle = it.title,
-            foodDescription = it.description,
-            foodImg = it.img,
+            id = it.id,
+            title = it.title,
+            description = it.description,
+            img = it.img,
             price = it.price,
             quantityType = it.quantityType,
             quantity = it.quantity,

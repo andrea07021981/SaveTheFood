@@ -1,6 +1,5 @@
 package com.example.savethefood.data.source.local.datasource
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
@@ -30,7 +29,7 @@ class FakeRemoteFoodDataSourceTest(
 
     override suspend fun getFoodById(id: Int): Result<FoodDomain>{
         foodList.find {
-            it.foodId == id
+            it.id == id
         }.also {
             return if (it != null) {
                 Result.Success(it)
@@ -41,7 +40,7 @@ class FakeRemoteFoodDataSourceTest(
     }
 
     override suspend fun insertFood(food: FoodDomain): Long {
-        foodList.add(food).also { return food.foodId.toLong() }
+        foodList.add(food).also { return food.id.toLong() }
     }
 
     override suspend fun updateFoods(food: FoodDomain) {

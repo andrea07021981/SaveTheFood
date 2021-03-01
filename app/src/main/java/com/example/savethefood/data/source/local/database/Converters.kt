@@ -4,6 +4,9 @@ import androidx.room.TypeConverter
 import com.example.savethefood.util.FoodImage
 import com.example.savethefood.util.QuantityType
 import com.example.savethefood.util.StorageType
+import java.lang.Exception
+import kotlin.jvm.Throws
+import kotlin.math.E
 
 // TODO add generic class and replace these
 class FoodImageConverter{
@@ -30,7 +33,7 @@ class StorageTypeConverter{
         "Fridge" -> StorageType.FRIDGE
         "Freezer" -> StorageType.FREEZER
         "Dry" -> StorageType.DRY
-        else -> StorageType.UNKNOWN
+        else -> throw Exception("Invalid value")
     }
 }
 

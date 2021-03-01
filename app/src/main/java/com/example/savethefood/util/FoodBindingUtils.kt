@@ -140,6 +140,38 @@ fun setListener(view: RadioGroup, typeAttrChanged: InverseBindingListener?) {
     }
 }
 
+
+@BindingAdapter("bind:storageType")
+fun RadioGroup.bindStorageType(selectedButtonId: StorageType) {
+    when (selectedButtonId) {
+        StorageType.FRIDGE -> check(R.id.fridge_button)
+        StorageType.FREEZER -> check(R.id.freeze_button)
+        StorageType.DRY -> check(R.id.dry_button)
+    }
+}
+
+@InverseBindingAdapter(attribute = "bind:storageType")
+fun RadioGroup.getStorageType(): StorageType {
+    return when (checkedRadioButtonId) {
+        R.id.fridge_button -> StorageType.FRIDGE
+        R.id.freeze_button -> StorageType.FREEZER
+        R.id.dry_button -> StorageType.DRY
+        else -> throw Exception("Invalid value")
+    }
+}
+
+@BindingAdapter(value = ["storageTypeAttrChanged"])
+fun setStorageListener(view: RadioGroup, typeAttrChanged: InverseBindingListener?) {
+    if (typeAttrChanged != null) {
+        view.setOnCheckedChangeListener { _, _ ->
+            typeAttrChanged.onChange()
+        }
+    }
+}
+
+
+
+
 @BindingAdapter("bind:decimals")
 fun TextInputEditText.setDecimals(decimals: Int) {
     val pattern: Pattern = Pattern.compile(

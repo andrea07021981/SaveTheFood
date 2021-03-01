@@ -6,14 +6,17 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.EventObserver
 import com.example.savethefood.R
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.databinding.FragmentAddFoodBinding
 import com.google.android.material.transition.MaterialFadeThrough
@@ -98,6 +101,14 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
 
         viewModel.newFoodFoodEvent.observe(viewLifecycleOwner) {
             // TODO ask to fill the values with the result
+        }
+
+        viewModel.saveFoodEvent.observe(viewLifecycleOwner) {
+            when (it) {
+                is Result.Success -> findNavController().popBackStack()
+                is Result.ExError, is Result.Error -> Toast.makeText(context, "Error saving food", Toast.LENGTH_LONG).show()
+                else -> Unit
+            }
         }
     }
 
