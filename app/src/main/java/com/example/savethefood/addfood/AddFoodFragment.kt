@@ -1,21 +1,26 @@
 package com.example.savethefood.addfood
 
+import android.content.Intent
 import android.os.Bundle
-import android.text.InputFilter
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import com.example.savethefood.BaseFragment
+import com.example.savethefood.EventObserver
 import com.example.savethefood.R
 import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.databinding.FragmentAddFoodBinding
-import com.example.savethefood.home.HomeFragment
-import com.example.savethefood.util.configSearchView
 import com.google.android.material.transition.MaterialFadeThrough
-import java.util.regex.Matcher
-import java.util.regex.Pattern
+import com.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.integration.android.IntentResult
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 
 const val REQUEST_KEY = "request"
 const val BUNDLE_KEY = "foodItem"
@@ -23,8 +28,11 @@ const val BUNDLE_KEY = "foodItem"
 // TODO add steppers for cooking phases
 // android stepper navigation component
 // Add home transition animation between gridlist and linear
+@AndroidEntryPoint
 class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>() {
 
+
+    private lateinit var startBarcodeForResult: ActivityResultLauncher<Intent>
 
     override val viewModel by viewModels<AddFoodViewModel>()
 
@@ -38,7 +46,7 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
         super.onCreate(savedInstanceState)
         enterTransition = MaterialFadeThrough().apply {
             addTarget(R.id.food_item_root)
-            duration = resources.getInteger(android.R.integer.config_longAnimTime).toLong()
+            duration = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
         }
     }
 
@@ -49,6 +57,19 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
             addFoodViewModel = viewModel
             setHasOptionsMenu(true)
         }
+
+        startBarcodeForResult = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            val result: IntentResult? =
+                IntentIntegrator.parseActivityResult(it.resultCode, it.resultCode, it.data)
+
+            //TODO forced value, emulator can't read barcode
+            //041631000564
+            result?.let { intentResult ->
+                viewModel.getApiFoodDetails(intentResult.contents ?: "041631000564")
+            }
+        };
     }
 
     override fun onResume() {
@@ -68,10 +89,29 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
         viewModel.foodDomain.observe(viewLifecycleOwner) {
             Log.d(classTag, "Updated item: $it")
         }
+
+        viewModel.barcodeFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
+            it.let {
+                startBarcodeForResult.launch(IntentIntegrator(activity).createScanIntent() )
+            }
+        })
+
+        viewModel.newFoodFoodEvent.observe(viewLifecycleOwner) {
+            // TODO ask to fill the values with the result
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_barcode, menu)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.barcode) {
+            viewModel.navigateToBarcodeReader()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }

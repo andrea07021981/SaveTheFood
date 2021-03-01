@@ -80,22 +80,9 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
     override fun activateObservers() {
         viewModel.detailFoodEvent.observe(viewLifecycleOwner, ::navigateTo)
 
-        viewModel.barcodeFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
-            it.let {
-                FragmentIntentIntegrator(this).initiateScan()
-            }
-        })
-
         viewModel.addFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddFoodFragment())
-            }
-        })
-
-        viewModel.newFoodFoodEvent.observe(viewLifecycleOwner, Observer {
-            if (it.succeeded) {
-                //TODO show a dialog with some info, editable and with the date if not present in barcode
-                Log.d(TAG, "Added")
             }
         })
     }
@@ -116,38 +103,16 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
         }
     }
 
-    @Deprecated("Removed scanner view")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val result: IntentResult? =
-            IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-
-        //TODO forced value, emulator can't read barcode
-        //041631000564
-        result?.let {
-            viewModel.getApiFoodDetails(it.contents ?: "041631000564")
-        }
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    @Deprecated("Removed scanner view")
-    inner class FragmentIntentIntegrator(
-        private val fragment: Fragment
-    ) : IntentIntegrator(fragment.activity) {
-
-        override fun startActivityForResult(intent: Intent, code: Int) {
-            fragment.startActivityForResult(intent, code)
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_toolbar, menu)
-        val searchItem = menu.findItem(R.id.action_search)
-        searchItem.configSearchView(
-            requireNotNull(activity),
-            "Search Food"
-        ) {
-            Log.d(TAG, "Value searched: $it")
+        with(menu.findItem(R.id.action_search)) {
+            configSearchView(
+                requireNotNull(activity),
+                "Search Food"
+            ) {
+                Log.d(TAG, "Value searched: $it")
+            }
         }
     }
 

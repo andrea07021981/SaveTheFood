@@ -12,7 +12,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.databinding.FragmentSearchableBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchableFragment : DialogFragment() {
 
     private val viewModel: AddFoodViewModel by viewModels(ownerProducer = { requireParentFragment() })

@@ -3,16 +3,24 @@ package com.example.savethefood.addfood
 import android.util.Log
 import androidx.collection.ArraySet
 import androidx.collection.arraySetOf
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodItem
+import com.example.savethefood.data.source.repository.FoodRepository
 import com.example.savethefood.util.FoodImage
+import com.squareup.moshi.JsonDataException
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
+import java.lang.Exception
 import java.util.*
 
 
-class AddFoodViewModel(
-
+class AddFoodViewModel @ViewModelInject constructor(
+    private val foodDataRepository: FoodRepository
 ) : ViewModel() {
 
     private val _foodItem = MutableLiveData(FoodItem(FoodImage.EMPTY))
@@ -25,6 +33,15 @@ class AddFoodViewModel(
             foodImg = it.img
         }
     }
+
+    private val _barcodeFoodEvent = MutableLiveData<Event<Unit>>()
+    val barcodeFoodEvent: LiveData<Event<Unit>>
+        get() = _barcodeFoodEvent
+
+
+    private val _newFoodFoodEvent = MutableLiveData<Result<FoodDomain>>()
+    val newFoodFoodEvent: LiveData<Result<FoodDomain>>
+        get() = _newFoodFoodEvent
 
     private val foodTypeFilter = MutableLiveData<String>()
     private var _foodsItems: ArraySet<FoodItem>? = null
@@ -79,7 +96,38 @@ class AddFoodViewModel(
         return customObjects
     }
 
+
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        println("Exception thrown within parent: $exception.")
+    }
+
+    private val childExceptionHandler = CoroutineExceptionHandler{ _, exception ->
+        println("Exception thrown in one of the children: $exception.")
+    }
+
+    fun getApiFoodDetails(barcode: String) {
+        viewModelScope.launch(handler) {
+            try {
+                supervisorScope {
+                    val foodJob = launch(childExceptionHandler) {
+                        _newFoodFoodEvent.value = foodDataRepository.getApiFoodUpc(barcode)
+                    }
+                    foodJob.join()
+                }
+            } catch (error: JsonDataException) {
+                _newFoodFoodEvent.value = Result.Error(error.toString())
+            } catch (generic: Exception) {
+                _newFoodFoodEvent.value = Result.Error(generic.toString())
+            }
+        }.invokeOnCompletion {
+        }
+    }
+
     fun openFoodDialog() {
         _openFoodTypeDialog.value = Event(Unit)
+    }
+
+    fun navigateToBarcodeReader() {
+        _barcodeFoodEvent.value = Event(Unit)
     }
 }

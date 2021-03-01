@@ -35,14 +35,6 @@ class HomeViewModel @ViewModelInject constructor(
     val detailFoodEvent: LiveData<Event<FoodDomain>>
         get() = _detailFoodEvent
 
-    private val _barcodeFoodEvent = MutableLiveData<Event<Unit>>()
-    val barcodeFoodEvent: LiveData<Event<Unit>>
-        get() = _barcodeFoodEvent
-
-    private val _newFoodFoodEvent = MutableLiveData<Result<FoodDomain>>()
-    val newFoodFoodEvent: LiveData<Result<FoodDomain>>
-        get() = _newFoodFoodEvent
-
     private val _addFoodEvent = MutableLiveData<Event<Unit>>()
     val addFoodEvent: LiveData<Event<Unit>>
         get() = _addFoodEvent
@@ -58,14 +50,6 @@ class HomeViewModel @ViewModelInject constructor(
 
         //TODO try to use function refenrce where possible like in lambda (if needed add ext functions)
         //initData()
-    }
-
-    private val handler = CoroutineExceptionHandler { _, exception ->
-        println("Exception thrown within parent: $exception.")
-    }
-
-    private val childExceptionHandler = CoroutineExceptionHandler{ _, exception ->
-        println("Exception thrown in one of the children: $exception.")
     }
 
     /**
@@ -87,28 +71,8 @@ class HomeViewModel @ViewModelInject constructor(
         _detailFoodEvent.value = Event(food)
     }
 
-    fun navigateToBarcodeReader() {
-        _barcodeFoodEvent.value = Event(Unit)
-    }
-
     fun navigateToAddFood() {
         _addFoodEvent.value = Event(Unit)
-    }
-
-    fun getApiFoodDetails(barcode: String) {
-        viewModelScope.launch(handler) {
-            try {
-               supervisorScope {
-                   //TODO add flow and use on start to show the loading
-                   val apiUdcJob = launch(childExceptionHandler) { foodDataRepository.getApiFoodUpc(barcode) }
-               }
-            } catch (error: JsonDataException) {
-                _newFoodFoodEvent.value = Result.Error(error.toString())
-            } catch (generic: Exception) {
-                _newFoodFoodEvent.value = Result.Error(generic.toString())
-            }
-        }.invokeOnCompletion {
-        }
     }
 
     override fun onCleared() {

@@ -16,6 +16,7 @@ class FilterFragment : BottomSheetDialogFragment() {
     ): View {
         val binding = FragmentFilterBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
+
         return binding.root
     }
 }
