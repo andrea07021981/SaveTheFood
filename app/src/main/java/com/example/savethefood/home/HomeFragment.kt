@@ -17,6 +17,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.*
+import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.succeeded
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.util.configSearchView
@@ -78,27 +79,30 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
     }
 
     override fun activateObservers() {
-        viewModel.detailFoodEvent.observe(viewLifecycleOwner, ::navigateTo)
-
-        viewModel.addFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
-            it.let {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAddFoodFragment())
-            }
-        })
+        viewModel.detailFoodEvent.observe(viewLifecycleOwner, ::navigateTo) // TODO is it better to keep the EventObserver?
+        viewModel.addFoodEvent.observe(viewLifecycleOwner, ::navigateTo)
     }
 
     override fun <T> navigateTo(event: Event<T>?) {
-        event.let {
-            with(dataBinding.foodRecycleview) {
-                val foodImageView = findViewById<ImageView>(R.id.food_imageview)
-                val foodTextView = findViewById<TextView>(R.id.food_textview)
-                val extras = FragmentNavigatorExtras(
-                    foodImageView to "foodImage",
-                    foodTextView to "foodTitle"
-                )
-                val bundle = bundleOf("foodDomain" to it)
-                findNavController()
-                    .navigate(R.id.foodDetailFragment, bundle, null, extras)
+        event?.let {
+            if (it.hasBeenHandled) return
+
+            when (it.peekContent()) {
+                is Unit -> findNavController()
+                    .navigate(HomeFragmentDirections.actionHomeFragmentToAddFoodFragment())
+                is FoodDomain -> {
+                    with(dataBinding.foodRecycleview) {
+                        val foodImageView = findViewById<ImageView>(R.id.food_imageview)
+                        val foodTextView = findViewById<TextView>(R.id.food_textview)
+                        val extras = FragmentNavigatorExtras(
+                            foodImageView to "foodImage",
+                            foodTextView to "foodTitle"
+                        )
+                        val bundle = bundleOf("foodDomain" to it.getContentIfNotHandled())
+                        findNavController()
+                            .navigate(R.id.foodDetailFragment, bundle, null, extras)
+                    }
+                }
             }
         }
     }
