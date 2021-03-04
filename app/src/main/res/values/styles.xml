@@ -53,5 +53,8 @@
     <style name="FormTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
         <item name="boxStrokeColor">@color/colorPrimary</item>
         <item name="boxStrokeWidth">1dp</item>
+        <item name="errorEnabled">true</item>
+        <item name="android:textColorHint">@color/colorAccent</item>
+        <item name="hintTextColor">@color/colorAccent</item>
     </style>
 </resources>

@@ -61,11 +61,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
-                            android:textColorHint="@color/colorAccent"
-                            app:errorEnabled="true"
-                            app:errorIconDrawable="@null"
-                            bind:hasError="@{safeUnbox(addFoodViewModel.errorName)}"
-                            app:hintTextColor="@color/colorAccent">
+                            bind:hasError="@{safeUnbox(addFoodViewModel.errorName)}">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/et_name"
@@ -89,10 +85,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginBottom="16dp"
-                            android:textColorHint="@color/colorAccent"
-                            app:errorEnabled="true"
-                            bind:hasError="@{safeUnbox(addFoodViewModel.errorDescription)}"
-                            app:hintTextColor="@color/colorAccent">
+                            bind:hasError="@{safeUnbox(addFoodViewModel.errorDescription)}">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/et_description"
@@ -115,10 +108,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginBottom="16dp"
-                            android:textColorHint="@color/colorAccent"
-                            app:errorEnabled="true"
-                            bind:hasError="@{safeUnbox(addFoodViewModel.errorPrice)}"
-                            app:hintTextColor="@color/colorAccent">
+                            bind:hasError="@{safeUnbox(addFoodViewModel.errorPrice)}">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/et_price"
@@ -146,8 +136,6 @@
                                 android:layout_width="151dp"
                                 android:layout_height="wrap_content"
                                 android:textColorHint="@color/colorAccent"
-                                app:errorEnabled="true"
-                                app:hintTextColor="@color/colorAccent"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@+id/toggle"
                                 app:layout_constraintHorizontal_bias="0.5"
