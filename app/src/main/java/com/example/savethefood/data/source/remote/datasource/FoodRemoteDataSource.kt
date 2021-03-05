@@ -1,7 +1,5 @@
 package com.example.savethefood.data.source.remote.datasource
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
@@ -9,8 +7,6 @@ import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.local.entity.FoodEntity
 import com.example.savethefood.data.source.remote.datatransferobject.asDomainModel
 import com.example.savethefood.data.source.remote.service.FoodService
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import java.lang.Exception
@@ -51,9 +47,9 @@ class FoodRemoteDataSource @Inject constructor(
     }
 
     @Throws(Exception::class)
-    override suspend fun getFoodByQuery(query: String): Result<FoodSearchDomain>?  = coroutineScope{
+    override suspend fun getFoodByQuery(barcode: String): Result<FoodSearchDomain>?  = coroutineScope{
         try {
-            val foodData = foodApi.getFoodByName(query = query)
+            val foodData = foodApi.getFoodByName(query = barcode)
             //Log.d("JSON RESULT", foodData.id.toString())
             return@coroutineScope Result.Success(foodData.asDomainModel())
         } catch (e: Exception) {

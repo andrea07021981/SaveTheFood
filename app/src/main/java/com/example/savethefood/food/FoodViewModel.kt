@@ -15,6 +15,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.Error
+import kotlin.jvm.Throws
 
 @Deprecated("No online foood search")
 class FoodViewModel @ViewModelInject constructor(
@@ -62,6 +63,7 @@ class FoodViewModel @ViewModelInject constructor(
         }
     }
 
+    @Throws(Exception::class)
     fun saveFoodDetail(food: ProductDomain) {
         viewModelScope.launch {
             try {

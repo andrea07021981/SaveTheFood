@@ -96,7 +96,6 @@ class MainActivity : AppCompatActivity() {
             R.id.splashFragment,
             R.id.loginFragment,
             R.id.signUpFragment,
-            R.id.foodDetailFragment,
             R.id.recipeDetailFragment -> View.GONE
             else -> View.VISIBLE
         }

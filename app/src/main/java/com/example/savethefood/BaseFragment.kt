@@ -14,7 +14,11 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 
-// TODO add as base fragment everywhere. Create same way a generic baseVM
+/**
+ * Base generic class for fragments.
+ * @param   VM          ViewModel used in fragment
+ * @param   DB          DataBinding for UI
+ */
 abstract class BaseFragment<VM : ViewModel, DB : ViewDataBinding>() : Fragment() {
 
     protected abstract val viewModel: VM

@@ -73,6 +73,7 @@ class FoodDataRepository @Inject constructor(
         }
     }
 
+    @Throws(Exception::class)
     override suspend fun getApiFoodById(id: Int): Result<FoodDomain> = coroutineScope{
         wrapEspressoIdlingResource {
             val foodByIdResult = foodRemoteDataSource.getFoodById(id)
@@ -85,6 +86,7 @@ class FoodDataRepository @Inject constructor(
         }
     }
 
+    @Throws(Exception::class)
     override suspend fun refreshData() = coroutineScope{
         wrapEspressoIdlingResource {
             val localFoods = foodLocalDataSource.getLocalFoods()
