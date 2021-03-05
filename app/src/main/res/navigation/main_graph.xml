@@ -57,7 +57,7 @@
     <fragment
         android:id="@+id/foodDetailFragment"
         android:name="com.example.savethefood.fooddetail.FoodDetailFragment"
-        android:label="FoodDetailFragment"
+        android:label="Food Detail"
         tools:layout="@layout/fragment_food_detail">
         <argument
             android:name="foodDomain"
