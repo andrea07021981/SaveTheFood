@@ -42,7 +42,6 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
 
     override fun activateObservers() {
         viewModel.food.observe(viewLifecycleOwner, {
-            (activity as AppCompatActivity?)!!.supportActionBar!!.title = it.title
         })
     }
 
