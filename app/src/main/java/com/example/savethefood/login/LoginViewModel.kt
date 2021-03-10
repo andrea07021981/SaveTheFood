@@ -31,21 +31,14 @@ class LoginViewModel @ViewModelInject constructor(
     val animationResourceView = R.anim.fade_in
     val animationResourceButton = R.anim.bounce
 
+    val emailValue = MutableLiveData<String>()
 
-    // TODO two way binding not working, replace with the UserDomain class but use Observable to
-    // notify errors
-    private val _emailValue = MutableLiveData<String>()
+    var passwordValue = MutableLiveData<String>()
 
-    val emailValue: LiveData<String>
-        get() = _emailValue
-
-    private val _passwordValue = MutableLiveData<String>()
-    var passwordValue: LiveData<String> = _passwordValue
-
-    var errorEmail = Transformations.map(_emailValue) {
+    var errorEmail = Transformations.map(emailValue) {
         it.isNullOrBlank()
     }
-    var errorPassword = Transformations.map(_passwordValue) {
+    var errorPassword = Transformations.map(passwordValue) {
         it.isNullOrBlank()
     }
 
@@ -59,8 +52,8 @@ class LoginViewModel @ViewModelInject constructor(
 
     init {
         if (BuildConfig.DEBUG) {
-            _emailValue.value = "a@a.com"
-            _passwordValue.value = "a"
+            emailValue.value = "a@a.com"
+            passwordValue.value = "a"
         }
     }
 

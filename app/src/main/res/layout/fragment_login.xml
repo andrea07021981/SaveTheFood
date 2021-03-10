@@ -79,7 +79,7 @@
                             android:drawablePadding="10dp"
                             android:hint="@string/email"
                             android:singleLine="true"
-                            bind:text="@={loginViewModel.emailValue}"
+                            android:text="@={loginViewModel.emailValue}"
                             android:textColor="@color/colorAccent" />
                     </com.google.android.material.textfield.TextInputLayout>
 
