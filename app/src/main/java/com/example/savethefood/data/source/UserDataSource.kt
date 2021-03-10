@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserDataSource {
 
-    fun getUser(email: String, password: String): UserEntity?
+    suspend fun getUser(email: String, password: String): UserEntity?
 
     suspend fun saveUser(user: UserDomain): Long
 }

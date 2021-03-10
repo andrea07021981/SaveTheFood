@@ -1,14 +1,14 @@
 package com.example.savethefood.login
 
 import android.util.Patterns
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.repository.UserRepository
 import kotlinx.coroutines.*
 
-//Inherit from AndroidViewModel we don't need to use a CustomViewmodelFactory for passing the application
-class SignUpViewModel(
+class SignUpViewModel @ViewModelInject constructor(
     private val userDataRepository: UserRepository
 ) : ViewModel() {
 

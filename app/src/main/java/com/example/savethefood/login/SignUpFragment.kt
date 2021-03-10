@@ -12,13 +12,14 @@ import com.example.savethefood.EventObserver
 import com.example.savethefood.R
 import com.example.savethefood.data.source.repository.UserDataRepository
 import com.example.savethefood.databinding.FragmentSignupBinding
-//TODO Add ontext change to the strenght password and use library https://github.com/nulab/zxcvbn4j/issues/75 and binding, customview like 
+import dagger.hilt.android.AndroidEntryPoint
+
+//TODO Add ontext change to the strenght password and use library https://github.com/nulab/zxcvbn4j/issues/75 and binding, customview like
+@AndroidEntryPoint
 class SignUpFragment : BaseFragment<SignUpViewModel, FragmentSignupBinding>() {
 
     //We can use by viewModels when the VM is not shared with other fragments
-    override val viewModel by viewModels<SignUpViewModel>() {
-            SignUpViewModel.SignUpViewModelFactory(UserDataRepository.getRepository(requireActivity().application))
-        }
+    override val viewModel by viewModels<SignUpViewModel>()
 
     override val layoutRes: Int
         get() = R.layout.fragment_signup

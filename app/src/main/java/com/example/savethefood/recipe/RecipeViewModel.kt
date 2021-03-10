@@ -9,6 +9,7 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.RecipeRepository
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.Error
 
@@ -34,6 +35,8 @@ class RecipeViewModel(
 
     // We could also use liveData { ....onCollect() { emit(value)}}
     // TODO move all operations in repository, here only aslivedata
+    // TODO move to stateflow like https://github.com/Mori-Atsushi/android-flow-mvvm-sample
+    // https://github.com/Mori-Atsushi/android-flow-mvvm-sample/blob/master/app/src/main/kotlin/com/example/flow_mvvm_sample/ui/detail/DetailViewModel.kt
     var _recipeListResult: LiveData<List<RecipeResult>?> =
         recipeRepository.getRecipes(foodName)
             .onStart {

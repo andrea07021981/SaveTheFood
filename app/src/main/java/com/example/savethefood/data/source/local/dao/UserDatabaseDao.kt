@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 interface UserDatabaseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(user: UserEntity) : Long
+    suspend fun insert(user: UserEntity) : Long
 
     /**
      * When updating a row with a value already set in a column,
@@ -22,7 +22,7 @@ interface UserDatabaseDao {
      * @param user new value to write
      */
     @Update
-    fun update(user: UserEntity)
+    suspend fun update(user: UserEntity)
 
     /**
      * Deletes all values from the table.
@@ -30,18 +30,18 @@ interface UserDatabaseDao {
      * This does not delete the table, only its contents.
      */
     @Query("DELETE FROM user_table")
-    fun clear()
+    suspend fun clear()
 
     /**
      * Selects and returns the user with given userId.
      */
     @Query("SELECT * from user_table WHERE userId = :key")
-    fun getUserWithId(key: Long): LiveData<UserEntity>
+    suspend fun getUserWithId(key: Long): UserEntity?
 
     /**
      * Selects and returns the user with given email and pass.(IMP: MUST BE SUSPENDED IN ORDER TO WORK WITH COROUTINES AND FLOW)
      */
     @Query("SELECT * from user_table WHERE email = :userEmail AND password = :userPassword")
-    fun getUser(userEmail: String, userPassword: String): UserEntity?
+    suspend fun getUser(userEmail: String, userPassword: String): UserEntity?
 }
 

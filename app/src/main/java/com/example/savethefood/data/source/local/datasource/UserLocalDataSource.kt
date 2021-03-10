@@ -14,17 +14,18 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 import kotlin.Exception
 import kotlin.jvm.Throws
 
-class UserLocalDataSource internal constructor(
+class UserLocalDataSource @Inject constructor(
     private val userDatabaseDao: UserDatabaseDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : UserDataSource {
 
     @Throws(Exception::class)
-    override fun getUser(email: String, password: String): UserEntity? {
-        return userDatabaseDao.getUser(email, password)
+    override suspend fun getUser(email: String, password: String) = withContext(ioDispatcher){
+        userDatabaseDao.getUser(email, password)
     }
 
     override suspend fun saveUser(user: UserDomain) = withContext(ioDispatcher){

@@ -2,12 +2,14 @@ package com.example.savethefood.util
 
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.AnimRes
 import androidx.databinding.BindingAdapter
-import com.example.savethefood.R
+import androidx.databinding.InverseBindingAdapter
 import com.example.savethefood.constants.LoginAuthenticationStates
 import com.example.savethefood.constants.LoginAuthenticationStates.*
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 
@@ -41,6 +43,7 @@ fun bindStatus(context: View, status: LoginAuthenticationStates?) {
             Toast.makeText(context.context, "Error Login", Toast.LENGTH_SHORT).show()
         }
         is Idle -> Toast.makeText(context.context, "Idle state", Toast.LENGTH_SHORT).show()
-        is Authenticating -> Toast.makeText(context.context, "Authenticating", Toast.LENGTH_SHORT).show()
+        is Authenticating -> Toast.makeText(context.context, "Authenticating", Toast.LENGTH_SHORT)
+            .show()
     }
 }

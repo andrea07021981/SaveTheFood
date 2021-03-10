@@ -1,6 +1,5 @@
 package com.example.savethefood.login
 
-import android.os.Build
 import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.hilt.lifecycle.ViewModelInject
@@ -8,20 +7,20 @@ import androidx.lifecycle.*
 import com.example.savethefood.BuildConfig
 import com.example.savethefood.Event
 import com.example.savethefood.R
-import com.example.savethefood.constants.*
+import com.example.savethefood.constants.LoginAuthenticationStates
 import com.example.savethefood.constants.LoginAuthenticationStates.*
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
-import com.example.savethefood.data.source.repository.UserDataRepository
 import com.example.savethefood.data.source.repository.UserRepository
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onEach
-import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
-class LoginViewModel (
+class LoginViewModel @ViewModelInject constructor(
     private val userDataRepository: UserRepository
 ) : ViewModel() {
 
@@ -32,12 +31,23 @@ class LoginViewModel (
     val animationResourceView = R.anim.fade_in
     val animationResourceButton = R.anim.bounce
 
-    var emailValue = MutableLiveData<String>()
-        @VisibleForTesting set // this allow us to use this set only for test
-    var passwordValue = MutableLiveData<String>()
-        @VisibleForTesting set // this allow us to use this set only for test
-    var errorPassword = MutableLiveData<Boolean>()
-    var errorEmail = MutableLiveData<Boolean>()
+
+    // TODO two way binding not working, replace with the UserDomain class but use Observable to
+    // notify errors
+    private val _emailValue = MutableLiveData<String>()
+
+    val emailValue: LiveData<String>
+        get() = _emailValue
+
+    private val _passwordValue = MutableLiveData<String>()
+    var passwordValue: LiveData<String> = _passwordValue
+
+    var errorEmail = Transformations.map(_emailValue) {
+        it.isNullOrBlank()
+    }
+    var errorPassword = Transformations.map(_passwordValue) {
+        it.isNullOrBlank()
+    }
 
     private val _loginAuthenticationState = MutableLiveData<LoginAuthenticationStates>()
     val loginAuthenticationState: LiveData<LoginAuthenticationStates>
@@ -49,16 +59,13 @@ class LoginViewModel (
 
     init {
         if (BuildConfig.DEBUG) {
-            emailValue.value = "a@a.com"
-            passwordValue.value = "a"
+            _emailValue.value = "a@a.com"
+            _passwordValue.value = "a"
         }
     }
 
     fun onSignUpClick(){
-        errorEmail.value = emailValue.value.isNullOrEmpty()
-        errorPassword.value = passwordValue.value.isNullOrEmpty()
         if (errorEmail.value == false && errorPassword.value == false) {
-            //TODO add a generic base viewmodel class with a generic function loadData(block: suspend () -> Unit)
             doLogin {
                 userDataRepository.getUser(user = UserDomain().apply {
                     userEmail = emailValue.value.toString()
@@ -68,7 +75,6 @@ class LoginViewModel (
         }
     }
 
-    // TODO remove flow, use call direct and repository send the different states _loginAuthenticationState.value = userDataRepository.getUse... Move login auth state in repo and all this code
     private inline fun doLogin(crossinline block: suspend () -> Result<UserDomain>) {
         viewModelScope.launch {
             _loginAuthenticationState.value = Authenticating()
@@ -89,39 +95,4 @@ class LoginViewModel (
     fun moveToSignUp() {
         _navigateToSignUpFragment.value = Event(Unit)
     }
-
-    /**
-     * Factory for constructing LoginViewModel with parameter
-     */
-    @Deprecated("Added hilt DI")
-    class LoginViewModelFactory(
-        private val dataRepository: UserRepository
-    ) : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return LoginViewModel(dataRepository) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-    }
 }
-/**
- * TODO Add in generic base VM to load, a
-
-launchDataLoad { plantRepository.loadFoods() }
-
-private fun launchDataLoad(block: suspend () -> Unit): Job {
-    return viewModelScope.launch {
-        try {
-            _spinner.value = true
-            block()
-        } catch (error: Throwable) {
-            _snackbar.value = error.message
-        } finally {
-            _spinner.value = false
-        }
-    }
-}
- *
-        **/

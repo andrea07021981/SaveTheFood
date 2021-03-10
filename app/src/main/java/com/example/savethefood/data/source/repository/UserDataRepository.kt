@@ -6,60 +6,36 @@ import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.UserDataSource
 import com.example.savethefood.data.source.local.datasource.UserLocalDataSource
+import com.example.savethefood.data.source.local.entity.UserEntity
 import com.example.savethefood.data.source.local.entity.asDomainModel
 import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class UserDataRepository(
+class UserDataRepository @Inject constructor(
     private val userLocalDataSource: UserDataSource,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val userRemoteDataSource: UserDataSource,
 ) : UserRepository {
-
-    companion object {
-        @Volatile
-        private var INSTANCE: UserDataRepository? = null
-
-        fun getRepository(app: Application): UserDataRepository {
-            return INSTANCE ?: synchronized(this) {
-                val database = SaveTheFoodDatabase.getInstance(app)
-                return@synchronized UserDataRepository(
-                    UserLocalDataSource(database.userDatabaseDao)
-                ).also {
-                    INSTANCE = it
-                }
-            }
-        }
-    }
 
     /**
      * SAve locally for now, TODO save online, retrieve data and save locally Firebase
      */
     override suspend fun saveNewUser(user: UserDomain) {
         wrapEspressoIdlingResource {
-            withContext(ioDispatcher) {
-                userLocalDataSource.saveUser(user)
-            }
-            //We could use this one, but it's useful only for multiple job children
-            /*coroutineScope {
-                launch { userLocalDataSource.saveUser(user) }
-            }*/
+            userLocalDataSource.saveUser(user)
         }
     }
 
-    override suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher): Result<UserDomain> = withContext(ioDispatcher){
+    override suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher): Result<UserDomain> {
         wrapEspressoIdlingResource {
-            try {
-                // TODO user elvis to retrieve online if offline is null !!!!!!  https://en.paradigmadigital.com/dev/android-testing-how-to-perform-unit-tests/
-                /*userLocalDataSource.getUser(user.userEmail, user.userPassword).let {
-                    return@withContext Result.Success(it.asDomainModel())
-                } ?: kotlin.run {
-                    userLocalDataSource.getUserFromAPI().....
-                    .......
-                }*/
-                val userDb = userLocalDataSource.getUser(user.userEmail, user.userPassword)
-                delay(2000) //TODO TEST remove
-                if (userDb != null) {
+            return try {
+                val userDb =
+                    userLocalDataSource.getUser(user.userEmail, user.userPassword)
+                        ?: kotlin.run {
+                            //CAll the API like firebase auth, no local user
+                        }
+                if (userDb is UserEntity) {
                     Result.Success(userDb.asDomainModel())
                 } else {
                     Result.Error("User Not found")

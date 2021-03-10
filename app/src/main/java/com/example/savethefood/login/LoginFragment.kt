@@ -11,6 +11,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -28,11 +29,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
 
-    override val viewModel by viewModels<LoginViewModel> {
-        LoginViewModel.LoginViewModelFactory(UserDataRepository.getRepository(requireActivity().application))
-    }
+    override val viewModel by activityViewModels<LoginViewModel>()
 
     override val layoutRes: Int
         get() = R.layout.fragment_login
@@ -120,6 +120,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
                     postDelayed(::revertAnimation, revertTime)
                 }
             }
+            else -> Unit
         }
 
     }

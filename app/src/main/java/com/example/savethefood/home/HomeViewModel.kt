@@ -41,6 +41,12 @@ class HomeViewModel @ViewModelInject constructor(
 
     init {
         // TODO, move offer emit, oneanch, catch, map in repository, datasource only suspend
+        // with states, we can do .catch, oneach, etc in repo and emit errors or other.
+        // Then the collect with start everything and using a class like Result will store data, errors, etc
+        // We can also decide to do the intermediate operations here, maybe easier?
+
+        // 1 in repo    -> Use emit
+        // 2 in VM      -> Create functions in VM
         
         //TODO move to this structure, Result in fragment as observer or databinding (better)??? https://www.droidcon.com/news-detail?content-id=/repository/collaboration/Groups/spaces/droidcon_hq/Documents/public/news/android-news/Using%20LiveData%20and%20Flow%20in%20MVVM%20-%20Part%20II
 

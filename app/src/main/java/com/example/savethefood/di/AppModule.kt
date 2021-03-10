@@ -4,13 +4,19 @@ import android.content.Context
 import androidx.room.Room
 import com.example.savethefood.BuildConfig
 import com.example.savethefood.data.source.FoodDataSource
+import com.example.savethefood.data.source.UserDataSource
 import com.example.savethefood.data.source.local.dao.FoodDatabaseDao
+import com.example.savethefood.data.source.local.dao.UserDatabaseDao
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.source.local.datasource.FoodLocalDataSource
+import com.example.savethefood.data.source.local.datasource.UserLocalDataSource
 import com.example.savethefood.data.source.remote.datasource.FoodRemoteDataSource
+import com.example.savethefood.data.source.remote.datasource.UserRemoteDataSource
 import com.example.savethefood.data.source.remote.service.FoodService
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.data.source.repository.FoodRepository
+import com.example.savethefood.data.source.repository.UserDataRepository
+import com.example.savethefood.data.source.repository.UserRepository
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -19,6 +25,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,6 +41,9 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 object BaseModule {
 
+    /**
+     * Data sources DI
+     */
     // Best way to provide multiple implementations same interface
     @Provides
     @Named("FoodRemoteDataSource")
@@ -63,8 +74,39 @@ object BaseModule {
         return FoodDataRepository(foodLocalDataSource, foodRemoteDataSource)
     }
 
+    @Provides
+    @Named("UserRemoteDataSource")
+    fun provideUserRemoteDataSource() : UserDataSource {
+        return UserRemoteDataSource()
+    }
+
+    @Provides
+    @Named("UserLocalDataSource")
+    fun provideUserLocalDataSource(
+        userDatabaseDao: UserDatabaseDao
+    ): UserDataSource {
+        return UserLocalDataSource(
+            userDatabaseDao,
+            Dispatchers.IO
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserDataRepository(
+        userLocalDataSource: UserLocalDataSource,
+        userRemoteDataSource: UserRemoteDataSource
+    ) : UserRepository {
+        return UserDataRepository(userLocalDataSource, userRemoteDataSource)
+    }
+
+    @Provides
+    fun provideDispatcher() = Dispatchers.IO
 }
 
+/**
+ * Database DI
+ */
 @InstallIn(ApplicationComponent::class)
 @Module
 object DatabaseModule {
@@ -82,6 +124,11 @@ object DatabaseModule {
     @Provides
     fun provideFoodDao(database: SaveTheFoodDatabase): FoodDatabaseDao {
         return database.foodDatabaseDao
+    }
+
+    @Provides
+    fun provideUserDao(database: SaveTheFoodDatabase): UserDatabaseDao {
+        return database.userDatabaseDao
     }
 }
 

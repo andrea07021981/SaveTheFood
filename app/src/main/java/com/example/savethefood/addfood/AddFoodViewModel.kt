@@ -36,6 +36,7 @@ class AddFoodViewModel @ViewModelInject constructor(
         }
     }
 
+    // TODO use custom set for livedata or transformations to update
     val errorName = MutableLiveData<Boolean>()
     val errorDescription = MutableLiveData<Boolean>()
     val errorPrice = MutableLiveData<Boolean>()

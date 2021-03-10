@@ -14,7 +14,7 @@ class FakeUserDataSourceTest(
     //TODO add fake data, not related with local or remote
 
     @Throws(Exception::class)
-    override fun getUser(email: String, password: String): UserEntity? {
+    override suspend fun getUser(email: String, password: String): UserEntity? {
         return users?.find { it.email == email && it.password == password }
     }
 

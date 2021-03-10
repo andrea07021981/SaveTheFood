@@ -43,17 +43,17 @@ class UserDaoTest {
     fun closeDb() = database.close()
 
     @Test
-    fun insertUser_andRetrieveit() {
+    suspend fun insertUser_andRetrieveit() {
         // GIVEN a new user and insert it
         val user = UserDomain("a", "a@a", "a")
         val insertId = database.userDatabaseDao.insert(user.asDatabaseModel())
 
         // WHEN get the user from db
-        val loaded = database.userDatabaseDao.getUserWithId(insertId).getOrAwaitValue()
+        val loaded = database.userDatabaseDao.getUserWithId(insertId)
 
         //THEN the loaded data contains the expected values
-        assertThat(user.userName, `is`(loaded.userName))
-        assertThat(user.userEmail, `is`(loaded.email))
-        assertThat(user.userPassword, `is`(loaded.password))
+        assertThat(user.userName, `is`(loaded?.userName))
+        assertThat(user.userEmail, `is`(loaded?.email))
+        assertThat(user.userPassword, `is`(loaded?.password))
     }
 }
