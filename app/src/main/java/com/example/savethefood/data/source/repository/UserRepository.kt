@@ -10,7 +10,7 @@ interface UserRepository {
     /**
      * SAve locally for now, TODO save online, retrieve data and save locally
      */
-    suspend fun saveNewUser(user: UserDomain)
+    suspend fun saveNewUser(user: UserDomain): Long
 
     suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher = Dispatchers.IO): Result<UserDomain>
 }

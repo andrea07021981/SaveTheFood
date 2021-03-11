@@ -23,8 +23,8 @@ class FakeUserDataRepositoryTest(
         shouldReturnError = value
     }
 
-    override suspend fun saveNewUser(user: UserDomain) {
-        fakeUserDataRepositoryTest.saveUser(user)
+    override suspend fun saveNewUser(user: UserDomain): Long {
+        return fakeUserDataRepositoryTest.saveUser(user)
     }
 
     override suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher): Result<UserDomain> {

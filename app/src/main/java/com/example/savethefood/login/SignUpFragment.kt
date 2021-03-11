@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.savethefood.BaseFragment
@@ -13,13 +14,15 @@ import com.example.savethefood.R
 import com.example.savethefood.data.source.repository.UserDataRepository
 import com.example.savethefood.databinding.FragmentSignupBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 //TODO Add ontext change to the strenght password and use library https://github.com/nulab/zxcvbn4j/issues/75 and binding, customview like
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class SignUpFragment : BaseFragment<SignUpViewModel, FragmentSignupBinding>() {
+class SignUpFragment : BaseFragment<LoginViewModel, FragmentSignupBinding>() {
 
     //We can use by viewModels when the VM is not shared with other fragments
-    override val viewModel by viewModels<SignUpViewModel>()
+    override val viewModel by activityViewModels<LoginViewModel>()
 
     override val layoutRes: Int
         get() = R.layout.fragment_signup
@@ -29,12 +32,12 @@ class SignUpFragment : BaseFragment<SignUpViewModel, FragmentSignupBinding>() {
 
     override fun init() {
         with(dataBinding) {
-            signupViewModel = viewModel
+            loginViewModel = viewModel
         }
     }
 
     override fun activateObservers() {
-        viewModel.loginEvent.observe(this.viewLifecycleOwner, EventObserver {
+        viewModel.signUpEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 this
                     .findNavController()

@@ -1,5 +1,6 @@
 package com.example.savethefood.login
 
+import android.util.Patterns
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.BuildConfig
@@ -28,11 +29,21 @@ class LoginViewModel @ViewModelInject constructor(
     val animationResourceView = R.anim.fade_in
     val animationResourceButton = R.anim.bounce
 
+    private val _errorUserName = MutableLiveData<LoginError>(LoginError.NONE)
+    val errorUserName: LiveData<LoginError> = _errorUserName
+
     private val _errorEmail = MutableLiveData<LoginError>(LoginError.NONE)
     val errorEmail: LiveData<LoginError> = _errorEmail
 
     private val _errorPassword = MutableLiveData<LoginError>(LoginError.NONE)
     val errorPassword: LiveData<LoginError> = _errorPassword
+
+    val onUserNameFocusChanged: (String) -> Unit = {
+        _errorUserName.value = when {
+            it.isEmpty() -> LoginError.INVALID_EMAIL
+            else -> LoginError.NONE
+        }
+    }
 
     val onUserEmailFocusChanged: (String) -> Unit = {
         _errorEmail.value = when {
@@ -49,6 +60,10 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
     var userDomain = MutableLiveData(UserDomain())
+
+    private val _signUpEvent = MutableLiveData<Event<Long>>()
+    val signUpEvent: LiveData<Event<Long>>
+        get() = _signUpEvent
 
     private val _loginAuthenticationState = MutableLiveData<LoginAuthenticationStates>()
     val loginAuthenticationState: LiveData<LoginAuthenticationStates>
@@ -67,9 +82,9 @@ class LoginViewModel @ViewModelInject constructor(
         }
     }
 
-    fun onSignUpClick(){
+    fun onSignInClick(){
         if (_errorEmail.value?.equals(LoginError.NONE) == true &&
-                _errorPassword.value?.equals(LoginError.NONE) == true) {
+            _errorPassword.value?.equals(LoginError.NONE) == true) {
             doLogin {
                 userDataRepository.getUser(userDomain.value!!)
             }
@@ -89,11 +104,23 @@ class LoginViewModel @ViewModelInject constructor(
         }
     }
 
+    fun onSignUpClick(){
+        if (_errorUserName.value?.equals(LoginError.NONE) == true &&
+                _errorEmail.value?.equals(LoginError.NONE) == true &&
+                _errorPassword.value?.equals(LoginError.NONE) == true ) {
+            viewModelScope.launch {
+                val newUserId = userDataRepository.saveNewUser(userDomain.value!!)
+                _signUpEvent.value = Event(newUserId)
+            }
+        }
+    }
+
     fun resetState() {
         _loginAuthenticationState.value = Idle
     }
 
     fun moveToSignUp() {
+        userDomain.value = userDomain.value?.copy(userName = "", email = "", password = "")
         _navigateToSignUpFragment.value = Event(Unit)
     }
 }

@@ -29,6 +29,6 @@ class UserLocalDataSource @Inject constructor(
     }
 
     override suspend fun saveUser(user: UserDomain) = withContext(ioDispatcher){
-        userDatabaseDao.insert(user.asDatabaseModel())
+        return@withContext userDatabaseDao.insert(user.asDatabaseModel())
     }
 }

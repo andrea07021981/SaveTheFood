@@ -34,7 +34,7 @@ fun TextInputLayout.hasError(error: Boolean) {
 @BindingAdapter("bind:hasLoginError")
 fun TextInputLayout.hasLoginError(error: LoginError) {
     when (error) {
-        LoginError.INVALID_EMAIL, LoginError.INVALID_PASSWORD -> setError(error.message)
+        LoginError.INVALID_USERNAME, LoginError.INVALID_EMAIL, LoginError.INVALID_PASSWORD -> setError(error.message)
         else -> setError(null)
     }
 }

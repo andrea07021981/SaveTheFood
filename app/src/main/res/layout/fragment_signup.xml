@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="signupViewModel"
-            type="com.example.savethefood.login.SignUpViewModel" />
+            name="loginViewModel"
+            type="com.example.savethefood.login.LoginViewModel" />
     </data>
 
     <LinearLayout
@@ -46,7 +46,7 @@
             app:layout_constraintTop_toBottomOf="@+id/chef_imageview">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutUsername"
+                android:id="@+id/layoutUserName"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,18 +59,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:hasError="@{safeUnbox(signupViewModel.errorUserName)}">
+                bind:hasLoginError="@{loginViewModel.errorUserName}">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etUsername"
+                    android:id="@+id/etUserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/email_white_24dp"
+                    android:drawableStart="@drawable/person_outline_24"
                     android:drawablePadding="10dp"
                     android:hint="@string/username"
                     android:singleLine="true"
-                    android:text="@={signupViewModel.userNameValue}"
-                    android:textColor="@color/colorAccent" />
+                    android:text="@={loginViewModel.userDomain.userName}"
+                    android:textColor="@color/colorAccent"
+                    bind:onFocusChange="@{loginViewModel.onUserNameFocusChanged}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -79,27 +80,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 android:textColorHint="@color/colorAccent"
                 app:errorEnabled="true"
                 app:hintTextColor="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layoutUsername"
-                bind:hasError="@{safeUnbox(signupViewModel.errorEmail)}">
+                app:layout_constraintTop_toBottomOf="@+id/layoutUserName"
+                bind:hasLoginError="@{loginViewModel.errorPassword}">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/email_white_24dp"
+                    android:drawableStart="@drawable/lock_white_24dp"
                     android:drawablePadding="10dp"
                     android:hint="@string/email"
+                    android:imeOptions="actionDone"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
-                    android:text="@={signupViewModel.emailValue}"
-                    android:textColor="@color/colorAccent" />
+                    android:text="@={loginViewModel.userDomain.email}"
+                    android:textColor="@color/colorAccent"
+                    bind:onFocusChange="@{loginViewModel.onUserEmailFocusChanged}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -108,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 android:textColorHint="@color/colorAccent"
                 app:errorEnabled="true"
@@ -116,7 +119,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layoutEmail"
-                bind:hasError="@{safeUnbox(signupViewModel.errorPassword)}">
+                bind:hasLoginError="@{loginViewModel.errorPassword}">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPassword"
@@ -125,10 +128,12 @@
                     android:drawableStart="@drawable/lock_white_24dp"
                     android:drawablePadding="10dp"
                     android:hint="@string/password"
+                    android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:text="@={signupViewModel.passwordValue}"
-                    android:textColor="@color/colorAccent" />
+                    android:text="@={loginViewModel.userDomain.password}"
+                    android:textColor="@color/colorAccent"
+                    bind:onFocusChange="@{loginViewModel.onUserPasswordFocusChanged}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
@@ -141,7 +146,7 @@
                 android:layout_marginBottom="32dp"
                 android:background="@drawable/custom_rounded_corners"
                 android:elevation="2dp"
-                android:onClick="@{() -> signupViewModel.onSignUpClick()}"
+                android:onClick="@{() -> loginViewModel.onSignUpClick()}"
                 android:stateListAnimator="@null"
                 android:text="@string/sign_up"
                 android:translationZ="20dp"

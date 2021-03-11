@@ -17,9 +17,9 @@ class UserDataRepository @Inject constructor(
     /**
      * SAve locally for now, TODO save online, retrieve data and save locally Firebase
      */
-    override suspend fun saveNewUser(user: UserDomain) {
+    override suspend fun saveNewUser(user: UserDomain): Long {
         wrapEspressoIdlingResource {
-            userLocalDataSource.saveUser(user)
+            return userLocalDataSource.saveUser(user)
         }
     }
 
