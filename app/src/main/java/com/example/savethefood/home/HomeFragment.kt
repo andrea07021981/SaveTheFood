@@ -86,7 +86,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
     override fun <T> navigateTo(event: Event<T>?) {
         event?.let {
             if (it.hasBeenHandled) return
-
+            val content = it.getContentIfNotHandled()
             when (it.peekContent()) {
                 is Unit -> findNavController()
                     .navigate(HomeFragmentDirections.actionHomeFragmentToAddFoodFragment())
@@ -98,7 +98,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), Fragmen
                             foodImageView to "foodImage",
                             foodTextView to "foodTitle"
                         )
-                        val bundle = bundleOf("foodDomain" to it.getContentIfNotHandled())
+                        val bundle = bundleOf("foodDomain" to content)
                         findNavController()
                             .navigate(R.id.foodDetailFragment, bundle, null, extras)
                     }
