@@ -4,17 +4,15 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.AnimRes
 import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
 import com.example.savethefood.constants.LoginAuthenticationStates
 import com.example.savethefood.constants.LoginAuthenticationStates.*
-import com.example.savethefood.constants.LoginError
+import com.example.savethefood.constants.LoginStateValue
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.fragment_food.view.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
 @BindingAdapter("bind:loadViewAnimation")
@@ -31,10 +29,11 @@ fun TextInputLayout.hasError(error: Boolean) {
     }
 }
 
+@ExperimentalCoroutinesApi
 @BindingAdapter("bind:hasLoginError")
-fun TextInputLayout.hasLoginError(error: LoginError) {
+fun TextInputLayout.hasLoginError(error: LoginStateValue?) {
     when (error) {
-        LoginError.INVALID_USERNAME, LoginError.INVALID_EMAIL, LoginError.INVALID_PASSWORD -> setError(error.message)
+        LoginStateValue.INVALID_FORMAT, LoginStateValue.INVALID_LENGTH -> setError(error.message)
         else -> setError(null)
     }
 }

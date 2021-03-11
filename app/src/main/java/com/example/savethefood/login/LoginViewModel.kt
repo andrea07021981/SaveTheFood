@@ -1,6 +1,5 @@
 package com.example.savethefood.login
 
-import android.util.Patterns
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.BuildConfig
@@ -8,7 +7,7 @@ import com.example.savethefood.Event
 import com.example.savethefood.R
 import com.example.savethefood.constants.LoginAuthenticationStates
 import com.example.savethefood.constants.LoginAuthenticationStates.*
-import com.example.savethefood.constants.LoginError
+import com.example.savethefood.constants.LoginStateValue
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.repository.UserRepository
@@ -29,37 +28,61 @@ class LoginViewModel @ViewModelInject constructor(
     val animationResourceView = R.anim.fade_in
     val animationResourceButton = R.anim.bounce
 
-    private val _errorUserName = MutableLiveData<LoginError>(LoginError.NONE)
-    val errorUserName: LiveData<LoginError> = _errorUserName
 
-    private val _errorEmail = MutableLiveData<LoginError>(LoginError.NONE)
-    val errorEmail: LiveData<LoginError> = _errorEmail
+    private val _genericError = MutableLiveData<Event<Unit>>()
+    val genericError: LiveData<Event<Unit>> = _genericError
 
-    private val _errorPassword = MutableLiveData<LoginError>(LoginError.NONE)
-    val errorPassword: LiveData<LoginError> = _errorPassword
+    abstract class LoginStatus(var value: String) {
+        private var _valueStatus = MutableLiveData<LoginStateValue>(LoginStateValue.NONE)
+        val valueStatus: LiveData<LoginStateValue> = _valueStatus
 
-    val onUserNameFocusChanged: (String) -> Unit = {
-        _errorUserName.value = when {
-            it.isEmpty() -> LoginError.INVALID_EMAIL
-            else -> LoginError.NONE
+        open val onFocusChanged: (String) -> Unit = {
+            _valueStatus.value = checkStatus(it)
+        }
+
+        abstract val checkStatus: (String) -> LoginStateValue
+    }
+
+    val userName = object : LoginStatus("") {
+        override val checkStatus: (String) -> LoginStateValue = {
+            when {
+                it.isEmpty() -> LoginStateValue.INVALID_LENGTH
+                else -> LoginStateValue.NONE
+            }
         }
     }
 
-    val onUserEmailFocusChanged: (String) -> Unit = {
-        _errorEmail.value = when {
-            it.isEmpty() || !it.isValidEmail() -> LoginError.INVALID_EMAIL
-            else -> LoginError.NONE
+    val email = object : LoginStatus("") {
+        init {
+            if (BuildConfig.DEBUG) {
+                value = "a@a.com"
+            }
+        }
+
+        override val checkStatus: (String) -> LoginStateValue = {
+            when {
+                !it.isValidEmail() -> LoginStateValue.INVALID_FORMAT
+                it.isEmpty() -> LoginStateValue.INVALID_LENGTH
+                else -> LoginStateValue.NONE
+            }
         }
     }
 
-    val onUserPasswordFocusChanged: (String) -> Unit = {
-        _errorPassword.value = when {
-            !it.isValidPassword() -> LoginError.INVALID_PASSWORD
-            else -> LoginError.NONE
+    val password = object : LoginStatus("") {
+        init {
+            if (BuildConfig.DEBUG) {
+                value = "a"
+            }
+        }
+
+        override val checkStatus: (String) -> LoginStateValue = {
+            when {
+                !it.isValidEmail() -> LoginStateValue.INVALID_FORMAT
+                it.isEmpty() -> LoginStateValue.INVALID_LENGTH
+                else -> LoginStateValue.NONE
+            }
         }
     }
-
-    var userDomain = MutableLiveData(UserDomain())
 
     private val _signUpEvent = MutableLiveData<Event<Long>>()
     val signUpEvent: LiveData<Event<Long>>
@@ -73,21 +96,15 @@ class LoginViewModel @ViewModelInject constructor(
     val navigateToSignUpFragment: LiveData<Event<Unit>>
         get() = _navigateToSignUpFragment
 
-    init {
-        if (BuildConfig.DEBUG) {
-            userDomain.value?.let {
-                it.email = "a@a.com"
-                it.password = "a"
-            }
-        }
-    }
-
     fun onSignInClick(){
-        if (_errorEmail.value?.equals(LoginError.NONE) == true &&
-            _errorPassword.value?.equals(LoginError.NONE) == true) {
-            doLogin {
-                userDataRepository.getUser(userDomain.value!!)
-            }
+        when {
+            email.valueStatus.value?.equals(LoginStateValue.EMPTY_FIELD) == true ||
+                    password.valueStatus.value?.equals(LoginStateValue.EMPTY_FIELD) == true  -> _genericError.value = Event(Unit)
+            email.valueStatus.value?.equals(LoginStateValue.NONE) == true &&
+                    password.valueStatus.value?.equals(LoginStateValue.NONE) == true ->
+                doLogin {
+                    userDataRepository.getUser(UserDomain(email = email.value, password = password.value))
+                }
         }
     }
 
@@ -95,7 +112,9 @@ class LoginViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             _loginAuthenticationState.value = Authenticating()
             when (val result = block()) {
-                is Result.Success -> _loginAuthenticationState.value = Authenticated(user = result.data)
+                is Result.Success -> {
+                    _loginAuthenticationState.value = Authenticated(user = result.data)
+                }
                 is Result.Error -> _loginAuthenticationState.value = InvalidAuthentication(result.message)
                 is Result.ExError -> _loginAuthenticationState.value = InvalidAuthentication(result.exception.toString())
                 is Result.Loading -> _loginAuthenticationState.value = Authenticating()
@@ -105,13 +124,20 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
     fun onSignUpClick(){
-        if (_errorUserName.value?.equals(LoginError.NONE) == true &&
-                _errorEmail.value?.equals(LoginError.NONE) == true &&
-                _errorPassword.value?.equals(LoginError.NONE) == true ) {
-            viewModelScope.launch {
-                val newUserId = userDataRepository.saveNewUser(userDomain.value!!)
-                _signUpEvent.value = Event(newUserId)
-            }
+        when {
+            userName.valueStatus.value?.equals(LoginStateValue.EMPTY_FIELD) == true ||
+                email.valueStatus.value?.equals(LoginStateValue.EMPTY_FIELD) == true ||
+                    password.valueStatus.value?.equals(LoginStateValue.EMPTY_FIELD) == true  -> _genericError.value = Event(Unit)
+            email.valueStatus.value?.equals(LoginStateValue.NONE) == true &&
+                email.valueStatus.value?.equals(LoginStateValue.NONE) == true &&
+                    password.valueStatus.value?.equals(LoginStateValue.NONE) == true ->
+                viewModelScope.launch {
+                    val newUserId = userDataRepository.saveNewUser(UserDomain(
+                        userName = userName.value,
+                        email = email.value,
+                        password = password.value))
+                    _signUpEvent.value = Event(newUserId)
+                }
         }
     }
 
@@ -120,7 +146,6 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
     fun moveToSignUp() {
-        userDomain.value = userDomain.value?.copy(userName = "", email = "", password = "")
         _navigateToSignUpFragment.value = Event(Unit)
     }
 }

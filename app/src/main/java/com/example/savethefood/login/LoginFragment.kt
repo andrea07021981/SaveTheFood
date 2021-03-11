@@ -68,6 +68,10 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
                 Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT).show()
             }
         })
+
+        viewModel.genericError.observe(viewLifecycleOwner) {
+            Toast.makeText(context, "Values required", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun ProgressButton.morphDoneAndRevert(

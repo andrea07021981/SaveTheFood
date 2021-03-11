@@ -21,9 +21,9 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/chef_imageview"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="32dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="16dp"
                 android:transitionName="chef_imageview"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +69,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        bind:hasLoginError="@{loginViewModel.errorEmail}">
+                        bind:hasLoginError="@{loginViewModel.email.valueStatus}">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etEmail"
@@ -81,8 +81,8 @@
                             android:imeOptions="actionNext"
                             android:inputType="textEmailAddress"
                             android:singleLine="true"
-                            android:text="@={loginViewModel.userDomain.email}"
-                            bind:onFocusChange="@{loginViewModel.onUserEmailFocusChanged}"
+                            android:text="@={loginViewModel.email.value}"
+                            bind:onFocusChange="@{loginViewModel.email.onFocusChanged}"
                             android:textColor="@color/colorAccent" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,7 +100,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/layoutEmail"
-                        bind:hasLoginError="@{loginViewModel.errorPassword}">
+                        bind:hasLoginError="@{loginViewModel.password.valueStatus}">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etPassword"
@@ -112,8 +112,8 @@
                             android:imeOptions="actionDone"
                             android:inputType="textPassword"
                             android:singleLine="true"
-                            android:text="@={loginViewModel.userDomain.password}"
-                            bind:onFocusChange="@{loginViewModel.onUserPasswordFocusChanged}"
+                            android:text="@={loginViewModel.password.value}"
+                            bind:onFocusChange="@{loginViewModel.password.onFocusChanged}"
                             android:textColor="@color/colorAccent" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
