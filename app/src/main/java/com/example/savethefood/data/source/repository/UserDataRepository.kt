@@ -1,16 +1,12 @@
 package com.example.savethefood.data.source.repository
 
-import android.app.Application
 import com.example.savethefood.data.Result
-import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.UserDataSource
-import com.example.savethefood.data.source.local.datasource.UserLocalDataSource
 import com.example.savethefood.data.source.local.entity.UserEntity
 import com.example.savethefood.data.source.local.entity.asDomainModel
 import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UserDataRepository @Inject constructor(
@@ -31,7 +27,7 @@ class UserDataRepository @Inject constructor(
         wrapEspressoIdlingResource {
             return try {
                 val userDb =
-                    userLocalDataSource.getUser(user.userEmail, user.userPassword)
+                    userLocalDataSource.getUser(user.email, user.password)
                         ?: kotlin.run {
                             //CAll the API like firebase auth, no local user
                         }

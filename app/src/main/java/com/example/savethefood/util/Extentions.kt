@@ -3,6 +3,7 @@ package com.example.savethefood.util
 import android.app.Activity
 import android.app.SearchManager
 import android.content.Context
+import android.util.Patterns
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
@@ -69,3 +70,7 @@ inline fun <T> ViewModel.launchDataLoad(loader: MutableLiveData<Result<T>>, cros
 fun Double?.isValidDouble(): Boolean {
     return this != null && this != 0.0
 }
+
+fun String.isValidEmail(): Boolean = Patterns.EMAIL_ADDRESS.matcher(this).matches()
+
+fun String.isValidPassword(): Boolean = this.length in 8..16

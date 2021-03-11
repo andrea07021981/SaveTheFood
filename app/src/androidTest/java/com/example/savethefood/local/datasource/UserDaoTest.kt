@@ -3,14 +3,12 @@ package com.example.savethefood.local.datasource
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.domain.asDatabaseModel
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
-import com.example.savethefood.viewmodel.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.After
@@ -53,7 +51,7 @@ class UserDaoTest {
 
         //THEN the loaded data contains the expected values
         assertThat(user.userName, `is`(loaded?.userName))
-        assertThat(user.userEmail, `is`(loaded?.email))
-        assertThat(user.userPassword, `is`(loaded?.password))
+        assertThat(user.email, `is`(loaded?.email))
+        assertThat(user.password, `is`(loaded?.password))
     }
 }

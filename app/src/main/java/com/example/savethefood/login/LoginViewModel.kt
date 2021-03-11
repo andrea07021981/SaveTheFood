@@ -1,7 +1,5 @@
 package com.example.savethefood.login
 
-import android.util.Log
-import androidx.annotation.VisibleForTesting
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.BuildConfig
@@ -9,14 +7,13 @@ import com.example.savethefood.Event
 import com.example.savethefood.R
 import com.example.savethefood.constants.LoginAuthenticationStates
 import com.example.savethefood.constants.LoginAuthenticationStates.*
+import com.example.savethefood.constants.LoginError
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.repository.UserRepository
+import com.example.savethefood.util.isValidEmail
+import com.example.savethefood.util.isValidPassword
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
@@ -31,16 +28,27 @@ class LoginViewModel @ViewModelInject constructor(
     val animationResourceView = R.anim.fade_in
     val animationResourceButton = R.anim.bounce
 
-    val emailValue = MutableLiveData<String>()
+    private val _errorEmail = MutableLiveData<LoginError>(LoginError.NONE)
+    val errorEmail: LiveData<LoginError> = _errorEmail
 
-    var passwordValue = MutableLiveData<String>()
+    private val _errorPassword = MutableLiveData<LoginError>(LoginError.NONE)
+    val errorPassword: LiveData<LoginError> = _errorPassword
 
-    var errorEmail = Transformations.map(emailValue) {
-        it.isNullOrBlank()
+    val onUserEmailFocusChanged: (String) -> Unit = {
+        _errorEmail.value = when {
+            it.isEmpty() || !it.isValidEmail() -> LoginError.INVALID_EMAIL
+            else -> LoginError.NONE
+        }
     }
-    var errorPassword = Transformations.map(passwordValue) {
-        it.isNullOrBlank()
+
+    val onUserPasswordFocusChanged: (String) -> Unit = {
+        _errorPassword.value = when {
+            !it.isValidPassword() -> LoginError.INVALID_PASSWORD
+            else -> LoginError.NONE
+        }
     }
+
+    var userDomain = MutableLiveData(UserDomain())
 
     private val _loginAuthenticationState = MutableLiveData<LoginAuthenticationStates>()
     val loginAuthenticationState: LiveData<LoginAuthenticationStates>
@@ -52,18 +60,18 @@ class LoginViewModel @ViewModelInject constructor(
 
     init {
         if (BuildConfig.DEBUG) {
-            emailValue.value = "a@a.com"
-            passwordValue.value = "a"
+            userDomain.value?.let {
+                it.email = "a@a.com"
+                it.password = "a"
+            }
         }
     }
 
     fun onSignUpClick(){
-        if (errorEmail.value == false && errorPassword.value == false) {
+        if (_errorEmail.value?.equals(LoginError.NONE) == true &&
+                _errorPassword.value?.equals(LoginError.NONE) == true) {
             doLogin {
-                userDataRepository.getUser(user = UserDomain().apply {
-                    userEmail = emailValue.value.toString()
-                    userPassword = passwordValue.value.toString()
-                })
+                userDataRepository.getUser(userDomain.value!!)
             }
         }
     }

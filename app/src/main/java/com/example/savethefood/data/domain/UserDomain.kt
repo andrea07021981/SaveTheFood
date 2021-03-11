@@ -7,8 +7,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class UserDomain(
     var userName: String = "",
-    var userEmail: String = "",
-    var userPassword: String = ""
+    var email: String = "",
+    var password: String = ""
 ) : Parcelable {
 
     constructor() : this("", "","")
@@ -17,7 +17,7 @@ data class UserDomain(
 fun UserDomain.asDatabaseModel(): UserEntity {
     return UserEntity(
         userName = userName,
-        email = userEmail,
-        password = userPassword
+        email = email,
+        password = password
     )
 }

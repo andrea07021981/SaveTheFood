@@ -23,7 +23,7 @@ data class UserEntity(
 fun UserEntity.asDomainModel(): UserDomain {
     return UserDomain(
         userName = userName,
-        userEmail = email,
-        userPassword = password
+        email = email,
+        password = password
     )
 }

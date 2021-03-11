@@ -34,8 +34,8 @@ class SignUpViewModel @ViewModelInject constructor(
         if (!checkValues()) {
             with(user) {
                     userName = userNameValue.value.toString()
-                    userEmail = emailValue.value.toString()
-                    userPassword = passwordValue.value.toString()
+                    email = emailValue.value.toString()
+                    password = passwordValue.value.toString()
                 }
                 .also {
                     viewModelScope.launch {

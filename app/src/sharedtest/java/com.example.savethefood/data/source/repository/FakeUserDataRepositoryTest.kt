@@ -3,16 +3,11 @@ package com.example.savethefood.data.source.repository
 import androidx.annotation.VisibleForTesting
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.UserDomain
-import com.example.savethefood.data.source.UserDataSource
 import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
 import com.example.savethefood.data.source.local.entity.asDomainModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.TestCoroutineDispatcher
-import org.jetbrains.annotations.TestOnly
-import org.junit.Assert.*
 
 @ExperimentalCoroutinesApi
 class FakeUserDataRepositoryTest(
@@ -33,7 +28,7 @@ class FakeUserDataRepositoryTest(
     }
 
     override suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher): Result<UserDomain> {
-        val userFound = fakeUserDataRepositoryTest.getUser(user.userEmail, user.userPassword)
+        val userFound = fakeUserDataRepositoryTest.getUser(user.email, user.password)
         return if (userFound != null) {
             Result.Success(userFound.asDomainModel())
         } else {

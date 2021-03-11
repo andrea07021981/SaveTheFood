@@ -30,8 +30,8 @@ abstract class DbTest {
     fun insert_user_done() {
         val user = UserDomain().apply {
             userName = "Username"
-            userEmail = "Useremail"
-            userPassword = "password"
+            email = "Useremail"
+            password = "password"
         }.asDatabaseModel()
         val newId = appDatabase.userDatabaseDao.insert(user)
         assertEquals(newId, 0)
