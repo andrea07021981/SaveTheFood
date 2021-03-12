@@ -1,10 +1,8 @@
 package com.example.savethefood.util
 
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.graphics.drawable.toDrawable
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -71,4 +69,11 @@ fun TextView.bindFormatDate(date: Date) {
 fun TextView.bindFormatQuantity(date: Double) {
     //TODO add formatter for grams and kg
     text = "500 g"
+}
+
+@BindingAdapter(value = ["listFood", "storageType"], requireAll = true)
+fun bindTabView(view: TextView, list: Result<List<FoodDomain>>?, type: StorageType) {
+    if (list is Result.Success) {
+        view.text = list.data.count { it.storageType == type }.toString()
+    }
 }

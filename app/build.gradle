@@ -181,7 +181,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$version_room"
     implementation "com.google.maps.android:maps-ktx:$version_map"
     implementation "com.google.maps.android:maps-utils-ktx:$version_map"
-    implementation 'com.google.android.gms:play-services-location:17.1.0'
+    implementation "com.google.android.gms:play-services-location:$version_service_location"
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_archlifecycle"
 
@@ -190,14 +190,17 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.3"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.3"
+    implementation "androidx.navigation:navigation-fragment-ktx:$version_navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$version_navigation"
 
     //Cards
     implementation 'androidx.cardview:cardview:1.0.0'
 
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+
+    // Viewpager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     //Play service
 
@@ -284,8 +287,12 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$version_hilt"
 
     // ViewModel support dependencies:
-    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
-    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha03'
+
+    implementation 'androidx.hilt:hilt-work:1.0.0-alpha03'
+    // When using Java.
+    annotationProcessor 'androidx.hilt:hilt-compiler:1.0.0-alpha03'
 
     // For Robolectric tests.
     testImplementation "com.google.dagger:hilt-android-testing:${version_hilt_test}"
@@ -302,13 +309,11 @@ dependencies {
     // ...with Java.
     androidTestAnnotationProcessor "com.google.dagger:hilt-android-compiler:${version_hilt_test}"
 
-    implementation 'androidx.hilt:hilt-work:1.0.0-alpha02'
-    // When using Java.
-    annotationProcessor 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
 
     // MockWebServer
     testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
     testImplementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
 
     testImplementation 'org.apache.maven:maven-ant-tasks:2.1.3'
+
 }

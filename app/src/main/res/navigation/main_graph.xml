@@ -18,10 +18,10 @@
             app:destination="@id/recipeCookFragment" />
     </fragment>
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.savethefood.home.HomeFragment"
+        android:id="@+id/homeFragmentContainer"
+        android:name="com.example.savethefood.home.HomeFragmentContainer"
         android:label="Pantry"
-        tools:layout="@layout/fragment_home">
+        tools:layout="@layout/fragment_home_container">
         <action
             android:id="@+id/action_homeFragment_to_foodDetailFragment"
             app:destination="@id/foodDetailFragment" />
@@ -80,8 +80,9 @@
             app:popExitAnim="@anim/flipping_out"
             app:popUpTo="@id/loginFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            android:id="@+id/action_loginFragment_to_homeFragmentContainer"
+            app:destination="@id/homeFragmentContainer" />
+
     </fragment>
     <fragment
         android:id="@+id/splashFragment"

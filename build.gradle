@@ -3,17 +3,18 @@
 buildscript {
     ext {
         version_core = "1.3.2"
-        version_coroutine = "1.4.1"
-        version_navigation = '1.0.0'
+        version_coroutine = "1.4.2"
+        version_navigation_args = '1.0.0'
+        version_navigation = '2.3.3'
         version_constraint_layout = "2.0.4"
         version_gradle = '4.1.0'
         version_kotlin = "1.4.21"
         version_lifecycle_extensions = '2.2.0'
-        version_archlifecycle = '2.3.0-rc01'
+        version_archlifecycle = '2.3.0'
         version_room = "2.2.6"
         version_appcompat = "1.2.0"
         version_fragment = "1.3.0-rc01"
-        version_junit = "4.13.1"
+        version_junit = "4.13.2"
         version_junit_test = "1.1.1"
         version_espresso = "3.3.0"
         version_moshi = "1.9.3"
@@ -30,12 +31,15 @@ buildscript {
         version_mockito = '3.5.13'
         version_dex_maker = '2.12.1'
         version_work = "2.5.0"
-        version_analitycs = "18.0.0"
-        version_auth = "20.0.1"
-        version_crashlytics = "17.3.0"
+        version_analitycs = "18.0.2"
+        version_auth = "20.0.3"
+        version_crashlytics = "17.3.1"
         version_hilt = "2.28.3-alpha"
         version_hilt_test = "2.28.3-alpha"
         version_map = "2.1.1"
+        version_play = "4.3.4"
+        version_service_location = "18.0.0"
+        version_crashlythics = "2.4.1"
     }
     repositories {
         google()
@@ -45,9 +49,9 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:${version_gradle}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
-        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:$version_navigation"
-        classpath 'com.google.gms:google-services:4.3.4'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.4.1'
+        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:$version_navigation_args"
+        classpath "com.google.gms:google-services:$version_play"
+        classpath "com.google.firebase:firebase-crashlytics-gradle:$version_crashlythics"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$version_hilt"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

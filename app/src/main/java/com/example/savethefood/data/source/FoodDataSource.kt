@@ -22,7 +22,7 @@ interface FoodDataSource {
 
     suspend fun updateFoods(food: FoodDomain)
 
-    suspend fun getFoods(): Flow<List<FoodEntity>?>
+    fun getFoods(): Flow<List<FoodEntity>?>
 
     suspend fun getLocalFoods(): Result<List<FoodDomain>>
 

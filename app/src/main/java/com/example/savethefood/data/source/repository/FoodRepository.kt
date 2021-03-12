@@ -19,7 +19,7 @@ interface FoodRepository {
 
     suspend fun saveNewFood(food: FoodDomain): Result<FoodDomain>
 
-    suspend fun getFoods(): Flow<Result<List<FoodDomain>>>
+    fun getFoods(): Flow<Result<List<FoodDomain>>>
 
     suspend fun getLocalFoods(): Result<List<FoodDomain>>
 

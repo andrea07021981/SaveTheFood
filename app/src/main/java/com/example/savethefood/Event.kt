@@ -1,13 +1,6 @@
 package com.example.savethefood
 
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
-import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.home.HomeFragmentDirections
 
 /**
  * Used as a wrapper for data that is exposed via a LiveData that represents an event.

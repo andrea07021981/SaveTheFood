@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.nav_host_fragment) as NavHostController
         val graphs = {
             setOf(
-                R.id.splashFragment, R.id.loginFragment, R.id.signUpFragment, R.id.homeFragment, R.id.recipeFragment, R.id.mapFragment
+                R.id.splashFragment, R.id.loginFragment, R.id.signUpFragment, R.id.homeFragmentContainer, R.id.recipeFragment, R.id.mapFragment
             )
         }
         appBarConfiguration = AppBarConfiguration(graphs())
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.homeFragment, R.id.mapFragment, R.id.recipeFragment -> {
+                R.id.homeFragmentContainer, R.id.mapFragment, R.id.recipeFragment -> {
                     binding.cordinatorBottom.visibility = View.VISIBLE
                 }
                 else -> binding.cordinatorBottom.visibility = View.GONE
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                 .setDuration(FAB_DURATION.toLong())
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
-                        if (destination.id == R.id.homeFragment) {
+                        if (destination.id == R.id.homeFragmentContainer) {
                             binding.navView.menu.getItem(2).isVisible = true
                             this@apply.show()
                         } else {

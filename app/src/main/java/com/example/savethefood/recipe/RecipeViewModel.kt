@@ -58,7 +58,7 @@ class RecipeViewModel(
 
     // This is the observable property, it changes every time the month filter changes (the original values never changes)
     val recipeListResult = Transformations.distinctUntilChanged(
-        Transformations.map(searchFilter) { // OR    _searchFilter.switchMap { used to refresh/trigger changed livedata
+        Transformations.switchMap(searchFilter) { // OR    _searchFilter.switchMap { used to refresh/trigger changed livedata
             if (it != null && it.isNotEmpty()) {
                 _recipeListResult.map { list ->
                     list?.filter { recipe ->
