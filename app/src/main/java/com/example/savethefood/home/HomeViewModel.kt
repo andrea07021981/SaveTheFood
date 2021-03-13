@@ -10,6 +10,7 @@ import com.example.savethefood.data.source.repository.FoodRepository
 import com.example.savethefood.util.StorageType
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.onCompletion
 import java.lang.Exception
 import java.util.*
 
@@ -32,14 +33,16 @@ class HomeViewModel @ViewModelInject constructor(
      */
 
     private val _storageType = MutableLiveData<StorageType>(StorageType.ALL)
-    private var _foodList:LiveData<Result<List<FoodDomain>>> = foodDataRepository.getFoods()
-        .asLiveData(viewModelScope.coroutineContext)
-    val foodList: LiveData<Result<List<FoodDomain>>> = _foodList
-    /*val foodList: LiveData<Result<List<FoodDomain>>> = Transformations.distinctUntilChanged(
-        _storageType.switchMap {
-            _foodList // TODO filter with storage type
+    private var _foodList: LiveData<Result<List<FoodDomain>>> = foodDataRepository.getFoods()
+        .onCompletion {
+            // TODO hide here the spinner instead of using the result
         }
-    )*/
+        .asLiveData(viewModelScope.coroutineContext)
+    val foodList: LiveData<Result<List<FoodDomain>>> = Transformations.distinctUntilChanged(
+        _storageType.switchMap {
+            _foodList // TODO filter with storage type, can we remove the result with transform? need it of the loader
+        }
+    )
     private val _detailFoodEvent = MutableLiveData<Event<FoodDomain>>()
     val detailFoodEvent: LiveData<Event<FoodDomain>>
         get() = _detailFoodEvent

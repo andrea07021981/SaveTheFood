@@ -41,11 +41,6 @@ class HomeFragmentContainer : BaseFragment<HomeViewModel, FragmentHomeContainerB
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 val tabCustomView = CustomTabLayoutBinding.inflate(layoutInflater)
                 tabCustomView.titleTextView.text = StorageType.values()[position].type // todo Add binding
-                tabCustomView.type = StorageType.values()[position]
-                tabCustomView.viewModel = viewModel
-                /*if (it is Result.Success) {
-                    tabCustomView.countTextView.text = it.data.count { it != null }.toString()
-                }*/
                 tab.customView = tabCustomView.root
                 tab.tag = StorageType.values()[position].type
             }.attach()
@@ -54,14 +49,16 @@ class HomeFragmentContainer : BaseFragment<HomeViewModel, FragmentHomeContainerB
     }
 
     override fun activateObservers() {
-        viewModel.foodList.observe(viewLifecycleOwner) {
-
-        }
-
-        viewModel.storageAllCount.observe(viewLifecycleOwner) {
-            Log.d(classTag, it.toString())
-            // TODO if the binding adapter does not work, use the listener of the foodlist and
-            // TODO update the 4 tabs once every time the list changes
+        viewModel.foodList.observe(viewLifecycleOwner) { result ->
+            if (result is Result.Success) {
+                for (tabIndex in 0 until dataBinding.tabLayout.tabCount) {
+                    val linearLayout =
+                        dataBinding.tabLayout.getTabAt(tabIndex)!!.customView as LinearLayout
+                    val bind = CustomTabLayoutBinding.bind(linearLayout)
+                    bind.countTextView.text =
+                        result.data.count { it.storageType == StorageType.values()[tabIndex] }.toString()
+                }
+            }
         }
     }
 
