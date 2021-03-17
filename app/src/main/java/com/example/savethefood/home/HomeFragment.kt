@@ -1,7 +1,6 @@
 package com.example.savethefood.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,13 +9,11 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.*
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.util.StorageType
-import com.example.savethefood.util.configSearchView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -25,7 +22,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 // TODO also add different adapter https://proandroiddev.com/understanding-kotlin-sealed-classes-65c0adad7015
 
-// TODO add filter for foods with bottomsheetdialog fragment
 
 const val FILTER_LIST = "filter_list"
 @ExperimentalCoroutinesApi
@@ -33,7 +29,6 @@ const val FILTER_LIST = "filter_list"
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     override val viewModel: HomeViewModel by viewModels(ownerProducer = { requireParentFragment() })
-
     override val layoutRes: Int
         get() = R.layout.fragment_home
 
@@ -44,6 +39,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
     @VisibleForTesting
     fun getHomeViewModel() = viewModel
+
+    private lateinit var filterType: StorageType
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +54,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun init() {
         with(dataBinding) {
             homeViewModel = viewModel
+            // TODO add paging library with flow (or paging library 3) for recycleview
             foodRecycleview.layoutManager = LinearLayoutManager(activity)
             foodRecycleview.adapter =
                 FoodAdapter(FoodAdapter.OnClickListener { food ->
@@ -64,7 +62,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                 })
             //it.foodRecycleview.scheduleLayoutAnimation()
             arguments?.takeIf { it.containsKey(FILTER_LIST) }?.apply {
-                viewModel.updateIndex(getSerializable(FILTER_LIST) as StorageType)
+                filterType = getSerializable(FILTER_LIST) as StorageType
+                viewModel.updateIndex(filterType)
             }
         }
     }
@@ -72,6 +71,14 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun activateObservers() {
         viewModel.detailFoodEvent.observe(viewLifecycleOwner, ::navigateTo) // TODO is it better to keep the EventObserver?
         viewModel.addFoodEvent.observe(viewLifecycleOwner, ::navigateTo)
+        viewModel.foodList.observe(viewLifecycleOwner) { list ->
+            (dataBinding.foodRecycleview.adapter as FoodAdapter)
+                .submitList(
+                    list?.filter { foodDomain ->
+                        foodDomain.storageType == filterType ||
+                                filterType == StorageType.ALL}
+                )
+        }
     }
 
     override fun <T> navigateTo(event: Event<T>?) {

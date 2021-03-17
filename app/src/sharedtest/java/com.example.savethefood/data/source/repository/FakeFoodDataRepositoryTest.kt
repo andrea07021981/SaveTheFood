@@ -51,11 +51,16 @@ class FakeFoodDataRepositoryTest(
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveNewFood(food: FoodDomain): Long = withContext(Dispatchers.IO) {
-        fakeLocalFoodDataSourceTest.insertFood(food)
+    override suspend fun saveNewFood(food: FoodDomain): Result<FoodDomain> = withContext(Dispatchers.IO) {
+        val insertFoodId = fakeLocalFoodDataSourceTest.insertFood(food)
+        if (insertFoodId > 0) {
+            return@withContext Result.Success(food)
+        } else {
+            return@withContext Result.Error("Error saving food")
+        }
     }
 
-    override suspend fun getFoods(): Flow<Result<List<FoodDomain>>> = flow{
+    override fun getFoods(): Flow<Result<List<FoodDomain>>> = flow{
         fakeLocalFoodDataSourceTest.getFoods()
             .map {
                 Result.Success(it)

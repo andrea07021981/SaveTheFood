@@ -2,12 +2,17 @@ package com.example.savethefood.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.savethefood.util.StorageType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-class HomeFragmentContainerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class HomeFragmentContainerAdapter(
+    fragmentManager: FragmentManager,
+    lifecycle: Lifecycle
+) : FragmentStateAdapter(fragmentManager, lifecycle) {
 
     override fun getItemCount(): Int = StorageType.values().size
 

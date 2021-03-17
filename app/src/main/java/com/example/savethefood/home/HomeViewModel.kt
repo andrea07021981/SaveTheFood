@@ -8,12 +8,11 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.repository.FoodRepository
 import com.example.savethefood.util.StorageType
-import com.squareup.moshi.JsonDataException
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.onCompletion
-import java.lang.Exception
-import java.util.*
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.launch
 
+// TODO use homwviewmodel for edit and add? save resources
 class HomeViewModel @ViewModelInject constructor(
     private val foodDataRepository: FoodRepository
 ) : ViewModel() {
@@ -33,16 +32,38 @@ class HomeViewModel @ViewModelInject constructor(
      */
 
     private val _storageType = MutableLiveData<StorageType>(StorageType.ALL)
-    private var _foodList: LiveData<Result<List<FoodDomain>>> = foodDataRepository.getFoods()
-        .onCompletion {
-            // TODO hide here the spinner instead of using the result
+    val storageType: LiveData<StorageType>
+        get() = _storageType
+
+    // maybe isìt's better the resuls???' with error the list could show an error
+    private var _foodList: LiveData<List<FoodDomain>?> = foodDataRepository.getFoods()
+        .transform { value ->
+            if (value is Result.Success) {
+                emit(value.data)
+            } else {
+                // TODO add error in case
+            }
         }
         .asLiveData(viewModelScope.coroutineContext)
-    val foodList: LiveData<Result<List<FoodDomain>>> = Transformations.distinctUntilChanged(
+
+    // TODO we could use the Conflatebroadcastchannel instead of transformations when we
+    // are using flows
+    // https://www.droidcon.com/news-detail?content-id=/repository/collaboration/Groups/spaces/droidcon_hq/Documents/public/news/android-news/Using%20LiveData%20and%20Flow%20in%20MVVM%20-%20Part%20II
+
+    val foodList: LiveData<List<FoodDomain>?>
+        get() = _foodList
+    /*val foodList: LiveData<List<FoodDomain>?> = Transformations.distinctUntilChanged(
         _storageType.switchMap {
-            _foodList // TODO filter with storage type, can we remove the result with transform? need it of the loader
+            if (!it.equals(StorageType.ALL)) {
+                _foodList.map { list ->
+                    list?.filter { food -> food.storageType == it}
+                }
+            } else {
+                _foodList
+            }
         }
-    )
+    )*/
+
     private val _detailFoodEvent = MutableLiveData<Event<FoodDomain>>()
     val detailFoodEvent: LiveData<Event<FoodDomain>>
         get() = _detailFoodEvent
@@ -52,45 +73,25 @@ class HomeViewModel @ViewModelInject constructor(
         get() = _addFoodEvent
 
     val storageAllCount: LiveData<Int> = _foodList.map { result ->
-        if (result is Result.Success) {
-            result.data.count { it != null }
-        } else {
-            0
-        }
+        result?.count { it != null } ?: 0
     }
 
     fun storageTypeCount(storageType: StorageType): LiveData<Int> {
         return Transformations.map(_foodList) { result ->
-            if (result is Result.Success) {
-                result.data.count { it.storageType == storageType }
-            } else {
-                0
-            }
+            result?.count { it.storageType == storageType } ?: 0
         }
     }
 
     val storageFridgeCount: LiveData<Int> = Transformations.map(_foodList) { result ->
-        if (result is Result.Success) {
-            result.data.count { it.storageType == StorageType.ALL }
-        } else {
-            0
-        }
+        result?.count { it.storageType == StorageType.ALL } ?: 0
     }
 
     val storageFreezerCount: LiveData<Int> = Transformations.map(_foodList) { result ->
-        if (result is Result.Success) {
-            result.data.count { it.storageType == StorageType.ALL }
-        } else {
-            0
-        }
+        result?.count { it.storageType == StorageType.FREEZER } ?: 0
     }
 
     val storageDryCount: LiveData<Int> = Transformations.map(_foodList) { result ->
-        if (result is Result.Success) {
-            result.data.count { it.storageType == StorageType.ALL }
-        } else {
-            0
-        }
+        result?.count { it.storageType == StorageType.DRY } ?: 0
     }
 
     init {
@@ -143,22 +144,5 @@ class HomeViewModel @ViewModelInject constructor(
     fun updateIndex(storageType: StorageType) {
         // use switch map like
         _storageType.value = storageType
-    }
-
-    /*
-     * Factory for constructing DevByteViewModel with parameter
-     */
-    @Deprecated("added DI with hilt")
-    class HomeViewModelFactory(
-        private val dataRepository: FoodRepository
-    ) : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return HomeViewModel(dataRepository) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-
     }
 }

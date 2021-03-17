@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -37,7 +38,7 @@ class HomeFragmentContainer : BaseFragment<HomeViewModel, FragmentHomeContainerB
 
     override fun init() {
         with(dataBinding) {
-            viewPager.adapter = HomeFragmentContainerAdapter(this@HomeFragmentContainer)
+            viewPager.adapter = HomeFragmentContainerAdapter(childFragmentManager, lifecycle)
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 val tabCustomView = CustomTabLayoutBinding.inflate(layoutInflater)
                 tabCustomView.titleTextView.text = StorageType.values()[position].type // todo Add binding
@@ -49,15 +50,19 @@ class HomeFragmentContainer : BaseFragment<HomeViewModel, FragmentHomeContainerB
     }
 
     override fun activateObservers() {
-        viewModel.foodList.observe(viewLifecycleOwner) { result ->
-            if (result is Result.Success) {
-                for (tabIndex in 0 until dataBinding.tabLayout.tabCount) {
-                    val linearLayout =
-                        dataBinding.tabLayout.getTabAt(tabIndex)!!.customView as LinearLayout
-                    val bind = CustomTabLayoutBinding.bind(linearLayout)
-                    bind.countTextView.text =
-                        result.data.count { it.storageType == StorageType.values()[tabIndex] }.toString()
-                }
+        viewModel.foodList.observe(viewLifecycleOwner) { foodList ->
+            for (tabIndex in 0 until dataBinding.tabLayout.tabCount) {
+                val linearLayout =
+                    dataBinding.tabLayout.getTabAt(tabIndex)!!.customView as LinearLayout
+                foodList?.count {
+                    val storageType = StorageType.values()[tabIndex]
+                    if (storageType == StorageType.ALL) {
+                        true
+                    } else {
+                        it.storageType == storageType
+                    }
+                }.toString()
+                    .also { CustomTabLayoutBinding.bind(linearLayout).countTextView.text = it }
             }
         }
     }

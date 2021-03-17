@@ -2,6 +2,7 @@ package com.example.savethefood.util
 
 import androidx.annotation.DrawableRes
 import com.example.savethefood.R
+import com.example.savethefood.data.domain.FoodDomain
 
 // TODO we will move to the backend and call the api with glide
 enum class FoodImage(val id: String) {

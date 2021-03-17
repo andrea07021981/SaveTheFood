@@ -5,7 +5,7 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="homeViewModel"
             type="com.example.savethefood.home.HomeViewModel" />
@@ -29,20 +29,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            bind:listdata="@{homeViewModel.foodList}"/>
-
-        <ImageView
-            android:id="@+id/status_imageview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/loading_animation"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/primaryColorAlpha"
-            tools:visibility="gone"
-            bind:goneIfNotNull="@{homeViewModel.foodList}" />
+            app:layout_constraintVertical_bias="0.0"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

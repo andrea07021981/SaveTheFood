@@ -26,7 +26,8 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class FoodDataRepository @Inject constructor(
     private val foodLocalDataSource: FoodDataSource,
-    private val foodRemoteDataSource: FoodDataSource
+    private val foodRemoteDataSource: FoodDataSource,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : FoodRepository {
 /*
     companion object {
@@ -170,7 +171,7 @@ class FoodDataRepository @Inject constructor(
                     }
                 }
                 // FLOWON is the correct way to change the context. The collection remains in main thread, but this flow goes in IO concurrently
-                .flowOn(Dispatchers.IO)
+                .flowOn(ioDispatcher)
                 // We can tell flow to make the buffer "conflated". It removes the buffer from flowOn
                 // and only shares the last value, as our UI discards any intermediate values in the
                 // buffer.

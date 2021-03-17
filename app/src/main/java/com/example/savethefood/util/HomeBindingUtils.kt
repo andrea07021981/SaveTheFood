@@ -49,13 +49,22 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
-@BindingAdapter("bind:listdata")
-fun bindFoodRecycleView(recyclerView: RecyclerView, data: Result<List<FoodDomain>>?) {
+@BindingAdapter("bind:listData")
+fun bindFoodRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?) {
     val adapter = recyclerView.adapter as FoodAdapter
-    when (data) {
-        is Result.Success -> adapter.submitList(data.data)
-        else -> adapter.submitList(listOf())
-    }
+    adapter.submitList(data)
+    recyclerView.scheduleLayoutAnimation();
+}
+
+@BindingAdapter(value = ["listData", "storageType"], requireAll = true)
+fun bindFoodRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?, storageType: StorageType?) {
+    val adapter = recyclerView.adapter as FoodAdapter
+    adapter.submitList(
+        if (storageType == StorageType.ALL) {
+            data
+        } else {
+            data?.filter { foodDomain -> foodDomain.storageType == storageType }
+        })
     recyclerView.scheduleLayoutAnimation();
 }
 
@@ -69,11 +78,4 @@ fun TextView.bindFormatDate(date: Date) {
 fun TextView.bindFormatQuantity(date: Double) {
     //TODO add formatter for grams and kg
     text = "500 g"
-}
-
-@BindingAdapter(value = ["listFood", "storageType"], requireAll = true)
-fun bindTabView(view: TextView, list: Result<List<FoodDomain>>?, type: StorageType) {
-    if (list is Result.Success) {
-        view.text = list.data.count { it.storageType == type }.toString()
-    }
 }

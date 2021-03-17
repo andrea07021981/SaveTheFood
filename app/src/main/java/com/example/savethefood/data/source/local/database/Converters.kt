@@ -33,7 +33,7 @@ class StorageTypeConverter{
         "Fridge" -> StorageType.FRIDGE
         "Freezer" -> StorageType.FREEZER
         "Dry" -> StorageType.DRY
-        else -> throw Exception("Invalid value")
+        else -> StorageType.ALL
     }
 }
 
