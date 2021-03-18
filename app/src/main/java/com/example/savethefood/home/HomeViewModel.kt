@@ -19,50 +19,26 @@ class HomeViewModel @ViewModelInject constructor(
 
     val animationResourceButton = R.anim.fade_in
 
-    //TODO like plantrepository in advanced coroutine codelab
-    //val foodList: LiveData<Result<List<FoodDomain>>> = liveData { //TODO keep live data, but get foods emit, change to flows and collect like https://medium.com/androiddevelopers/livedata-with-coroutines-and-flow-part-iii-livedata-and-coroutines-patterns-592485a4a85a
-    //    emitSource(foodDataRepository.getFoods().asLiveData(Dispatchers.IO)) // Change to flow repo and data source, in repo do the oneach, onstart, etc and manage all here with databinding emitSource(foodDataRepository.getFoods().asLiveData())   TO TEST CHANGE CALL TO SCANNER AND ADD MEEDIATELY
-    //}
-   // TODO can also use dTransformations distinct https://proandroiddev.com/livedata-transformations-4f120ac046fc
-    /*
-    Other solution
-     val foodList: LiveData<Result<List<FoodDomain>>> = liveData {
-        foodDataRepository.getFoods()
-    }
-     */
-
     private val _storageType = MutableLiveData<StorageType>(StorageType.ALL)
     val storageType: LiveData<StorageType>
         get() = _storageType
 
-    // maybe isìt's better the resuls???' with error the list could show an error
+    private val _errorData = MutableLiveData<Event<String>>()
+    val errorData: LiveData<Event<String>>
+        get() = _errorData
+
     private var _foodList: LiveData<List<FoodDomain>?> = foodDataRepository.getFoods()
         .transform { value ->
-            if (value is Result.Success) {
-                emit(value.data)
-            } else {
-                // TODO add error in case
+            when (value) {
+                is Result.Success -> emit(value.data)
+                is Result.ExError -> _errorData.value = Event(value.exception.localizedMessage)
+                else -> Unit
             }
         }
         .asLiveData(viewModelScope.coroutineContext)
 
-    // TODO we could use the Conflatebroadcastchannel instead of transformations when we
-    // are using flows
-    // https://www.droidcon.com/news-detail?content-id=/repository/collaboration/Groups/spaces/droidcon_hq/Documents/public/news/android-news/Using%20LiveData%20and%20Flow%20in%20MVVM%20-%20Part%20II
-
     val foodList: LiveData<List<FoodDomain>?>
         get() = _foodList
-    /*val foodList: LiveData<List<FoodDomain>?> = Transformations.distinctUntilChanged(
-        _storageType.switchMap {
-            if (!it.equals(StorageType.ALL)) {
-                _foodList.map { list ->
-                    list?.filter { food -> food.storageType == it}
-                }
-            } else {
-                _foodList
-            }
-        }
-    )*/
 
     private val _detailFoodEvent = MutableLiveData<Event<FoodDomain>>()
     val detailFoodEvent: LiveData<Event<FoodDomain>>
@@ -72,26 +48,10 @@ class HomeViewModel @ViewModelInject constructor(
     val addFoodEvent: LiveData<Event<Unit>>
         get() = _addFoodEvent
 
-    val storageAllCount: LiveData<Int> = _foodList.map { result ->
-        result?.count { it != null } ?: 0
-    }
-
-    fun storageTypeCount(storageType: StorageType): LiveData<Int> {
-        return Transformations.map(_foodList) { result ->
-            result?.count { it.storageType == storageType } ?: 0
+    val listByStorageType: LiveData<Map<StorageType, Int>?> = _foodList.map { result ->
+        result?.groupingBy(FoodDomain::storageType)?.eachCount()?.toMutableMap().also {
+            it?.set(StorageType.ALL, result?.count() ?: 0)
         }
-    }
-
-    val storageFridgeCount: LiveData<Int> = Transformations.map(_foodList) { result ->
-        result?.count { it.storageType == StorageType.ALL } ?: 0
-    }
-
-    val storageFreezerCount: LiveData<Int> = Transformations.map(_foodList) { result ->
-        result?.count { it.storageType == StorageType.FREEZER } ?: 0
-    }
-
-    val storageDryCount: LiveData<Int> = Transformations.map(_foodList) { result ->
-        result?.count { it.storageType == StorageType.DRY } ?: 0
     }
 
     init {

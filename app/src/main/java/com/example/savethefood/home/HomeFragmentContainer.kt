@@ -3,24 +3,23 @@ package com.example.savethefood.home
 import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.savethefood.BaseFragment
+import com.example.savethefood.EventObserver
 import com.example.savethefood.FragmentCallback
 import com.example.savethefood.R
-import com.example.savethefood.data.Result
 import com.example.savethefood.databinding.CustomTabLayoutBinding
 import com.example.savethefood.databinding.FragmentHomeContainerBinding
 import com.example.savethefood.util.StorageType
 import com.example.savethefood.util.configSearchView
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.custom_tab_layout.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -41,7 +40,7 @@ class HomeFragmentContainer : BaseFragment<HomeViewModel, FragmentHomeContainerB
             viewPager.adapter = HomeFragmentContainerAdapter(childFragmentManager, lifecycle)
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 val tabCustomView = CustomTabLayoutBinding.inflate(layoutInflater)
-                tabCustomView.titleTextView.text = StorageType.values()[position].type // todo Add binding
+                tabCustomView.titleTextView.text = StorageType.values()[position].type
                 tab.customView = tabCustomView.root
                 tab.tag = StorageType.values()[position].type
             }.attach()
@@ -50,21 +49,21 @@ class HomeFragmentContainer : BaseFragment<HomeViewModel, FragmentHomeContainerB
     }
 
     override fun activateObservers() {
-        viewModel.foodList.observe(viewLifecycleOwner) { foodList ->
-            for (tabIndex in 0 until dataBinding.tabLayout.tabCount) {
-                val linearLayout =
-                    dataBinding.tabLayout.getTabAt(tabIndex)!!.customView as LinearLayout
-                foodList?.count {
-                    val storageType = StorageType.values()[tabIndex]
-                    if (storageType == StorageType.ALL) {
-                        true
-                    } else {
-                        it.storageType == storageType
-                    }
-                }.toString()
-                    .also { CustomTabLayoutBinding.bind(linearLayout).countTextView.text = it }
+        viewModel.listByStorageType.observe(viewLifecycleOwner) {
+            if (it != null) {
+                for ((index, value) in it) {
+                    val linearLayout = dataBinding.tabLayout.getTabAt(index.ordinal)
+                        ?.customView as LinearLayout
+                    CustomTabLayoutBinding.bind(linearLayout).countTextView.text =
+                        value.toString()
+                }
             }
         }
+
+        viewModel.errorData.observe(viewLifecycleOwner, EventObserver {
+            Snackbar.make(dataBinding.root, getString(R.string.no_data), Snackbar.LENGTH_LONG)
+                .show()
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
