@@ -3,15 +3,15 @@ package com.example.savethefood.work
 import android.app.Application
 import android.content.Context
 import androidx.hilt.Assisted
-import androidx.hilt.work.WorkerInject
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.data.source.repository.FoodRepository
 import java.lang.Exception
+import javax.inject.Inject
 
-class RefreshDataWorker @WorkerInject constructor(
+class RefreshDataWorker @Inject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
     private val foodDataRepository: FoodRepository

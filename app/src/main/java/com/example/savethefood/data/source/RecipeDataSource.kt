@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface RecipeDataSource {
     @Throws(Exception::class)
-    fun getRecipes(foodFilter: String?): Flow<Result<RecipeDomain>>
+    fun getRecipes(foodFilter: String?): Flow<RecipeDomain?>
 
     @Throws(Exception::class)
     suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain>

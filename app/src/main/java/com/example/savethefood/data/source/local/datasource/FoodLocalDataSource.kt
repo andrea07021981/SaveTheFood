@@ -54,7 +54,7 @@ class FoodLocalDataSource  @Inject constructor(
         foodDatabaseDao.updateAll(food.asDatabaseModel())
     }
 
-    override suspend fun getFoods(): Flow<List<FoodEntity>?> {
+    override fun getFoods(): Flow<List<FoodEntity>?> {
         return foodDatabaseDao.observeFoods()
     }
 

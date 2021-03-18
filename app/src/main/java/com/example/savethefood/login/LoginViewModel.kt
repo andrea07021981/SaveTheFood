@@ -71,7 +71,7 @@ class LoginViewModel @ViewModelInject constructor(
     val password = object : LoginStatus("") {
         init {
             if (BuildConfig.DEBUG) {
-                value = "a"
+                value = "aaaaaaaa"
             }
         }
 

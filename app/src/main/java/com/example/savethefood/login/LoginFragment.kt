@@ -100,7 +100,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
                         bundle.putParcelable("user", state.user)
                         findNavController()
                             .navigate(
-                                LoginFragmentDirections.actionLoginFragmentToHomeFragment(
+                                LoginFragmentDirections.actionLoginFragmentToHomeFragmentContainer(
                                     bundle
                                 )
                             )

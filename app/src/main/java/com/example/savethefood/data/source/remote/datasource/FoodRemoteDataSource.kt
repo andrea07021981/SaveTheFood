@@ -77,7 +77,7 @@ class FoodRemoteDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getFoods(): Flow<List<FoodEntity>> {
+    override fun getFoods(): Flow<List<FoodEntity>> {
         TODO("No OP")
     }
 

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/homeFragment"
+        android:id="@+id/homeFragmentContainer"
         android:icon="@drawable/ic_diet"
-        android:title="Food"
-        android:contentDescription="Food"/>
+        android:title="@string/food"
+        android:contentDescription="@string/food"/>
     <item
         android:id="@+id/recipeFragment"
         android:icon="@drawable/ic_dish"
-        android:title="Recipes"
-        android:contentDescription="Recipes"/>
+        android:title="@string/recipes"
+        android:contentDescription="@string/recipes"/>
 
     <item
         android:id="@+id/divider"
@@ -18,12 +18,12 @@
     <item
         android:id="@+id/mapFragment"
         android:icon="@drawable/ic_baseline_map_24"
-        android:title="Map"
-        android:contentDescription="Map"/>
+        android:title="@string/map"
+        android:contentDescription="@string/map"/>
 
     <item
         android:id="@+id/settingsFragment"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="Settings"
-        android:contentDescription="Settings"/>
+        android:title="@string/settings"
+        android:contentDescription="@string/settings"/>
 </menu>

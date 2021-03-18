@@ -20,14 +20,13 @@ class RecipeRemoteDataSource(
 ) : RecipeDataSource{
 
     @Throws(Exception::class)
-    override  fun getRecipes(foodFilter: String?): Flow<Result<RecipeDomain>> = flow {
-        emit(Result.Loading)
+    override  fun getRecipes(foodFilter: String?): Flow<RecipeDomain?> = flow {
         try {
             //NEVER USE THE WITHCONTEXT TO CHANGE THE CONTEXT, USE FLOW ON WHICH EXECUTE IN A SECOND THREAD AND CONTEXT
             val recipes = if (foodFilter.isNullOrEmpty()) foodApi.getRecipes() else foodApi.getRecipesByIngredient(foodFilter)
-            emit(Result.Success(recipes.asDomainModel()))
+            emit(recipes.asDomainModel())
         } catch (error: Exception) {
-            emit(Result.ExError(error))
+            emit(null)
         }
     }
 
@@ -35,6 +34,7 @@ class RecipeRemoteDataSource(
     override suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain> = coroutineScope {
         return@coroutineScope try {
             val recipe = foodApi.getRecipeInfo(id).await()
+            // TODO replace result with Apistatus, use result in repository with a converter
             Result.Success(recipe.asDomainModel())
         } catch (error: Exception) {
             Result.ExError(error)

@@ -47,7 +47,7 @@ class FakeRemoteFoodDataSourceTest(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getFoods(): Flow<List<FoodEntity>?> = flow {
+    override fun getFoods(): Flow<List<FoodEntity>?> = flow {
         _foodList
     }
 

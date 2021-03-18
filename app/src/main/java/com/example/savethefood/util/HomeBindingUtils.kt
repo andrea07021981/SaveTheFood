@@ -1,10 +1,8 @@
 package com.example.savethefood.util
 
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.graphics.drawable.toDrawable
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -51,13 +49,22 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
-@BindingAdapter("bind:listdata")
-fun bindFoodRecycleView(recyclerView: RecyclerView, data: Result<List<FoodDomain>>?) {
+@BindingAdapter("bind:listData")
+fun bindFoodRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?) {
     val adapter = recyclerView.adapter as FoodAdapter
-    when (data) {
-        is Result.Success -> adapter.submitList(data.data)
-        else -> adapter.submitList(listOf())
-    }
+    adapter.submitList(data)
+    recyclerView.scheduleLayoutAnimation();
+}
+
+@BindingAdapter(value = ["listData", "storageType"], requireAll = true)
+fun bindFoodRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?, storageType: StorageType?) {
+    val adapter = recyclerView.adapter as FoodAdapter
+    adapter.submitList(
+        if (storageType == StorageType.ALL) {
+            data
+        } else {
+            data?.filter { foodDomain -> foodDomain.storageType == storageType }
+        })
     recyclerView.scheduleLayoutAnimation();
 }
 

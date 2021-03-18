@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.data.Result
+import com.example.savethefood.data.domain.FoodDomain
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 

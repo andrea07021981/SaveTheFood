@@ -48,6 +48,7 @@ class RecipeDetailViewModel(
     }
 
     private fun getRecipeDetails(recipeResult: RecipeResult) {
+        // TODO move to livedata constructor, remove status and use the result that we will recive from repository to show the status
         viewModelScope.launch {
             try {
                 _status.value = Loading("Loading")

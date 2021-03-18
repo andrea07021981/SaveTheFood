@@ -33,7 +33,7 @@ abstract class BaseFragment<VM : ViewModel, DB : ViewDataBinding>() : Fragment()
 
     protected abstract val classTag: String
 
-    private fun baseInit(inflater: LayoutInflater, container: ViewGroup) {
+    private fun baseInit(inflater: LayoutInflater, container: ViewGroup?) {
         _dataBinding = DataBindingUtil.inflate(inflater, layoutRes, container, false)
         _dataBinding?.let {
             it.lifecycleOwner = this
@@ -48,7 +48,7 @@ abstract class BaseFragment<VM : ViewModel, DB : ViewDataBinding>() : Fragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        baseInit(inflater, container!!)
+        baseInit(inflater, container)
         init()
         activateObservers()
         return dataBinding.root

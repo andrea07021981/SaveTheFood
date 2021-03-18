@@ -26,7 +26,8 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class FoodDataRepository @Inject constructor(
     private val foodLocalDataSource: FoodDataSource,
-    private val foodRemoteDataSource: FoodDataSource
+    private val foodRemoteDataSource: FoodDataSource,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : FoodRepository {
 /*
     companion object {
@@ -142,9 +143,8 @@ class FoodDataRepository @Inject constructor(
     // In coroutines, a flow is a type that can emit multiple values sequentially,
     // as opposed to suspend functions that return only a single value. For example, you can use a flow to receive live updates from a database
     // TODO remove all suspend where we use flow, no needed
-    override suspend fun getFoods(): Flow<Result<List<FoodDomain>>> {
+    override fun getFoods(): Flow<Result<List<FoodDomain>>> {
         wrapEspressoIdlingResource {
-            delay(1000) // TEST long time
             //TODO DO LIKE RECIPE. Moreover add a retry in case of error, with a custom number of attempts (maybe retryWhen() or retry()?)
             return foodLocalDataSource.getFoods()
                 .onStart {
@@ -171,7 +171,7 @@ class FoodDataRepository @Inject constructor(
                     }
                 }
                 // FLOWON is the correct way to change the context. The collection remains in main thread, but this flow goes in IO concurrently
-                .flowOn(Dispatchers.IO)
+                .flowOn(ioDispatcher)
                 // We can tell flow to make the buffer "conflated". It removes the buffer from flowOn
                 // and only shares the last value, as our UI discards any intermediate values in the
                 // buffer.
