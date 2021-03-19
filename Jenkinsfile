@@ -8,8 +8,8 @@ pipeline {
     triggers{ cron('H H(9-16)/2 * * 1-5') } // once in every two hours slot between 9 AM and 5 PM every weekday (perhaps at 10:38 AM, 12:38 PM, 2:38 PM, 4:38 PM)
 
     stages {
-        stage('Preparation') {
-            /*steps {
+        /*stage('Preparation') {
+            steps {
                 echo 'Preparation Dev'
                 withCredentials([file(credentialsId: 'googleservicesdev', variable: 'googleservicesdev')]) {
                     sh "cp \$googleservicesdev /Users/andreafranco/.jenkins/workspace/SaveTheFoodMasterPipeline_master/app/src/dev/google-services.json"
@@ -34,8 +34,8 @@ pipeline {
                     sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/SaveTheFoodMasterPipeline_master/app/src/prod/res/values/google_maps_api.xml"
                 }
 
-            }*/
-        }
+            }
+        }*/
         stage('Lint App') {
             steps {
                 echo 'Running Lint'
