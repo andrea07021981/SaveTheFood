@@ -12,8 +12,7 @@ import java.util.*
 class FakeRecipeDataSourceTest(
     private val recipeResult: List<RecipeResult>
 ) : RecipeDataSource {
-    override fun getRecipes(foodFilter: String?): Flow<Result<RecipeDomain>> {
-        return flow {
+    override fun getRecipes(foodFilter: String?): Flow<RecipeDomain?> = flow {
             foodFilter?.let { filter ->
                 recipeResult.filter {
                     if (filter.isNotEmpty()) {
@@ -24,7 +23,6 @@ class FakeRecipeDataSourceTest(
                 }
             }
         }
-    }
 
     override suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain> {
         TODO("Not yet implemented")
@@ -33,5 +31,4 @@ class FakeRecipeDataSourceTest(
     override suspend fun saveRecipe(recipe: RecipeInfoDomain) {
         TODO("Not yet implemented")
     }
-
 }
