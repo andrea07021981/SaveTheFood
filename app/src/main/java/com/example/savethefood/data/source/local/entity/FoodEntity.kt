@@ -9,8 +9,8 @@ import com.example.savethefood.data.source.local.database.FoodImageConverter
 import com.example.savethefood.data.source.local.database.QuantityTypeConverter
 import com.example.savethefood.data.source.local.database.StorageTypeConverter
 import com.example.savethefood.util.FoodImage
-import com.example.savethefood.util.QuantityType
-import com.example.savethefood.util.StorageType
+import com.example.savethefood.constants.QuantityType
+import com.example.savethefood.constants.StorageType
 import java.sql.Date
 
 @Entity(tableName = "food_table")

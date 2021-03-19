@@ -10,8 +10,8 @@ import com.example.savethefood.data.source.local.datasource.FakeRemoteFoodDataSo
 import com.example.savethefood.data.source.repository.FakeFoodDataRepositoryTest
 import com.example.savethefood.data.succeeded
 import com.example.savethefood.util.FoodImage
-import com.example.savethefood.util.QuantityType
-import com.example.savethefood.util.StorageType
+import com.example.savethefood.constants.QuantityType
+import com.example.savethefood.constants.StorageType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before

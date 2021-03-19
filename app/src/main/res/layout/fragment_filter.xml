@@ -4,6 +4,13 @@
     xmlns:bind="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import type="com.example.savethefood.constants.FoodOrder"/>
+        <variable
+            name="viewmodel"
+            type="com.example.savethefood.home.HomeViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -12,10 +19,11 @@
             android:id="@+id/filter_chip_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:chipSpacingHorizontal="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,39 +31,45 @@
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/none_chip"
-                android:text="None"/>
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="80dp"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/bg_chip_state_list"
+                android:onClick="@{() -> viewmodel.updateDataListEvent(FoodOrder.NONE)}"
+                android:text="Clear" />
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/make_chip"
-                android:text="Filter1"/>
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="80dp"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/bg_chip_state_list"
+                android:onClick="@{() -> viewmodel.updateDataListEvent(FoodOrder.TITLE)}"
+                android:text="Title" />
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/model_chip"
-                android:text="Filter2"/>
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="80dp"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/bg_chip_state_list"
+                android:onClick="@{() -> viewmodel.updateDataListEvent(FoodOrder.BEFORE)}"
+                android:text="Before" />
 
             <com.google.android.material.chip.Chip
-                style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/condition_chip"
-                android:text="Filter3"/>
-
-            <com.google.android.material.chip.Chip
                 style="@style/Widget.MaterialComponents.Chip.Choice"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
+                android:textAlignment="center"
                 android:layout_height="wrap_content"
-                android:id="@+id/engine_chip"
-                android:text="Filter4"/>
+                app:chipBackgroundColor="@color/bg_chip_state_list"
+                android:onClick="@{() -> viewmodel.updateDataListEvent(FoodOrder.QUANTITY)}"
+                android:text="Quantity" />
+
         </com.google.android.material.chip.ChipGroup>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

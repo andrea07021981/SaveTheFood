@@ -4,13 +4,15 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.R
+import com.example.savethefood.constants.FoodOrder
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.repository.FoodRepository
-import com.example.savethefood.util.StorageType
+import com.example.savethefood.constants.StorageType
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
+import java.util.*
 
 // TODO use homwviewmodel for edit and add? save resources
 class HomeViewModel @ViewModelInject constructor(
@@ -27,6 +29,12 @@ class HomeViewModel @ViewModelInject constructor(
     val errorData: LiveData<Event<String>>
         get() = _errorData
 
+    private val searchFilter = MutableLiveData<String>("")
+
+    private val _listOrderEvent = MutableLiveData<Event<FoodOrder>>()
+    val listOrderEvent: LiveData<Event<FoodOrder>>
+        get() = _listOrderEvent
+
     private var _foodList: LiveData<List<FoodDomain>?> = foodDataRepository.getFoods()
         .transform { value ->
             when (value) {
@@ -37,8 +45,20 @@ class HomeViewModel @ViewModelInject constructor(
         }
         .asLiveData(viewModelScope.coroutineContext)
 
-    val foodList: LiveData<List<FoodDomain>?>
-        get() = _foodList
+    val foodList: LiveData<List<FoodDomain>?> = Transformations.distinctUntilChanged(
+        Transformations.switchMap(searchFilter) { // OR    _searchFilter.switchMap { used to refresh/trigger changed livedata
+            if (it != null && it.isNotEmpty()) {
+                _foodList.map { list ->
+                    list?.filter { recipe ->
+                        recipe.title.toLowerCase(Locale.getDefault())
+                            .contains(it.toLowerCase(Locale.getDefault()))
+                    }
+                }
+            } else {
+                _foodList
+            }
+        }
+    )
 
     private val _detailFoodEvent = MutableLiveData<Event<FoodDomain>>()
     val detailFoodEvent: LiveData<Event<FoodDomain>>
@@ -104,5 +124,18 @@ class HomeViewModel @ViewModelInject constructor(
     fun updateIndex(storageType: StorageType) {
         // use switch map like
         _storageType.value = storageType
+    }
+
+    fun updateDataList(filter: String) {
+        searchFilter.value = filter
+    }
+
+    fun updateDataList(order: FoodOrder) {
+        // TODO need to figure out how transform with two filter () searchfilter and order
+        // TODO we could use a map to save both with keys and values
+    }
+
+    fun updateDataListEvent(order: FoodOrder) {
+        _listOrderEvent.value = Event(order)
     }
 }

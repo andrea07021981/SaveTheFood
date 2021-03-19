@@ -1,7 +1,6 @@
 package com.example.savethefood.home
 
 import android.os.Bundle
-import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.*
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.databinding.FragmentHomeBinding
-import com.example.savethefood.util.StorageType
+import com.example.savethefood.constants.StorageType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 

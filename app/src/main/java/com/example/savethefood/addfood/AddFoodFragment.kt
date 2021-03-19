@@ -16,6 +16,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.EventObserver
 import com.example.savethefood.R
+import com.example.savethefood.constants.Constants.BUNDLE_KEY
+import com.example.savethefood.constants.Constants.REQUEST_KEY
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.databinding.FragmentAddFoodBinding
@@ -25,8 +27,6 @@ import com.google.zxing.integration.android.IntentResult
 import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
 
-const val REQUEST_KEY = "request"
-const val BUNDLE_KEY = "foodItem"
 
 // TODO add steppers for cooking phases
 // android stepper navigation component

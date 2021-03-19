@@ -3,11 +3,9 @@ package com.example.savethefood.data.domain
 import android.os.Parcelable
 import com.example.savethefood.data.source.local.entity.FoodEntity
 import com.example.savethefood.util.FoodImage
-import com.example.savethefood.util.QuantityType
-import com.example.savethefood.util.StorageType
-import com.example.savethefood.util.isValidDouble
+import com.example.savethefood.constants.QuantityType
+import com.example.savethefood.constants.StorageType
 import kotlinx.android.parcel.Parcelize
-import java.lang.StringBuilder
 import java.util.*
 
 

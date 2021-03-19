@@ -10,7 +10,6 @@ import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.data.source.repository.FoodRepository
 import com.example.savethefood.util.FoodImage
-import com.example.savethefood.util.StorageType
 import com.example.savethefood.util.isValidDouble
 import com.example.savethefood.util.launchDataLoad
 import com.squareup.moshi.JsonDataException
