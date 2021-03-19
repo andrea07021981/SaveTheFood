@@ -9,7 +9,7 @@ pipeline {
 
     stages {
         stage('Preparation') {
-            steps {
+            /*steps {
                 echo 'Preparation Dev'
                 withCredentials([file(credentialsId: 'googleservicesdev', variable: 'googleservicesdev')]) {
                     sh "cp \$googleservicesdev /Users/andreafranco/.jenkins/workspace/SaveTheFoodMasterPipeline_master/app/src/dev/google-services.json"
@@ -34,7 +34,7 @@ pipeline {
                     sh "cp \$MAPSAPI /Users/andreafranco/.jenkins/workspace/SaveTheFoodMasterPipeline_master/app/src/prod/res/values/google_maps_api.xml"
                 }
 
-            }
+            }*/
         }
         stage('Lint App') {
             steps {
