@@ -8,7 +8,7 @@ pipeline {
     triggers{ cron('H H(9-16)/2 * * 1-5') } // once in every two hours slot between 9 AM and 5 PM every weekday (perhaps at 10:38 AM, 12:38 PM, 2:38 PM, 4:38 PM)
 
     stages {
-        /*stage('Preparation') {
+        stage('Preparation') {
             steps {
                 echo 'Preparation Dev'
                 withCredentials([file(credentialsId: 'googleservicesdev', variable: 'googleservicesdev')]) {
@@ -35,7 +35,7 @@ pipeline {
                 }
 
             }
-        }*/
+        }
         stage('Lint App') {
             steps {
                 echo 'Running Lint'
