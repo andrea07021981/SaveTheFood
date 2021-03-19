@@ -2,11 +2,8 @@ package com.example.savethefood.data.source.local.database
 
 import androidx.room.TypeConverter
 import com.example.savethefood.util.FoodImage
-import com.example.savethefood.util.QuantityType
-import com.example.savethefood.util.StorageType
-import java.lang.Exception
-import kotlin.jvm.Throws
-import kotlin.math.E
+import com.example.savethefood.constants.QuantityType
+import com.example.savethefood.constants.StorageType
 
 // TODO add generic class and replace these
 class FoodImageConverter{

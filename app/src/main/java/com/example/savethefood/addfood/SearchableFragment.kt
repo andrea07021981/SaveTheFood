@@ -11,6 +11,8 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.savethefood.constants.Constants.BUNDLE_KEY
+import com.example.savethefood.constants.Constants.REQUEST_KEY
 import com.example.savethefood.databinding.FragmentSearchableBinding
 import dagger.hilt.android.AndroidEntryPoint
 

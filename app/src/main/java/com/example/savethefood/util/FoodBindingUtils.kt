@@ -17,6 +17,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
 import com.example.savethefood.addfood.FoodTypeAdapter
+import com.example.savethefood.constants.QuantityType
+import com.example.savethefood.constants.StorageType
 import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.data.domain.ProductDomain
 import com.example.savethefood.food.FoodSearchAdapter
