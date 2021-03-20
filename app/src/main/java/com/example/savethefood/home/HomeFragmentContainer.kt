@@ -44,6 +44,7 @@ class HomeFragmentContainer : BaseFragment<HomeViewModel, FragmentHomeContainerB
         with(dataBinding) {
             viewPager.adapter = HomeFragmentContainerAdapter(childFragmentManager, lifecycle)
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                // TODO change tab:background and add a circle resource xml shape for selected
                 val tabCustomView = CustomTabLayoutBinding.inflate(layoutInflater)
                 tabCustomView.titleTextView.text = StorageType.values()[position].type
                 tab.customView = tabCustomView.root
