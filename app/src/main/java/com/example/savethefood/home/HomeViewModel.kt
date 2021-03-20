@@ -29,7 +29,7 @@ class HomeViewModel @ViewModelInject constructor(
     val errorData: LiveData<Event<String>>
         get() = _errorData
 
-    private val searchFilter = MutableLiveData<String>("")
+    private val searchFilter = MutableLiveData<MutableMap<String,Any>>(mutableMapOf())
 
     private val _listOrderEvent = MutableLiveData<Event<FoodOrder>>()
     val listOrderEvent: LiveData<Event<FoodOrder>>
@@ -46,12 +46,13 @@ class HomeViewModel @ViewModelInject constructor(
         .asLiveData(viewModelScope.coroutineContext)
 
     val foodList: LiveData<List<FoodDomain>?> = Transformations.distinctUntilChanged(
-        Transformations.switchMap(searchFilter) { // OR    _searchFilter.switchMap { used to refresh/trigger changed livedata
-            if (it != null && it.isNotEmpty()) {
+        searchFilter.switchMap {
+            val filter = it["FILTER"] as String
+            if (filter.isNotEmpty()) {
                 _foodList.map { list ->
                     list?.filter { recipe ->
                         recipe.title.toLowerCase(Locale.getDefault())
-                            .contains(it.toLowerCase(Locale.getDefault()))
+                            .contains(filter.toLowerCase(Locale.getDefault()))
                     }
                 }
             } else {
@@ -127,12 +128,14 @@ class HomeViewModel @ViewModelInject constructor(
     }
 
     fun updateDataList(filter: String) {
-        searchFilter.value = filter
+        searchFilter.value?.put("FILTER", filter)
     }
 
     fun updateDataList(order: FoodOrder) {
         // TODO need to figure out how transform with two filter () searchfilter and order
         // TODO we could use a map to save both with keys and values
+
+        // TODO find a way to trigger pull on github (the problem is the localhost)
     }
 
     fun updateDataListEvent(order: FoodOrder) {
