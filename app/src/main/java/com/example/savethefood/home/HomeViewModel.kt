@@ -1,5 +1,7 @@
 package com.example.savethefood.home
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
@@ -9,6 +11,7 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.repository.FoodRepository
 import com.example.savethefood.constants.StorageType
+import com.example.savethefood.util.customSortBy
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
@@ -18,6 +21,12 @@ import java.util.*
 class HomeViewModel @ViewModelInject constructor(
     private val foodDataRepository: FoodRepository
 ) : ViewModel() {
+
+    private sealed class FoodFilters {
+        class Filter(val value: String): FoodFilters()
+        class Order(val order: FoodOrder): FoodFilters()
+        object None: FoodFilters()
+    }
 
     val animationResourceButton = R.anim.fade_in
 
@@ -29,7 +38,7 @@ class HomeViewModel @ViewModelInject constructor(
     val errorData: LiveData<Event<String>>
         get() = _errorData
 
-    private val searchFilter = MutableLiveData<MutableMap<String,Any>>(mutableMapOf())
+    private val searchFilter = MutableLiveData<FoodFilters>(FoodFilters.None)
 
     private val _listOrderEvent = MutableLiveData<Event<FoodOrder>>()
     val listOrderEvent: LiveData<Event<FoodOrder>>
@@ -47,16 +56,29 @@ class HomeViewModel @ViewModelInject constructor(
 
     val foodList: LiveData<List<FoodDomain>?> = Transformations.distinctUntilChanged(
         searchFilter.switchMap {
-            val filter = it["FILTER"] as String
-            if (filter.isNotEmpty()) {
-                _foodList.map { list ->
-                    list?.filter { recipe ->
-                        recipe.title.toLowerCase(Locale.getDefault())
-                            .contains(filter.toLowerCase(Locale.getDefault()))
+            when (it) {
+                is FoodFilters.Filter -> {
+                    if (it.value.isNotEmpty()) {
+                        _foodList.map { list ->
+                            list?.filter { recipe ->
+                                recipe.title.toLowerCase(Locale.getDefault())
+                                    .contains(it.value.toLowerCase(Locale.getDefault()))
+                            }
+                        }
+                    } else {
+                        _foodList
                     }
                 }
-            } else {
-                _foodList
+                is FoodFilters.Order -> {
+                    if (it.order != FoodOrder.NONE) {
+                        _foodList.map { list ->
+                            list?.customSortBy(it.order)
+                        }
+                    } else {
+                        _foodList
+                    }
+                }
+                else -> _foodList
             }
         }
     )
@@ -127,15 +149,13 @@ class HomeViewModel @ViewModelInject constructor(
         _storageType.value = storageType
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     fun updateDataList(filter: String) {
-        searchFilter.value?.put("FILTER", filter)
+        searchFilter.value = FoodFilters.Filter(filter)
     }
 
     fun updateDataList(order: FoodOrder) {
-        // TODO need to figure out how transform with two filter () searchfilter and order
-        // TODO we could use a map to save both with keys and values
-
-        // TODO find a way to trigger pull on github (the problem is the localhost)
+        searchFilter.value = FoodFilters.Order(order)
     }
 
     fun updateDataListEvent(order: FoodOrder) {

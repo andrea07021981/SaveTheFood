@@ -5,13 +5,11 @@ import android.app.SearchManager
 import android.content.Context
 import android.util.Patterns
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.recyclerview.widget.RecyclerView
+import com.example.savethefood.constants.FoodOrder
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import kotlinx.coroutines.Job
@@ -75,3 +73,13 @@ fun Double?.isValidDouble(): Boolean {
 fun String.isValidEmail(): Boolean = Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
 fun String.isValidPassword(): Boolean = this.length in 8..16
+
+// TODO find a way to create a generic ext and avoid the repetition of sortedBy
+fun List<FoodDomain>.customSortBy(order: FoodOrder): List<FoodDomain> {
+    return when (order) {
+        FoodOrder.TITLE -> sortedBy(FoodDomain::title)
+        FoodOrder.BEFORE -> sortedBy(FoodDomain::bestBefore)
+        FoodOrder.QUANTITY -> sortedBy(FoodDomain::quantity)
+        else -> this
+    }
+}
