@@ -149,7 +149,6 @@ class HomeViewModel @ViewModelInject constructor(
         _storageType.value = storageType
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     fun updateDataList(filter: String) {
         searchFilter.value = FoodFilters.Filter(filter)
     }
