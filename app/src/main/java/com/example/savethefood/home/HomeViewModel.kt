@@ -28,9 +28,7 @@ class HomeViewModel @ViewModelInject constructor(
         object None: FoodFilters()
     }
 
-    val animationResourceButton = R.anim.fade_in
-
-    private val _storageType = MutableLiveData<StorageType>(StorageType.ALL)
+    private val _storageType = MutableLiveData(StorageType.ALL)
     val storageType: LiveData<StorageType>
         get() = _storageType
 
