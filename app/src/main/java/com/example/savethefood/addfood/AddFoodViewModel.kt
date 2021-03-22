@@ -75,7 +75,11 @@ class AddFoodViewModel @ViewModelInject constructor(
     val openFoodTypeDialog: LiveData<Event<Unit>>
         get() = _openFoodTypeDialog
 
+    private val _openDateDialog = MutableLiveData<Event<Date>>()
+    val openDateDialog: LiveData<Event<Date>>
+        get() = _openDateDialog
 
+    @Deprecated("Removed the datepicker")
     val updateBestBefore: (Calendar) -> Unit = { date ->
         _foodDomain.bestBefore = date.time
     }
@@ -86,6 +90,11 @@ class AddFoodViewModel @ViewModelInject constructor(
 
     fun updateFood(foodItem: FoodItem) {
         _foodItem.value = foodItem
+    }
+
+    fun updateBestBefore(date: Date) {
+        // TODO use the copy if it does not work as observable
+        _foodDomain.bestBefore = date
     }
 
     fun save() {
@@ -148,6 +157,10 @@ class AddFoodViewModel @ViewModelInject constructor(
 
     fun openFoodDialog() {
         _openFoodTypeDialog.value = Event(Unit)
+    }
+
+    fun openDateDialog() {
+        _openDateDialog.value = Event(_foodDomain.bestBefore)
     }
 
     fun navigateToBarcodeReader() {

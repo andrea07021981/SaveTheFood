@@ -68,7 +68,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     }
 
     override fun activateObservers() {
-        viewModel.detailFoodEvent.observe(viewLifecycleOwner, ::navigateTo) // TODO is it better to keep the EventObserver?
+        viewModel.detailFoodEvent.observe(viewLifecycleOwner, ::navigateTo) // TODO is it better to keep the EventObserver and navigateTo(it)?
         viewModel.addFoodEvent.observe(viewLifecycleOwner, ::navigateTo)
         viewModel.foodList.observe(viewLifecycleOwner) { list ->
             (dataBinding.foodRecycleview.adapter as FoodAdapter)

@@ -200,55 +200,27 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                        <RelativeLayout
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/layout_date"
+                            style="@style/FormTextInputLayoutStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_margin="16dp">
 
-                            <LinearLayout
-                                android:id="@+id/best_before_layout"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/et_date"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="16dp"
-                                android:background="@drawable/rounded_container"
-                                android:orientation="vertical">
-
-                                <DatePicker
-                                    android:id="@+id/editTextDate2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="120dp"
-                                    android:datePickerMode="spinner"
-                                    android:calendarViewShown="false"
-                                    android:layout_marginStart="16dp"
-                                    bind:dateConverter="@{addFoodViewModel.foodDomain.bestBefore}"
-                                    bind:day="@{addFoodViewModel.foodDomain.bestBefore.day}"
-                                    bind:month="@{addFoodViewModel.foodDomain.bestBefore.month}"
-                                    bind:onDateChanged="@{addFoodViewModel.updateBestBefore}"
-                                    bind:year="@{addFoodViewModel.foodDomain.bestBefore.year}"
-                                    android:layout_marginEnd="16dp"
-                                    android:ems="10"
-                                    android:inputType="date" />
-                            </LinearLayout>
-                            <View
-                                android:id="@+id/best_before_view"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
-                                android:layout_alignBottom="@+id/best_before_view"
-                                android:background="@android:color/white"
-                                android:includeFontPadding="false"
-                                android:layout_marginBottom="16dp"
-                                android:paddingStart="5dp"
-                                android:paddingEnd="5dp"
-                                android:text="Best Before"
-                                android:textSize="12sp"
-                                android:textColor="@color/colorAccent"
-                                android:textAppearance="@android:style/TextAppearance.Medium" />
-                        </RelativeLayout>
+                                android:hint="Best Before"
+                                android:imeOptions="actionNext"
+                                android:inputType="date"
+                                android:singleLine="true"
+                                android:focusableInTouchMode="false"
+                                android:onClick="@{() -> addFoodViewModel.openDateDialog()}"
+                                bind:dateToString="@={addFoodViewModel.foodDomain.bestBefore}"
+                                android:nextFocusDown="@id/et_description"
+                                android:textColor="@color/colorAccent" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <RelativeLayout
                             android:layout_width="match_parent"

@@ -1,5 +1,7 @@
 package com.example.savethefood.addfood
 
+import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +11,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,8 +25,8 @@ import com.example.savethefood.databinding.FragmentAddFoodBinding
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
-import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 
 // TODO add steppers for cooking phases
@@ -85,9 +86,26 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
     }
 
     override fun activateObservers() {
-        viewModel.openFoodTypeDialog.observe(viewLifecycleOwner) {
+        viewModel.openFoodTypeDialog.observe(viewLifecycleOwner, EventObserver {
             SearchableFragment().show(parentFragmentManager, classTag)
-        }
+        })
+
+        viewModel.openDateDialog.observe(viewLifecycleOwner, EventObserver {
+            with(Calendar.getInstance()) {
+                time = it
+                DatePickerDialog(
+                    requireContext(),
+                    R.style.DatePickerTheme,
+                    { _, year, month, dayOfMonth ->
+                        // With SDK > O
+                        //LocalDate.of(year, month, dayOfMonth)
+
+                            this.set(year, month, dayOfMonth)
+                            viewModel.updateBestBefore(this.time)
+                    }, get(Calendar.YEAR), get(Calendar.MONTH), get(Calendar.DAY_OF_MONTH)
+                ).show()
+            }
+        })
 
         viewModel.foodDomain.observe(viewLifecycleOwner) {
             Log.d(classTag, "Updated item: $it")
@@ -95,7 +113,7 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
 
         viewModel.barcodeFoodEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
-                startBarcodeForResult.launch(IntentIntegrator(activity).createScanIntent() )
+                startBarcodeForResult.launch(IntentIntegrator(activity).createScanIntent())
             }
         })
 
@@ -106,7 +124,11 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
         viewModel.saveFoodEvent.observe(viewLifecycleOwner) {
             when (it) {
                 is Result.Success -> findNavController().popBackStack()
-                is Result.ExError, is Result.Error -> Toast.makeText(context, "Error saving food", Toast.LENGTH_LONG).show()
+                is Result.ExError, is Result.Error -> Toast.makeText(
+                    context,
+                    "Error saving food",
+                    Toast.LENGTH_LONG
+                ).show()
                 else -> Unit
             }
         }

@@ -23,6 +23,10 @@ import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.data.domain.ProductDomain
 import com.example.savethefood.food.FoodSearchAdapter
 import com.google.android.material.textfield.TextInputEditText
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -93,7 +97,7 @@ fun bindDate(
 @BindingAdapter("bind:doubleToString")
 fun TextInputEditText.bindTextDouble(value: Double?) {
     value?.let {
-        setText(value.toString())
+        setText(it.toString())
     }
 }
 
@@ -171,8 +175,34 @@ fun setStorageListener(view: RadioGroup, typeAttrChanged: InverseBindingListener
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
+@BindingAdapter("bind:dateToString")
+fun TextInputEditText.bindTextDate(value: Date?) {
+    value?.let {
+        val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(value)
+        setText(formattedDate)
+    }
+}
 
+@RequiresApi(Build.VERSION_CODES.O)
+@InverseBindingAdapter(attribute = "bind:dateToString")
+fun TextInputEditText.getDateFromBinding(): Date? {
+    val result = LocalDate.parse(text, DateTimeFormatter.ISO_DATE)
+    return Date.from(result.atStartOfDay(ZoneId.systemDefault()).toInstant());
+}
 
+@BindingAdapter(value = ["dateToStringAttrChanged"])
+fun setDateListener(view: TextInputEditText, textAttrChanged: InverseBindingListener?) {
+    if (textAttrChanged != null) {
+        view.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun afterTextChanged(editable: Editable) {
+                textAttrChanged.onChange()
+            }
+        })
+    }
+}
 
 @BindingAdapter("bind:decimals")
 fun TextInputEditText.setDecimals(decimals: Int) {
