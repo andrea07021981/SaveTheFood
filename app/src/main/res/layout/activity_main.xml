@@ -70,7 +70,7 @@
             app:contentInsetStart="0dp"
             app:contentInsetStartWithNavigation="0dp"
             app:fabAlignmentMode="center"
-            app:fabCradleMargin="10dp"
+            app:fabCradleMargin="6dp"
             app:fabCradleRoundedCornerRadius="25dp"
             app:fabCradleVerticalOffset="0dp">
 
@@ -95,10 +95,12 @@
             android:id="@+id/btn_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorSecondary"
+            android:backgroundTint="@color/colorAccentBright"
             android:src="@drawable/ic_food_add"
             android:visibility="invisible"
+            app:fabSize="normal"
+            app:backgroundTint="@color/colorSecondary"
             app:layout_anchor="@id/bottom_bar"
-            app:tint="@android:color/white" />
+            app:tint="@color/colorSecondary" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

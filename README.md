@@ -9,8 +9,9 @@ IMPORTANT: Create a free api key here and change it in file ApiKey ----> https:/
 <img align="left" width="280" height="500" src="images/signUp.png">
 <img align="left" width="280" height="500" src="images/home.png">
 <img align="left" width="280" height="500" src="images/fooddetail.png">
+<img align="left" width="280" height="500" src="images/fooddetail.png">
 
-<img align="left" width="280" height="500" src="images/nav.png">
+<img align="left" width="280" height="500" src="images/addFood.png">
 
 <img align="left" width="280" height="500" src="images/search.png">
 
