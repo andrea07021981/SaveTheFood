@@ -19,4 +19,5 @@
     <color name="customLightRed">#E35E60</color>
     <color name="customGreen">#57a701</color>
     <color name="primaryColorAlpha">#5E28354A</color>
+    <color name="lightGrey">#BCBCBC</color>
 </resources>
