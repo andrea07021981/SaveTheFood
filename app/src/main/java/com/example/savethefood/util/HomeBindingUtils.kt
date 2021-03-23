@@ -1,19 +1,28 @@
 package com.example.savethefood.util
 
+import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
+import com.example.savethefood.constants.QuantityType
 import com.example.savethefood.constants.StorageType
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.home.FoodAdapter
+import java.time.LocalDate
+import java.time.Period
+import java.time.ZoneId
+import java.time.temporal.ChronoUnit
 import java.util.*
+import kotlin.math.abs
 
 /**
  * Binding adapter used to hide the spinner once data is available
@@ -69,14 +78,40 @@ fun bindFoodRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?, sto
     recyclerView.scheduleLayoutAnimation();
 }
 
-@BindingAdapter("bind:formatDate")
+@RequiresApi(Build.VERSION_CODES.O)
+@BindingAdapter("bind:formatExpireDate")
 fun TextView.bindFormatDate(date: Date) {
-    //TODO add formatter, change also color use <xliff:
-    text = "11 days is"
+    val currentDate = LocalDate.now()
+    val oldDate = date.toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toLocalDate()
+    val diff = ChronoUnit.DAYS.between(currentDate, oldDate)
+
+    when {
+        diff in 0..3 -> {
+            text = context.getString(R.string.expiring_date, diff)
+            setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_light))
+        }
+        diff < 0 -> {
+            text = context.getString(R.string.expired, abs(diff))
+            setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
+        }
+        else -> {
+            text = context.getString(R.string.days_in, diff)
+            setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+        }
+    }
 }
 
-@BindingAdapter("bind:formatQuantity")
-fun TextView.bindFormatQuantity(date: Double) {
-    //TODO add formatter for grams and kg
-    text = "500 g"
+@BindingAdapter(value = ["bind:unit", "bind:formatQuantity"], requireAll = true)
+fun TextView.bindFormatQuantity(unit: QuantityType, data: Double) {
+    text = if (unit == QuantityType.UNIT) {
+        context.resources.getQuantityString(R.plurals.units, data.toInt(), data.toInt())
+    } else {
+        if (data < 1) {
+            context.getString(R.string.gr, data)
+        } else {
+            context.getString(R.string.kg, data)
+        }
+    }
 }
