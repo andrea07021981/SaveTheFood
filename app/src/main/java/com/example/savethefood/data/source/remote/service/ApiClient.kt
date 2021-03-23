@@ -9,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
+// TODO SE DSL like GSON https://proandroiddev.com/writing-dsls-in-kotlin-part-2-cd9dcd0c4715
 class ApiClient {
 
     companion object {

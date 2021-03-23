@@ -20,9 +20,9 @@ data class FoodDomain(
     var quantityType: QuantityType,
     var quantity: Double?,
     var storageType: StorageType,
-    var bestBefore: Date
+    var bestBefore: Date?
 ) : Parcelable {
-    constructor() : this("", "",0, FoodImage.EMPTY,null, QuantityType.UNIT, null, StorageType.FRIDGE, Calendar.getInstance().time)
+    constructor() : this("", "",0, FoodImage.EMPTY,null, QuantityType.UNIT, null, StorageType.FRIDGE, null)
 }
 
 fun FoodDomain.asDatabaseModel(): FoodEntity {
@@ -34,6 +34,15 @@ fun FoodDomain.asDatabaseModel(): FoodEntity {
         quantityType = quantityType,
         quantity = quantity,
         storageType = storageType,
-        foodBestBefore = bestBefore.time
+        foodBestBefore = bestBefore?.time ?: Date().time
     )
+}
+
+// TODO use DSL for domains and other classes like
+// https://proandroiddev.com/writing-dsls-in-kotlin-part-1-7f5d2193f277
+
+fun food(block: (FoodDomain) -> Unit): FoodDomain {
+    val p = FoodDomain()
+    block(p)
+    return p
 }

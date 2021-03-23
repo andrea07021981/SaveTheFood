@@ -23,6 +23,11 @@ import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.data.domain.ProductDomain
 import com.example.savethefood.food.FoodSearchAdapter
 import com.google.android.material.textfield.TextInputEditText
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -93,7 +98,7 @@ fun bindDate(
 @BindingAdapter("bind:doubleToString")
 fun TextInputEditText.bindTextDouble(value: Double?) {
     value?.let {
-        setText(value.toString())
+        setText(it.toString())
     }
 }
 
@@ -117,7 +122,7 @@ fun setListener(view: TextInputEditText, textAttrChanged: InverseBindingListener
 }
 
 @BindingAdapter("bind:quantityType")
-fun RadioGroup.bindQuantityType(selectedButtonId: QuantityType) {
+fun RadioGroup.bindQuantityType(selectedButtonId: QuantityType?) {
     when (selectedButtonId) {
         QuantityType.WEIGHT -> check(R.id.kg_radio_button)
         QuantityType.UNIT -> check(R.id.unit_radio_button)
@@ -144,7 +149,7 @@ fun setListener(view: RadioGroup, typeAttrChanged: InverseBindingListener?) {
 
 
 @BindingAdapter("bind:storageType")
-fun RadioGroup.bindStorageType(selectedButtonId: StorageType) {
+fun RadioGroup.bindStorageType(selectedButtonId: StorageType?) {
     when (selectedButtonId) {
         StorageType.FRIDGE -> check(R.id.fridge_button)
         StorageType.FREEZER -> check(R.id.freeze_button)
@@ -171,8 +176,38 @@ fun setStorageListener(view: RadioGroup, typeAttrChanged: InverseBindingListener
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
+@BindingAdapter("bind:dateToString")
+fun TextInputEditText.bindTextDate(value: Date?) {
+    value?.let {
+        val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(value)
+        setText(formattedDate)
+    } ?: setText("")
+}
 
+@RequiresApi(Build.VERSION_CODES.O)
+@InverseBindingAdapter(attribute = "bind:dateToString")
+fun TextInputEditText.getDateFromBinding(): Date? {
+    return try {
+        val result = LocalDate.parse(text, DateTimeFormatter.ISO_DATE)
+        Date.from(result.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    } catch (ex: DateTimeParseException) {
+        null
+    }
+}
 
+@BindingAdapter(value = ["dateToStringAttrChanged"])
+fun setDateListener(view: TextInputEditText, textAttrChanged: InverseBindingListener?) {
+    if (textAttrChanged != null) {
+        view.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun afterTextChanged(editable: Editable) {
+                textAttrChanged.onChange()
+            }
+        })
+    }
+}
 
 @BindingAdapter("bind:decimals")
 fun TextInputEditText.setDecimals(decimals: Int) {

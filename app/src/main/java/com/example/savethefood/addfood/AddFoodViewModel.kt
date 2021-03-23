@@ -16,7 +16,6 @@ import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
-import java.lang.Exception
 import java.util.*
 
 
@@ -24,14 +23,25 @@ class AddFoodViewModel @ViewModelInject constructor(
     private val foodDataRepository: FoodRepository
 ) : ViewModel() {
 
-    private val _foodItem = MutableLiveData(FoodItem(FoodImage.EMPTY))
-    val foodItem: LiveData<FoodItem>
-        get() = _foodItem
+    /**
+     * Private class to notify the main food domain when something changes
+     */
+    private sealed class ObserverFields {
+        class FoodItemImage(val value: FoodItem = FoodItem(FoodImage.EMPTY)): ObserverFields()
+        class BestBefore(val value: Date?): ObserverFields()
+        object None: ObserverFields()
+    }
+
+    private var observerField: MutableLiveData<ObserverFields> = MutableLiveData(ObserverFields.FoodItemImage())
 
     private val _foodDomain = FoodDomain()
-    val foodDomain: LiveData<FoodDomain> = Transformations.map(_foodItem) {
+    val foodDomain: LiveData<FoodDomain> = Transformations.map(observerField) {
         _foodDomain.apply {
-            img = it.img
+            when (it) {
+                is ObserverFields.FoodItemImage -> img = it.value.img
+                is ObserverFields.BestBefore -> bestBefore = it.value ?: Date()
+                else -> Unit
+            }
         }
     }
 
@@ -40,6 +50,7 @@ class AddFoodViewModel @ViewModelInject constructor(
     val errorDescription = MutableLiveData<Boolean>()
     val errorPrice = MutableLiveData<Boolean>()
     val errorQuantity = MutableLiveData<Boolean>()
+    val errorDate = MutableLiveData<Boolean>()
 
     private val _barcodeFoodEvent = MutableLiveData<Event<Unit>>()
     val barcodeFoodEvent: LiveData<Event<Unit>>
@@ -75,7 +86,11 @@ class AddFoodViewModel @ViewModelInject constructor(
     val openFoodTypeDialog: LiveData<Event<Unit>>
         get() = _openFoodTypeDialog
 
+    private val _openDateDialog = MutableLiveData<Event<Date>>()
+    val openDateDialog: LiveData<Event<Date>>
+        get() = _openDateDialog
 
+    @Deprecated("Removed the datepicker")
     val updateBestBefore: (Calendar) -> Unit = { date ->
         _foodDomain.bestBefore = date.time
     }
@@ -85,7 +100,11 @@ class AddFoodViewModel @ViewModelInject constructor(
     }
 
     fun updateFood(foodItem: FoodItem) {
-        _foodItem.value = foodItem
+        observerField.value = ObserverFields.FoodItemImage(foodItem)
+    }
+
+    fun updateBestBefore(date: Date) {
+        observerField.value = ObserverFields.BestBefore(date)
     }
 
     fun save() {
@@ -93,11 +112,13 @@ class AddFoodViewModel @ViewModelInject constructor(
         errorDescription.value = _foodDomain.description.isNullOrBlank()
         errorPrice.value = _foodDomain.price.isValidDouble().not()
         errorQuantity.value = _foodDomain.quantity.isValidDouble().not()
+        errorDate.value = _foodDomain.bestBefore == null
 
         if (errorName.value == false &&
             errorDescription.value == false &&
             errorPrice.value == false &&
-            errorQuantity.value == false
+            errorQuantity.value == false &&
+            errorDate.value == false
         ) {
             launchDataLoad(_saveFoodEvent) {
                 foodDataRepository.saveNewFood(_foodDomain)
@@ -148,6 +169,10 @@ class AddFoodViewModel @ViewModelInject constructor(
 
     fun openFoodDialog() {
         _openFoodTypeDialog.value = Event(Unit)
+    }
+
+    fun openDateDialog() {
+        _openDateDialog.value = Event(_foodDomain.bestBefore ?: Date())
     }
 
     fun navigateToBarcodeReader() {
