@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -121,7 +122,7 @@ fun setListener(view: TextInputEditText, textAttrChanged: InverseBindingListener
 }
 
 @BindingAdapter("bind:quantityType")
-fun RadioGroup.bindQuantityType(selectedButtonId: QuantityType) {
+fun RadioGroup.bindQuantityType(selectedButtonId: QuantityType?) {
     when (selectedButtonId) {
         QuantityType.WEIGHT -> check(R.id.kg_radio_button)
         QuantityType.UNIT -> check(R.id.unit_radio_button)
@@ -148,7 +149,7 @@ fun setListener(view: RadioGroup, typeAttrChanged: InverseBindingListener?) {
 
 
 @BindingAdapter("bind:storageType")
-fun RadioGroup.bindStorageType(selectedButtonId: StorageType) {
+fun RadioGroup.bindStorageType(selectedButtonId: StorageType?) {
     when (selectedButtonId) {
         StorageType.FRIDGE -> check(R.id.fridge_button)
         StorageType.FREEZER -> check(R.id.freeze_button)
@@ -181,14 +182,18 @@ fun TextInputEditText.bindTextDate(value: Date?) {
     value?.let {
         val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(value)
         setText(formattedDate)
-    }
+    } ?: setText("")
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @InverseBindingAdapter(attribute = "bind:dateToString")
 fun TextInputEditText.getDateFromBinding(): Date? {
-    val result = LocalDate.parse(text, DateTimeFormatter.ISO_DATE)
-    return Date.from(result.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    return try {
+        val result = LocalDate.parse(text, DateTimeFormatter.ISO_DATE)
+        Date.from(result.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    } catch (ex: DateTimeParseException) {
+        null
+    }
 }
 
 @BindingAdapter(value = ["dateToStringAttrChanged"])
