@@ -45,6 +45,7 @@ class SearchableFragment : DialogFragment() {
                 }
             )
 
+            // todo move the listeners in bindadapters with high order in vm
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     viewModel.updateFilter(query ?: "")

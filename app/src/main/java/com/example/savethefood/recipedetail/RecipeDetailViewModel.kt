@@ -1,25 +1,20 @@
 package com.example.savethefood.recipedetail
 
-import android.app.Application
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.ApiCallStatus.*
 import com.example.savethefood.data.Result
-import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.domain.RecipeResult
-import com.example.savethefood.data.source.repository.RecipeDataRepository
 import com.example.savethefood.data.source.repository.RecipeRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import kotlin.Error
 
-class RecipeDetailViewModel(
+class RecipeDetailViewModel @ViewModelInject constructor(
     private val recipeRepository: RecipeRepository,
-    recipeResult: RecipeResult
+    @Assisted recipeResult: SavedStateHandle
 ) : ViewModel() {
 
     //TODO ADD CHECK STATUS OF SAVED RECIPE AND BIND IT
@@ -39,12 +34,12 @@ class RecipeDetailViewModel(
     val recipeListEvent: LiveData<Event<Unit>>
         get() = _recipeListEvent
 
-    private val _recipeCookingtEvent = MutableLiveData<Event<RecipeInfoDomain>>()
-    val recipeCookingtEvent: LiveData<Event<RecipeInfoDomain>>
-        get() = _recipeCookingtEvent
+    private val _recipeCookingEvent = MutableLiveData<Event<RecipeInfoDomain>>()
+    val recipeCookingEvent: LiveData<Event<RecipeInfoDomain>>
+        get() = _recipeCookingEvent
 
     init {
-        getRecipeDetails(recipeResult)
+        getRecipeDetails(recipeResult.get<RecipeResult>("recipeResult") ?: RecipeResult())
     }
 
     private fun getRecipeDetails(recipeResult: RecipeResult) {
@@ -71,30 +66,13 @@ class RecipeDetailViewModel(
     }
 
     fun moveToCookDetail(recipe: RecipeInfoDomain) {
-        _recipeCookingtEvent.value = Event(recipe)
+        _recipeCookingEvent.value = Event(recipe)
     }
 
     fun saveRecipe(recipe: RecipeInfoDomain) {
         //TODO SAVE IN LOCAL THE RECIPE, ADD A LIVE DATA AND DATABINDIG FOR HEART ICON
         viewModelScope.launch {
             recipeRepository.saveRecipe(recipe)
-        }
-    }
-
-    class RecipeDetailViewModelFactory(
-        private val dataRepository: RecipeRepository,
-        private val recipeResult: RecipeResult
-    ) : ViewModelProvider.Factory {
-
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(RecipeDetailViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return RecipeDetailViewModel(
-                    dataRepository,
-                    recipeResult
-                ) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
         }
     }
 }

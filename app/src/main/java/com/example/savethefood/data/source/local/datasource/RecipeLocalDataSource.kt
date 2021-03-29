@@ -9,8 +9,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class RecipeLocalDataSource internal constructor(
+class RecipeLocalDataSource @Inject constructor(
     private val recipeDatabaseDao: RecipeDatabaseDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : RecipeDataSource {

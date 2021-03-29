@@ -9,14 +9,14 @@ import com.example.savethefood.R
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.RecipeDataRepository
 import com.example.savethefood.databinding.FragmentRecipeDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeDetailFragment : BaseFragment<RecipeDetailViewModel, FragmentRecipeDetailBinding>() {
 
     private lateinit var recipeSelected: RecipeResult
 
-    override val viewModel by viewModels<RecipeDetailViewModel> {
-        RecipeDetailViewModel.RecipeDetailViewModelFactory(RecipeDataRepository.getRepository(requireActivity().application), recipeSelected)
-    }
+    override val viewModel by viewModels<RecipeDetailViewModel>()
 
     override val layoutRes: Int
         get() = R.layout.fragment_recipe_detail
@@ -53,7 +53,7 @@ class RecipeDetailFragment : BaseFragment<RecipeDetailViewModel, FragmentRecipeD
         })
 
         //TODO add save recipe into DB
-        viewModel.recipeCookingtEvent.observe(this.viewLifecycleOwner, EventObserver {
+        viewModel.recipeCookingEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 findNavController()
                     .navigate(

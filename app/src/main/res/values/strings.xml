@@ -56,7 +56,6 @@
     <string name="progress_bar">progress bar</string>
     <string name="scan">Scan</string>
     <string name="description">Description</string>
-    <string name="ingredients">Ingredients</string>
     <string name="save">Save</string>
     <string name="online">Online</string>
     <string name="best_before">Best before</string>
@@ -72,4 +71,6 @@
     <string name="no_data">No data</string>
     <string name="filter">Filter</string>
     <string name="search">Search</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="equipment">Equipment</string>
 </resources>

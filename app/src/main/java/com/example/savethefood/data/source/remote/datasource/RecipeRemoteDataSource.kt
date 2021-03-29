@@ -13,8 +13,9 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception
+import javax.inject.Inject
 
-class RecipeRemoteDataSource(
+class RecipeRemoteDataSource @Inject constructor(
     private val foodApi: FoodService,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : RecipeDataSource{

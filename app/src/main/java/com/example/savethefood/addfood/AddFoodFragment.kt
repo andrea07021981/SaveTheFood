@@ -29,13 +29,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 
-// TODO add steppers for cooking phases
-// android stepper navigation component
 // Add home transition animation between gridlist and linear
 @AndroidEntryPoint
 class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>() {
 
-
+    // todo add e deep link to add a food
     private lateinit var startBarcodeForResult: ActivityResultLauncher<Intent>
 
     override val viewModel by viewModels<AddFoodViewModel>()
