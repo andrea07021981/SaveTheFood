@@ -29,14 +29,33 @@
     <string name="time">Time</string>
     <string name="health">Health</string>
     <string name="price">Price</string>
+    <string name="expiring_date">
+        Expiring in <xliff:g id="expiring">%d</xliff:g> days!
+    </string>
+    <string name="days_in">
+        <xliff:g id="days">%d</xliff:g> days in
+    </string>
+    <string name="expired">
+        Expired <xliff:g id="expired">%d</xliff:g> days ago!
+    </string>
 
+    <plurals name="units">
+        <item quantity="one">%d unit</item>
+        <item quantity="other">%d units</item>
+    </plurals>
+
+    <string name="kg">
+        <xliff:g id="kg">%.2f</xliff:g> Kg
+    </string>
+    <string name="gr">
+        <xliff:g id="gr">%.2f</xliff:g> Gr
+    </string>
     <string name="format_price"><xliff:g id="price">%.2f</xliff:g> $</string>
     <string name="about_recipe">About Recipe</string>
     <string name="cook_now">COOK NOW</string>
     <string name="progress_bar">progress bar</string>
     <string name="scan">Scan</string>
     <string name="description">Description</string>
-    <string name="ingredients">Ingredients</string>
     <string name="save">Save</string>
     <string name="online">Online</string>
     <string name="best_before">Best before</string>
@@ -52,4 +71,6 @@
     <string name="no_data">No data</string>
     <string name="filter">Filter</string>
     <string name="search">Search</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="equipment">Equipment</string>
 </resources>

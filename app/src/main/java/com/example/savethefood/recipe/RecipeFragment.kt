@@ -17,16 +17,17 @@ import com.example.savethefood.cook.RecipeCookFragmentArgs
 import com.example.savethefood.data.source.repository.RecipeDataRepository
 import com.example.savethefood.databinding.FragmentReceipeBinding
 import com.example.savethefood.util.configSearchView
+import dagger.hilt.EntryPoint
+import dagger.hilt.android.AndroidEntryPoint
 
 // TODO add tablayout, recipe online and recipe saved (need room data entities)
 // TODO use paging library
+@AndroidEntryPoint
 class RecipeFragment : BaseFragment<RecipeViewModel, FragmentReceipeBinding>() {
 
     private var foodName: String? = null
 
-    override val viewModel by viewModels<RecipeViewModel> {
-        RecipeViewModel.RecipeViewModelFactory(RecipeDataRepository.getRepository(requireActivity().application), foodName)
-    }
+    override val viewModel by viewModels<RecipeViewModel>()
 
     override val layoutRes: Int
         get() = R.layout.fragment_receipe

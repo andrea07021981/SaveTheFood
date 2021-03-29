@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.databinding.StepCookItemBinding
 import com.example.savethefood.data.domain.StepDomain
 
+@Deprecated("Added the stepper")
 class StepCookAdapter(
     private val onClickListener: OnStepClickListener
 ) : ListAdapter<StepDomain, StepCookAdapter.StepCookViewHolder>(

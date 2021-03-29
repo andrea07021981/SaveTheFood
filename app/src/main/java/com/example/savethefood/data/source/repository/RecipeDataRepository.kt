@@ -19,29 +19,13 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.withContext
 import java.lang.Exception
+import javax.inject.Inject
 
-class RecipeDataRepository(
+class RecipeDataRepository @Inject constructor(
     private val recipeLocalDataSource: RecipeDataSource,
     private val recipeRemoteDataSource: RecipeDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : RecipeRepository {
-
-    companion object {
-        @Volatile
-        private var INSTANCE: RecipeDataRepository? = null
-
-        fun getRepository(app: Application): RecipeDataRepository{
-            return INSTANCE ?: synchronized(this) {
-                val database = SaveTheFoodDatabase.getInstance(app)
-                return RecipeDataRepository(
-                    RecipeLocalDataSource(database.recipeDatabaseDao),
-                    RecipeRemoteDataSource(ApiClient.retrofitService)
-                ).also {
-                    INSTANCE = it
-                }
-            }
-        }
-    }
 
     @Throws(Exception::class)
     override fun getRecipes(foodFilter: String?): Flow<Result<RecipeDomain>> {

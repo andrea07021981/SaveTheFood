@@ -88,7 +88,7 @@
                     android:id="@+id/textView10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    bind:formatDate="@{foodDomain.bestBefore}"
+                    bind:formatExpireDate="@{foodDomain.bestBefore}"
                     tools:text="2 days in" />
             </LinearLayout>
 
@@ -112,6 +112,7 @@
                     android:gravity="end"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    bind:unit="@{foodDomain.quantityType}"
                     bind:formatQuantity="@{foodDomain.quantity}"
                     tools:text="300 g" />
 

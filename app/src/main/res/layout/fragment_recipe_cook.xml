@@ -8,20 +8,13 @@
             name="recipeCookViewModel"
             type="com.example.savethefood.cook.RecipeCookViewModel" />
     </data>
-    <FrameLayout
+    <ernestoyaquello.com.verticalstepperform.VerticalStepperFormView
+        android:id="@+id/stepper_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/step_recycleView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center"
-            bind:listSteps="@{recipeCookViewModel.recipeInfoDomain}"
-            tools:listitem="@layout/step_cook_item"/>
-    </FrameLayout>
+        android:layout_height="match_parent"
+        app:form_confirmation_step_title_text="ENJOY!"
+        app:form_last_button_text="Close"
+        app:form_circle_background_color="@color/colorPrimary"
+        app:form_next_button_background_color="@color/colorPrimary"
+        app:form_next_button_pressed_background_color="@color/colorPrimaryDark"/>
 </layout>

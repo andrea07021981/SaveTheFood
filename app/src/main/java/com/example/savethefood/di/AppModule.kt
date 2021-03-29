@@ -4,19 +4,20 @@ import android.content.Context
 import androidx.room.Room
 import com.example.savethefood.BuildConfig
 import com.example.savethefood.data.source.FoodDataSource
+import com.example.savethefood.data.source.RecipeDataSource
 import com.example.savethefood.data.source.UserDataSource
 import com.example.savethefood.data.source.local.dao.FoodDatabaseDao
+import com.example.savethefood.data.source.local.dao.RecipeDatabaseDao
 import com.example.savethefood.data.source.local.dao.UserDatabaseDao
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.source.local.datasource.FoodLocalDataSource
+import com.example.savethefood.data.source.local.datasource.RecipeLocalDataSource
 import com.example.savethefood.data.source.local.datasource.UserLocalDataSource
 import com.example.savethefood.data.source.remote.datasource.FoodRemoteDataSource
+import com.example.savethefood.data.source.remote.datasource.RecipeRemoteDataSource
 import com.example.savethefood.data.source.remote.datasource.UserRemoteDataSource
 import com.example.savethefood.data.source.remote.service.FoodService
-import com.example.savethefood.data.source.repository.FoodDataRepository
-import com.example.savethefood.data.source.repository.FoodRepository
-import com.example.savethefood.data.source.repository.UserDataRepository
-import com.example.savethefood.data.source.repository.UserRepository
+import com.example.savethefood.data.source.repository.*
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -102,6 +103,36 @@ object BaseModule {
 
     @Provides
     fun provideDispatcher() = Dispatchers.IO
+
+    @Provides
+    @Named("RecipeRemoteDataSource")
+    fun provideRecipeRemoteDataSource(
+        foodApi: FoodService
+    ): RecipeDataSource {
+        return RecipeRemoteDataSource(
+            foodApi
+        )
+    }
+
+    @Provides
+    @Named("RecipeLocalDataSource")
+    fun provideRecipeLocalDataSource(
+        foodDatabaseDao: RecipeDatabaseDao
+    ): RecipeDataSource {
+        return RecipeLocalDataSource(
+            foodDatabaseDao
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideRecipeDataRepository(
+        recipeLocalDataSource: RecipeLocalDataSource,
+        recipeRemoteDataSource: RecipeRemoteDataSource
+    ) : RecipeRepository {
+        return RecipeDataRepository(recipeLocalDataSource, recipeRemoteDataSource)
+    }
+
 }
 
 /**
@@ -129,6 +160,11 @@ object DatabaseModule {
     @Provides
     fun provideUserDao(database: SaveTheFoodDatabase): UserDatabaseDao {
         return database.userDatabaseDao
+    }
+
+    @Provides
+    fun provideRecipeDao(database: SaveTheFoodDatabase): RecipeDatabaseDao {
+        return database.recipeDatabaseDao
     }
 }
 

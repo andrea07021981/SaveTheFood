@@ -1,22 +1,26 @@
 package com.example.savethefood.recipe
 
 import androidx.annotation.VisibleForTesting
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
-import com.example.savethefood.constants.*
-import com.example.savethefood.constants.ApiCallStatus.*
+import com.example.savethefood.constants.ApiCallStatus
+import com.example.savethefood.constants.ApiCallStatus.Done
+import com.example.savethefood.constants.ApiCallStatus.Loading
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.RecipeRepository
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.transform
 import java.util.*
-import kotlin.Error
 
 
-class RecipeViewModel(
+class RecipeViewModel @ViewModelInject constructor(
     private val recipeRepository: RecipeRepository,
-    foodName: String?
+    @Assisted private val foodName: SavedStateHandle?
 ) : ViewModel() {
 
     // The internal MutableLiveData that stores the status of the most recent request
@@ -37,8 +41,8 @@ class RecipeViewModel(
     // TODO move all operations in repository, here only aslivedata
     // TODO move to stateflow like https://github.com/Mori-Atsushi/android-flow-mvvm-sample
     // https://github.com/Mori-Atsushi/android-flow-mvvm-sample/blob/master/app/src/main/kotlin/com/example/flow_mvvm_sample/ui/detail/DetailViewModel.kt
-    var _recipeListResult: LiveData<List<RecipeResult>?> =
-        recipeRepository.getRecipes(foodName)
+    private var _recipeListResult: LiveData<List<RecipeResult>?> =
+        recipeRepository.getRecipes(foodName?.get("foodName"))
             .onStart {
                 _status.value = Loading("Loading")
             }
@@ -86,22 +90,5 @@ class RecipeViewModel(
 
     fun reloadList() {
         // TODO Reload using a variable and _reload.switchMap {..} search online android flow reload data
-    }
-
-    class RecipeViewModelFactory(
-        private val dataRepository: RecipeRepository,
-        private val foodName: String?
-    ) : ViewModelProvider.NewInstanceFactory() {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(RecipeViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return RecipeViewModel(
-                    dataRepository,
-                    foodName
-                ) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-
     }
 }

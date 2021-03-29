@@ -48,7 +48,7 @@
     <fragment
         android:id="@+id/recipeCookFragment"
         android:name="com.example.savethefood.cook.RecipeCookFragment"
-        android:label="RecipeCookFragment"
+        android:label="Cooking steps"
         tools:layout="@layout/fragment_recipe_cook">
         <argument
             android:name="recipeInfoDomain"
