@@ -29,14 +29,29 @@
     <string name="time">Time</string>
     <string name="health">Health</string>
     <string name="price">Price</string>
-    <string name="expiring_date">
+    <string name="expiring_info">Expiring</string>
+    <string name="expired_info">Expired</string>
+
+    <string name="expiring_in_date">
         Expiring in <xliff:g id="expiring">%d</xliff:g> days!
+    </string>
+    <string name="expiring_date">
+        in <xliff:g id="expiring">%d</xliff:g> days!
     </string>
     <string name="days_in">
         <xliff:g id="days">%d</xliff:g> days in
     </string>
+
+    <string name="days">
+        <xliff:g id="days">%d</xliff:g> days
+    </string>
+
+    <string name="expired_from">
+        Expired <xliff:g id="expired_from">%d</xliff:g> days ago!
+    </string>
+
     <string name="expired">
-        Expired <xliff:g id="expired">%d</xliff:g> days ago!
+        <xliff:g id="expired">%d</xliff:g> days ago!
     </string>
 
     <plurals name="units">

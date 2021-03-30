@@ -11,7 +11,7 @@ import com.example.savethefood.data.source.local.database.StorageTypeConverter
 import com.example.savethefood.util.FoodImage
 import com.example.savethefood.constants.QuantityType
 import com.example.savethefood.constants.StorageType
-import java.sql.Date
+import java.util.*
 
 @Entity(tableName = "food_table")
 data class FoodEntity(
@@ -43,7 +43,10 @@ data class FoodEntity(
     val storageType: StorageType,
 
     @ColumnInfo(name = "best_before")
-    var foodBestBefore: Long
+    var foodBestBefore: Date,
+
+    @ColumnInfo(name = "last_update")
+    var lastUpdate: Date
 )
 
 fun FoodEntity.asDomainModel(): FoodDomain {
@@ -56,7 +59,8 @@ fun FoodEntity.asDomainModel(): FoodDomain {
         quantityType = quantityType,
         quantity = quantity,
         storageType = storageType,
-        bestBefore = Date(foodBestBefore)
+        bestBefore = foodBestBefore,
+        lastUpdate = lastUpdate
     )
 }
 
@@ -71,7 +75,8 @@ fun List<FoodEntity>.asDomainModel(): List<FoodDomain> {
             quantityType = it.quantityType,
             quantity = it.quantity,
             storageType = it.storageType,
-            bestBefore = Date(it.foodBestBefore)
+            bestBefore = it.foodBestBefore,
+            lastUpdate = it.lastUpdate
         )
     }
 

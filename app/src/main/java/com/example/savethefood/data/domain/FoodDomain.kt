@@ -20,9 +20,10 @@ data class FoodDomain(
     var quantityType: QuantityType,
     var quantity: Double?,
     var storageType: StorageType,
-    var bestBefore: Date?
+    var bestBefore: Date?,
+    var lastUpdate: Date?,
 ) : Parcelable {
-    constructor() : this("", "",0, FoodImage.EMPTY,null, QuantityType.UNIT, null, StorageType.FRIDGE, null)
+    constructor() : this("", "",0, FoodImage.EMPTY,null, QuantityType.UNIT, null, StorageType.FRIDGE, null, Date())
 }
 
 fun FoodDomain.asDatabaseModel(): FoodEntity {
@@ -34,7 +35,8 @@ fun FoodDomain.asDatabaseModel(): FoodEntity {
         quantityType = quantityType,
         quantity = quantity,
         storageType = storageType,
-        foodBestBefore = bestBefore?.time ?: Date().time
+        foodBestBefore = bestBefore ?: Date(),
+        lastUpdate = lastUpdate ?: Date()
     )
 }
 

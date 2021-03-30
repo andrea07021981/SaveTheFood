@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.widget.*
 import android.widget.AdapterView.*
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
@@ -28,9 +29,11 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
+import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.math.abs
 
 
 /**
@@ -154,6 +157,7 @@ fun RadioGroup.bindStorageType(selectedButtonId: StorageType?) {
         StorageType.FRIDGE -> check(R.id.fridge_button)
         StorageType.FREEZER -> check(R.id.freeze_button)
         StorageType.DRY -> check(R.id.dry_button)
+        else -> Unit
     }
 }
 
@@ -218,4 +222,65 @@ fun TextInputEditText.setDecimals(decimals: Int) {
         val matcher: Matcher = pattern.matcher(dest)
         if (!matcher.matches()) "" else null
     })
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@BindingAdapter("bind:formatExpiringDate")
+fun TextView.bindFormatExpiringDate(date: Date) {
+    val currentDate = LocalDate.now()
+    val oldDate = date.toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toLocalDate()
+    val diff = ChronoUnit.DAYS.between(currentDate, oldDate)
+
+    when {
+        diff in 0..3 -> {
+            text = context.getString(R.string.expiring_date, diff)
+            setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_light))
+        }
+        diff < 0 -> {
+            text = context.getString(R.string.expired, abs(diff))
+            setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
+        }
+        else -> {
+            text = context.getString(R.string.expiring_date, diff)
+            setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+        }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@BindingAdapter("bind:formatExpiringLabel")
+fun TextView.bindFormatExpiringLabel(date: Date) {
+    val currentDate = LocalDate.now()
+    val oldDate = date.toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toLocalDate()
+    val diff = ChronoUnit.DAYS.between(currentDate, oldDate)
+
+    when {
+        diff in 0..3 -> {
+            text = context.getString(R.string.expiring_info)
+            setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_light))
+        }
+        diff < 0 -> {
+            text = context.getString(R.string.expired_info)
+            setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
+        }
+        else -> {
+            text = context.getString(R.string.expiring_info)
+            setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+        }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@BindingAdapter("bind:daysIn")
+fun TextView.bindDaysIn(date: Date) {
+    val currentDate = LocalDate.now()
+    val lastUpdate = date.toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toLocalDate()
+    val diff = ChronoUnit.DAYS.between(currentDate, lastUpdate)
+    text = context.getString(R.string.days, diff)
 }

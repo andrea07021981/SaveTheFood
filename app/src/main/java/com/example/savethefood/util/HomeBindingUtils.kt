@@ -89,11 +89,11 @@ fun TextView.bindFormatDate(date: Date) {
 
     when {
         diff in 0..3 -> {
-            text = context.getString(R.string.expiring_date, diff)
+            text = context.getString(R.string.expiring_in_date, diff)
             setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_light))
         }
         diff < 0 -> {
-            text = context.getString(R.string.expired, abs(diff))
+            text = context.getString(R.string.expired_from, abs(diff))
             setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
         }
         else -> {
