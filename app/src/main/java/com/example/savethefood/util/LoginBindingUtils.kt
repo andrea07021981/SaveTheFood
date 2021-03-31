@@ -14,72 +14,80 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+object LoginBindingUtils {
 
-@BindingAdapter("bind:loadViewAnimation")
-fun View.animation(@AnimRes resource: Int) {
-    val animation = AnimationUtils.loadAnimation(context, resource)
-    startAnimation(animation)
-}
-
-@BindingAdapter("bind:hasError")
-fun TextInputLayout.hasError(error: Boolean) {
-    when (error) {
-        true -> setError("Mandatory field")
-        else -> setError(null)
+    @JvmStatic
+    @BindingAdapter("bind:loadViewAnimation")
+    fun View.animation(@AnimRes resource: Int) {
+        val animation = AnimationUtils.loadAnimation(context, resource)
+        startAnimation(animation)
     }
-}
 
-@ExperimentalCoroutinesApi
-@BindingAdapter("bind:hasLoginError")
-fun TextInputLayout.hasLoginError(error: LoginStateValue?) {
-    when (error) {
-        LoginStateValue.INVALID_FORMAT, LoginStateValue.INVALID_LENGTH -> setError(error.message)
-        else -> setError(null)
+    @JvmStatic
+    @BindingAdapter("bind:hasError")
+    fun TextInputLayout.hasError(error: Boolean) {
+        when (error) {
+            true -> setError("Mandatory field")
+            else -> setError(null)
+        }
     }
-}
 
-/**
- * This bindiadapter display the login status using [LoginAuthenticationStates]
- */
-@BindingAdapter("bind:loginStatus")
-fun bindStatus(context: View, status: LoginAuthenticationStates?) {
-    when (status) {
-        is Authenticated -> {
-            Toast.makeText(context.context, "Logged", Toast.LENGTH_SHORT).show()
+    @JvmStatic
+    @ExperimentalCoroutinesApi
+    @BindingAdapter("bind:hasLoginError")
+    fun TextInputLayout.hasLoginError(error: LoginStateValue?) {
+        when (error) {
+            LoginStateValue.INVALID_FORMAT, LoginStateValue.INVALID_LENGTH -> setError(error.message)
+            else -> setError(null)
         }
-        is Unauthenticated -> {
-            Toast.makeText(context.context, "Not logged", Toast.LENGTH_SHORT).show()
-        }
-        is InvalidAuthentication -> {
-            Toast.makeText(context.context, "Error Login", Toast.LENGTH_SHORT).show()
-        }
-        is Idle -> Toast.makeText(context.context, "Idle state", Toast.LENGTH_SHORT).show()
-        is Authenticating -> Toast.makeText(context.context, "Authenticating", Toast.LENGTH_SHORT)
-            .show()
     }
-}
 
-@BindingAdapter("bind:onFocusChange")
-fun binTextFocusChangeCheck(view: TextInputEditText, block: (String) -> Unit) {
-    view.setOnFocusChangeListener { v, hasFocus ->
-        if (!hasFocus) block((v as TextInputEditText).text.toString())
+    /**
+     * This bindiadapter display the login status using [LoginAuthenticationStates]
+     */
+    @JvmStatic
+    @BindingAdapter("bind:loginStatus")
+    fun bindStatus(context: View, status: LoginAuthenticationStates?) {
+        when (status) {
+            is Authenticated -> {
+                Toast.makeText(context.context, "Logged", Toast.LENGTH_SHORT).show()
+            }
+            is Unauthenticated -> {
+                Toast.makeText(context.context, "Not logged", Toast.LENGTH_SHORT).show()
+            }
+            is InvalidAuthentication -> {
+                Toast.makeText(context.context, "Error Login", Toast.LENGTH_SHORT).show()
+            }
+            is Idle -> Toast.makeText(context.context, "Idle state", Toast.LENGTH_SHORT).show()
+            is Authenticating -> Toast.makeText(context.context, "Authenticating", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
-}
 
-@BindingAdapter("bind:onTextChange")
-fun binTextChangeCheck(view: TextInputEditText, block: (String) -> Unit) {
-    view.addTextChangedListener(object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
+    @JvmStatic
+    @BindingAdapter("bind:onFocusChange")
+    fun binTextFocusChangeCheck(view: TextInputEditText, block: (String) -> Unit) {
+        view.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) block((v as TextInputEditText).text.toString())
         }
+    }
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            block(s.toString())
-        }
+    @JvmStatic
+    @BindingAdapter("bind:onTextChange")
+    fun binTextChangeCheck(view: TextInputEditText, block: (String) -> Unit) {
+        view.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
-        override fun afterTextChanged(s: Editable?) {
+            }
 
-        }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                block(s.toString())
+            }
 
-    })
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+    }
 }

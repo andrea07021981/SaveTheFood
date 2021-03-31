@@ -41,249 +41,270 @@ object FoodBindingUtils {
     /**
      * Needs to be used with [NumberOfSetsConverters.setArrayToString].
      */
+    @JvmStatic
     @BindingAdapter("bind:numberOfSets")
     fun setNumberOfSets(view: EditText, value: String) {
         view.setText(value)
     }
 
+    @JvmStatic
     @BindingAdapter("bind:listFoods")
     fun bindRecycleView(recyclerView: RecyclerView, data: List<ProductDomain>?) {
         val adapter = recyclerView.adapter as FoodSearchAdapter
         adapter.submitList(data)
     }
-}
-
-/**
- * Uses the Glide library to load an image by URL into an [ImageView]
- */
-@BindingAdapter("bind:imageFoodUrl")
-fun bindFoodImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl?.let {
-        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-        Glide.with(imgView.context)
-            .load(imgUri)
-            .apply(
-                RequestOptions()
-                    .placeholder(R.drawable.loading_animation)
-                    .error(R.drawable.ic_broken_image)
-            )
-            .into(imgView)
-    }
-}
-
-@BindingAdapter("bind:htmlConverter")
-fun TextView.bindFoodDescription(html: String?) {//TODO check if we can directly bind in xml with binding exp https://developer.android.com/topic/libraries/data-binding/expressions
-    html?.let { text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY); }
-}
-
-@BindingAdapter("bind:foodListData")
-fun bindFoodListData(recyclerView: RecyclerView, data: Collection<FoodItem>?) {
-    data?.let {
-        val adapter = recyclerView.adapter as FoodTypeAdapter
-        adapter.submitList(data.toList())
-    }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@BindingAdapter("bind:year", "bind:month", "bind:day", "bind:onDateChanged")
-fun bindDate(
-    view: DatePicker, year: Int, month: Int,
-    day: Int, block: (Calendar) -> Unit
-) {
-    view.init(
-        year, month, day
-    ) { _, currentYear, monthOfYear, dayOfMonth ->
-        val calendar = Calendar.getInstance().apply {
-            set(currentYear, monthOfYear, dayOfMonth)
-            time
+    
+    /**
+     * Uses the Glide library to load an image by URL into an [ImageView]
+     */
+    @JvmStatic
+    @BindingAdapter("bind:imageFoodUrl")
+    fun bindFoodImage(imgView: ImageView, imgUrl: String?) {
+        imgUrl?.let {
+            val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+            Glide.with(imgView.context)
+                .load(imgUri)
+                .apply(
+                    RequestOptions()
+                        .placeholder(R.drawable.loading_animation)
+                        .error(R.drawable.ic_broken_image)
+                )
+                .into(imgView)
         }
-        block(calendar)
     }
-}
 
-@BindingAdapter("bind:doubleToString")
-fun TextInputEditText.bindTextDouble(value: Double?) {
-    value?.let {
-        setText(it.toString())
+    @JvmStatic
+    @BindingAdapter("bind:htmlConverter")
+    fun TextView.bindFoodDescription(html: String?) {//TODO check if we can directly bind in xml with binding exp https://developer.android.com/topic/libraries/data-binding/expressions
+        html?.let { text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_LEGACY); }
     }
-}
 
-@InverseBindingAdapter(attribute = "bind:doubleToString")
-fun TextInputEditText.getDoubleFromBinding(): Double? {
-    val result=text.toString()
-    return result.toDoubleOrNull()
-}
+    @JvmStatic
+    @BindingAdapter("bind:foodListData")
+    fun bindFoodListData(recyclerView: RecyclerView, data: Collection<FoodItem>?) {
+        data?.let {
+            val adapter = recyclerView.adapter as FoodTypeAdapter
+            adapter.submitList(data.toList())
+        }
+    }
 
-@BindingAdapter(value = ["doubleToStringAttrChanged"])
-fun setListener(view: TextInputEditText, textAttrChanged: InverseBindingListener?) {
-    if (textAttrChanged != null) {
-        view.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun afterTextChanged(editable: Editable) {
-                textAttrChanged.onChange()
+    @JvmStatic
+    @RequiresApi(Build.VERSION_CODES.O)
+    @BindingAdapter("bind:year", "bind:month", "bind:day", "bind:onDateChanged")
+    fun bindDate(
+        view: DatePicker, year: Int, month: Int,
+        day: Int, block: (Calendar) -> Unit
+    ) {
+        view.init(
+            year, month, day
+        ) { _, currentYear, monthOfYear, dayOfMonth ->
+            val calendar = Calendar.getInstance().apply {
+                set(currentYear, monthOfYear, dayOfMonth)
+                time
             }
+            block(calendar)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind:doubleToString")
+    fun TextInputEditText.bindTextDouble(value: Double?) {
+        value?.let {
+            setText(it.toString())
+        }
+    }
+
+    @JvmStatic
+    @InverseBindingAdapter(attribute = "bind:doubleToString")
+    fun TextInputEditText.getDoubleFromBinding(): Double? {
+        val result=text.toString()
+        return result.toDoubleOrNull()
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["doubleToStringAttrChanged"])
+    fun setListener(view: TextInputEditText, textAttrChanged: InverseBindingListener?) {
+        if (textAttrChanged != null) {
+            view.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+                override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+                override fun afterTextChanged(editable: Editable) {
+                    textAttrChanged.onChange()
+                }
+            })
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind:quantityType")
+    fun RadioGroup.bindQuantityType(selectedButtonId: QuantityType?) {
+        when (selectedButtonId) {
+            QuantityType.WEIGHT -> check(R.id.kg_radio_button)
+            QuantityType.UNIT -> check(R.id.unit_radio_button)
+        }
+    }
+
+    @JvmStatic
+    @InverseBindingAdapter(attribute = "bind:quantityType")
+    fun RadioGroup.getQuantityType(): QuantityType {
+        return when (checkedRadioButtonId) {
+            R.id.kg_radio_button -> QuantityType.WEIGHT
+            R.id.unit_radio_button -> QuantityType.UNIT
+            else -> QuantityType.UNIT
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["quantityTypeAttrChanged"])
+    fun setListener(view: RadioGroup, typeAttrChanged: InverseBindingListener?) {
+        if (typeAttrChanged != null) {
+            view.setOnCheckedChangeListener { group, checkedId ->
+                typeAttrChanged.onChange()
+            }
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind:storageType")
+    fun RadioGroup.bindStorageType(selectedButtonId: StorageType?) {
+        when (selectedButtonId) {
+            StorageType.FRIDGE -> check(R.id.fridge_button)
+            StorageType.FREEZER -> check(R.id.freeze_button)
+            StorageType.DRY -> check(R.id.dry_button)
+            else -> Unit
+        }
+    }
+
+    @JvmStatic
+    @InverseBindingAdapter(attribute = "bind:storageType")
+    fun RadioGroup.getStorageType(): StorageType {
+        return when (checkedRadioButtonId) {
+            R.id.fridge_button -> StorageType.FRIDGE
+            R.id.freeze_button -> StorageType.FREEZER
+            R.id.dry_button -> StorageType.DRY
+            else -> throw Exception("Invalid value")
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["storageTypeAttrChanged"])
+    fun setStorageListener(view: RadioGroup, typeAttrChanged: InverseBindingListener?) {
+        if (typeAttrChanged != null) {
+            view.setOnCheckedChangeListener { _, _ ->
+                typeAttrChanged.onChange()
+            }
+        }
+    }
+
+    @JvmStatic
+    @RequiresApi(Build.VERSION_CODES.O)
+    @BindingAdapter("bind:dateToString")
+    fun TextInputEditText.bindTextDate(value: Date?) {
+        value?.let {
+            val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(value)
+            setText(formattedDate)
+        } ?: setText("")
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    @JvmStatic
+    @InverseBindingAdapter(attribute = "bind:dateToString")
+    fun TextInputEditText.getDateFromBinding(): Date? {
+        return try {
+            val result = LocalDate.parse(text, DateTimeFormatter.ISO_DATE)
+            Date.from(result.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        } catch (ex: DateTimeParseException) {
+            null
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["dateToStringAttrChanged"])
+    fun setDateListener(view: TextInputEditText, textAttrChanged: InverseBindingListener?) {
+        if (textAttrChanged != null) {
+            view.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+                override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+                override fun afterTextChanged(editable: Editable) {
+                    textAttrChanged.onChange()
+                }
+            })
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind:decimals")
+    fun TextInputEditText.setDecimals(decimals: Int) {
+        val pattern: Pattern = Pattern.compile(
+            "[0-9]{0,9}+((\\.[0-9]{0," + (decimals - 1) + "})?)||(\\.)?"
+        )
+        filters = arrayOf(InputFilter { _, _, _, dest, _, _ ->
+            val matcher: Matcher = pattern.matcher(dest)
+            if (!matcher.matches()) "" else null
         })
     }
-}
 
-@BindingAdapter("bind:quantityType")
-fun RadioGroup.bindQuantityType(selectedButtonId: QuantityType?) {
-    when (selectedButtonId) {
-        QuantityType.WEIGHT -> check(R.id.kg_radio_button)
-        QuantityType.UNIT -> check(R.id.unit_radio_button)
-    }
-}
+    @JvmStatic
+    @RequiresApi(Build.VERSION_CODES.O)
+    @BindingAdapter("bind:formatExpiringDate")
+    fun TextView.bindFormatExpiringDate(date: Date) {
+        val currentDate = LocalDate.now()
+        val oldDate = date.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+        val diff = ChronoUnit.DAYS.between(currentDate, oldDate)
 
-@InverseBindingAdapter(attribute = "bind:quantityType")
-fun RadioGroup.getQuantityType(): QuantityType {
-    return when (checkedRadioButtonId) {
-        R.id.kg_radio_button -> QuantityType.WEIGHT
-        R.id.unit_radio_button -> QuantityType.UNIT
-        else -> QuantityType.UNIT
-    }
-}
-
-@BindingAdapter(value = ["quantityTypeAttrChanged"])
-fun setListener(view: RadioGroup, typeAttrChanged: InverseBindingListener?) {
-    if (typeAttrChanged != null) {
-        view.setOnCheckedChangeListener { group, checkedId ->
-            typeAttrChanged.onChange()
-        }
-    }
-}
-
-
-@BindingAdapter("bind:storageType")
-fun RadioGroup.bindStorageType(selectedButtonId: StorageType?) {
-    when (selectedButtonId) {
-        StorageType.FRIDGE -> check(R.id.fridge_button)
-        StorageType.FREEZER -> check(R.id.freeze_button)
-        StorageType.DRY -> check(R.id.dry_button)
-        else -> Unit
-    }
-}
-
-@InverseBindingAdapter(attribute = "bind:storageType")
-fun RadioGroup.getStorageType(): StorageType {
-    return when (checkedRadioButtonId) {
-        R.id.fridge_button -> StorageType.FRIDGE
-        R.id.freeze_button -> StorageType.FREEZER
-        R.id.dry_button -> StorageType.DRY
-        else -> throw Exception("Invalid value")
-    }
-}
-
-@BindingAdapter(value = ["storageTypeAttrChanged"])
-fun setStorageListener(view: RadioGroup, typeAttrChanged: InverseBindingListener?) {
-    if (typeAttrChanged != null) {
-        view.setOnCheckedChangeListener { _, _ ->
-            typeAttrChanged.onChange()
-        }
-    }
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@BindingAdapter("bind:dateToString")
-fun TextInputEditText.bindTextDate(value: Date?) {
-    value?.let {
-        val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(value)
-        setText(formattedDate)
-    } ?: setText("")
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@InverseBindingAdapter(attribute = "bind:dateToString")
-fun TextInputEditText.getDateFromBinding(): Date? {
-    return try {
-        val result = LocalDate.parse(text, DateTimeFormatter.ISO_DATE)
-        Date.from(result.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    } catch (ex: DateTimeParseException) {
-        null
-    }
-}
-
-@BindingAdapter(value = ["dateToStringAttrChanged"])
-fun setDateListener(view: TextInputEditText, textAttrChanged: InverseBindingListener?) {
-    if (textAttrChanged != null) {
-        view.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun afterTextChanged(editable: Editable) {
-                textAttrChanged.onChange()
+        when {
+            diff in 0..3 -> {
+                text = context.getString(R.string.expiring_date, diff)
+                setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_light))
             }
-        })
-    }
-}
-
-@BindingAdapter("bind:decimals")
-fun TextInputEditText.setDecimals(decimals: Int) {
-    val pattern: Pattern = Pattern.compile(
-        "[0-9]{0,9}+((\\.[0-9]{0," + (decimals - 1) + "})?)||(\\.)?"
-    )
-    filters = arrayOf(InputFilter { _, _, _, dest, _, _ ->
-        val matcher: Matcher = pattern.matcher(dest)
-        if (!matcher.matches()) "" else null
-    })
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@BindingAdapter("bind:formatExpiringDate")
-fun TextView.bindFormatExpiringDate(date: Date) {
-    val currentDate = LocalDate.now()
-    val oldDate = date.toInstant()
-        .atZone(ZoneId.systemDefault())
-        .toLocalDate()
-    val diff = ChronoUnit.DAYS.between(currentDate, oldDate)
-
-    when {
-        diff in 0..3 -> {
-            text = context.getString(R.string.expiring_date, diff)
-            setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_light))
-        }
-        diff < 0 -> {
-            text = context.getString(R.string.expired, abs(diff))
-            setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
-        }
-        else -> {
-            text = context.getString(R.string.expiring_date, diff)
-            setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+            diff < 0 -> {
+                text = context.getString(R.string.expired, abs(diff))
+                setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
+            }
+            else -> {
+                text = context.getString(R.string.expiring_date, diff)
+                setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+            }
         }
     }
-}
 
-@RequiresApi(Build.VERSION_CODES.O)
-@BindingAdapter("bind:formatExpiringLabel")
-fun TextView.bindFormatExpiringLabel(date: Date) {
-    val currentDate = LocalDate.now()
-    val oldDate = date.toInstant()
-        .atZone(ZoneId.systemDefault())
-        .toLocalDate()
-    val diff = ChronoUnit.DAYS.between(currentDate, oldDate)
+    @JvmStatic
+    @RequiresApi(Build.VERSION_CODES.O)
+    @BindingAdapter("bind:formatExpiringLabel")
+    fun TextView.bindFormatExpiringLabel(date: Date) {
+        val currentDate = LocalDate.now()
+        val oldDate = date.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+        val diff = ChronoUnit.DAYS.between(currentDate, oldDate)
 
-    when {
-        diff in 0..3 -> {
-            text = context.getString(R.string.expiring_info)
-            setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_light))
-        }
-        diff < 0 -> {
-            text = context.getString(R.string.expired_info)
-            setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
-        }
-        else -> {
-            text = context.getString(R.string.expiring_info)
-            setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+        when {
+            diff in 0..3 -> {
+                text = context.getString(R.string.expiring_info)
+                setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_light))
+            }
+            diff < 0 -> {
+                text = context.getString(R.string.expired_info)
+                setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
+            }
+            else -> {
+                text = context.getString(R.string.expiring_info)
+                setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+            }
         }
     }
-}
 
-@RequiresApi(Build.VERSION_CODES.O)
-@BindingAdapter("bind:daysIn")
-fun TextView.bindDaysIn(date: Date) {
-    val currentDate = LocalDate.now()
-    val lastUpdate = date.toInstant()
-        .atZone(ZoneId.systemDefault())
-        .toLocalDate()
-    val diff = ChronoUnit.DAYS.between(currentDate, lastUpdate)
-    text = context.resources.getQuantityString(R.plurals.days, abs(diff).toInt(), abs(diff).toInt())
+    @JvmStatic
+    @RequiresApi(Build.VERSION_CODES.O)
+    @BindingAdapter("bind:daysIn")
+    fun TextView.bindDaysIn(date: Date) {
+        val currentDate = LocalDate.now()
+        val lastUpdate = date.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+        val diff = ChronoUnit.DAYS.between(currentDate, lastUpdate)
+        text = context.resources.getQuantityString(R.plurals.days, abs(diff).toInt(), abs(diff).toInt())
+    }
 }

@@ -24,94 +24,104 @@ import java.time.temporal.ChronoUnit
 import java.util.*
 import kotlin.math.abs
 
-/**
- * Binding adapter used to hide the spinner once data is available
- */
-@BindingAdapter("bind:goneIfNotNull")
-fun goneIfNotNull(view: View, it: Result<List<FoodDomain>>?) {
-    view.visibility = it?.let { result ->
-        if (result is Result.Loading) View.VISIBLE else View.GONE
-    } ?: View.VISIBLE
-}
+object HomeBindingUtils {
 
-/**
- * Uses the Glide library to load an image by URL into an [ImageView]
- */
-@BindingAdapter("bind:imageLocalUrl")
-fun ImageView.bindImageLocalUrl(img: FoodImage?) {
-    setImageResource(img?.let {
+    /**
+     * Binding adapter used to hide the spinner once data is available
+     */
+    @JvmStatic
+    @BindingAdapter("bind:goneIfNotNull")
+    fun goneIfNotNull(view: View, it: Result<List<FoodDomain>>?) {
+        view.visibility = it?.let { result ->
+            if (result is Result.Loading) View.VISIBLE else View.GONE
+        } ?: View.VISIBLE
+    }
+
+    /**
+     * Uses the Glide library to load an image by URL into an [ImageView]
+     */
+    @JvmStatic
+    @BindingAdapter("bind:imageLocalUrl")
+    fun ImageView.bindImageLocalUrl(img: FoodImage?) {
+        setImageResource(img?.let {
             resources.getIdentifier(img.id, "drawable", context.packageName)
-    } ?: R.drawable.ic_broken_image)
-}
-
-@BindingAdapter("bind:imageUrl")
-fun bindImage(imgView: ImageView, imgUrl: String?) {
-    imgUrl?.let {
-        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
-        Glide.with(imgView.context)
-            .load(imgUri)
-            .apply(
-                RequestOptions()
-                    .placeholder(R.drawable.loading_animation)
-                    .error(R.drawable.ic_broken_image)
-            )
-            .into(imgView)
+        } ?: R.drawable.ic_broken_image)
     }
-}
 
-@BindingAdapter("bind:listData")
-fun bindFoodRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?) {
-    val adapter = recyclerView.adapter as FoodAdapter
-    adapter.submitList(data)
-    recyclerView.scheduleLayoutAnimation();
-}
-
-@BindingAdapter(value = ["listData", "storageType"], requireAll = true)
-fun bindFoodRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?, storageType: StorageType?) {
-    val adapter = recyclerView.adapter as FoodAdapter
-    adapter.submitList(
-        if (storageType == StorageType.ALL) {
-            data
-        } else {
-            data?.filter { foodDomain -> foodDomain.storageType == storageType }
-        })
-    recyclerView.scheduleLayoutAnimation();
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@BindingAdapter("bind:formatExpireDate")
-fun TextView.bindFormatDate(date: Date) {
-    val currentDate = LocalDate.now()
-    val oldDate = date.toInstant()
-        .atZone(ZoneId.systemDefault())
-        .toLocalDate()
-    val diff = ChronoUnit.DAYS.between(currentDate, oldDate)
-
-    when {
-        diff in 0..3 -> {
-            text = context.getString(R.string.expiring_in_date, diff)
-            setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_light))
-        }
-        diff < 0 -> {
-            text = context.getString(R.string.expired_from, abs(diff))
-            setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
-        }
-        else -> {
-            text = context.getString(R.string.days_in, diff)
-            setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+    @JvmStatic
+    @BindingAdapter("bind:imageUrl")
+    fun bindImage(imgView: ImageView, imgUrl: String?) {
+        imgUrl?.let {
+            val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+            Glide.with(imgView.context)
+                .load(imgUri)
+                .apply(
+                    RequestOptions()
+                        .placeholder(R.drawable.loading_animation)
+                        .error(R.drawable.ic_broken_image)
+                )
+                .into(imgView)
         }
     }
-}
 
-@BindingAdapter(value = ["bind:unit", "bind:formatQuantity"], requireAll = true)
-fun TextView.bindFormatQuantity(unit: QuantityType, data: Double) {
-    text = if (unit == QuantityType.UNIT) {
-        context.resources.getQuantityString(R.plurals.units, data.toInt(), data.toInt())
-    } else {
-        if (data < 1) {
-            context.getString(R.string.gr, data)
+    @JvmStatic
+    @BindingAdapter("bind:listData")
+    fun bindFoodRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?) {
+        val adapter = recyclerView.adapter as FoodAdapter
+        adapter.submitList(data)
+        recyclerView.scheduleLayoutAnimation();
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["listData", "storageType"], requireAll = true)
+    fun bindFoodRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?, storageType: StorageType?) {
+        val adapter = recyclerView.adapter as FoodAdapter
+        adapter.submitList(
+            if (storageType == StorageType.ALL) {
+                data
+            } else {
+                data?.filter { foodDomain -> foodDomain.storageType == storageType }
+            })
+        recyclerView.scheduleLayoutAnimation();
+    }
+
+    @JvmStatic
+    @RequiresApi(Build.VERSION_CODES.O)
+    @BindingAdapter("bind:formatExpireDate")
+    fun TextView.bindFormatDate(date: Date) {
+        val currentDate = LocalDate.now()
+        val oldDate = date.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+        val diff = ChronoUnit.DAYS.between(currentDate, oldDate)
+
+        when {
+            diff in 0..3 -> {
+                text = context.getString(R.string.expiring_in_date, diff)
+                setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_light))
+            }
+            diff < 0 -> {
+                text = context.getString(R.string.expired_from, abs(diff))
+                setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
+            }
+            else -> {
+                text = context.getString(R.string.days_in, diff)
+                setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+            }
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter(value = ["bind:unit", "bind:formatQuantity"], requireAll = true)
+    fun TextView.bindFormatQuantity(unit: QuantityType, data: Double) {
+        text = if (unit == QuantityType.UNIT) {
+            context.resources.getQuantityString(R.plurals.units, data.toInt(), data.toInt())
         } else {
-            context.getString(R.string.kg, data)
+            if (data < 1) {
+                context.getString(R.string.gr, data)
+            } else {
+                context.getString(R.string.kg, data)
+            }
         }
     }
 }

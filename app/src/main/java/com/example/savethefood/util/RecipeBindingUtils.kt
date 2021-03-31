@@ -24,67 +24,97 @@ import com.example.savethefood.recipe.RecipeAdapter
 import com.example.savethefood.recipedetail.IngredientAdapter
 import kotlin.Error
 
-@BindingAdapter("bind:recipeApiStatus")
-fun bindStatus(statusImageView: ImageView, status: ApiCallStatus) {
-    when (status){
-        is Loading -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.loading_animation)
-        }
-        is ApiCallStatus.Error -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_broken_image)
-        }
-        is Done -> {
-            statusImageView.visibility = View.GONE
+object RecipeBindingUtils {
+
+    @JvmStatic
+    @BindingAdapter("bind:recipeApiStatus")
+    fun bindStatus(statusImageView: ImageView, status: ApiCallStatus) {
+        when (status){
+            is Loading -> {
+                statusImageView.visibility = View.VISIBLE
+                statusImageView.setImageResource(R.drawable.loading_animation)
+            }
+            is ApiCallStatus.Error -> {
+                statusImageView.visibility = View.VISIBLE
+                statusImageView.setImageResource(R.drawable.ic_broken_image)
+            }
+            is Done -> {
+                statusImageView.visibility = View.GONE
+            }
         }
     }
-}
 
-
-@BindingAdapter("bind:listdata")
-fun bindRecipeRecycleView(recyclerView: RecyclerView, data: List<RecipeResult>?) {
-    val adapter = recyclerView.adapter as RecipeAdapter
-    adapter.submitList(data)
-}
-
-@BindingAdapter("bind:listIngredientsInstruction")
-fun bindIngredientInstructionsRecycleView(recyclerView: RecyclerView, data: List<IngredientsDomain>?) {
-    if (recyclerView.adapter is IngredientInstructionAdapter) {
-        val adapter = recyclerView.adapter as IngredientInstructionAdapter
+    @JvmStatic
+    @BindingAdapter("bind:listdata")
+    fun bindRecipeRecycleView(recyclerView: RecyclerView, data: List<RecipeResult>?) {
+        val adapter = recyclerView.adapter as RecipeAdapter
         adapter.submitList(data)
     }
-}
 
-@BindingAdapter("bind:listEquipmentsInstruction")
-fun bindEquipmentInstructionsRecycleView(recyclerView: RecyclerView, data: List<EquipmentDomain>?) {
-    if (recyclerView.adapter is EquipmentInstructionAdapter) {
-        val adapter = recyclerView.adapter as EquipmentInstructionAdapter
+    @JvmStatic
+    @BindingAdapter("bind:listIngredientsInstruction")
+    fun bindIngredientInstructionsRecycleView(recyclerView: RecyclerView, data: List<IngredientsDomain>?) {
+        if (recyclerView.adapter is IngredientInstructionAdapter) {
+            val adapter = recyclerView.adapter as IngredientInstructionAdapter
+            adapter.submitList(data)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind:listEquipmentsInstruction")
+    fun bindEquipmentInstructionsRecycleView(recyclerView: RecyclerView, data: List<EquipmentDomain>?) {
+        if (recyclerView.adapter is EquipmentInstructionAdapter) {
+            val adapter = recyclerView.adapter as EquipmentInstructionAdapter
+            adapter.submitList(data)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind:listIngredients")
+    fun bindIngredientsRecycleView(recyclerView: RecyclerView, data: List<ExtendedIngredientDomain>?) {
+        val adapter = recyclerView.adapter as IngredientAdapter
         adapter.submitList(data)
     }
-}
 
-@BindingAdapter("bind:listIngredients")
-fun bindIngredientsRecycleView(recyclerView: RecyclerView, data: List<ExtendedIngredientDomain>?) {
-    val adapter = recyclerView.adapter as IngredientAdapter
-    adapter.submitList(data)
-}
+    @JvmStatic
+    @BindingAdapter("bind:listSteps")
+    fun bindStepsRecycleView(recyclerView: RecyclerView, data: RecipeInfoDomain) {
+        val adapter = recyclerView.adapter as StepCookAdapter
+        //TODO check if there's always one recipeAnalyzedInstructions
+        adapter.submitList(data.recipeAnalyzedInstructions[0].instructionSteps)
+    }
+    /**
+     * Uses the Glide library to load an image by URL into an [ImageView]
+     */
+    @JvmStatic
+    @BindingAdapter("bind:imageRecipeUrl")
+    fun bindRecipeImage(imgView: ImageView, recipeResult: RecipeResult?) {
+        recipeResult?.let {
+            val imgUri = recipeResult
+                .baseDomainUrl
+                .plus(recipeResult.image)
+                .toUri()
+                .buildUpon()
+                .scheme("https")
+                .build()
+            Glide.with(imgView.context)
+                .load(imgUri)
+                .apply(
+                    RequestOptions()
+                        .placeholder(R.drawable.loading_animation)
+                        .error(R.drawable.ic_broken_image))
+                .into(imgView)
+        }
+    }
 
-@BindingAdapter("bind:listSteps")
-fun bindStepsRecycleView(recyclerView: RecyclerView, data: RecipeInfoDomain) {
-    val adapter = recyclerView.adapter as StepCookAdapter
-    //TODO check if there's always one recipeAnalyzedInstructions
-    adapter.submitList(data.recipeAnalyzedInstructions[0].instructionSteps)
-}
-/**
- * Uses the Glide library to load an image by URL into an [ImageView]
- */
-@BindingAdapter("bind:imageRecipeUrl")
-fun bindRecipeImage(imgView: ImageView, recipeResult: RecipeResult?) {
-    recipeResult?.let {
-        val imgUri = recipeResult
-            .baseDomainUrl
-            .plus(recipeResult.image)
+    /**
+     * Uses the Glide library to load an image by URL into an [ImageView]
+     */
+    @JvmStatic
+    @BindingAdapter("bind:imageIngredientUrl")
+    fun bindIngredientImage(imgView: ImageView, imgUrl: String?) {
+        val imgUri = UrlImagesPath.INGREDIENTS
+            .plus(imgUrl)
             .toUri()
             .buildUpon()
             .scheme("https")
@@ -97,67 +127,50 @@ fun bindRecipeImage(imgView: ImageView, recipeResult: RecipeResult?) {
                     .error(R.drawable.ic_broken_image))
             .into(imgView)
     }
-}
 
-/**
- * Uses the Glide library to load an image by URL into an [ImageView]
- */
-@BindingAdapter("bind:imageIngredientUrl")
-fun bindIngredientImage(imgView: ImageView, imgUrl: String?) {
-    val imgUri = UrlImagesPath.INGREDIENTS
-        .plus(imgUrl)
-        .toUri()
-        .buildUpon()
-        .scheme("https")
-        .build()
-    Glide.with(imgView.context)
-        .load(imgUri)
-        .apply(
-            RequestOptions()
-                .placeholder(R.drawable.loading_animation)
-                .error(R.drawable.ic_broken_image))
-        .into(imgView)
-}
-
-/**
- *  set the starts 0 out of 100
- */
-@BindingAdapter("bind:starsValue")
-fun AppCompatRatingBar.starsValue(recipe: RecipeInfoDomain?) {
-    numStars = when(recipe?.recipeSpoonacularScore?.toInt()) {
-        in 0..20 -> 1
-        in 21..40 -> 2
-        in 41..60 -> 3
-        in 61..80 -> 4
-        in 81..100 ->5
-        else -> 0
+    /**
+     *  set the starts 0 out of 100
+     */
+    @JvmStatic
+    @BindingAdapter("bind:starsValue")
+    fun AppCompatRatingBar.starsValue(recipe: RecipeInfoDomain?) {
+        numStars = when(recipe?.recipeSpoonacularScore?.toInt()) {
+            in 0..20 -> 1
+            in 21..40 -> 2
+            in 41..60 -> 3
+            in 61..80 -> 4
+            in 81..100 ->5
+            else -> 0
+        }
     }
-}
 
-/**
- *  set the health 0 out of 100
- */
-@BindingAdapter("bind:healthValue")
-fun TextView.healthValue(recipe: RecipeInfoDomain?) {
-    text = when(recipe?.recipeHealthScore?.toInt()) {
-        in 0..20 -> "POOR"
-        in 21..40 -> "AVERAGE"
-        in 41..60 -> "GOOD"
-        in 61..80 -> "VERY GOOD"
-        in 81..100 -> "EXCELLENT"
-        else -> "NONE"
+    /**
+     *  set the health 0 out of 100
+     */
+    @JvmStatic
+    @BindingAdapter("bind:healthValue")
+    fun TextView.healthValue(recipe: RecipeInfoDomain?) {
+        text = when(recipe?.recipeHealthScore?.toInt()) {
+            in 0..20 -> "POOR"
+            in 21..40 -> "AVERAGE"
+            in 41..60 -> "GOOD"
+            in 61..80 -> "VERY GOOD"
+            in 81..100 -> "EXCELLENT"
+            else -> "NONE"
+        }
     }
-}
 
-/**
- *  Format the minutes
- */
-@BindingAdapter("bind:formattedText")
-fun TextView.formattedText(minutes: Int?) {
-    text = minutes?.let {
-        String.format(context.getString(
-            R.string.format__date,
-            it.div(60),
-            it.rem(60)))
-    } ?: "--"
+    /**
+     *  Format the minutes
+     */
+    @JvmStatic
+    @BindingAdapter("bind:formattedText")
+    fun TextView.formattedText(minutes: Int?) {
+        text = minutes?.let {
+            String.format(context.getString(
+                R.string.format__date,
+                it.div(60),
+                it.rem(60)))
+        } ?: "--"
+    }
 }
