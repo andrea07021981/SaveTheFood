@@ -6,6 +6,13 @@
 
     <data>
 
+        <variable
+            name="foodDomain"
+            type="com.example.savethefood.data.domain.FoodDomain" />
+
+        <variable
+            name="foodCallback"
+            type="com.example.savethefood.fooddetail.FoodPantryAdapter.OnClickListener" />
     </data>
 
         <LinearLayout
@@ -25,6 +32,7 @@
                 android:backgroundTint="@android:color/white"
                 android:elevation="12dp"
                 android:padding="8dp"
+                bind:imageLocalUrl="@{foodDomain.img}"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/ic_apple_1" />
 
@@ -34,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
+                android:text="@{foodDomain.title}"
                 tools:text="Food"/>
         </LinearLayout>
 </layout>

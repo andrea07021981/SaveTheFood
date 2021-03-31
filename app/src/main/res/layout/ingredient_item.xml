@@ -33,19 +33,21 @@
                 android:id="@+id/imageButton2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:adjustViewBounds="true"
                 android:background="@android:color/transparent"
                 android:padding="10dp"
                 android:scaleType="fitCenter"
                 android:transitionName="ingredientImage"
-                bind:imageIngredientUrl="@{ingredientItem.exIngredientImage}"
+                app:layout_constraintBottom_toTopOf="@+id/textView7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/btn_star" />
+                app:srcCompat="@android:drawable/btn_star"
+                bind:imageIngredientUrl="@{ingredientItem.exIngredientImage}" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -54,6 +56,7 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@{ingredientItem.exIngredientName}"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageButton2" />

@@ -33,6 +33,7 @@
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                bind:imageLocalUrl="@{foodDetailViewModel.food.img}"
                 app:srcCompat="@drawable/avocado" />
 
             <TextView
@@ -66,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="4 days"
+                bind:daysIn="@{foodDetailViewModel.food.lastUpdate}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -82,7 +83,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="In 2 days!"
+                bind:formatExpiringDate="@{foodDetailViewModel.food.bestBefore}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -97,7 +98,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="200gr"
+                bind:unit="@{foodDetailViewModel.food.quantityType}"
+                bind:formatQuantity="@{foodDetailViewModel.food.quantity}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -134,7 +136,7 @@
                 android:id="@+id/textView5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Expiring"
+                bind:formatExpiringLabel="@{foodDetailViewModel.food.bestBefore}"
                 android:textColor="@color/colorAccent"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:layout_constraintEnd_toStartOf="@+id/view2"
@@ -199,7 +201,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/ingredientsRecyclerView"
+                android:id="@+id/foodRecyclerView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -208,6 +210,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView13"
+                bind:listData="@{foodDetailViewModel.foodList}"
                 tools:listitem="@layout/pair_item" />
 
             <TextView
@@ -220,7 +223,7 @@
                 android:textColor="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredientsRecyclerView" />
+                app:layout_constraintTop_toBottomOf="@+id/foodRecyclerView" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="0dp"

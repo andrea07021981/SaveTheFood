@@ -1,9 +1,10 @@
 package com.example.savethefood.data.source.local.database
 
 import androidx.room.TypeConverter
-import com.example.savethefood.util.FoodImage
 import com.example.savethefood.constants.QuantityType
 import com.example.savethefood.constants.StorageType
+import com.example.savethefood.util.FoodImage
+import java.util.*
 
 // TODO add generic class and replace these
 class FoodImageConverter{
@@ -43,7 +44,19 @@ class QuantityTypeConverter{
 
     @TypeConverter
     fun toQuantityType(value: String): QuantityType = when(value){
-        "Weight" -> QuantityType.WEIGHT
+        "weight" -> QuantityType.WEIGHT
         else -> QuantityType.UNIT
+    }
+}
+
+class TimeStampConverter {
+    @TypeConverter
+    fun fromTimestamp(value: Long?): Date? {
+        return value?.let { Date(it) }
+    }
+
+    @TypeConverter
+    fun dateToTimestamp(date: Date?): Long? {
+        return date?.time
     }
 }
