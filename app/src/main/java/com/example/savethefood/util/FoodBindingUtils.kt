@@ -20,9 +20,12 @@ import com.example.savethefood.R
 import com.example.savethefood.addfood.FoodTypeAdapter
 import com.example.savethefood.constants.QuantityType
 import com.example.savethefood.constants.StorageType
+import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.data.domain.ProductDomain
 import com.example.savethefood.food.FoodSearchAdapter
+import com.example.savethefood.fooddetail.FoodPantryAdapter
+import com.example.savethefood.home.FoodAdapter
 import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -306,5 +309,14 @@ object FoodBindingUtils {
             .toLocalDate()
         val diff = ChronoUnit.DAYS.between(currentDate, lastUpdate)
         text = context.resources.getQuantityString(R.plurals.days, abs(diff).toInt(), abs(diff).toInt())
+    }
+
+    // TODO multiple binding list adapter, find a generic one with a when condition
+    @JvmStatic
+    @BindingAdapter("bind:listData")
+    fun bindFoodRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?) {
+        val adapter = recyclerView.adapter as FoodPantryAdapter
+        adapter.submitList(data)
+        recyclerView.scheduleLayoutAnimation();
     }
 }

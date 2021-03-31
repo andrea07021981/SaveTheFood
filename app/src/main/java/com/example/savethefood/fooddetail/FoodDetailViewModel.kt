@@ -8,6 +8,7 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.source.repository.FoodDataRepository
@@ -16,6 +17,7 @@ import com.example.savethefood.data.source.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 import java.lang.NullPointerException
@@ -37,6 +39,22 @@ class FoodDetailViewModel @ViewModelInject constructor(
     private val _recipeFoodEvent = MutableLiveData<Event<FoodDomain>>()
     val recipeFoodEvent: LiveData<Event<FoodDomain>>
         get() = _recipeFoodEvent
+
+    private val _errorData = MutableLiveData<Event<String>>()
+    val errorData: LiveData<Event<String>>
+        get() = _errorData
+
+    private val _foodList: LiveData<List<FoodDomain>?> = foodDataRepository.getFoods()
+        .transform { value ->
+            when (value) {
+                is Result.Success -> emit(value.data)
+                is Result.ExError -> _errorData.value = Event(value.exception.localizedMessage)
+                else -> Unit
+            }
+        }
+        .asLiveData(viewModelScope.coroutineContext)
+
+    val foodList: LiveData<List<FoodDomain>?> = _foodList
 
     init {
         _food.value = food.get<FoodDomain>("foodDomain") ?: FoodDomain()

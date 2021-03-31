@@ -201,7 +201,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/ingredientsRecyclerView"
+                android:id="@+id/foodRecyclerView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -210,6 +210,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView13"
+                bind:listData="@{foodDetailViewModel.foodList}"
                 tools:listitem="@layout/pair_item" />
 
             <TextView
@@ -222,7 +223,7 @@
                 android:textColor="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredientsRecyclerView" />
+                app:layout_constraintTop_toBottomOf="@+id/foodRecyclerView" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="0dp"
