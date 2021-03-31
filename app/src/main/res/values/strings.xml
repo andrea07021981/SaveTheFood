@@ -36,15 +36,16 @@
         Expiring in <xliff:g id="expiring">%d</xliff:g> days!
     </string>
     <string name="expiring_date">
-        in <xliff:g id="expiring">%d</xliff:g> days!
+        in <xliff:g id="expiring">%d</xliff:g> days
     </string>
     <string name="days_in">
         <xliff:g id="days">%d</xliff:g> days in
     </string>
 
-    <string name="days">
-        <xliff:g id="days">%d</xliff:g> days
-    </string>
+    <plurals name="days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
 
     <string name="expired_from">
         Expired <xliff:g id="expired_from">%d</xliff:g> days ago!

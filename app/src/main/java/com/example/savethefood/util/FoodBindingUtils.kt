@@ -36,18 +36,21 @@ import java.util.regex.Pattern
 import kotlin.math.abs
 
 
-/**
- * Needs to be used with [NumberOfSetsConverters.setArrayToString].
- */
-@BindingAdapter("bind:numberOfSets")
-fun setNumberOfSets(view: EditText, value: String) {
-    view.setText(value)
-}
+object FoodBindingUtils {
 
-@BindingAdapter("bind:listFoods")
-fun bindRecycleView(recyclerView: RecyclerView, data: List<ProductDomain>?) {
-    val adapter = recyclerView.adapter as FoodSearchAdapter
-    adapter.submitList(data)
+    /**
+     * Needs to be used with [NumberOfSetsConverters.setArrayToString].
+     */
+    @BindingAdapter("bind:numberOfSets")
+    fun setNumberOfSets(view: EditText, value: String) {
+        view.setText(value)
+    }
+
+    @BindingAdapter("bind:listFoods")
+    fun bindRecycleView(recyclerView: RecyclerView, data: List<ProductDomain>?) {
+        val adapter = recyclerView.adapter as FoodSearchAdapter
+        adapter.submitList(data)
+    }
 }
 
 /**
@@ -282,5 +285,5 @@ fun TextView.bindDaysIn(date: Date) {
         .atZone(ZoneId.systemDefault())
         .toLocalDate()
     val diff = ChronoUnit.DAYS.between(currentDate, lastUpdate)
-    text = context.getString(R.string.days, diff)
+    text = context.resources.getQuantityString(R.plurals.days, abs(diff).toInt(), abs(diff).toInt())
 }
