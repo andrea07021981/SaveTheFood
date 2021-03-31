@@ -309,16 +309,20 @@
                         bind:listIngredients="@{recipeDetailViewModel.recipeDetail.recipeExtendedIngredients}"
                         tools:listitem="@layout/ingredient_item" />
 
+                    <ImageView
+                        android:id="@+id/status_imageview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/progress_bar"
+                        android:src="@drawable/loading_animation"
+                        android:visibility="visible"
+                        bind:recipeApiStatus="@{recipeDetailViewModel.status}"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:layout_editor_absoluteY="-314dp" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
         </androidx.core.widget.NestedScrollView>
-        <ImageView
-            android:id="@+id/status_imageview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/loading_animation"
-            android:visibility="visible"
-            bind:recipeApiStatus="@{recipeDetailViewModel.status}"
-            android:contentDescription="@string/progress_bar" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
