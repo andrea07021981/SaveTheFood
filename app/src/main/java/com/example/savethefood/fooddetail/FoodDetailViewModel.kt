@@ -52,7 +52,7 @@ class FoodDetailViewModel @ViewModelInject constructor(
 
     val foodList: LiveData<List<FoodDomain>?> = _foodList
 
-    private val _recipeList: LiveData<List<RecipeResult>?> = recipeDataRepository.getRecipes("")
+    private val _recipeList: LiveData<List<RecipeResult>?> = recipeDataRepository.getRecipes()
         .transform { value ->
             if (value is Result.Success) {
                 emit(value.data.results)

@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.transform
 class FakeRecipeDataRepositoryTest(
     private val fakeRecipeLocalDataSourceTest: RecipeDataSource
 ) : RecipeRepository {
-    override fun getRecipes(foodFilter: String?): Flow<Result<RecipeDomain>> {
-        return fakeRecipeLocalDataSourceTest.getRecipes(foodFilter)
+    override fun getRecipes(vararg foodFilter: String?): Flow<Result<RecipeDomain>> {
+        return fakeRecipeLocalDataSourceTest.getRecipes(*foodFilter)
             .transform { value ->
                 if (value != null) {
                     emit(Result.Success(value))

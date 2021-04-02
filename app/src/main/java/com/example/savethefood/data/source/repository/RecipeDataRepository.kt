@@ -26,10 +26,10 @@ class RecipeDataRepository @Inject constructor(
 ) : RecipeRepository {
 
     @Throws(Exception::class)
-    override fun getRecipes(foodFilter: String?): Flow<Result<RecipeDomain>> {
+    override fun getRecipes(vararg foodFilter: String?): Flow<Result<RecipeDomain>> {
         return wrapEspressoIdlingResource {
             // TODO use CacheOnSuccess like advance coroutines with oneach and change from flow to suspend and coroutine
-            recipeRemoteDataSource.getRecipes(foodFilter)
+            recipeRemoteDataSource.getRecipes(*foodFilter)
                 .map {
                     if (it != null) {
                         Result.Success(it)

@@ -7,6 +7,7 @@ import com.example.savethefood.data.source.RecipeDataSource
 import com.example.savethefood.data.source.remote.datatransferobject.asDomainModel
 import com.example.savethefood.data.source.remote.service.ApiClient
 import com.example.savethefood.data.source.remote.service.FoodService
+import com.example.savethefood.util.isListOfNulls
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -21,10 +22,10 @@ class RecipeRemoteDataSource @Inject constructor(
 ) : RecipeDataSource{
 
     @Throws(Exception::class)
-    override  fun getRecipes(foodFilter: String?): Flow<RecipeDomain?> = flow {
+    override  fun getRecipes(vararg foodFilter: String?): Flow<RecipeDomain?> = flow {
         try {
             //NEVER USE THE WITHCONTEXT TO CHANGE THE CONTEXT, USE FLOW ON WHICH EXECUTE IN A SECOND THREAD AND CONTEXT
-            val recipes = if (foodFilter.isNullOrEmpty()) foodApi.getRecipes() else foodApi.getRecipesByIngredient(foodFilter)
+            val recipes = if (foodFilter.toList().isListOfNulls()) foodApi.getRecipes() else foodApi.getRecipesByIngredient(foodFilter.joinToString(","))
             emit(recipes.asDomainModel())
         } catch (error: Exception) {
             emit(null)
