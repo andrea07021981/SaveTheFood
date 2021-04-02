@@ -145,16 +145,9 @@ class FoodDataRepository @Inject constructor(
     // TODO remove all suspend where we use flow, no needed
     override fun getFoods(): Flow<Result<List<FoodDomain>>> {
         wrapEspressoIdlingResource {
-            //TODO DO LIKE RECIPE. Moreover add a retry in case of error, with a custom number of attempts (maybe retryWhen() or retry()?)
             return foodLocalDataSource.getFoods()
-                .onStart {
-                    Result.Loading
-                }
                 .onEach {
                     check(it != null)
-                }
-                .catch {
-                    Result.ExError(Exception(""))
                 }
                 .map {
                     if (it!!.isNotEmpty()) {

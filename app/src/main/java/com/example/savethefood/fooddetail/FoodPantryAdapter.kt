@@ -1,6 +1,7 @@
 package com.example.savethefood.fooddetail
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -65,8 +66,8 @@ class FoodPantryAdapter(
      * @param clickListener lambda that will be called with the current [Food]
      */
     class OnClickListener(
-        val clickListener: (food: FoodDomain) -> Unit
+        val clickListener: (food: FoodDomain, view: View) -> Unit
     ) {
-        fun onClick(food: FoodDomain) = clickListener(food)
+        fun onClick(food: FoodDomain, view: View) = clickListener(food, view)
     }
 }

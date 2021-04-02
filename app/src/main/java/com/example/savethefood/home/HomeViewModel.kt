@@ -1,11 +1,13 @@
 package com.example.savethefood.home
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.R
+import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.FoodOrder
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
@@ -13,6 +15,9 @@ import com.example.savethefood.data.source.repository.FoodRepository
 import com.example.savethefood.constants.StorageType
 import com.example.savethefood.util.customSortBy
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import java.util.*
@@ -43,12 +48,22 @@ class HomeViewModel @ViewModelInject constructor(
         get() = _listOrderEvent
 
     private var _foodList: LiveData<List<FoodDomain>?> = foodDataRepository.getFoods()
+        .onStart {
+            Result.Loading
+        }
+        .catch { error ->
+            emit(Result.ExError(java.lang.Exception(error.message)))
+        }
         .transform { value ->
             when (value) {
+                is Result.Loading -> Unit // TODO animate list
                 is Result.Success -> emit(value.data)
                 is Result.ExError -> _errorData.value = Event(value.exception.localizedMessage)
                 else -> Unit
             }
+        }
+        .onCompletion {
+            // Never called since the channel with room is always open to listen
         }
         .asLiveData(viewModelScope.coroutineContext)
 

@@ -1,30 +1,21 @@
 package com.example.savethefood.fooddetail
 
-import android.app.Application
-import android.text.Html
 import android.util.Log
-import androidx.core.text.HtmlCompat
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.data.Result
-import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.source.repository.FoodDataRepository
+import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.FoodRepository
-import com.example.savethefood.data.source.repository.UserRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import com.example.savethefood.data.source.repository.RecipeRepository
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
-import java.lang.NullPointerException
-import javax.inject.Inject
 
 class FoodDetailViewModel @ViewModelInject constructor(
     private val foodDataRepository: FoodRepository,
+    private val recipeDataRepository: RecipeRepository,
     @Assisted food: SavedStateHandle
 ) : ViewModel() {
 
@@ -44,10 +35,15 @@ class FoodDetailViewModel @ViewModelInject constructor(
     val errorData: LiveData<Event<String>>
         get() = _errorData
 
+    init {
+        _food.value = food.get<FoodDomain>("foodDomain") ?: FoodDomain()
+    }
+
+    // Collect the list without and filter the current food
     private val _foodList: LiveData<List<FoodDomain>?> = foodDataRepository.getFoods()
         .transform { value ->
             when (value) {
-                is Result.Success -> emit(value.data)
+                is Result.Success -> emit(value.data.filter { it.id != _food.value?.id })
                 is Result.ExError -> _errorData.value = Event(value.exception.localizedMessage)
                 else -> Unit
             }
@@ -56,9 +52,15 @@ class FoodDetailViewModel @ViewModelInject constructor(
 
     val foodList: LiveData<List<FoodDomain>?> = _foodList
 
-    init {
-        _food.value = food.get<FoodDomain>("foodDomain") ?: FoodDomain()
-    }
+    private val _recipeList: LiveData<List<RecipeResult>?> = recipeDataRepository.getRecipes("")
+        .transform { value ->
+            if (value is Result.Success) {
+                emit(value.data.results)
+            }
+        }
+        .asLiveData(viewModelScope.coroutineContext)
+
+    val recipeList: LiveData<List<RecipeResult>?> = _recipeList
 
     fun deleteFood() {
         viewModelScope.launch {

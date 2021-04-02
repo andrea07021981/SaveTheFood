@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.transform
+import java.lang.Exception
 import java.util.*
 
 
@@ -44,18 +45,27 @@ class RecipeViewModel @ViewModelInject constructor(
     private var _recipeListResult: LiveData<List<RecipeResult>?> =
         recipeRepository.getRecipes(foodName?.get("foodName"))
             .onStart {
-                _status.value = Loading("Loading")
+                emit(Result.Loading)
             }
-            .catch {
-                _status.value = ApiCallStatus.Error("Error Loading") //TODO create a class with Errors
+            .catch { error ->
+                emit(Result.ExError(Exception(error.message)))
             }
             .transform { value ->
-                if (value is Result.Success) {
-                    emit(value.data.results)
+                when (value) {
+                    is Result.Loading -> _status.value = Loading()
+                    is Result.Success -> {
+                        _status.value = Done("Done")
+                        emit(value.data.results)
+                    }
+                    is Result.ExError -> _status.value = ApiCallStatus.Error(
+                        value.exception.localizedMessage
+                    )
+                    else -> Unit
                 }
             }
             .onCompletion {
-                _status.value = Done("Done")
+                // In this case it's called because the channel is closed in datasource
+                _status.value = Done()
             }
             .asLiveData(viewModelScope.coroutineContext)
      @VisibleForTesting set // this allow us to use this set only for test
