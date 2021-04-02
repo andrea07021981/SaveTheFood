@@ -16,6 +16,7 @@ import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
 import com.example.savethefood.home.FoodAdapter
+import com.example.savethefood.recipe.RecipeAdapter
 import com.example.savethefood.recipedetail.IngredientAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.food_item.view.*
@@ -50,6 +51,7 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
             foodRecyclerView.adapter =
                 FoodPantryAdapter(
                     FoodPantryAdapter.OnClickListener { food, view ->
+                        // TODO call vm filter with food name
                         val drawable = view.food_image_view.background as GradientDrawable
                         view.tag = view.tag != true
                         drawable.setStroke(8,
@@ -59,6 +61,12 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
                                 Color.WHITE
                             });
                     })
+            recipesRecycleView.layoutManager = LinearLayoutManager(activity)
+            setHasOptionsMenu(true)
+            recipesRecycleView.adapter =
+                RecipeAdapter(RecipeAdapter.OnClickListener { recipeResult ->
+                    //TODO move to recipe details
+                })
         }
     }
 

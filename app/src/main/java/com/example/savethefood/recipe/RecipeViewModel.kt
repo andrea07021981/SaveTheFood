@@ -25,6 +25,7 @@ class RecipeViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     // The internal MutableLiveData that stores the status of the most recent request
+    // TODO REmove and use the result loading ....
     private val _status = MutableLiveData<ApiCallStatus>(Done("Done"))
 
     // The external immutable LiveData for the request status
