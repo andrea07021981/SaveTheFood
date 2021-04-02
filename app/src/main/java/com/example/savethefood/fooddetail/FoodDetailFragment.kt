@@ -1,7 +1,12 @@
 package com.example.savethefood.fooddetail
 
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.ShapeDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.fragment.navArgs
@@ -11,9 +16,12 @@ import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
 import com.example.savethefood.home.FoodAdapter
+import com.example.savethefood.recipe.RecipeAdapter
 import com.example.savethefood.recipedetail.IngredientAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.food_item.view.*
 import kotlinx.android.synthetic.main.fragment_food.*
+import kotlinx.android.synthetic.main.pair_item.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
@@ -42,9 +50,23 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
             foodRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             foodRecyclerView.adapter =
                 FoodPantryAdapter(
-                    FoodPantryAdapter.OnClickListener {
-                        // Select the single item
+                    FoodPantryAdapter.OnClickListener { food, view ->
+                        // TODO call vm filter with food name
+                        val drawable = view.food_image_view.background as GradientDrawable
+                        view.tag = view.tag != true
+                        drawable.setStroke(8,
+                            if (view.tag == true) {
+                                ContextCompat.getColor(requireContext(), R.color.customGreen)
+                            } else {
+                                Color.WHITE
+                            });
                     })
+            recipesRecycleView.layoutManager = LinearLayoutManager(activity)
+            setHasOptionsMenu(true)
+            recipesRecycleView.adapter =
+                RecipeAdapter(RecipeAdapter.OnClickListener { recipeResult ->
+                    //TODO move to recipe details
+                })
         }
     }
 

@@ -17,7 +17,7 @@ class RecipeLocalDataSource @Inject constructor(
 ) : RecipeDataSource {
 
     @Throws(Exception::class)
-    override fun getRecipes(foodFilter: String?): Flow<RecipeDomain?> {
+    override fun getRecipes(vararg foodFilter: String?): Flow<RecipeDomain?> {
         TODO("No OP")
     }
 

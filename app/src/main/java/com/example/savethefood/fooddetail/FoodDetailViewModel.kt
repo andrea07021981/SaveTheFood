@@ -1,32 +1,33 @@
 package com.example.savethefood.fooddetail
 
-import android.app.Application
-import android.text.Html
 import android.util.Log
-import androidx.core.text.HtmlCompat
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
+import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.data.Result
-import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.source.repository.FoodDataRepository
+import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.FoodRepository
-import com.example.savethefood.data.source.repository.UserRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import com.example.savethefood.data.source.repository.RecipeRepository
+import com.example.savethefood.home.HomeViewModel
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
-import java.lang.NullPointerException
-import javax.inject.Inject
+import java.lang.Exception
 
 class FoodDetailViewModel @ViewModelInject constructor(
     private val foodDataRepository: FoodRepository,
+    private val recipeDataRepository: RecipeRepository,
     @Assisted food: SavedStateHandle
 ) : ViewModel() {
+
+    private val _status = MutableLiveData<ApiCallStatus>(ApiCallStatus.Done())
+    val status: LiveData<ApiCallStatus>
+        get() = _status
 
     private val _food = MutableLiveData<FoodDomain>()
     val food: LiveData<FoodDomain>
@@ -44,10 +45,15 @@ class FoodDetailViewModel @ViewModelInject constructor(
     val errorData: LiveData<Event<String>>
         get() = _errorData
 
+    init {
+        _food.value = food.get<FoodDomain>("foodDomain") ?: FoodDomain()
+    }
+
+    // Collect the list without and filter the current food
     private val _foodList: LiveData<List<FoodDomain>?> = foodDataRepository.getFoods()
         .transform { value ->
             when (value) {
-                is Result.Success -> emit(value.data)
+                is Result.Success -> emit(value.data.filter { it.id != _food.value?.id })
                 is Result.ExError -> _errorData.value = Event(value.exception.localizedMessage)
                 else -> Unit
             }
@@ -56,9 +62,36 @@ class FoodDetailViewModel @ViewModelInject constructor(
 
     val foodList: LiveData<List<FoodDomain>?> = _foodList
 
-    init {
-        _food.value = food.get<FoodDomain>("foodDomain") ?: FoodDomain()
+    private var _foodFilter = MutableLiveData(_food.value?.title ?: "")
+    private val _recipeList: LiveData<List<RecipeResult>?> = _foodFilter.switchMap {
+        recipeDataRepository.getRecipes(it)
+            .onStart {
+                emit(Result.Loading)
+            }
+            .catch { error ->
+                emit(Result.ExError(Exception(error.message)))
+            }
+            .transform { value ->
+                when (value) {
+                    is Result.Loading -> _status.value = ApiCallStatus.Loading()
+                    is Result.Success -> {
+                        _status.value = ApiCallStatus.Done("Done")
+                        emit(value.data.results)
+                    }
+                    is Result.ExError -> _status.value = ApiCallStatus.Error(
+                        value.exception.localizedMessage
+                    )
+                    else -> Unit
+                }
+            }
+            .onCompletion {
+                // In this case it's called because the channel is closed in datasource
+                _status.value = ApiCallStatus.Done()
+            }
+            .asLiveData(viewModelScope.coroutineContext)
     }
+
+    val recipeList: LiveData<List<RecipeResult>?> = _recipeList
 
     fun deleteFood() {
         viewModelScope.launch {
@@ -74,24 +107,8 @@ class FoodDetailViewModel @ViewModelInject constructor(
     fun moveToRecipeSearch(recipe: FoodDomain) {
         _recipeFoodEvent.value = Event(recipe)
     }
-/*
-    *//**
-     * Factory for constructing DevByteViewModel with parameter
-     *//*
-    class FoodDetailViewModelFactory(
-        private val dataRepository: FoodRepository,
-        private val foodSelected: FoodDomain
-    ) : ViewModelProvider.NewInstanceFactory() {
 
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(FoodDetailViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return FoodDetailViewModel(
-                    foodDataRepository = dataRepository,
-                    food = foodSelected
-                ) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-    }*/
+    fun updateRecipeList(filter: String) {
+        // _foodFilter.value = _foodFilter.value TODO need to use array for vararg
+    }
 }

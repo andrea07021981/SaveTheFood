@@ -18,10 +18,11 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="@{(view) -> foodCallback.onClick(foodDomain, view)}">
 
             <ImageView
-                android:id="@+id/imageButton2"
+                android:id="@+id/food_image_view"
                 android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -29,7 +30,6 @@
                 android:layout_marginEnd="8dp"
                 android:adjustViewBounds="true"
                 android:background="@drawable/custom_rounded_corners"
-                android:backgroundTint="@android:color/white"
                 android:elevation="12dp"
                 android:padding="8dp"
                 bind:imageLocalUrl="@{foodDomain.img}"
@@ -37,7 +37,6 @@
                 app:srcCompat="@drawable/ic_apple_1" />
 
             <TextView
-                android:id="@+id/textView7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

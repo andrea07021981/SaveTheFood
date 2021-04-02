@@ -20,4 +20,6 @@
     <color name="customGreen">#57a701</color>
     <color name="primaryColorAlpha">#5E28354A</color>
     <color name="lightGrey">#BCBCBC</color>
+    <color name="shimmer_placeholder">#dddddd</color>
+    <color name="shimmer_placeholder_dark">#CCCACA</color>
 </resources>

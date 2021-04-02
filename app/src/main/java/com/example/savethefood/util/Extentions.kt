@@ -83,3 +83,5 @@ fun List<FoodDomain>.customSortBy(order: FoodOrder): List<FoodDomain> {
         else -> this
     }
 }
+
+fun <T> List<T>.isListOfNulls(): Boolean = this.all { it == null }
