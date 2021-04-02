@@ -318,4 +318,6 @@ dependencies {
 
     implementation 'com.ernestoyaquello.stepperform:vertical-stepper-form:2.4.1'
 
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
 }

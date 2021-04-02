@@ -1,5 +1,6 @@
 package com.example.savethefood.constants
 
+// TODO deprecate it and use result
 sealed class ApiCallStatus(
     open val message: String
 ) {

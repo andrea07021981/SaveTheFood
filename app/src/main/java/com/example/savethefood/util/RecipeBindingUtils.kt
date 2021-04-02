@@ -22,6 +22,8 @@ import com.example.savethefood.cook.StepCookAdapter
 import com.example.savethefood.data.domain.*
 import com.example.savethefood.recipe.RecipeAdapter
 import com.example.savethefood.recipedetail.IngredientAdapter
+import com.facebook.shimmer.Shimmer
+import com.facebook.shimmer.ShimmerFrameLayout
 import kotlin.Error
 
 object RecipeBindingUtils {
@@ -172,5 +174,30 @@ object RecipeBindingUtils {
                 it.div(60),
                 it.rem(60)))
         } ?: "--"
+    }
+
+    /**
+     *  Handle the Shimmer effect
+     */
+    @JvmStatic
+    @BindingAdapter("bind:shimmer")
+    fun setShimmer(view: ShimmerFrameLayout, status: ApiCallStatus?) {
+        when (status) {
+            is Loading -> view.startShimmer()
+            else -> view.stopShimmer()
+        }
+    }
+
+    /**
+     *  Handle the visibility of the recycleview
+     */
+    @JvmStatic
+    @BindingAdapter("bind:apiStatusVisibility")
+    fun RecyclerView.setApiStatusVisibility(status: ApiCallStatus?) {
+        visibility = if (status == Loading()) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
     }
 }
