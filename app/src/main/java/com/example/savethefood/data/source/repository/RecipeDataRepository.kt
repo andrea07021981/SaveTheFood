@@ -6,6 +6,7 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
+import com.example.savethefood.data.domain.RecipeIngredients
 import com.example.savethefood.data.source.RecipeDataSource
 import com.example.savethefood.data.source.local.datasource.RecipeLocalDataSource
 import com.example.savethefood.data.source.local.entity.asDomainModel
@@ -26,16 +27,42 @@ class RecipeDataRepository @Inject constructor(
 ) : RecipeRepository {
 
     @Throws(Exception::class)
-    override fun getRecipes(vararg foodFilter: String?): Flow<Result<RecipeDomain>> {
+    override fun getRecipes(): Flow<Result<RecipeDomain>> {
         return wrapEspressoIdlingResource {
             // TODO use CacheOnSuccess like advance coroutines with oneach and change from flow to suspend and coroutine
-            recipeRemoteDataSource.getRecipes(*foodFilter)
+            recipeRemoteDataSource.getRecipes()
                 .map {
                     if (it != null) {
                         Result.Success(it)
                     } else {
                         Result.Error("No data")
                     }
+                }
+                .retryWhen {cause, attempt ->
+                    if (cause is IOException && attempt < 5) {    // retry on IOException
+                        delay(1000)                     // delay for one second before retry
+                        true
+                    } else {                                      // do not retry otherwise
+                        false
+                    }
+                }
+                .flowOn(ioDispatcher)
+        }
+    }
+
+    override fun getRecipesByIngredients(vararg foodFilter: String?): Flow<Result<List<RecipeIngredients>?>> {
+        return wrapEspressoIdlingResource {
+            // TODO use CacheOnSuccess like advance coroutines with oneach and change from flow to suspend and coroutine
+            recipeRemoteDataSource.getRecipesByIngredients(*foodFilter)
+                .map { list ->
+                    list?.let {
+                        if (it.count() > 0) {
+                            Result.Success(it)
+                        } else {
+                            Result.Error("No data")
+                        }
+                    } ?: Result.ExError(Exception("Error retrieving data"))
+
                 }
                 .retryWhen {cause, attempt ->
                     if (cause is IOException && attempt < 5) {    // retry on IOException

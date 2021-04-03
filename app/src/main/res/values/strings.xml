@@ -66,6 +66,9 @@
     <string name="gr">
         <xliff:g id="gr">%.2f</xliff:g> Gr
     </string>
+
+    <string name="pantry_match">%d / %d</string>
+
     <string name="format_price"><xliff:g id="price">%.2f</xliff:g> $</string>
     <string name="about_recipe">About Recipe</string>
     <string name="cook_now">COOK NOW</string>

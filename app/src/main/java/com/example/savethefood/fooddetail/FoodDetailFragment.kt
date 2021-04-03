@@ -64,7 +64,7 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
             recipesRecycleView.layoutManager = LinearLayoutManager(activity)
             setHasOptionsMenu(true)
             recipesRecycleView.adapter =
-                RecipeAdapter(RecipeAdapter.OnClickListener { recipeResult ->
+                RecipeIngredientsAdapter(RecipeIngredientsAdapter.OnClickListener { recipeResult ->
                     //TODO move to recipe details
                 })
         }

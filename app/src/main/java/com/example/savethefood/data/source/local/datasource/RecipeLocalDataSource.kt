@@ -3,6 +3,7 @@ package com.example.savethefood.data.source.local.datasource
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
+import com.example.savethefood.data.domain.RecipeIngredients
 import com.example.savethefood.data.source.RecipeDataSource
 import com.example.savethefood.data.source.local.dao.RecipeDatabaseDao
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,8 +18,13 @@ class RecipeLocalDataSource @Inject constructor(
 ) : RecipeDataSource {
 
     @Throws(Exception::class)
-    override fun getRecipes(vararg foodFilter: String?): Flow<RecipeDomain?> {
+    override fun getRecipes(): Flow<RecipeDomain?> {
         TODO("No OP")
+    }
+
+    @Throws(Exception::class)
+    override fun getRecipesByIngredients(vararg foodFilter: String?): Flow<List<RecipeIngredients>?> {
+        TODO("Not yet implemented")
     }
 
     @Throws(Exception::class)

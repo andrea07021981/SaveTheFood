@@ -1,9 +1,6 @@
 package com.example.savethefood.data.source.remote.service
 
-import com.example.savethefood.data.source.remote.datatransferobject.NetworkFood
-import com.example.savethefood.data.source.remote.datatransferobject.NetworkFoodSearch
-import com.example.savethefood.data.source.remote.datatransferobject.NetworkRecipe
-import com.example.savethefood.data.source.remote.datatransferobject.NetworkRecipeInfo
+import com.example.savethefood.data.source.remote.datatransferobject.*
 import com.example.savethefood.data.source.remote.service.ApiEndPoint.BASE_URL
 import com.example.savethefood.data.source.remote.service.ApiKey.API_KEY
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -36,10 +33,10 @@ interface FoodService {
      * and retrofit methid deferred
      */
     @GET("recipes/search")
-    suspend fun getRecipes(@Query("apiKey") key: String = API_KEY, @Query("number") number: Int = 10): NetworkRecipe
+    suspend fun getRecipes(@Query("apiKey") key: String = API_KEY, @Query("number") number: Int = 100): NetworkRecipe
 
     @GET("recipes/findByIngredients")
-    suspend fun getRecipesByIngredient(@Query("ingredients") ingredients: String?, @Query("apiKey") key: String = API_KEY): NetworkRecipe
+    suspend fun getRecipesByIngredient(@Query("ingredients") ingredients: String?, @Query("apiKey") key: String = API_KEY): List<NetworkRecipeIngredientsItem>
 
     @GET("recipes/{id}/information")
     fun getRecipeInfo(@Path("id") id: Int, @Query("apiKey") key: String = API_KEY): Deferred<NetworkRecipeInfo>

@@ -5,7 +5,13 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="recipe"
+            type="com.example.savethefood.data.domain.RecipeIngredients" />
 
+        <variable
+            name="callback"
+            type="com.example.savethefood.fooddetail.RecipeIngredientsAdapter.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,17 +33,20 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_apple_1" />
+            app:srcCompat="@drawable/ic_apple_1"
+            bind:imageRecipeUrl="@{recipe.image}" />
 
         <TextView
             android:id="@+id/textView15"
-            android:layout_width="0dp"
+            android:layout_width="287dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:text="@{recipe.title}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/textView17"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageButton2"
             app:layout_constraintTop_toTopOf="parent"
@@ -47,8 +56,9 @@
             android:id="@+id/imageButton4"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:elevation="5dp"
             android:background="@drawable/custom_rounded_corners"
             android:backgroundTint="#5BAAAAAA"
             android:padding="32dp"
@@ -60,11 +70,11 @@
             android:id="@+id/textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/custom_oval_view"
             android:gravity="center"
             android:padding="8dp"
-            android:text="8/11"
+            android:text="@{ String.format(@string/pantry_match, recipe.usedIngredientCount, recipe.totalIngredients) }"
             android:textColor="#4B8C05"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -76,11 +86,14 @@
             android:id="@+id/textView17"
             android:layout_width="226dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="25dp"
             android:layout_marginBottom="16dp"
             android:text="Pantry match"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView16" />
+            app:layout_constraintStart_toEndOf="@+id/textView16"
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

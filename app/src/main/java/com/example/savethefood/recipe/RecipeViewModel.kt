@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.transform
 import java.lang.Exception
 import java.util.*
 
-
+// TODO use paging library, too many recipes
 class RecipeViewModel @ViewModelInject constructor(
     private val recipeRepository: RecipeRepository,
     @Assisted private val foodName: SavedStateHandle?
@@ -44,7 +44,7 @@ class RecipeViewModel @ViewModelInject constructor(
     // TODO move to stateflow like https://github.com/Mori-Atsushi/android-flow-mvvm-sample
     // https://github.com/Mori-Atsushi/android-flow-mvvm-sample/blob/master/app/src/main/kotlin/com/example/flow_mvvm_sample/ui/detail/DetailViewModel.kt
     private var _recipeListResult: LiveData<List<RecipeResult>?> =
-        recipeRepository.getRecipes(foodName?.get("foodName"))
+        recipeRepository.getRecipes()
             .onStart {
                 emit(Result.Loading)
             }
