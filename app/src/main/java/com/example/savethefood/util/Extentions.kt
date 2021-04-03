@@ -5,6 +5,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.util.Patterns
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.savethefood.constants.FoodOrder
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
+import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -85,3 +87,12 @@ fun List<FoodDomain>.customSortBy(order: FoodOrder): List<FoodDomain> {
 }
 
 fun <T> List<T>.isListOfNulls(): Boolean = this.all { it == null }
+
+// TODO hide and show the shimmer
+fun ShimmerFrameLayout.start() {
+    startShimmer()
+}
+
+fun ShimmerFrameLayout.stop() {
+    stopShimmer()
+}

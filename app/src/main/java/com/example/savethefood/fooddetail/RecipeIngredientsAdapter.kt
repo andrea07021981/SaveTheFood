@@ -1,27 +1,26 @@
 package com.example.savethefood.fooddetail
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.databinding.PairItemBinding
+import com.example.savethefood.data.domain.RecipeIngredients
+import com.example.savethefood.databinding.PairRecipeItemBinding
 
 // TODO create a generic adapter or an abstract class
-class FoodPantryAdapter(
+class RecipeIngredientsAdapter(
     private val onClickListener: OnClickListener
-) : ListAdapter<FoodDomain, FoodPantryAdapter.FoodPantryHolder>(
+) : ListAdapter<RecipeIngredients, RecipeIngredientsAdapter.RecipeIngredientsHolder>(
     DiffCallback
 ) {
-    class FoodPantryHolder private constructor(
-        val binding: PairItemBinding
+    class RecipeIngredientsHolder private constructor(
+        val binding: PairRecipeItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(clickListener: OnClickListener, item: FoodDomain) {
+        fun bind(clickListener: OnClickListener, item: RecipeIngredients) {
             with(binding) {
-                foodDomain = item
-                foodCallback = clickListener
+                recipe = item
+                callback = clickListener
                 executePendingBindings()
             }
         }
@@ -30,19 +29,19 @@ class FoodPantryAdapter(
         companion object {
             val from = {parent: ViewGroup ->
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = PairItemBinding.inflate(layoutInflater, parent, false)
-                FoodPantryHolder(binding)
+                val binding = PairRecipeItemBinding.inflate(layoutInflater, parent, false)
+                RecipeIngredientsHolder(binding)
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodPantryHolder {
-        return FoodPantryHolder.from(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeIngredientsHolder {
+        return RecipeIngredientsHolder.from(
             parent
         )
     }
 
-    override fun onBindViewHolder(holder: FoodPantryHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecipeIngredientsHolder, position: Int) {
         return holder.bind(onClickListener, getItem(position))
     }
 
@@ -50,12 +49,12 @@ class FoodPantryAdapter(
      * Allows the RecyclerView to determine which items have changed when the [List] of [Food]
      * has been updated.
      */
-    companion object DiffCallback : DiffUtil.ItemCallback<FoodDomain>() {
-        override fun areItemsTheSame(oldItem: FoodDomain, newItem: FoodDomain): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<RecipeIngredients>() {
+        override fun areItemsTheSame(oldItem: RecipeIngredients, newItem: RecipeIngredients): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: FoodDomain, newItem: FoodDomain): Boolean {
+        override fun areContentsTheSame(oldItem: RecipeIngredients, newItem: RecipeIngredients): Boolean {
             return oldItem.id == newItem.id
         }
     }
@@ -66,8 +65,8 @@ class FoodPantryAdapter(
      * @param clickListener lambda that will be called with the current [Food]
      */
     class OnClickListener(
-        val clickListener: (food: FoodDomain, view: View) -> Unit
+        val clickListener: (recipe: RecipeIngredients) -> Unit
     ) {
-        fun onClick(food: FoodDomain, view: View) = clickListener(food, view)
+        fun onClick(recipe: RecipeIngredients) = clickListener(recipe)
     }
 }

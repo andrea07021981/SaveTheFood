@@ -1,8 +1,10 @@
 package com.example.savethefood.data.source.remote.datasource
 
+import android.util.Log
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
+import com.example.savethefood.data.domain.RecipeIngredients
 import com.example.savethefood.data.source.RecipeDataSource
 import com.example.savethefood.data.source.remote.datatransferobject.asDomainModel
 import com.example.savethefood.data.source.remote.service.ApiClient
@@ -22,13 +24,29 @@ class RecipeRemoteDataSource @Inject constructor(
 ) : RecipeDataSource{
 
     @Throws(Exception::class)
-    override  fun getRecipes(vararg foodFilter: String?): Flow<RecipeDomain?> = flow {
+    override  fun getRecipes(): Flow<RecipeDomain?> = flow {
         try {
-            //NEVER USE THE WITHCONTEXT TO CHANGE THE CONTEXT, USE FLOW ON WHICH EXECUTE IN A SECOND THREAD AND CONTEXT
-            val recipes = if (foodFilter.toList().isListOfNulls()) foodApi.getRecipes() else foodApi.getRecipesByIngredient(foodFilter.joinToString(","))
+            val recipes = foodApi.getRecipes()
             emit(recipes.asDomainModel())
         } catch (error: Exception) {
-            emit(null)
+            Log.d("Error", error.localizedMessage)
+            throw error
+        }
+    }
+
+    @Throws(Exception::class)
+    override fun getRecipesByIngredients(vararg foodFilter: String?): Flow<List<RecipeIngredients>?>  = flow {
+        try {
+            //NEVER USE THE WITHCONTEXT TO CHANGE THE CONTEXT, USE FLOW ON WHICH EXECUTE IN A SECOND THREAD AND CONTEXT
+            val recipes = if (foodFilter.toList().isListOfNulls()) {
+                foodApi.getRecipesByIngredient(null)
+            } else {
+                foodApi.getRecipesByIngredient(foodFilter.joinToString(","))
+            }
+            emit(recipes.asDomainModel())
+        } catch (error: Exception) {
+            Log.d("Error", error.localizedMessage)
+            throw error
         }
     }
 

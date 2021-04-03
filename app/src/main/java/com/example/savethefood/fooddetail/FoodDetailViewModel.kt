@@ -8,6 +8,7 @@ import com.example.savethefood.Event
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.domain.RecipeIngredients
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.FoodRepository
 import com.example.savethefood.data.source.repository.RecipeRepository
@@ -45,10 +46,6 @@ class FoodDetailViewModel @ViewModelInject constructor(
     val errorData: LiveData<Event<String>>
         get() = _errorData
 
-    init {
-        _food.value = food.get<FoodDomain>("foodDomain") ?: FoodDomain()
-    }
-
     // Collect the list without and filter the current food
     private val _foodList: LiveData<List<FoodDomain>?> = foodDataRepository.getFoods()
         .transform { value ->
@@ -63,8 +60,8 @@ class FoodDetailViewModel @ViewModelInject constructor(
     val foodList: LiveData<List<FoodDomain>?> = _foodList
 
     private var _foodFilter = MutableLiveData(_food.value?.title ?: "")
-    private val _recipeList: LiveData<List<RecipeResult>?> = _foodFilter.switchMap {
-        recipeDataRepository.getRecipes(it)
+    private val _recipeList: LiveData<List<RecipeIngredients>?> = _foodFilter.switchMap {
+        recipeDataRepository.getRecipesByIngredients(it)
             .onStart {
                 emit(Result.Loading)
             }
@@ -75,8 +72,8 @@ class FoodDetailViewModel @ViewModelInject constructor(
                 when (value) {
                     is Result.Loading -> _status.value = ApiCallStatus.Loading()
                     is Result.Success -> {
-                        _status.value = ApiCallStatus.Done("Done")
-                        emit(value.data.results)
+                        _status.value = ApiCallStatus.Done()
+                        emit(value.data)
                     }
                     is Result.ExError -> _status.value = ApiCallStatus.Error(
                         value.exception.localizedMessage
@@ -91,7 +88,13 @@ class FoodDetailViewModel @ViewModelInject constructor(
             .asLiveData(viewModelScope.coroutineContext)
     }
 
-    val recipeList: LiveData<List<RecipeResult>?> = _recipeList
+    val recipeList: LiveData<List<RecipeIngredients>?> = _recipeList
+
+    init {
+        _food.value = food.get<FoodDomain>("foodDomain") ?: FoodDomain()
+        _foodFilter.value = _food.value?.title ?: ""
+    }
+
 
     fun deleteFood() {
         viewModelScope.launch {

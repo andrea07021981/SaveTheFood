@@ -20,6 +20,7 @@ import com.example.savethefood.cook.EquipmentInstructionAdapter
 import com.example.savethefood.cook.IngredientInstructionAdapter
 import com.example.savethefood.cook.StepCookAdapter
 import com.example.savethefood.data.domain.*
+import com.example.savethefood.fooddetail.RecipeIngredientsAdapter
 import com.example.savethefood.recipe.RecipeAdapter
 import com.example.savethefood.recipedetail.IngredientAdapter
 import com.facebook.shimmer.Shimmer
@@ -48,8 +49,15 @@ object RecipeBindingUtils {
 
     @JvmStatic
     @BindingAdapter("bind:listdata")
-    fun bindRecipeRecycleView(recyclerView: RecyclerView, data: List<RecipeResult>?) {
+    fun bindRecipeRecycleView(recyclerView: RecyclerView, data: List<RecipeResult>?) { //TODO clean repeted binding
         val adapter = recyclerView.adapter as RecipeAdapter
+        adapter.submitList(data)
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind:listdata")
+    fun bindRecipeIngredientsRecycleView(recyclerView: RecyclerView, data: List<RecipeIngredients>?) {
+        val adapter = recyclerView.adapter as RecipeIngredientsAdapter
         adapter.submitList(data)
     }
 
@@ -95,6 +103,28 @@ object RecipeBindingUtils {
             val imgUri = recipeResult
                 .baseDomainUrl
                 .plus(recipeResult.image)
+                .toUri()
+                .buildUpon()
+                .scheme("https")
+                .build()
+            Glide.with(imgView.context)
+                .load(imgUri)
+                .apply(
+                    RequestOptions()
+                        .placeholder(R.drawable.loading_animation)
+                        .error(R.drawable.ic_broken_image))
+                .into(imgView)
+        }
+    }
+
+    /**
+     * Uses the Glide library to load an image by URL into an [ImageView]
+     */
+    @JvmStatic
+    @BindingAdapter("bind:imageRecipeUrl")
+    fun bindRecipeIngredientsImage(imgView: ImageView, recipeImage: String?) {
+        recipeImage?.let {
+            val imgUri = it
                 .toUri()
                 .buildUpon()
                 .scheme("https")
@@ -183,8 +213,8 @@ object RecipeBindingUtils {
     @BindingAdapter("bind:shimmer")
     fun setShimmer(view: ShimmerFrameLayout, status: ApiCallStatus?) {
         when (status) {
-            is Loading -> view.startShimmer()
-            else -> view.stopShimmer()
+            is Loading -> view.start()
+            else -> view.stop()
         }
     }
 
