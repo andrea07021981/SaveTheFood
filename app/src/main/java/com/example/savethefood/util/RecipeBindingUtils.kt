@@ -213,8 +213,14 @@ object RecipeBindingUtils {
     @BindingAdapter("bind:shimmer")
     fun setShimmer(view: ShimmerFrameLayout, status: ApiCallStatus?) {
         when (status) {
-            is Loading -> view.start()
-            else -> view.stop()
+            is Loading -> {
+                view.visibility = View.VISIBLE
+                view.start()
+            }
+            else -> {
+                view.visibility = View.GONE
+                view.stop()
+            }
         }
     }
 

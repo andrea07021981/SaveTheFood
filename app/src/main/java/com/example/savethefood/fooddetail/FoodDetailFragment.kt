@@ -51,9 +51,9 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
             foodRecyclerView.adapter =
                 FoodPantryAdapter(
                     FoodPantryAdapter.OnClickListener { food, view ->
-                        // TODO call vm filter with food name
                         val drawable = view.food_image_view.background as GradientDrawable
                         view.tag = view.tag != true
+                        viewModel.updateRecipeList(food.title)
                         drawable.setStroke(8,
                             if (view.tag == true) {
                                 ContextCompat.getColor(requireContext(), R.color.customGreen)
@@ -64,9 +64,13 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
             recipesRecycleView.layoutManager = LinearLayoutManager(activity)
             setHasOptionsMenu(true)
             recipesRecycleView.adapter =
-                RecipeIngredientsAdapter(RecipeIngredientsAdapter.OnClickListener { recipeResult ->
-                    //TODO move to recipe details
-                })
+                RecipeIngredientsAdapter(RecipeIngredientsAdapter.OnClickListener(
+                    clickListener = {
+                        // TODO move to recipe cook
+                    },
+                    clickSaveListener = {
+                        viewModel.saveRecipe(it)
+                    }))
         }
     }
 
