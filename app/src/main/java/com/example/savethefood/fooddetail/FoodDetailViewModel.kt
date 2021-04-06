@@ -8,11 +8,11 @@ import com.example.savethefood.Event
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeIngredients
-import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.FoodRepository
 import com.example.savethefood.data.source.repository.RecipeRepository
-import com.example.savethefood.home.HomeViewModel
+import com.example.savethefood.util.launchDataLoad
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
@@ -25,6 +25,10 @@ class FoodDetailViewModel @ViewModelInject constructor(
     private val recipeDataRepository: RecipeRepository,
     @Assisted food: SavedStateHandle
 ) : ViewModel() {
+
+    private val _opStatus = MutableLiveData<Result<RecipeDomain>>()
+    val opStatus: LiveData<Result<RecipeDomain>>
+        get() = _opStatus
 
     private val _status = MutableLiveData<ApiCallStatus>(ApiCallStatus.Done())
     val status: LiveData<ApiCallStatus>
@@ -48,10 +52,17 @@ class FoodDetailViewModel @ViewModelInject constructor(
 
     // Collect the list without and filter the current food
     private val _foodList: LiveData<List<FoodDomain>?> = foodDataRepository.getFoods()
+        .onStart {
+            emit(Result.Loading)
+        }
+        .catch { error ->
+            emit(Result.ExError(Exception(error.message)))
+        }
         .transform { value ->
             when (value) {
                 is Result.Success -> emit(value.data.filter { it.id != _food.value?.id })
                 is Result.ExError -> _errorData.value = Event(value.exception.localizedMessage)
+                is Result.Error -> _errorData.value = Event(value.message)
                 else -> Unit
             }
         }
@@ -59,9 +70,10 @@ class FoodDetailViewModel @ViewModelInject constructor(
 
     val foodList: LiveData<List<FoodDomain>?> = _foodList
 
-    private var _foodFilter = MutableLiveData(_food.value?.title ?: "")
+    private val foodsFilterList: ArrayList<String> = arrayListOf()
+    private var _foodFilter = MutableLiveData(foodsFilterList)
     private val _recipeList: LiveData<List<RecipeIngredients>?> = _foodFilter.switchMap {
-        recipeDataRepository.getRecipesByIngredients(it)
+        recipeDataRepository.getRecipesByIngredients(*it.toTypedArray())
             .onStart {
                 emit(Result.Loading)
             }
@@ -70,14 +82,14 @@ class FoodDetailViewModel @ViewModelInject constructor(
             }
             .transform { value ->
                 when (value) {
-                    is Result.Loading -> _status.value = ApiCallStatus.Loading()
+                    is Result.Loading -> _status.postValue(ApiCallStatus.Loading())
                     is Result.Success -> {
-                        _status.value = ApiCallStatus.Done()
+                        _status.postValue(ApiCallStatus.Done())
                         emit(value.data)
                     }
-                    is Result.ExError -> _status.value = ApiCallStatus.Error(
+                    is Result.ExError -> _status.postValue(ApiCallStatus.Error(
                         value.exception.localizedMessage
-                    )
+                    ))
                     else -> Unit
                 }
             }
@@ -92,7 +104,7 @@ class FoodDetailViewModel @ViewModelInject constructor(
 
     init {
         _food.value = food.get<FoodDomain>("foodDomain") ?: FoodDomain()
-        _foodFilter.value = _food.value?.title ?: ""
+        foodsFilterList.add(_food.value?.title ?: "")
     }
 
 
@@ -112,6 +124,25 @@ class FoodDetailViewModel @ViewModelInject constructor(
     }
 
     fun updateRecipeList(filter: String) {
-        // _foodFilter.value = _foodFilter.value TODO need to use array for vararg
+
+        with(foodsFilterList) {
+            if (contains(filter)) {
+                remove(filter)
+            } else {
+                add(filter)
+            }
+        }
+        _foodFilter.value = foodsFilterList
+    }
+
+    fun saveRecipe(recipe: RecipeIngredients) {
+        /*launchDataLoad(_opStatus) {
+
+        }
+
+         */
+        // TODO check if we are are saving or deleting, WE just need ot check if we have a record
+        // if exist, delete otherwise :
+        // TODO Retrieve the network recipe by id and save locally
     }
 }

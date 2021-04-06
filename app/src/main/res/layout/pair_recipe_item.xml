@@ -27,21 +27,21 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:adjustViewBounds="true"
-            android:elevation="12dp"
-            android:padding="8dp"
-            android:scaleType="centerInside"
+            android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/ic_apple_1"
             bind:imageRecipeUrl="@{recipe.image}" />
 
         <TextView
             android:id="@+id/textView15"
-            android:layout_width="287dp"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:text="@{recipe.title}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"
@@ -56,14 +56,12 @@
             android:id="@+id/imageButton4"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:elevation="5dp"
             android:background="@drawable/custom_rounded_corners"
-            android:backgroundTint="#5BAAAAAA"
+            android:backgroundTint="#A9716F6F"
+            android:elevation="20dp"
             android:padding="32dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imageButton2"
+            app:layout_constraintTop_toTopOf="@+id/imageButton2"
             app:srcCompat="@drawable/ic_hearth" />
 
         <TextView
@@ -78,22 +76,18 @@
             android:textColor="#4B8C05"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/textView17"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageButton2" />
+            app:layout_constraintStart_toStartOf="@+id/textView15" />
 
         <TextView
             android:id="@+id/textView17"
-            android:layout_width="226dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="24dp"
             android:text="Pantry match"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/textView16"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textView16"
-            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+            app:layout_constraintTop_toTopOf="@+id/textView16" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

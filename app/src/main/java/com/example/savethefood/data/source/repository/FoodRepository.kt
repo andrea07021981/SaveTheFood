@@ -1,10 +1,9 @@
 package com.example.savethefood.data.source.repository
 
-import androidx.lifecycle.LiveData
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
-import kotlinx.coroutines.coroutineScope
+import com.example.savethefood.data.domain.RecipeIngredients
 import kotlinx.coroutines.flow.Flow
 
 interface FoodRepository {

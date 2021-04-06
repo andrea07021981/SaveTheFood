@@ -24,7 +24,7 @@ class RecipeRemoteDataSource @Inject constructor(
 ) : RecipeDataSource{
 
     @Throws(Exception::class)
-    override  fun getRecipes(): Flow<RecipeDomain?> = flow {
+    override fun getRecipes(): Flow<RecipeDomain?> = flow {
         try {
             val recipes = foodApi.getRecipes()
             emit(recipes.asDomainModel())

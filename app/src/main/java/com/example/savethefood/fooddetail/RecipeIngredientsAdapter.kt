@@ -10,7 +10,7 @@ import com.example.savethefood.databinding.PairRecipeItemBinding
 
 // TODO create a generic adapter or an abstract class
 class RecipeIngredientsAdapter(
-    private val onClickListener: OnClickListener
+    private val onClickListener: OnClickListener,
 ) : ListAdapter<RecipeIngredients, RecipeIngredientsAdapter.RecipeIngredientsHolder>(
     DiffCallback
 ) {
@@ -65,8 +65,11 @@ class RecipeIngredientsAdapter(
      * @param clickListener lambda that will be called with the current [Food]
      */
     class OnClickListener(
-        val clickListener: (recipe: RecipeIngredients) -> Unit
+        val clickListener: (recipe: RecipeIngredients) -> Unit,
+        val clickSaveListener: (recipe: RecipeIngredients) -> Unit
     ) {
         fun onClick(recipe: RecipeIngredients) = clickListener(recipe)
+
+        fun onSaveRecipe(recipe: RecipeIngredients) = clickSaveListener(recipe)
     }
 }

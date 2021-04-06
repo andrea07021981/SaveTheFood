@@ -26,7 +26,7 @@ data class NetworkRecipeIngredientsItem(
 
 @JsonClass(generateAdapter = true)
 data class UnusedIngredient(
-    val aisle: String,
+    val aisle: String?,
     val amount: Double,
     val id: Int,
     val image: String,
@@ -43,7 +43,7 @@ data class UnusedIngredient(
 
 @JsonClass(generateAdapter = true)
 data class UsedIngredient(
-    val aisle: String,
+    val aisle: String?,
     val amount: Double,
     val extendedName: String?,
     val id: Int,

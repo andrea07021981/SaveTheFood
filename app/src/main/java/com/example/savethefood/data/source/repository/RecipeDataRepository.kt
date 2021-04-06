@@ -85,6 +85,11 @@ class RecipeDataRepository @Inject constructor(
 
     override suspend fun saveRecipe(recipe: RecipeInfoDomain) = withContext(ioDispatcher){
         wrapEspressoIdlingResource {
+            // TODO check if we are are saving or deleting, WE just need ot check if we have a record
+            // if exist, delete otherwise :
+            // TODO Retrieve the network recipe by id and save locally
+
+            // RecipeDomain OR recipeinfodomain??
             recipeLocalDataSource.saveRecipe(recipe)
         }
     }

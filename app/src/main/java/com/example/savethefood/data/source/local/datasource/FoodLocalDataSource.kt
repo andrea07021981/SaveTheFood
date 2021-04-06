@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 import javax.inject.Inject
 import kotlin.jvm.Throws
 
@@ -54,6 +55,7 @@ class FoodLocalDataSource  @Inject constructor(
         foodDatabaseDao.updateAll(food.asDatabaseModel())
     }
 
+    @Throws(Exception::class)
     override fun getFoods(): Flow<List<FoodEntity>?> {
         return foodDatabaseDao.observeFoods()
     }
