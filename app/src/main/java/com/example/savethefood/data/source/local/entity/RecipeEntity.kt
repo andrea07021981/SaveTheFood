@@ -1,35 +1,27 @@
 package com.example.savethefood.data.source.local.entity
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.savethefood.data.domain.RecipeIngredients
 
-@Entity(tableName = "recipe_table")
+// TODO create the complex ER relations, the entity must be like NetworkRecipeInfo
+@Entity(tableName = "Recipe")
 data class RecipeEntity(
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
-
-    @ColumnInfo(name = "baseUri")
-    val baseUri: String,
-
-    @ColumnInfo(name = "expires")
-    val expires: Long,
-
-    @ColumnInfo(name = "isState")
-    val isStale: Boolean,
-
-    @ColumnInfo(name = "number")
-    val number: Int,
-
-    @ColumnInfo(name = "offset")
-    val offset: Int,
-
-    @ColumnInfo(name = "processingTimeMs")
-    val processingTimeMs: Int,
-
-    @ColumnInfo(name = "resultsList")
-    val resultsList: String,
-
-    @ColumnInfo(name = "totalResults")
-    val totalResults: Int
+    val id: Int,
+    val title: String,
+    val image: String
 )
+
+fun RecipeEntity.asDomainModel(): RecipeIngredients {
+    return RecipeIngredients(
+        id = id,
+        title = title,
+        image = image,
+        imageType =  "",
+        likes = 0,
+        missedIngredientCount = 0,
+        usedIngredientCount = 0,
+        unUsedIngredientCount = 0
+    )
+}

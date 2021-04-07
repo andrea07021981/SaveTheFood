@@ -72,7 +72,7 @@ class RecipeDetailViewModel @ViewModelInject constructor(
     fun saveRecipe(recipe: RecipeInfoDomain) {
         //TODO SAVE IN LOCAL THE RECIPE, ADD A LIVE DATA AND DATABINDIG FOR HEART ICON
         viewModelScope.launch {
-            recipeRepository.saveRecipe(recipe)
+            //recipeRepository.saveRecipe(recipe)
         }
     }
 }

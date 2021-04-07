@@ -77,6 +77,10 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
     override fun activateObservers() {
         viewModel.food.observe(viewLifecycleOwner, {
         })
+
+        viewModel.opStatus.observe(viewLifecycleOwner) {
+            Log.d(classTag, it.toString())
+        }
     }
 
     override fun onDestroy() {

@@ -10,6 +10,7 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeIngredients
+import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.FoodRepository
 import com.example.savethefood.data.source.repository.RecipeRepository
 import com.example.savethefood.util.launchDataLoad
@@ -26,8 +27,8 @@ class FoodDetailViewModel @ViewModelInject constructor(
     @Assisted food: SavedStateHandle
 ) : ViewModel() {
 
-    private val _opStatus = MutableLiveData<Result<RecipeDomain>>()
-    val opStatus: LiveData<Result<RecipeDomain>>
+    private val _opStatus = MutableLiveData<Result<RecipeIngredients>>()
+    val opStatus: LiveData<Result<RecipeIngredients>>
         get() = _opStatus
 
     private val _status = MutableLiveData<ApiCallStatus>(ApiCallStatus.Done())
@@ -136,13 +137,8 @@ class FoodDetailViewModel @ViewModelInject constructor(
     }
 
     fun saveRecipe(recipe: RecipeIngredients) {
-        /*launchDataLoad(_opStatus) {
-
+        launchDataLoad(_opStatus) {
+            recipeDataRepository.saveRecipe(recipe)
         }
-
-         */
-        // TODO check if we are are saving or deleting, WE just need ot check if we have a record
-        // if exist, delete otherwise :
-        // TODO Retrieve the network recipe by id and save locally
     }
 }

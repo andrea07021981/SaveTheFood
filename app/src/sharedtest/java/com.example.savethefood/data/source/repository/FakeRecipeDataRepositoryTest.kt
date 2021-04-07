@@ -4,11 +4,10 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.domain.RecipeIngredients
+import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.RecipeDataSource
-import com.example.savethefood.data.source.local.datasource.FakeRecipeDataSourceTest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.transform
 
@@ -35,7 +34,7 @@ class FakeRecipeDataRepositoryTest(
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveRecipe(recipe: RecipeInfoDomain) {
+    override suspend fun saveRecipe(recipe: RecipeResult) {
         TODO("Not yet implemented")
     }
 

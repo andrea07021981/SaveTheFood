@@ -1,9 +1,7 @@
 package com.example.savethefood.data.source.local.datasource
 
 import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.RecipeDomain
-import com.example.savethefood.data.domain.RecipeInfoDomain
-import com.example.savethefood.data.domain.RecipeIngredients
+import com.example.savethefood.data.domain.*
 import com.example.savethefood.data.source.RecipeDataSource
 import com.example.savethefood.data.source.local.dao.RecipeDatabaseDao
 import kotlinx.coroutines.CoroutineDispatcher
@@ -32,7 +30,9 @@ class RecipeLocalDataSource @Inject constructor(
         TODO("No OP")
     }
 
-    override suspend fun saveRecipe(recipe: RecipeInfoDomain) {
-        //TODO SAVE LOCAL RECIPE
+    override suspend fun saveRecipe(recipe: RecipeIngredients): RecipeIngredients? {
+        val newRowId = recipeDatabaseDao.insertRecipe(recipe.asDatabaseModel())
+        if (newRowId > 0) return recipe
+        return null
     }
 }

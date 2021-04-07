@@ -20,6 +20,8 @@ class RefreshDataWorker @Inject constructor(
     companion object {
         const val WORK_NAME = "RefreshDataWorker"
     }
+
+    // TODO add refreshj local recipes
     override suspend fun doWork(): Result {
         return try {
             foodDataRepository.refreshData()
