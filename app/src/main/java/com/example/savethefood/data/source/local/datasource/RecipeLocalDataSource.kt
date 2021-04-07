@@ -4,6 +4,7 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.*
 import com.example.savethefood.data.source.RecipeDataSource
 import com.example.savethefood.data.source.local.dao.RecipeDatabaseDao
+import com.example.savethefood.data.source.local.entity.asDomainModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -34,5 +35,13 @@ class RecipeLocalDataSource @Inject constructor(
         val newRowId = recipeDatabaseDao.insertRecipe(recipe.asDatabaseModel())
         if (newRowId > 0) return recipe
         return null
+    }
+
+    override suspend fun getRecipe(recipeId: Int): RecipeIngredients? {
+        return recipeDatabaseDao.getRecipe(recipeId).asDomainModel()
+    }
+
+    override suspend fun deleteRecipe(recipeId: RecipeIngredients): Int? {
+        return recipeDatabaseDao.deleteRecipe(recipeId.asDatabaseModel())
     }
 }

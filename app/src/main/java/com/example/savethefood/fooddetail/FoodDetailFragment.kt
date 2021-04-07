@@ -79,7 +79,7 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
         })
 
         viewModel.opStatus.observe(viewLifecycleOwner) {
-            Log.d(classTag, it.toString())
+            // TODO 
         }
     }
 

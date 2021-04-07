@@ -29,19 +29,19 @@ interface UserDatabaseDao {
      *
      * This does not delete the table, only its contents.
      */
-    @Query("DELETE FROM user_table")
+    @Query("DELETE FROM User")
     suspend fun clear()
 
     /**
      * Selects and returns the user with given userId.
      */
-    @Query("SELECT * from user_table WHERE userId = :key")
+    @Query("SELECT * from User WHERE userId = :key")
     suspend fun getUserWithId(key: Long): UserEntity?
 
     /**
      * Selects and returns the user with given email and pass.(IMP: MUST BE SUSPENDED IN ORDER TO WORK WITH COROUTINES AND FLOW)
      */
-    @Query("SELECT * from user_table WHERE email = :userEmail AND password = :userPassword")
+    @Query("SELECT * from User WHERE email = :userEmail AND password = :userPassword")
     suspend fun getUser(userEmail: String, userPassword: String): UserEntity?
 }
 

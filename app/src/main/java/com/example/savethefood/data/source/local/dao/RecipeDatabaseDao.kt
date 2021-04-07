@@ -1,6 +1,7 @@
 package com.example.savethefood.data.source.local.dao
 
 import androidx.room.*
+import com.example.savethefood.data.source.local.entity.FoodEntity
 import com.example.savethefood.data.source.local.entity.RecipeEntity
 
 
@@ -16,4 +17,7 @@ interface RecipeDatabaseDao {
     @Transaction
     @Query("SELECT * FROM Recipe WHERE id = :id")
     fun getRecipe(id: Int): RecipeEntity
+
+    @Delete
+    fun deleteRecipe(food: RecipeEntity): Int
 }

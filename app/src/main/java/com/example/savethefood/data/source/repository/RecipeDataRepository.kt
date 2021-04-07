@@ -82,6 +82,8 @@ class RecipeDataRepository @Inject constructor(
             // if exist, delete otherwise :
             // TODO Retrieve the network recipe by id and save locally
 
+            val dbRecipe = recipeLocalDataSource.getRecipe(recipe.id)
+            // If present, remove from favourites and return
             val newRecipe = recipeLocalDataSource.saveRecipe(recipe)
             return@withContext newRecipe?.let {
                 Result.Success(it)

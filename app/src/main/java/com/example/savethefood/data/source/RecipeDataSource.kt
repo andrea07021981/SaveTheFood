@@ -18,4 +18,8 @@ interface RecipeDataSource {
     suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain>
 
     suspend fun saveRecipe(recipe: RecipeIngredients): RecipeIngredients?
+
+    suspend fun getRecipe(recipeId: Int): RecipeIngredients?
+
+    suspend fun deleteRecipe(recipeId: RecipeIngredients): Int?
 }

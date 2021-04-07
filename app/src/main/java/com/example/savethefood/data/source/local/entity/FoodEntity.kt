@@ -13,7 +13,7 @@ import com.example.savethefood.constants.QuantityType
 import com.example.savethefood.constants.StorageType
 import java.util.*
 
-@Entity(tableName = "food_table")
+@Entity(tableName = "Food")
 data class FoodEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,

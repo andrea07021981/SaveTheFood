@@ -64,4 +64,12 @@ class RecipeRemoteDataSource @Inject constructor(
     override suspend fun saveRecipe(recipe: RecipeIngredients): RecipeIngredients? {
         return null
     }
+
+    override suspend fun getRecipe(recipeId: Int): RecipeIngredients? {
+        return null
+    }
+
+    override suspend fun deleteRecipe(recipeId: RecipeIngredients): Int? {
+        return null
+    }
 }
