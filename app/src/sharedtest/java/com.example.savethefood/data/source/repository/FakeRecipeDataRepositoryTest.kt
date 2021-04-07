@@ -34,7 +34,7 @@ class FakeRecipeDataRepositoryTest(
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveRecipe(recipe: RecipeResult) {
+    override suspend fun saveRecipe(recipe: RecipeIngredients): Result<RecipeIngredients> {
         TODO("Not yet implemented")
     }
 
