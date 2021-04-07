@@ -8,7 +8,6 @@ import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.RecipeDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.util.*
 
 class FakeRecipeDataSourceTest(
     private val recipeResult: List<RecipeResult>
@@ -25,7 +24,7 @@ class FakeRecipeDataSourceTest(
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveRecipe(recipe: RecipeInfoDomain) {
+    override suspend fun saveRecipe(recipe: RecipeIngredients) {
         TODO("Not yet implemented")
     }
 }

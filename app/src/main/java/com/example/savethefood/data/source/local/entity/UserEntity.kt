@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.savethefood.data.domain.UserDomain
 
-@Entity(tableName = "user_table")
+@Entity(tableName = "User")
 data class UserEntity(
     @PrimaryKey(autoGenerate = true)
     var userId: Long = 0L,

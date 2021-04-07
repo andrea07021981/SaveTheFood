@@ -11,10 +11,7 @@ import com.example.savethefood.data.source.local.dao.FoodDatabaseDao
 import com.example.savethefood.data.source.local.dao.RecipeDatabaseDao
 import com.example.savethefood.data.source.local.dao.RecipeInfoDatabaseDao
 import com.example.savethefood.data.source.local.dao.UserDatabaseDao
-import com.example.savethefood.data.source.local.entity.FoodEntity
-import com.example.savethefood.data.source.local.entity.RecipeEntity
-import com.example.savethefood.data.source.local.entity.RecipeInfoEntity
-import com.example.savethefood.data.source.local.entity.UserEntity
+import com.example.savethefood.data.source.local.entity.*
 
 
 /**

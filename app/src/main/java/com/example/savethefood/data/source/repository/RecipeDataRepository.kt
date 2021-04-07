@@ -1,18 +1,11 @@
 package com.example.savethefood.data.source.repository
 
-import android.app.Application
-import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.data.Result
-import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.domain.RecipeIngredients
+import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.RecipeDataSource
-import com.example.savethefood.data.source.local.datasource.RecipeLocalDataSource
-import com.example.savethefood.data.source.local.entity.asDomainModel
-import com.example.savethefood.data.source.remote.datasource.RecipeRemoteDataSource
-import com.example.savethefood.data.source.remote.datatransferobject.asDomainModel
-import com.example.savethefood.data.source.remote.service.ApiClient
 import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -83,14 +76,18 @@ class RecipeDataRepository @Inject constructor(
         }
     }
 
-    override suspend fun saveRecipe(recipe: RecipeInfoDomain) = withContext(ioDispatcher){
+    override suspend fun saveRecipe(recipe: RecipeIngredients) = withContext(ioDispatcher){
         wrapEspressoIdlingResource {
             // TODO check if we are are saving or deleting, WE just need ot check if we have a record
             // if exist, delete otherwise :
             // TODO Retrieve the network recipe by id and save locally
 
-            // RecipeDomain OR recipeinfodomain??
-            recipeLocalDataSource.saveRecipe(recipe)
+            val dbRecipe = recipeLocalDataSource.getRecipe(recipe.id)
+            // If present, remove from favourites and return
+            val newRecipe = recipeLocalDataSource.saveRecipe(recipe)
+            return@withContext newRecipe?.let {
+                Result.Success(it)
+            } ?: Result.Error("No inserted")
         }
     }
 }

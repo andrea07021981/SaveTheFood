@@ -27,12 +27,12 @@ interface RecipeInfoDatabaseDao {
      *
      * This does not delete the table, only its contents.
      */
-    @Query("DELETE FROM recipe_info_table")
+    @Query("DELETE FROM RecipeInfo")
     fun clear()
 
     /**
      * Selects and returns the user with given recipe id.
      */
-    @Query("SELECT * from recipe_info_table WHERE id = :key")
+    @Query("SELECT * from RecipeInfo WHERE id = :key")
     fun getRecipeWithId(key: Long): LiveData<RecipeInfoEntity>
 }

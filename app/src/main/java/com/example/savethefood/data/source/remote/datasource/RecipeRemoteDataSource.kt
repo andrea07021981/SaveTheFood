@@ -5,9 +5,9 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.domain.RecipeIngredients
+import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.RecipeDataSource
 import com.example.savethefood.data.source.remote.datatransferobject.asDomainModel
-import com.example.savethefood.data.source.remote.service.ApiClient
 import com.example.savethefood.data.source.remote.service.FoodService
 import com.example.savethefood.util.isListOfNulls
 import kotlinx.coroutines.CoroutineDispatcher
@@ -61,7 +61,15 @@ class RecipeRemoteDataSource @Inject constructor(
         }
     }
 
-    override suspend fun saveRecipe(recipe: RecipeInfoDomain) {
-        //TODO SAVE LOCAL RECIPE
+    override suspend fun saveRecipe(recipe: RecipeIngredients): RecipeIngredients? {
+        return null
+    }
+
+    override suspend fun getRecipe(recipeId: Int): RecipeIngredients? {
+        return null
+    }
+
+    override suspend fun deleteRecipe(recipeId: RecipeIngredients): Int? {
+        return null
     }
 }

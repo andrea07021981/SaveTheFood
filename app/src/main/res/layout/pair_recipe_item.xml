@@ -60,6 +60,7 @@
             android:backgroundTint="#A9716F6F"
             android:elevation="20dp"
             android:padding="32dp"
+            android:onClick="@{() -> callback.onSaveRecipe(recipe)}"
             app:layout_constraintStart_toStartOf="@+id/imageButton2"
             app:layout_constraintTop_toTopOf="@+id/imageButton2"
             app:srcCompat="@drawable/ic_hearth" />
