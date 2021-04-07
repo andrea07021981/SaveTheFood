@@ -8,9 +8,7 @@ import com.example.savethefood.Event
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeIngredients
-import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.FoodRepository
 import com.example.savethefood.data.source.repository.RecipeRepository
 import com.example.savethefood.util.launchDataLoad
@@ -27,9 +25,9 @@ class FoodDetailViewModel @ViewModelInject constructor(
     @Assisted food: SavedStateHandle
 ) : ViewModel() {
 
-    private val _opStatus = MutableLiveData<Result<RecipeIngredients>>()
-    val opStatus: LiveData<Result<RecipeIngredients>>
-        get() = _opStatus
+    private val _recipeAdded = MutableLiveData<Result<RecipeIngredients?>>()
+    val recipeAdded: LiveData<Result<RecipeIngredients?>>
+        get() = _recipeAdded
 
     private val _status = MutableLiveData<ApiCallStatus>(ApiCallStatus.Done())
     val status: LiveData<ApiCallStatus>
@@ -137,7 +135,7 @@ class FoodDetailViewModel @ViewModelInject constructor(
     }
 
     fun saveRecipe(recipe: RecipeIngredients) {
-        launchDataLoad(_opStatus) {
+        launchDataLoad(_recipeAdded) {
             recipeDataRepository.saveRecipe(recipe)
         }
     }

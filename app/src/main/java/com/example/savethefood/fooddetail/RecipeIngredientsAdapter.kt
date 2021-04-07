@@ -1,6 +1,7 @@
 package com.example.savethefood.fooddetail
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -66,10 +67,10 @@ class RecipeIngredientsAdapter(
      */
     class OnClickListener(
         val clickListener: (recipe: RecipeIngredients) -> Unit,
-        val clickSaveListener: (recipe: RecipeIngredients) -> Unit
+        val clickSaveListener: (recipe: RecipeIngredients, view: View) -> Unit
     ) {
         fun onClick(recipe: RecipeIngredients) = clickListener(recipe)
 
-        fun onSaveRecipe(recipe: RecipeIngredients) = clickSaveListener(recipe)
+        fun onSaveRecipe(recipe: RecipeIngredients, view: View) = clickSaveListener(recipe, view)
     }
 }

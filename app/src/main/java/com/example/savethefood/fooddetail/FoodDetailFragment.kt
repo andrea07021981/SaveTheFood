@@ -2,10 +2,7 @@ package com.example.savethefood.fooddetail
 
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
@@ -15,12 +12,7 @@ import androidx.transition.TransitionInflater
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
-import com.example.savethefood.home.FoodAdapter
-import com.example.savethefood.recipe.RecipeAdapter
-import com.example.savethefood.recipedetail.IngredientAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.food_item.view.*
-import kotlinx.android.synthetic.main.fragment_food.*
 import kotlinx.android.synthetic.main.pair_item.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -68,8 +60,8 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
                     clickListener = {
                         // TODO move to recipe cook
                     },
-                    clickSaveListener = {
-                        viewModel.saveRecipe(it)
+                    clickSaveListener = { recipe, item ->
+                        viewModel.saveRecipe(recipe)
                     }))
         }
     }
@@ -78,7 +70,7 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
         viewModel.food.observe(viewLifecycleOwner, {
         })
 
-        viewModel.opStatus.observe(viewLifecycleOwner) {
+        viewModel.recipeAdded.observe(viewLifecycleOwner) {
             // TODO 
         }
     }

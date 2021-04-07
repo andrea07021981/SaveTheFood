@@ -4,7 +4,6 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.domain.RecipeIngredients
-import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.RecipeDataSource
 import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.*
@@ -46,6 +45,7 @@ class RecipeDataRepository @Inject constructor(
     override fun getRecipesByIngredients(vararg foodFilter: String?): Flow<Result<List<RecipeIngredients>?>> {
         return wrapEspressoIdlingResource {
             // TODO use CacheOnSuccess like advance coroutines with oneach and change from flow to suspend and coroutine
+            // TODO add a custom property and search in db for save recipes, we need them for the heart icon
             recipeRemoteDataSource.getRecipesByIngredients(*foodFilter)
                 .map { list ->
                     list?.let {
@@ -84,10 +84,15 @@ class RecipeDataRepository @Inject constructor(
 
             val dbRecipe = recipeLocalDataSource.getRecipe(recipe.id)
             // If present, remove from favourites and return
-            val newRecipe = recipeLocalDataSource.saveRecipe(recipe)
-            return@withContext newRecipe?.let {
-                Result.Success(it)
-            } ?: Result.Error("No inserted")
+            return@withContext dbRecipe?.run {
+                recipeLocalDataSource.deleteRecipe(recipe)
+                Result.Success(null)
+            } ?: kotlin.run {
+                val newRecipe = recipeLocalDataSource.saveRecipe(recipe)
+                newRecipe?.let {
+                    Result.Success(it)
+                } ?: Result.Error("No inserted")
+            }
         }
     }
 }
