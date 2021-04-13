@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.pair_item.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-
+// TODO add cale dar with weekly meal plan, map with people who are sharing food (click on marker and see the list of foods)
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailBinding>() {

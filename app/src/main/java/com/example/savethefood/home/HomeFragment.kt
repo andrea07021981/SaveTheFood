@@ -13,6 +13,7 @@ import com.example.savethefood.*
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.constants.StorageType
+import com.example.savethefood.work.BaseAdapterClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -56,7 +57,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             // TODO add paging library with flow (or paging library 3) for recycleview
             foodRecycleview.layoutManager = LinearLayoutManager(activity)
             foodRecycleview.adapter =
-                FoodAdapter(FoodAdapter.OnClickListener { food ->
+                FoodAdapter(BaseAdapter.BaseClickListener { food ->
                     viewModel.moveToFoodDetail(food)
                 })
             //it.foodRecycleview.scheduleLayoutAnimation()
