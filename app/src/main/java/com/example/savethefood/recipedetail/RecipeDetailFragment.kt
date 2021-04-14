@@ -1,8 +1,10 @@
 package com.example.savethefood.recipedetail
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.savethefood.BaseAdapter
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.EventObserver
 import com.example.savethefood.R
@@ -35,8 +37,9 @@ class RecipeDetailFragment : BaseFragment<RecipeDetailViewModel, FragmentRecipeD
             ingredientRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             ingredientRecyclerView.adapter =
                 IngredientAdapter(
-                    IngredientAdapter.OnIngredientClickListener {
+                    BaseAdapter.BaseClickListener {
                         //TODO OPEN ALER DIALOG WITH CUSTOM LAYOUT INGREDIENT DETAIL
+                        Log.d(classTag, it.exIngredientName)
                     })
             maintoolbar.setNavigationOnClickListener {
                 viewModel.backToRecipeList()

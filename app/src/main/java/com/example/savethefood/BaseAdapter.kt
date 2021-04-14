@@ -21,20 +21,9 @@ abstract class BaseAdapter<T, DB: ViewDataBinding>(
 
     class BaseViewHolder<DB: ViewDataBinding>(
         val binding: DB,
-    ) : RecyclerView.ViewHolder(binding.root) {
-
-        // TODO find a way to use this like https://www.simplifiedcoding.net/abstract-recyclerview-adapter/
-        /*companion object {
-            fun <DB: ViewDataBinding> from(parent: ViewGroup, layoutRes: Int): BaseViewHolder<DB> {
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = DataBindingUtil.inflate<DB>(layoutInflater, layoutRes, parent, false)
-                return BaseViewHolder(binding)
-            }
-        }*/
-    }
+    ) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<DB> {
-        //return BaseViewHolder.from(parent, layoutRes)
         val layoutInflater = LayoutInflater.from(parent.context)
         dataBinding = DataBindingUtil.inflate<DB>(layoutInflater, layoutRes, parent, false)
         return BaseViewHolder(dataBinding)
@@ -53,8 +42,12 @@ abstract class BaseAdapter<T, DB: ViewDataBinding>(
         override fun areContentsTheSame(oldItem: T, newItem: T) = oldItem == newItem
     }
 
-    class BaseClickListener<T>(
-        val clickListener: (data: T) -> Unit
+    interface Test<T> {
+        fun onClick(data: T)
+    }
+
+    open class BaseClickListener<T>(
+        open val clickListener: (data: T) -> Unit
     ) {
         fun onClick(data: T) = clickListener(data)
     }

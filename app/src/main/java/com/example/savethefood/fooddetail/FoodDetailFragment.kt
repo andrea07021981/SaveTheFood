@@ -42,27 +42,30 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
             foodRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             foodRecyclerView.adapter =
                 FoodPantryAdapter(
-                    FoodPantryAdapter.OnClickListener { food, view ->
-                        val drawable = view.food_image_view.background as GradientDrawable
-                        view.tag = view.tag != true
-                        viewModel.updateRecipeList(food.title)
-                        drawable.setStroke(8,
-                            if (view.tag == true) {
-                                ContextCompat.getColor(requireContext(), R.color.customGreen)
-                            } else {
-                                Color.WHITE
-                            });
-                    })
+                    FoodPantryAdapter.PantryBaseClickListener(
+                        clickListener = {},
+                        clickViewListener = { food, view ->
+                            val drawable = view.food_image_view.background as GradientDrawable
+                            view.tag = view.tag != true
+                            viewModel.updateRecipeList(food.title)
+                            drawable.setStroke(8,
+                                if (view.tag == true) {
+                                    ContextCompat.getColor(requireContext(), R.color.customGreen)
+                                } else {
+                                    Color.WHITE
+                                });
+                        }
+                    )
+                )
             recipesRecycleView.layoutManager = LinearLayoutManager(activity)
             setHasOptionsMenu(true)
             recipesRecycleView.adapter =
-                RecipeIngredientsAdapter(RecipeIngredientsAdapter.OnClickListener(
-                    clickListener = {
-                        // TODO move to recipe cook
-                    },
-                    clickSaveListener = { recipe, item ->
+                RecipeIngredientsAdapter(RecipeIngredientsAdapter.RecipeIngredientsClickListener(
+                    clickListener = {},
+                    clickSaveListener = { recipe, _ ->
                         viewModel.saveRecipe(recipe)
-                    }))
+                    }
+                ))
         }
     }
 

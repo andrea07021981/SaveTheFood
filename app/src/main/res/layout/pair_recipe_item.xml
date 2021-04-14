@@ -11,7 +11,7 @@
 
         <variable
             name="callback"
-            type="com.example.savethefood.fooddetail.RecipeIngredientsAdapter.OnClickListener" />
+            type="com.example.savethefood.fooddetail.RecipeIngredientsAdapter.RecipeIngredientsClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -69,6 +69,10 @@
 
     <string name="pantry_match">%d / %d</string>
 
+    <string name="save_new_food">
+        Save <xliff:g id="save_new_food">%s</xliff:g>?
+    </string>
+
     <string name="format_price"><xliff:g id="price">%.2f</xliff:g> $</string>
     <string name="about_recipe">About Recipe</string>
     <string name="cook_now">COOK NOW</string>
@@ -92,4 +96,7 @@
     <string name="search">Search</string>
     <string name="ingredients">Ingredients</string>
     <string name="equipment">Equipment</string>
+    <string name="save_food">Save food</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
 </resources>

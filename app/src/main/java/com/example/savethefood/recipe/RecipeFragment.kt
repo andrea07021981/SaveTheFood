@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.savethefood.BaseAdapter
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.EventObserver
 import com.example.savethefood.R
@@ -46,7 +47,7 @@ class RecipeFragment : BaseFragment<RecipeViewModel, FragmentReceipeBinding>() {
             recipeRecycleview.layoutManager = LinearLayoutManager(activity)
             setHasOptionsMenu(true)
             recipeRecycleview.adapter =
-                RecipeAdapter(RecipeAdapter.OnClickListener { recipeResult ->
+                RecipeAdapter(BaseAdapter.BaseClickListener { recipeResult ->
                     viewModel.moveToRecipeDetail(recipeResult)
                 })
             recipeRecycleview.addOnScrollListener(object : RecyclerView.OnScrollListener() {

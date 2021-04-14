@@ -59,7 +59,7 @@ class FoodDetailViewModel @ViewModelInject constructor(
         }
         .transform { value ->
             when (value) {
-                is Result.Success -> emit(value.data.filter { it.id != _food.value?.id })
+                is Result.Success -> emit(value.data.filter { it.id != _food.value?.id }) // Remove the current food
                 is Result.ExError -> _errorData.value = Event(value.exception.localizedMessage)
                 is Result.Error -> _errorData.value = Event(value.message)
                 else -> Unit
