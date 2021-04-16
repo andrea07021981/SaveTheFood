@@ -3,15 +3,23 @@ package com.example.savethefood.fooddetail
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
 import com.example.savethefood.BaseFragment
+import com.example.savethefood.Event
 import com.example.savethefood.R
+import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
+import com.example.savethefood.home.HomeFragmentContainerDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.pair_item.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -67,6 +75,7 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
                     }
                 ))
         }
+        setHasOptionsMenu(true)
     }
 
     override fun activateObservers() {
@@ -76,6 +85,31 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
         viewModel.recipeAdded.observe(viewLifecycleOwner) {
             // TODO 
         }
+
+        viewModel.editFoodEvent.observe(viewLifecycleOwner, ::navigateTo)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_edit, menu)
+    }
+
+    override fun <T> navigateTo(event: Event<T>?) {
+        event?.let {
+            if (it.hasBeenHandled) return
+            val content = it.getContentIfNotHandled()
+            findNavController()
+                .navigate(FoodDetailFragmentDirections.actionFoodDetailFragmentToAddFoodFragment(
+                    bundleOf(
+                        "foodDomain" to content)))
+        }
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.edit) {
+            viewModel.navigateToFoodEdit()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

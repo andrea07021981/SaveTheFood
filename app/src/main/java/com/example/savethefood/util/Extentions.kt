@@ -3,6 +3,7 @@ package com.example.savethefood.util
 import android.app.Activity
 import android.app.SearchManager
 import android.content.Context
+import android.os.Bundle
 import android.util.Patterns
 import android.view.MenuItem
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.savethefood.constants.Constants
 import com.example.savethefood.constants.FoodOrder
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
@@ -55,6 +57,9 @@ fun MenuItem.configSearchView(activity: Activity, hint: String = "Type Value", b
 }
 
 // TODO replace result with ApiCallStatus?
+/**
+ * Dispatchers.Main.immediate is set as the default CoroutineDispatcher for viewModelScope
+ */
 inline fun <T> ViewModel.launchDataLoad(loader: MutableLiveData<Result<T>>, crossinline block: suspend () -> Result<T>): Job {
     return viewModelScope.launch {
         try {
@@ -95,4 +100,10 @@ fun ShimmerFrameLayout.start() {
 
 fun ShimmerFrameLayout.stop() {
     stopShimmer()
+}
+
+fun Bundle?.retrieveFood(): FoodDomain {
+    return this?.get(Constants.BUNDLE_FOOD_VALUE)?.let {
+        it as FoodDomain
+    }?: FoodDomain()
 }

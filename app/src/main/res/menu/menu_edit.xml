@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/save"
+        android:id="@+id/edit"
         android:orderInCategory="100"
-        android:title="Save"
-        android:icon="@drawable/ic_save_white_24dp"
+        android:title="Edit"
+        android:icon="@drawable/ic_baseline_edit_24"
         app:showAsAction="always"/>
 </menu>

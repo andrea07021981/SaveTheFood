@@ -40,14 +40,14 @@
                 android:id="@+id/textView3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{foodDetailViewModel.food.title}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textStyle="bold"
+                android:layout_marginStart="16dp"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/imageView3"
-                app:layout_constraintTop_toTopOf="@+id/imageView3" />
+                app:layout_constraintTop_toTopOf="@+id/imageView3"
+                bind:formatText="@{foodDetailViewModel.food}" />
 
             <TextView
                 android:id="@+id/textView4"
