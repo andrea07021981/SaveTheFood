@@ -2,29 +2,29 @@ package com.example.savethefood.fooddetail
 
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.ActivityNavigator
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
 import com.example.savethefood.BaseFragment
+import com.example.savethefood.Event
 import com.example.savethefood.R
+import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
-import com.example.savethefood.home.FoodAdapter
-import com.example.savethefood.recipe.RecipeAdapter
-import com.example.savethefood.recipedetail.IngredientAdapter
+import com.example.savethefood.home.HomeFragmentContainerDirections
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.food_item.view.*
-import kotlinx.android.synthetic.main.fragment_food.*
 import kotlinx.android.synthetic.main.pair_item.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-
+// TODO add cale dar with weekly meal plan, map with people who are sharing food (click on marker and see the list of foods)
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailBinding>() {
@@ -50,37 +50,66 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
             foodRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
             foodRecyclerView.adapter =
                 FoodPantryAdapter(
-                    FoodPantryAdapter.OnClickListener { food, view ->
-                        val drawable = view.food_image_view.background as GradientDrawable
-                        view.tag = view.tag != true
-                        viewModel.updateRecipeList(food.title)
-                        drawable.setStroke(8,
-                            if (view.tag == true) {
-                                ContextCompat.getColor(requireContext(), R.color.customGreen)
-                            } else {
-                                Color.WHITE
-                            });
-                    })
+                    FoodPantryAdapter.PantryBaseClickListener(
+                        clickListener = {},
+                        clickViewListener = { food, view ->
+                            val drawable = view.food_image_view.background as GradientDrawable
+                            view.tag = view.tag != true
+                            viewModel.updateRecipeList(food.title)
+                            drawable.setStroke(8,
+                                if (view.tag == true) {
+                                    ContextCompat.getColor(requireContext(), R.color.customGreen)
+                                } else {
+                                    Color.WHITE
+                                });
+                        }
+                    )
+                )
             recipesRecycleView.layoutManager = LinearLayoutManager(activity)
             setHasOptionsMenu(true)
             recipesRecycleView.adapter =
-                RecipeIngredientsAdapter(RecipeIngredientsAdapter.OnClickListener(
-                    clickListener = {
-                        // TODO move to recipe cook
-                    },
-                    clickSaveListener = {
-                        viewModel.saveRecipe(it)
-                    }))
+                RecipeIngredientsAdapter(RecipeIngredientsAdapter.RecipeIngredientsClickListener(
+                    clickListener = {},
+                    clickSaveListener = { recipe, _ ->
+                        viewModel.saveRecipe(recipe)
+                    }
+                ))
         }
+        setHasOptionsMenu(true)
     }
 
     override fun activateObservers() {
         viewModel.food.observe(viewLifecycleOwner, {
         })
 
-        viewModel.opStatus.observe(viewLifecycleOwner) {
+        viewModel.recipeAdded.observe(viewLifecycleOwner) {
             // TODO 
         }
+
+        viewModel.editFoodEvent.observe(viewLifecycleOwner, ::navigateTo)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_edit, menu)
+    }
+
+    override fun <T> navigateTo(event: Event<T>?) {
+        event?.let {
+            if (it.hasBeenHandled) return
+            val content = it.getContentIfNotHandled()
+            findNavController()
+                .navigate(FoodDetailFragmentDirections.actionFoodDetailFragmentToAddFoodFragment(
+                    bundleOf(
+                        "foodDomain" to content)))
+        }
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.edit) {
+            viewModel.navigateToFoodEdit()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

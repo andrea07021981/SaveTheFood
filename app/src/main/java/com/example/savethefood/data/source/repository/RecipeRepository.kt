@@ -17,5 +17,5 @@ interface RecipeRepository {
     @Throws(Exception::class)
     suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain>
 
-    suspend fun saveRecipe(recipe: RecipeIngredients): Result<RecipeIngredients>
+    suspend fun saveRecipe(recipe: RecipeIngredients): Result<RecipeIngredients?>
 }

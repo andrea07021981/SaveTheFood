@@ -12,7 +12,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.savethefood.BaseAdapter
 import com.example.savethefood.EventObserver
+import com.example.savethefood.R
 import com.example.savethefood.data.source.repository.FoodDataRepository
 import com.example.savethefood.databinding.FragmentFoodBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,16 +36,16 @@ class FoodFragment : Fragment() {
             it.lifecycleOwner = this
             it.foodViewModel = foodViewModel
             it.recyclerView.layoutManager = LinearLayoutManager(activity)
-            it.recyclerView.adapter = FoodSearchAdapter(FoodSearchAdapter.OnClickListener { productDomain ->
+            it.recyclerView.adapter = FoodSearchAdapter(BaseAdapter.BaseClickListener { productDomain ->
                 productDomain.let {
                     AlertDialog.Builder(requireNotNull(activity))
-                        .setTitle("Save food")
-                        .setMessage("Save ${productDomain.title}?")
+                        .setTitle(getString(R.string.save_food))
+                        .setMessage(getString(R.string.save_new_food, productDomain.title))
                         .setCancelable(false)
-                        .setNegativeButton("Cancel") { dialogInterface, _ ->
+                        .setNegativeButton(getString(R.string.cancel)) { dialogInterface, _ ->
                             dialogInterface.cancel()
                         }
-                        .setPositiveButton("Confirm") { dialogInterface, _ ->
+                        .setPositiveButton(getString(R.string.confirm)) { dialogInterface, _ ->
                             dialogInterface.dismiss()
                             foodViewModel.saveFoodDetail(it)
                         }

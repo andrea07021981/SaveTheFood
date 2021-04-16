@@ -60,11 +60,14 @@
         android:label="Food Detail"
         tools:layout="@layout/fragment_food_detail">
         <argument
-            android:name="foodDomain"
-            app:argType="com.example.savethefood.data.domain.FoodDomain" />
+            android:name="foodDetail"
+            app:argType="android.os.Bundle" />
         <action
             android:id="@+id/action_foodDetailFragment_to_recipeFragment"
             app:destination="@id/recipeFragment" />
+        <action
+            android:id="@+id/action_foodDetailFragment_to_addFoodFragment"
+            app:destination="@id/addFoodFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -107,8 +110,16 @@
     <fragment
         android:id="@+id/addFoodFragment"
         android:name="com.example.savethefood.addfood.AddFoodFragment"
-        tools:layout="@layout/fragment_add_food"
-        android:label="AddFoodFragment" />
+        android:label="AddFoodFragment"
+        tools:layout="@layout/fragment_add_food">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="myapp://savethefood.com/addfood?short=true" />
+        <argument
+            android:name="foodDetail"
+            app:argType="android.os.Bundle"
+            app:nullable="true" />
+    </fragment>
 
     <dialog
         android:id="@+id/filterFragment"

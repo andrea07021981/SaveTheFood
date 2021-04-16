@@ -24,7 +24,15 @@ class FakeRecipeDataSourceTest(
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveRecipe(recipe: RecipeIngredients) {
+    override suspend fun saveRecipe(recipe: RecipeIngredients): RecipeIngredients? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getRecipe(recipeId: Int): RecipeIngredients? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteRecipe(recipeId: RecipeIngredients): Int? {
         TODO("Not yet implemented")
     }
 }

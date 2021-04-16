@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
  * @param   VM          ViewModel used in fragment
  * @param   DB          DataBinding for UI
  */
+// WE could remove the abstract layout res and abstract class BaseFragment<VM : ViewModel, DB : ViewDataBinding>(@LayoutRes val layoutRes: Int) : Fragment() {
 abstract class BaseFragment<VM : ViewModel, DB : ViewDataBinding>() : Fragment() {
 
     protected abstract val viewModel: VM

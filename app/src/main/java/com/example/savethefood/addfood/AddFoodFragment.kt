@@ -1,6 +1,5 @@
 package com.example.savethefood.addfood
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -11,11 +10,14 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.EventObserver
+import com.example.savethefood.Notifier
 import com.example.savethefood.R
 import com.example.savethefood.constants.Constants.BUNDLE_KEY
 import com.example.savethefood.constants.Constants.REQUEST_KEY
@@ -29,11 +31,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 
-// Add home transition animation between gridlist and linear
 @AndroidEntryPoint
 class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>() {
 
-    // todo add e deep link to add a food
+    private val args: AddFoodFragmentArgs by navArgs()
+
+    private enum class ShortCutState {
+        SHORT_LINK,
+        DIRECT
+    }
+    private var shortCutState = ShortCutState.DIRECT
+
     private lateinit var startBarcodeForResult: ActivityResultLauncher<Intent>
 
     override val viewModel by viewModels<AddFoodViewModel>()
@@ -57,7 +65,12 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
 
         with(dataBinding) {
             addFoodViewModel = viewModel
-            setHasOptionsMenu(true)
+        }
+        setHasOptionsMenu(true)
+
+        // If the intent data is not null we are in shortcut mode
+        if (requireActivity().intent.data != null) {
+            shortCutState = ShortCutState.SHORT_LINK
         }
 
         startBarcodeForResult = registerForActivityResult(
@@ -121,7 +134,18 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
 
         viewModel.saveFoodEvent.observe(viewLifecycleOwner) {
             when (it) {
-                is Result.Success -> findNavController().popBackStack()
+                is Result.Success -> {
+                    if (shortCutState == ShortCutState.SHORT_LINK) {
+                        val bundle = bundleOf("foodDomain" to it.data)
+                        val pendingIntent = findNavController()
+                            .createDeepLink()
+                            .setDestination(R.id.addFoodFragment)
+                            .setArguments(bundle)
+                            .createPendingIntent()
+                        Notifier.postNotification(it.data.id, requireContext(), pendingIntent)
+                    }
+                    findNavController().popBackStack()
+                }
                 is Result.ExError, is Result.Error -> Toast.makeText(
                     context,
                     "Error saving food",

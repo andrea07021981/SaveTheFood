@@ -11,7 +11,7 @@
 
         <variable
             name="callback"
-            type="com.example.savethefood.fooddetail.RecipeIngredientsAdapter.OnClickListener" />
+            type="com.example.savethefood.fooddetail.RecipeIngredientsAdapter.RecipeIngredientsClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -60,7 +60,7 @@
             android:backgroundTint="#A9716F6F"
             android:elevation="20dp"
             android:padding="32dp"
-            android:onClick="@{() -> callback.onSaveRecipe(recipe)}"
+            android:onClick="@{(view) -> callback.onSaveRecipe(recipe, view)}"
             app:layout_constraintStart_toStartOf="@+id/imageButton2"
             app:layout_constraintTop_toTopOf="@+id/imageButton2"
             app:srcCompat="@drawable/ic_hearth" />

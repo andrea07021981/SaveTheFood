@@ -1,61 +1,24 @@
 package com.example.savethefood.cook
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
-import com.example.savethefood.databinding.IngredientInstructionItemBinding
+import com.example.savethefood.BaseAdapter
+import com.example.savethefood.R
 import com.example.savethefood.data.domain.IngredientsDomain
+import com.example.savethefood.databinding.IngredientInstructionItemBinding
 
-class IngredientInstructionAdapter : ListAdapter<IngredientsDomain, IngredientInstructionAdapter.IngredientInstructionViewHolder>(
-    DiffCallback
-) {
+class IngredientInstructionAdapter(
+    onClickListener: BaseClickListener<IngredientsDomain>,
+) : BaseAdapter<IngredientsDomain, IngredientInstructionItemBinding>(onClickListener) {
 
-    class IngredientInstructionViewHolder private constructor(
-        val binding: IngredientInstructionItemBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    override val layoutRes: Int
+        get() = R.layout.ingredient_instruction_item
 
-        fun bind(item: IngredientsDomain) {
-            with(binding) {
-                ingredientItem = item
-                executePendingBindings()
-            }
-        }
-
-        companion object {
-            val from = {parent: ViewGroup ->
-                val layoutInflate = LayoutInflater.from(parent.context)
-                val binding = IngredientInstructionItemBinding.inflate(layoutInflate, parent, false)
-                IngredientInstructionViewHolder(
-                    binding
-                )
-            }
+    override fun bind(
+        holder: BaseViewHolder<IngredientInstructionItemBinding>,
+        clickListener: BaseClickListener<IngredientsDomain>,
+        item: IngredientsDomain
+    ) {
+        with(dataBinding) {
+            ingredientItem = item
         }
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientInstructionViewHolder {
-        return IngredientInstructionViewHolder.from(
-            parent
-        )
-    }
-
-    override fun onBindViewHolder(holder: IngredientInstructionViewHolder, position: Int) {
-        return holder.bind(getItem(position))
-    }
-
-    /**
-     * Allows the RecyclerView to determine which items have changed when the [List] of [Food]
-     * has been updated.
-     */
-    companion object DiffCallback : DiffUtil.ItemCallback<IngredientsDomain>() {
-        override fun areItemsTheSame(oldItem: IngredientsDomain, newItem: IngredientsDomain): Boolean {
-            return oldItem === newItem
-        }
-
-        override fun areContentsTheSame(oldItem: IngredientsDomain, newItem: IngredientsDomain): Boolean {
-            return oldItem.ingredientId == newItem.ingredientId
-        }
-    }
-
 }

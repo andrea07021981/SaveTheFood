@@ -2,6 +2,7 @@ package com.example.savethefood.util
 
 import android.os.Build
 import android.text.Editable
+import android.text.Html
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.widget.*
@@ -25,7 +26,6 @@ import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.data.domain.ProductDomain
 import com.example.savethefood.food.FoodSearchAdapter
 import com.example.savethefood.fooddetail.FoodPantryAdapter
-import com.example.savethefood.home.FoodAdapter
 import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -129,7 +129,14 @@ object FoodBindingUtils {
     fun setListener(view: TextInputEditText, textAttrChanged: InverseBindingListener?) {
         if (textAttrChanged != null) {
             view.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+                override fun beforeTextChanged(
+                    charSequence: CharSequence,
+                    i: Int,
+                    i1: Int,
+                    i2: Int
+                ) {
+                }
+
                 override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
                 override fun afterTextChanged(editable: Editable) {
                     textAttrChanged.onChange()
@@ -226,7 +233,14 @@ object FoodBindingUtils {
     fun setDateListener(view: TextInputEditText, textAttrChanged: InverseBindingListener?) {
         if (textAttrChanged != null) {
             view.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+                override fun beforeTextChanged(
+                    charSequence: CharSequence,
+                    i: Int,
+                    i1: Int,
+                    i2: Int
+                ) {
+                }
+
                 override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
                 override fun afterTextChanged(editable: Editable) {
                     textAttrChanged.onChange()
@@ -308,7 +322,11 @@ object FoodBindingUtils {
             .atZone(ZoneId.systemDefault())
             .toLocalDate()
         val diff = ChronoUnit.DAYS.between(currentDate, lastUpdate)
-        text = context.resources.getQuantityString(R.plurals.days, abs(diff).toInt(), abs(diff).toInt())
+        text = context.resources.getQuantityString(
+            R.plurals.days,
+            abs(diff).toInt(),
+            abs(diff).toInt()
+        )
     }
 
     // TODO multiple binding list adapter, find a generic one with a when condition
@@ -318,5 +336,16 @@ object FoodBindingUtils {
         val adapter = recyclerView.adapter as FoodPantryAdapter
         adapter.submitList(data)
         recyclerView.scheduleLayoutAnimation();
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind:formatText")
+    fun TextView.bindFormatText(foodDomain: FoodDomain) {
+        val sourceString = "<b>${foodDomain.title}</b> in <b>${foodDomain.storageType.type}</b>"
+        text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(sourceString, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        } else {
+            Html.fromHtml(sourceString)
+        }
     }
 }

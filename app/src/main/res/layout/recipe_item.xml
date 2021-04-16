@@ -12,7 +12,7 @@
 
         <variable
             name="recipeCallback"
-            type="com.example.savethefood.recipe.RecipeAdapter.OnClickListener" />
+            type="com.example.savethefood.BaseAdapter.BaseClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView

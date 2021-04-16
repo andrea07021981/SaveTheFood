@@ -13,7 +13,7 @@
 
         <variable
             name="stepCallback"
-            type="com.example.savethefood.cook.StepCookAdapter.OnStepClickListener" />
+            type="com.example.savethefood.BaseAdapter.BaseClickListener" />
     </data>
 
         <LinearLayout

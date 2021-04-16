@@ -5,6 +5,7 @@ import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.savethefood.BaseAdapter
 import com.example.savethefood.R
 import com.example.savethefood.data.domain.StepDomain
 import com.example.savethefood.databinding.StepCookItemBinding
@@ -46,14 +47,14 @@ class CookStepper(
             ingredientsRecyclerView.apply {
                 layoutManager = ingredientManager
                 adapter =
-                    IngredientInstructionAdapter()
+                    IngredientInstructionAdapter(BaseAdapter.BaseClickListener {  })
                 setRecycledViewPool(viewPool)
             }
             val equipmentManager = LinearLayoutManager(equipmentsRecyclerView.context, LinearLayoutManager.HORIZONTAL, false)
             equipmentsRecyclerView.apply {
                 layoutManager = equipmentManager
                 adapter =
-                    EquipmentInstructionAdapter()
+                    EquipmentInstructionAdapter(BaseAdapter.BaseClickListener {  })
                 setRecycledViewPool(viewPool)
             }
         }

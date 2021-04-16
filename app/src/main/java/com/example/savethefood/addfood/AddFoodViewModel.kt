@@ -1,10 +1,14 @@
 package com.example.savethefood.addfood
 
+import android.os.Bundle
 import androidx.collection.ArraySet
 import androidx.collection.arraySetOf
+import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
+import com.example.savethefood.constants.Constants.BUNDLE_FOOD_KEY
+import com.example.savethefood.constants.Constants.BUNDLE_FOOD_VALUE
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodItem
@@ -12,6 +16,7 @@ import com.example.savethefood.data.source.repository.FoodRepository
 import com.example.savethefood.util.FoodImage
 import com.example.savethefood.util.isValidDouble
 import com.example.savethefood.util.launchDataLoad
+import com.example.savethefood.util.retrieveFood
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -20,8 +25,30 @@ import java.util.*
 
 
 class AddFoodViewModel @ViewModelInject constructor(
-    private val foodDataRepository: FoodRepository
+    private val foodDataRepository: FoodRepository,
+    @Assisted val food: SavedStateHandle
 ) : ViewModel() {
+
+    private val _foodDomain: FoodDomain = food.get<Bundle>(BUNDLE_FOOD_KEY).retrieveFood()
+
+    private val foodTypeFilter = MutableLiveData<String>()
+
+    private var _foodsItems: ArraySet<FoodItem>? = null
+    val foodItems = foodTypeFilter.switchMap { filter ->
+        liveData {
+            if (filter.isNullOrEmpty()) {
+                emit(_foodsItems)
+            } else {
+                emit(_foodsItems?.filter {
+                    it.name.contains(filter.toUpperCase())
+                })
+            }
+        }
+    }
+
+    init {
+        _foodsItems = getCustomSet()
+    }
 
     /**
      * Private class to notify the main food domain when something changes
@@ -32,9 +59,10 @@ class AddFoodViewModel @ViewModelInject constructor(
         object None: ObserverFields()
     }
 
-    private var observerField: MutableLiveData<ObserverFields> = MutableLiveData(ObserverFields.FoodItemImage())
+    private var observerField: MutableLiveData<ObserverFields> = MutableLiveData(ObserverFields.FoodItemImage(
+        FoodItem(_foodDomain.img)
+    ))
 
-    private val _foodDomain = FoodDomain()
     val foodDomain: LiveData<FoodDomain> = Transformations.map(observerField) {
         _foodDomain.apply {
             when (it) {
@@ -63,24 +91,6 @@ class AddFoodViewModel @ViewModelInject constructor(
     private val _newFoodFoodEvent = MutableLiveData<Result<FoodDomain>>()
     val newFoodFoodEvent: LiveData<Result<FoodDomain>>
         get() = _newFoodFoodEvent
-
-    private val foodTypeFilter = MutableLiveData<String>()
-    private var _foodsItems: ArraySet<FoodItem>? = null
-    val foodItems = foodTypeFilter.switchMap { filter ->
-        liveData {
-            if (filter.isNullOrEmpty()) {
-                emit(_foodsItems)
-            } else {
-                emit(_foodsItems?.filter {
-                    it.name.contains(filter.toUpperCase())
-                })
-            }
-        }
-    }
-
-    init {
-        _foodsItems = getCustomSet()
-    }
 
     private val _openFoodTypeDialog = MutableLiveData<Event<Unit>>()
     val openFoodTypeDialog: LiveData<Event<Unit>>

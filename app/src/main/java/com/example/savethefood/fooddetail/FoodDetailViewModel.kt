@@ -1,19 +1,22 @@
 package com.example.savethefood.fooddetail
 
+import android.os.Bundle
 import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.constants.ApiCallStatus
+import com.example.savethefood.constants.Constants
+import com.example.savethefood.constants.Constants.BUNDLE_FOOD_KEY
+import com.example.savethefood.constants.Constants.BUNDLE_FOOD_VALUE
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeIngredients
-import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.FoodRepository
 import com.example.savethefood.data.source.repository.RecipeRepository
 import com.example.savethefood.util.launchDataLoad
+import com.example.savethefood.util.retrieveFood
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
@@ -27,9 +30,9 @@ class FoodDetailViewModel @ViewModelInject constructor(
     @Assisted food: SavedStateHandle
 ) : ViewModel() {
 
-    private val _opStatus = MutableLiveData<Result<RecipeIngredients>>()
-    val opStatus: LiveData<Result<RecipeIngredients>>
-        get() = _opStatus
+    private val _recipeAdded = MutableLiveData<Result<RecipeIngredients?>>()
+    val recipeAdded: LiveData<Result<RecipeIngredients?>>
+        get() = _recipeAdded
 
     private val _status = MutableLiveData<ApiCallStatus>(ApiCallStatus.Done())
     val status: LiveData<ApiCallStatus>
@@ -47,6 +50,10 @@ class FoodDetailViewModel @ViewModelInject constructor(
     val recipeFoodEvent: LiveData<Event<FoodDomain>>
         get() = _recipeFoodEvent
 
+    private val _editFoodEvent = MutableLiveData<Event<FoodDomain>>()
+    val editFoodEvent: LiveData<Event<FoodDomain>>
+        get() = _editFoodEvent
+
     private val _errorData = MutableLiveData<Event<String>>()
     val errorData: LiveData<Event<String>>
         get() = _errorData
@@ -61,7 +68,7 @@ class FoodDetailViewModel @ViewModelInject constructor(
         }
         .transform { value ->
             when (value) {
-                is Result.Success -> emit(value.data.filter { it.id != _food.value?.id })
+                is Result.Success -> emit(value.data.filter { it.id != _food.value?.id }) // Remove the current food
                 is Result.ExError -> _errorData.value = Event(value.exception.localizedMessage)
                 is Result.Error -> _errorData.value = Event(value.message)
                 else -> Unit
@@ -104,7 +111,7 @@ class FoodDetailViewModel @ViewModelInject constructor(
     val recipeList: LiveData<List<RecipeIngredients>?> = _recipeList
 
     init {
-        _food.value = food.get<FoodDomain>("foodDomain") ?: FoodDomain()
+        _food.value = food.get<Bundle>(BUNDLE_FOOD_KEY).retrieveFood()
         foodsFilterList.add(_food.value?.title ?: "")
     }
 
@@ -120,8 +127,14 @@ class FoodDetailViewModel @ViewModelInject constructor(
         }
     }
 
-    fun moveToRecipeSearch(recipe: FoodDomain) {
+    fun navigateToRecipeSearch(recipe: FoodDomain) {
         _recipeFoodEvent.value = Event(recipe)
+    }
+
+    fun navigateToFoodEdit() {
+        _food.value?.let {
+            _editFoodEvent.value = Event(it)
+        }
     }
 
     fun updateRecipeList(filter: String) {
@@ -137,7 +150,7 @@ class FoodDetailViewModel @ViewModelInject constructor(
     }
 
     fun saveRecipe(recipe: RecipeIngredients) {
-        launchDataLoad(_opStatus) {
+        launchDataLoad(_recipeAdded) {
             recipeDataRepository.saveRecipe(recipe)
         }
     }

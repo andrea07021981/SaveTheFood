@@ -13,6 +13,7 @@ import com.example.savethefood.*
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.constants.StorageType
+import com.example.savethefood.work.BaseAdapterClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -56,7 +57,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             // TODO add paging library with flow (or paging library 3) for recycleview
             foodRecycleview.layoutManager = LinearLayoutManager(activity)
             foodRecycleview.adapter =
-                FoodAdapter(FoodAdapter.OnClickListener { food ->
+                FoodAdapter(BaseAdapter.BaseClickListener { food ->
+                    // TODO Pass the item view
                     viewModel.moveToFoodDetail(food)
                 })
             //it.foodRecycleview.scheduleLayoutAnimation()
@@ -70,6 +72,8 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun activateObservers() {
         viewModel.detailFoodEvent.observe(viewLifecycleOwner, ::navigateTo) // TODO is it better to keep the EventObserver and navigateTo(it)?
         viewModel.addFoodEvent.observe(viewLifecycleOwner, ::navigateTo)
+
+        // TODO can we move it into homebindingutils with bindingadapter in xml?
         viewModel.foodList.observe(viewLifecycleOwner) { list ->
             (dataBinding.foodRecycleview.adapter as FoodAdapter)
                 .submitList(
@@ -86,19 +90,21 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             val content = it.getContentIfNotHandled()
             when (it.peekContent()) {
                 is Unit -> findNavController()
-                    .navigate(R.id.addFoodFragment)
+                    .navigate(HomeFragmentContainerDirections.actionHomeFragmentToAddFoodFragment(
+                        bundleOf()))
                 is FoodDomain -> {
-                    with(dataBinding.foodRecycleview) {
-                        val foodImageView = findViewById<ImageView>(R.id.food_imageview)
-                        val foodTextView = findViewById<TextView>(R.id.food_textview)
-                        val extras = FragmentNavigatorExtras(
-                            foodImageView to "foodImage",
-                            foodTextView to "foodTitle"
-                        )
-                        val bundle = bundleOf("foodDomain" to content)
-                        findNavController()
-                            .navigate(R.id.foodDetailFragment, bundle, null, extras)
-                    }
+                    // TODO pass the shared elements
+                    /*val foodImageView = findViewById<ImageView>(R.id.food_imageview)
+                    val foodTextView = findViewById<TextView>(R.id.food_textview)
+                    val extras = FragmentNavigatorExtras(
+                        foodImageView to "foodImage",
+                        foodTextView to "foodTitle"
+                    )*/
+                    val bundle = bundleOf(
+                        "foodDomain" to content
+                    )
+                    findNavController()
+                        .navigate(HomeFragmentContainerDirections.actionHomeFragmentToFoodDetailFragment(bundle))
                 }
             }
         }

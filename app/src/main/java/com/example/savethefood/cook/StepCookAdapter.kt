@@ -1,94 +1,44 @@
 package com.example.savethefood.cook
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.savethefood.databinding.StepCookItemBinding
+import com.example.savethefood.BaseAdapter
+import com.example.savethefood.R
 import com.example.savethefood.data.domain.StepDomain
+import com.example.savethefood.databinding.StepCookItemBinding
 
-@Deprecated("Added the stepper")
 class StepCookAdapter(
-    private val onClickListener: OnStepClickListener
-) : ListAdapter<StepDomain, StepCookAdapter.StepCookViewHolder>(
-    DiffCallback
-) {
+    onClickListener: BaseClickListener<StepDomain>,
+) : BaseAdapter<StepDomain, StepCookItemBinding>(onClickListener) {
 
-    class StepCookViewHolder private constructor(
-        val binding: StepCookItemBinding,
-        val parent: ViewGroup
-    ) : RecyclerView.ViewHolder(binding.root) {
+    override val layoutRes: Int
+        get() = R.layout.step_cook_item
 
-        private val viewPool = RecyclerView.RecycledViewPool()
+    private val viewPool = RecyclerView.RecycledViewPool()
 
-        fun bind(clickListener: OnStepClickListener, item: StepDomain) {
-            with(binding) {
-                stepItem = item
-                stepCallback = clickListener
-                val ingredientManager = LinearLayoutManager(this.ingredientsRecyclerView.context, LinearLayoutManager.HORIZONTAL, false)
-                this.ingredientsRecyclerView.apply {
-                    layoutManager = ingredientManager
-                    adapter =
-                        IngredientInstructionAdapter()
-                    setRecycledViewPool(viewPool)
-                }
-                val equipmentManager = LinearLayoutManager(this.equipmentsRecyclerView.context, LinearLayoutManager.HORIZONTAL, false)
-                this.equipmentsRecyclerView.apply {
-                    layoutManager = equipmentManager
-                    adapter =
-                        EquipmentInstructionAdapter()
-                    setRecycledViewPool(viewPool)
-                }
-                executePendingBindings()
-            }
-        }
-
-        companion object {
-            val from = { parent: ViewGroup ->
-                val layoutInflate = LayoutInflater.from(parent.context)
-                val binding = StepCookItemBinding.inflate(layoutInflate, parent, false)
-                StepCookViewHolder(
-                    binding,
-                    parent
-                )
-            }
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StepCookViewHolder {
-        return StepCookViewHolder.from(
-            parent
-        )
-    }
-
-    override fun onBindViewHolder(holder: StepCookViewHolder, position: Int) {
-        return holder.bind(onClickListener, getItem(position))
-    }
-
-    /**
-     * Allows the RecyclerView to determine which items have changed when the [List] of [Food]
-     * has been updated.
-     */
-    companion object DiffCallback : DiffUtil.ItemCallback<StepDomain>() {
-        override fun areItemsTheSame(oldItem: StepDomain, newItem: StepDomain): Boolean {
-            return oldItem === newItem
-        }
-
-        override fun areContentsTheSame(oldItem: StepDomain, newItem: StepDomain): Boolean {
-            return oldItem.stepNumber== newItem.stepNumber
-        }
-    }
-
-    /**
-     * Custom listener that handles clicks on [RecyclerView] items.  Passes the [Step]
-     * associated with the current item to the [onClick] function.
-     * @param clickListener lambda that will be called with the current [Step]
-     */
-    class OnStepClickListener(
-        val clickListener: (step: StepDomain) -> Unit
+    override fun bind(
+        holder: BaseViewHolder<StepCookItemBinding>,
+        clickListener: BaseClickListener<StepDomain>,
+        item: StepDomain
     ) {
-        fun onClick(step: StepDomain) = clickListener(step)
+        with(dataBinding) {
+            stepItem = item
+            stepCallback = clickListener
+            val ingredientManager = LinearLayoutManager(this.ingredientsRecyclerView.context, LinearLayoutManager.HORIZONTAL, false)
+            this.ingredientsRecyclerView.apply {
+                layoutManager = ingredientManager
+                adapter =
+                    IngredientInstructionAdapter(BaseClickListener {  })
+                setRecycledViewPool(viewPool)
+            }
+            val equipmentManager = LinearLayoutManager(this.equipmentsRecyclerView.context, LinearLayoutManager.HORIZONTAL, false)
+            this.equipmentsRecyclerView.apply {
+                layoutManager = equipmentManager
+                adapter =
+                    EquipmentInstructionAdapter(BaseClickListener {  })
+                setRecycledViewPool(viewPool)
+            }
+            executePendingBindings()
+        }
     }
 }

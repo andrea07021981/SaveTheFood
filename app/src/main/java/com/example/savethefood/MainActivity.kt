@@ -47,6 +47,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         setUpNavigation(binding)
+
+        // Init the notifications
+        Notifier.init(this)
     }
 
     private fun setUpNavigation(binding: ActivityMainBinding) {

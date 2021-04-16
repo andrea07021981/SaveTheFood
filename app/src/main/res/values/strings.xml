@@ -69,7 +69,13 @@
 
     <string name="pantry_match">%d / %d</string>
 
-    <string name="format_price"><xliff:g id="price">%.2f</xliff:g> $</string>
+    <string name="save_new_food">
+        Save <xliff:g id="save_new_food">%s</xliff:g>?
+    </string>
+
+    <string name="format_price">
+        <xliff:g id="price">%.2f</xliff:g> $
+    </string>
     <string name="about_recipe">About Recipe</string>
     <string name="cook_now">COOK NOW</string>
     <string name="progress_bar">progress bar</string>
@@ -92,4 +98,14 @@
     <string name="search">Search</string>
     <string name="ingredients">Ingredients</string>
     <string name="equipment">Equipment</string>
+    <string name="save_food">Save food</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="static_shortcut_label_short">New Food</string>
+    <string name="static_shortcut_label_long">Add New Food</string>
+    <string name="static_shortcut_disabled_message">New Food Shortcut Disabled</string>
+    <string name="defaultChannel">SaveTheFood default channel</string>
+    <string name="notificationDescription">Notifications from Save The Food</string>
+    <string name="deepLinkNotificationTitle">Deep Link</string>
+    <string name="addFoodInfo">Add more info about the food</string>
 </resources>
