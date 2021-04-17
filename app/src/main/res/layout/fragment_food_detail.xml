@@ -243,7 +243,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    bind:shimmer="@{foodDetailViewModel.status}"
+                    bind:shimmer="@{foodDetailViewModel.recipeList}"
                     tools:ignore="MissingConstraints">
 
                     <LinearLayout
@@ -278,9 +278,9 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:visibility="gone"
-                    bind:apiStatusVisibility="@{foodDetailViewModel.status}"
+                    bind:apiStatusVisibility="@{foodDetailViewModel.recipeList}"
                     tools:listitem="@layout/pair_recipe_item"
-                    bind:listdata="@{foodDetailViewModel.recipeList}"/>
+                    bind:listData="@{foodDetailViewModel.recipeList}"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

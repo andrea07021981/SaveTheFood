@@ -1,31 +1,28 @@
 package com.example.savethefood.util
 
-import android.graphics.Bitmap
-import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
-import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
 import com.example.savethefood.constants.ApiCallStatus
-import com.example.savethefood.constants.ApiCallStatus.*
+import com.example.savethefood.constants.ApiCallStatus.Done
+import com.example.savethefood.constants.ApiCallStatus.Loading
 import com.example.savethefood.constants.UrlImagesPath
 import com.example.savethefood.cook.EquipmentInstructionAdapter
 import com.example.savethefood.cook.IngredientInstructionAdapter
 import com.example.savethefood.cook.StepCookAdapter
+import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.*
 import com.example.savethefood.fooddetail.RecipeIngredientsAdapter
 import com.example.savethefood.recipe.RecipeAdapter
 import com.example.savethefood.recipedetail.IngredientAdapter
-import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerFrameLayout
-import kotlin.Error
 
 object RecipeBindingUtils {
 
@@ -48,17 +45,19 @@ object RecipeBindingUtils {
     }
 
     @JvmStatic
-    @BindingAdapter("bind:listdata")
+    @BindingAdapter("bind:listData")
     fun bindRecipeRecycleView(recyclerView: RecyclerView, data: List<RecipeResult>?) { //TODO clean repeted binding
         val adapter = recyclerView.adapter as RecipeAdapter
         adapter.submitList(data)
     }
 
     @JvmStatic
-    @BindingAdapter("bind:listdata")
-    fun bindRecipeIngredientsRecycleView(recyclerView: RecyclerView, data: List<RecipeIngredients>?) {
+    @BindingAdapter("bind:listData")
+    fun bindRecipeIngredientsRecycleView(recyclerView: RecyclerView, data: Result<List<RecipeIngredients>?>) {
         val adapter = recyclerView.adapter as RecipeIngredientsAdapter
-        adapter.submitList(data)
+        if (data is Result.Success) {
+            adapter.submitList(data.data)
+        }
     }
 
     @JvmStatic
@@ -225,12 +224,43 @@ object RecipeBindingUtils {
     }
 
     /**
+     *  Handle the Shimmer effect, we can use * projection since we don't neeed to know the specific type
+     */
+    @JvmStatic
+    @BindingAdapter("bind:shimmer")
+    fun setShimmer(view: ShimmerFrameLayout, status: Result<*>?) {
+        when (status) {
+            is Result.Loading -> {
+                view.visibility = View.VISIBLE
+                view.start()
+            }
+            else -> {
+                view.visibility = View.GONE
+                view.stop()
+            }
+        }
+    }
+
+    /**
      *  Handle the visibility of the recycleview
      */
     @JvmStatic
     @BindingAdapter("bind:apiStatusVisibility")
     fun RecyclerView.setApiStatusVisibility(status: ApiCallStatus?) {
         visibility = if (status == Loading()) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
+    }
+
+    /**
+     *  Handle the visibility of the recycleview
+     */
+    @JvmStatic
+    @BindingAdapter("bind:apiStatusVisibility")
+    fun RecyclerView.setApiStatusVisibility(status: Result<*>?) {
+        visibility = if (status is Result.Loading) {
             View.GONE
         } else {
             View.VISIBLE

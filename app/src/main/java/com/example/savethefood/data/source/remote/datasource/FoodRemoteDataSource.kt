@@ -85,7 +85,7 @@ class FoodRemoteDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteFood(food: FoodDomain?): Int {
+    override suspend fun deleteFood(food: FoodEntity): Int {
         TODO("No OP")
     }
 }

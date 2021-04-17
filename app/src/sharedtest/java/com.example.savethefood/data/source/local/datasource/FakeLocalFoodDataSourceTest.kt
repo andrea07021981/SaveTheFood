@@ -48,7 +48,7 @@ class FakeLocalFoodDataSourceTest(
         return Result.Success(foodList)
     }
 
-    override suspend fun deleteFood(food: FoodDomain?): Int {
+    override suspend fun deleteFood(food: FoodEntity): Int {
         foodList.remove(food).also {
             return food!!.id
         }

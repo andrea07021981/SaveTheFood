@@ -55,7 +55,7 @@ class FakeRemoteFoodDataSourceTest(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteFood(food: FoodDomain?): Int {
+    override suspend fun deleteFood(food: FoodEntity): Int {
         TODO("Not yet implemented")
     }
 }

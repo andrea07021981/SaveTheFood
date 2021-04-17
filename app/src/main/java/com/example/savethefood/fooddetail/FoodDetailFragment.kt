@@ -1,11 +1,15 @@
 package com.example.savethefood.fooddetail
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -97,17 +101,39 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
     override fun <T> navigateTo(event: Event<T>?) {
         event?.let {
             if (it.hasBeenHandled) return
-            val content = it.getContentIfNotHandled()
-            findNavController()
-                .navigate(FoodDetailFragmentDirections.actionFoodDetailFragmentToAddFoodFragment(
-                    bundleOf(
-                        "foodDomain" to content)))
+            when (val content = it.getContentIfNotHandled()) {
+                is Boolean -> if (content) {
+                    findNavController().popBackStack()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Something went wrong",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is FoodDomain -> findNavController()
+                    .navigate(FoodDetailFragmentDirections.actionFoodDetailFragmentToAddFoodFragment(
+                        bundleOf(
+                            "foodDomain" to content)))
+                else -> Unit
+            }
         }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.edit) {
             viewModel.navigateToFoodEdit()
             return true
+        } else if (item.itemId == R.id.delete) {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Info")
+                .setMessage("Do you want to delete the food?")
+                .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
+                .setPositiveButton("Yes") { dialog, _ ->
+                    viewModel.deleteFood()
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
         }
         return super.onOptionsItemSelected(item)
     }

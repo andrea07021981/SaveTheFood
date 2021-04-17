@@ -32,7 +32,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ic_apple_1"
+            app:srcCompat="@drawable/loading_animation"
             bind:imageRecipeUrl="@{recipe.image}" />
 
         <TextView

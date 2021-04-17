@@ -53,6 +53,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:listdata="@{recipeViewModel.recipeListResult}"/>
+            bind:listData="@{recipeViewModel.recipeListResult}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

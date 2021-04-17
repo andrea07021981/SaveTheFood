@@ -6,10 +6,7 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
-import com.example.savethefood.constants.ApiCallStatus
-import com.example.savethefood.constants.Constants
 import com.example.savethefood.constants.Constants.BUNDLE_FOOD_KEY
-import com.example.savethefood.constants.Constants.BUNDLE_FOOD_VALUE
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.RecipeIngredients
@@ -33,10 +30,6 @@ class FoodDetailViewModel @ViewModelInject constructor(
     private val _recipeAdded = MutableLiveData<Result<RecipeIngredients?>>()
     val recipeAdded: LiveData<Result<RecipeIngredients?>>
         get() = _recipeAdded
-
-    private val _status = MutableLiveData<ApiCallStatus>(ApiCallStatus.Done())
-    val status: LiveData<ApiCallStatus>
-        get() = _status
 
     private val _food = MutableLiveData<FoodDomain>()
     val food: LiveData<FoodDomain>
@@ -80,7 +73,8 @@ class FoodDetailViewModel @ViewModelInject constructor(
 
     private val foodsFilterList: ArrayList<String> = arrayListOf()
     private var _foodFilter = MutableLiveData(foodsFilterList)
-    private val _recipeList: LiveData<List<RecipeIngredients>?> = _foodFilter.switchMap {
+    // TODO We could emit the result directly in transform nd manage it with binding adapter (instead of the status variable)
+    private val _recipeList: LiveData<Result<List<RecipeIngredients>?>> = _foodFilter.switchMap {
         recipeDataRepository.getRecipesByIngredients(*it.toTypedArray())
             .onStart {
                 emit(Result.Loading)
@@ -89,26 +83,16 @@ class FoodDetailViewModel @ViewModelInject constructor(
                 emit(Result.ExError(Exception(error.message)))
             }
             .transform { value ->
-                when (value) {
-                    is Result.Loading -> _status.postValue(ApiCallStatus.Loading())
-                    is Result.Success -> {
-                        _status.postValue(ApiCallStatus.Done())
-                        emit(value.data)
-                    }
-                    is Result.ExError -> _status.postValue(ApiCallStatus.Error(
-                        value.exception.localizedMessage
-                    ))
-                    else -> Unit
-                }
+                emit(value)
             }
             .onCompletion {
                 // In this case it's called because the channel is closed in datasource
-                _status.value = ApiCallStatus.Done()
+                //_status.value = ApiCallStatus.Done()
             }
             .asLiveData(viewModelScope.coroutineContext)
     }
 
-    val recipeList: LiveData<List<RecipeIngredients>?> = _recipeList
+    val recipeList: LiveData<Result<List<RecipeIngredients>?>> = _recipeList
 
     init {
         _food.value = food.get<Bundle>(BUNDLE_FOOD_KEY).retrieveFood()
@@ -119,10 +103,12 @@ class FoodDetailViewModel @ViewModelInject constructor(
     fun deleteFood() {
         viewModelScope.launch {
             try {
-                val idDeleted = foodDataRepository.deleteFood(_food.value)
-                _foodDeleted.value = Event(idDeleted != 0)
+                _foodDeleted.value = _food.value?.let {
+                    Event(foodDataRepository.deleteFood(it) != 0)
+                } ?: Event(false)
             } catch (e: NullPointerException) {
                 Log.e("FoodDetail", e.message)
+                Event(false)
             }
         }
     }

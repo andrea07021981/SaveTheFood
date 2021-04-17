@@ -3,7 +3,7 @@ package com.example.savethefood.data.source.repository
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
-import com.example.savethefood.data.domain.RecipeIngredients
+import com.example.savethefood.data.domain.asDatabaseModel
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.local.entity.asDomainModel
 import com.example.savethefood.util.wrapEspressoIdlingResource
@@ -177,9 +177,9 @@ class FoodDataRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteFood(food: FoodDomain?): Int  = withContext(Dispatchers.IO) {
+    override suspend fun deleteFood(food: FoodDomain): Int  = withContext(Dispatchers.IO) {
         wrapEspressoIdlingResource {
-            foodLocalDataSource.deleteFood(food)
+            foodLocalDataSource.deleteFood(food.asDatabaseModel())
         }
     }
 }
