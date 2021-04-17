@@ -6,10 +6,7 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
-import com.example.savethefood.constants.ApiCallStatus
-import com.example.savethefood.constants.Constants
 import com.example.savethefood.constants.Constants.BUNDLE_FOOD_KEY
-import com.example.savethefood.constants.Constants.BUNDLE_FOOD_VALUE
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.RecipeIngredients
@@ -106,10 +103,12 @@ class FoodDetailViewModel @ViewModelInject constructor(
     fun deleteFood() {
         viewModelScope.launch {
             try {
-                val idDeleted = foodDataRepository.deleteFood(_food.value)
-                _foodDeleted.value = Event(idDeleted != 0)
+                _foodDeleted.value = _food.value?.let {
+                    Event(foodDataRepository.deleteFood(it) != 0)
+                } ?: Event(false)
             } catch (e: NullPointerException) {
                 Log.e("FoodDetail", e.message)
+                Event(false)
             }
         }
     }

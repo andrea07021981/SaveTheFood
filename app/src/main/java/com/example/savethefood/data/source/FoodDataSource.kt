@@ -1,6 +1,5 @@
 package com.example.savethefood.data.source
 
-import androidx.lifecycle.LiveData
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
@@ -26,5 +25,5 @@ interface FoodDataSource {
 
     suspend fun getLocalFoods(): Result<List<FoodDomain>>
 
-    suspend fun deleteFood(food: FoodDomain?): Int
+    suspend fun deleteFood(food: FoodEntity): Int
 }

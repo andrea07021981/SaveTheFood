@@ -3,7 +3,6 @@ package com.example.savethefood.data.source.repository
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
-import com.example.savethefood.data.domain.RecipeIngredients
 import kotlinx.coroutines.flow.Flow
 
 interface FoodRepository {
@@ -22,5 +21,5 @@ interface FoodRepository {
 
     suspend fun getLocalFoods(): Result<List<FoodDomain>>
 
-    suspend fun deleteFood(food: FoodDomain?): Int
+    suspend fun deleteFood(food: FoodDomain): Int
 }

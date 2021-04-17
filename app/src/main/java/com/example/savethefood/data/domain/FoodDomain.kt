@@ -28,6 +28,7 @@ data class FoodDomain(
 
 fun FoodDomain.asDatabaseModel(): FoodEntity {
     return FoodEntity(
+        id = id,
         title = title,
         description = description,
         img = img,

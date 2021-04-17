@@ -55,7 +55,9 @@ object RecipeBindingUtils {
     @BindingAdapter("bind:listData")
     fun bindRecipeIngredientsRecycleView(recyclerView: RecyclerView, data: Result<List<RecipeIngredients>?>) {
         val adapter = recyclerView.adapter as RecipeIngredientsAdapter
-        if (data is Result.Success)  adapter.submitList(data.data)
+        if (data is Result.Success) {
+            adapter.submitList(data.data)
+        }
     }
 
     @JvmStatic

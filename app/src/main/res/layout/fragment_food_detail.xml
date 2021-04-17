@@ -278,6 +278,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:visibility="gone"
+                    bind:apiStatusVisibility="@{foodDetailViewModel.recipeList}"
                     tools:listitem="@layout/pair_recipe_item"
                     bind:listData="@{foodDetailViewModel.recipeList}"/>
             </androidx.constraintlayout.widget.ConstraintLayout>

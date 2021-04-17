@@ -3,7 +3,7 @@ package com.example.savethefood.data.source.repository
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
-import com.example.savethefood.data.domain.RecipeIngredients
+import com.example.savethefood.data.domain.asDatabaseModel
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.succeeded
 import kotlinx.coroutines.Dispatchers
@@ -73,7 +73,7 @@ class FakeFoodDataRepositoryTest(
         return fakeLocalFoodDataSourceTest.getLocalFoods()
     }
 
-    override suspend fun deleteFood(food: FoodDomain?): Int {
-        return fakeLocalFoodDataSourceTest.deleteFood(food)
+    override suspend fun deleteFood(food: FoodDomain): Int {
+        return fakeLocalFoodDataSourceTest.deleteFood(food.asDatabaseModel())
     }
 }
