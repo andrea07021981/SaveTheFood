@@ -34,10 +34,6 @@ class FoodDetailViewModel @ViewModelInject constructor(
     val recipeAdded: LiveData<Result<RecipeIngredients?>>
         get() = _recipeAdded
 
-    private val _status = MutableLiveData<ApiCallStatus>(ApiCallStatus.Done())
-    val status: LiveData<ApiCallStatus>
-        get() = _status
-
     private val _food = MutableLiveData<FoodDomain>()
     val food: LiveData<FoodDomain>
         get() = _food
@@ -80,7 +76,8 @@ class FoodDetailViewModel @ViewModelInject constructor(
 
     private val foodsFilterList: ArrayList<String> = arrayListOf()
     private var _foodFilter = MutableLiveData(foodsFilterList)
-    private val _recipeList: LiveData<List<RecipeIngredients>?> = _foodFilter.switchMap {
+    // TODO We could emit the result directly in transform nd manage it with binding adapter (instead of the status variable)
+    private val _recipeList: LiveData<Result<List<RecipeIngredients>?>> = _foodFilter.switchMap {
         recipeDataRepository.getRecipesByIngredients(*it.toTypedArray())
             .onStart {
                 emit(Result.Loading)
@@ -89,26 +86,16 @@ class FoodDetailViewModel @ViewModelInject constructor(
                 emit(Result.ExError(Exception(error.message)))
             }
             .transform { value ->
-                when (value) {
-                    is Result.Loading -> _status.postValue(ApiCallStatus.Loading())
-                    is Result.Success -> {
-                        _status.postValue(ApiCallStatus.Done())
-                        emit(value.data)
-                    }
-                    is Result.ExError -> _status.postValue(ApiCallStatus.Error(
-                        value.exception.localizedMessage
-                    ))
-                    else -> Unit
-                }
+                emit(value)
             }
             .onCompletion {
                 // In this case it's called because the channel is closed in datasource
-                _status.value = ApiCallStatus.Done()
+                //_status.value = ApiCallStatus.Done()
             }
             .asLiveData(viewModelScope.coroutineContext)
     }
 
-    val recipeList: LiveData<List<RecipeIngredients>?> = _recipeList
+    val recipeList: LiveData<Result<List<RecipeIngredients>?>> = _recipeList
 
     init {
         _food.value = food.get<Bundle>(BUNDLE_FOOD_KEY).retrieveFood()

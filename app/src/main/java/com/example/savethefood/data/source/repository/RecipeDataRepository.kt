@@ -59,7 +59,7 @@ class RecipeDataRepository @Inject constructor(
                 }
                 .retryWhen {cause, attempt ->
                     if (cause is IOException && attempt < 5) {    // retry on IOException
-                        delay(1000)                     // delay for one second before retry
+                        delay(10000)                     // delay for one second before retry
                         true
                     } else {                                      // do not retry otherwise
                         false
