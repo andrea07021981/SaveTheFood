@@ -91,6 +91,7 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
         }
 
         viewModel.editFoodEvent.observe(viewLifecycleOwner, ::navigateTo)
+        viewModel.deleteFoodEvent.observe(viewLifecycleOwner, ::navigateTo)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

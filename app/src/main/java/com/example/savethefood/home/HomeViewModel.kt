@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.collections.HashMap
 
 // TODO use homwviewmodel for edit and add? save resources
 class HomeViewModel @ViewModelInject constructor(
@@ -104,9 +105,19 @@ class HomeViewModel @ViewModelInject constructor(
     val addFoodEvent: LiveData<Event<Unit>>
         get() = _addFoodEvent
 
+    /**
+     * Observer for the storagetype and numbers of each.
+     * Creates a map for all types if the list is empty
+     */
     val listByStorageType: LiveData<Map<StorageType, Int>?> = _foodList.map { result ->
-        result?.groupingBy(FoodDomain::storageType)?.eachCount()?.toMutableMap().also {
-            it?.set(StorageType.ALL, result?.count() ?: 0)
+        if (result?.size != 0) {
+            result?.groupingBy(FoodDomain::storageType)?.eachCount()?.toMutableMap().also {
+                it?.set(StorageType.ALL, result?.count() ?: 0)
+            }
+        } else {
+            StorageType.values().map {
+                it to 0
+            }.toMap()
         }
     }
 

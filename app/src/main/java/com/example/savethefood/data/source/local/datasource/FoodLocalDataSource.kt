@@ -59,8 +59,7 @@ class FoodLocalDataSource  @Inject constructor(
 
     override suspend fun deleteFood(food: FoodEntity): Int {
         return withContext(Dispatchers.IO) {
-            val deleteFood = foodDatabaseDao.deleteFood(food = food)
-            deleteFood
+            foodDatabaseDao.deleteFood(food = food)
         }
     }
 }
