@@ -5,20 +5,20 @@ IMPORTANT: Create a free api key here and change it in file ApiKey ----> https:/
 
 
 
-<img align="left" width="260" height="500" src="images/login.png">
-<img align="left" width="260" height="500" src="images/signUp.png">
-<img align="left" width="260" height="500" src="images/home.png">
-<img align="left" width="260" height="500" src="images/fooddetail.png">
+<img align="left" width="250" height="500" src="images/login.png">
+<img align="left" width="250" height="500" src="images/signUp.png">
+<img align="left" width="250" height="500" src="images/home.png">
+<img align="left" width="250" height="500" src="images/fooddetail.png">
 
-<img align="left" width="260" height="500" src="images/addFood.png">
+<img align="left" width="250" height="500" src="images/addFood.png">
 
-<img align="left" width="260" height="500" src="images/search.png">
+<img align="left" width="250" height="500" src="images/search.png">
 
-<img align="left" width="260" height="500" src="images/found.png">
+<img align="left" width="250" height="500" src="images/found.png">
 
-<img align="left" width="260" height="500" src="images/recipes.png">
+<img align="left" width="250" height="500" src="images/recipes.png">
 
-<img align="left" width="260" height="500" src="images/recipedetail.png">
+<img align="left" width="250" height="500" src="images/recipedetail.png">
 
-<img align="left" width="260" height="500" src="images/cook.png">
+<img align="left" width="250" height="500" src="images/cook.png">
 

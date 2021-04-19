@@ -54,10 +54,6 @@ class LoginFragmentTest {
     fun initRepository() {
         repository = FakeUserDataRepositoryTest(FakeUserDataSourceTest())
         loginViewModel = LoginViewModel(repository)
-            .apply {
-                emailValue.value = "a@a"
-                passwordValue.value = "a"
-            }
         val user1 = UserDomain("a", "a@a", "a")
         val user2 = UserDomain("b", "a@b", "b")
         val user3 = UserDomain("c", "a@c", "c")

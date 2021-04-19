@@ -73,7 +73,6 @@ class FoodDetailViewModel @ViewModelInject constructor(
 
     private val foodsFilterList: ArrayList<String> = arrayListOf()
     private var _foodFilter = MutableLiveData(foodsFilterList)
-    // TODO We could emit the result directly in transform nd manage it with binding adapter (instead of the status variable)
     private val _recipeList: LiveData<Result<List<RecipeIngredients>?>> = _foodFilter.switchMap {
         recipeDataRepository.getRecipesByIngredients(*it.toTypedArray())
             .onStart {
@@ -99,7 +98,6 @@ class FoodDetailViewModel @ViewModelInject constructor(
         foodsFilterList.add(_food.value?.title ?: "")
     }
 
-
     fun deleteFood() {
         viewModelScope.launch {
             try {
@@ -124,7 +122,6 @@ class FoodDetailViewModel @ViewModelInject constructor(
     }
 
     fun updateRecipeList(filter: String) {
-
         with(foodsFilterList) {
             if (contains(filter)) {
                 remove(filter)

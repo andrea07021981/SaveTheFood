@@ -6,6 +6,7 @@ import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.domain.RecipeIngredients
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.RecipeDataSource
+import com.example.savethefood.data.source.local.entity.RecipeEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -28,7 +29,11 @@ class FakeRecipeDataSourceTest(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getRecipe(recipeId: Int): RecipeIngredients? {
+    override suspend fun getRecipeIngredients(recipeId: Int): RecipeIngredients? {
+        TODO("Not yet implemented")
+    }
+
+    override fun getRecipesIngredients(): Flow<List<RecipeEntity>?> {
         TODO("Not yet implemented")
     }
 
