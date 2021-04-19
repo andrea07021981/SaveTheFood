@@ -52,6 +52,8 @@ class FoodDetailViewModel @ViewModelInject constructor(
         get() = _errorData
 
     // Collect the list without and filter the current food
+    // TODO can we move all methods in repositories but either keep the transform or handle
+    // TODO it with databinding, remove errordata and use the result live recipes
     private val _foodList: LiveData<List<FoodDomain>?> = foodDataRepository.getFoods()
         .onStart {
             emit(Result.Loading)

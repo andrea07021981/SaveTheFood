@@ -8,10 +8,11 @@ import com.example.savethefood.data.source.local.entity.asDomainModel
 import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.*
 import javax.inject.Inject
+import javax.inject.Named
 
 class UserDataRepository @Inject constructor(
-    private val userLocalDataSource: UserDataSource,
-    private val userRemoteDataSource: UserDataSource,
+    @field:[Named("UserLocalDataSource")] private val userLocalDataSource: UserDataSource,
+    @field:[Named("UserRemoteDataSource")] private val userRemoteDataSource: UserDataSource,
 ) : UserRepository {
 
     /**

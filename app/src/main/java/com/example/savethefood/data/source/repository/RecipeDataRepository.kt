@@ -11,10 +11,11 @@ import kotlinx.coroutines.flow.*
 import java.io.IOException
 import java.lang.Exception
 import javax.inject.Inject
+import javax.inject.Named
 
 class RecipeDataRepository @Inject constructor(
-    private val recipeLocalDataSource: RecipeDataSource,
-    private val recipeRemoteDataSource: RecipeDataSource,
+    @field:[Named("RecipeLocalDataSource")] private val recipeLocalDataSource: RecipeDataSource,
+    @field:[Named("RecipeRemoteDataSource")] private val recipeRemoteDataSource: RecipeDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : RecipeRepository {
 
