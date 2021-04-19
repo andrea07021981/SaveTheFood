@@ -5,6 +5,7 @@ import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.domain.RecipeIngredients
 import com.example.savethefood.data.domain.RecipeResult
+import com.example.savethefood.data.source.local.entity.RecipeEntity
 import kotlinx.coroutines.flow.Flow
 
 interface RecipeDataSource {
@@ -19,7 +20,9 @@ interface RecipeDataSource {
 
     suspend fun saveRecipe(recipe: RecipeIngredients): RecipeIngredients?
 
-    suspend fun getRecipe(recipeId: Int): RecipeIngredients?
+    suspend fun getRecipeIngredients(recipeId: Int): RecipeIngredients?
+
+    fun getRecipesIngredients(): Flow<List<RecipeIngredients>?>
 
     suspend fun deleteRecipe(recipeId: RecipeIngredients): Int?
 }

@@ -81,7 +81,7 @@ class HomeFragmentTest {
         //Hilt is not ready for fragmentscenario, this is another way to test a fragment with DI
         launchFragmentInHiltContainer<HomeFragment>(fragmentArgs) {
             val orAwaitValue = (this as HomeFragment).getHomeViewModel().foodList.getOrAwaitValue()
-            assert(orAwaitValue.succeeded)
+            assert(orAwaitValue is Result.Success<*>)
         }
 
 

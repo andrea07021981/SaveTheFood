@@ -266,4 +266,14 @@ object RecipeBindingUtils {
             View.VISIBLE
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("bind:imageHearth")
+    fun ImageView.setImageHearth(isSaved: Boolean) {
+        if (isSaved) {
+            setImageResource(R.drawable.ic_heart_selected)
+        } else {
+            setImageResource(R.drawable.ic_hearth)
+        }
+    }
 }

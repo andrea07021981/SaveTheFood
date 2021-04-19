@@ -151,10 +151,16 @@ class FoodDataRepository @Inject constructor(
                     check(it != null)
                 }
                 .map {
-                    if (it!!.isNotEmpty()) {
-                        Result.Success(it.asDomainModel())
-                    } else {
-                        Result.Error("No data")
+                    when {
+                        it == null -> {
+                            Result.Error("No data")
+                        }
+                        it.isNotEmpty() -> {
+                            Result.Success(it.asDomainModel())
+                        }
+                        else -> {
+                            Result.Success(emptyList())
+                        }
                     }
                 }.retryWhen {cause, attempt ->
                     if (cause is IOException && attempt < 5) {    // retry on IOException

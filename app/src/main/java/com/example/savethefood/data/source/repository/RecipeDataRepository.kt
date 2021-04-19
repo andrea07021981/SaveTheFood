@@ -31,12 +31,7 @@ class RecipeDataRepository @Inject constructor(
                     }
                 }
                 .retryWhen {cause, attempt ->
-                    if (cause is IOException && attempt < 5) {    // retry on IOException
-                        delay(1000)                     // delay for one second before retry
-                        true
-                    } else {                                      // do not retry otherwise
-                        false
-                    }
+                    retryConnection(cause, attempt)
                 }
                 .flowOn(ioDispatcher)
         }
@@ -44,28 +39,26 @@ class RecipeDataRepository @Inject constructor(
 
     override fun getRecipesByIngredients(vararg foodFilter: String?): Flow<Result<List<RecipeIngredients>?>> {
         return wrapEspressoIdlingResource {
-            // TODO use CacheOnSuccess like advance coroutines with oneach and change from flow to suspend and coroutine
-            // TODO add a custom property and search in db for save recipes, we need them for the heart icon
+            val flowLocalRecipes = recipeLocalDataSource.getRecipesIngredients()
             recipeRemoteDataSource.getRecipesByIngredients(*foodFilter)
-                .map { list ->
-                    list?.let {
-                        if (it.count() > 0) {
-                            Result.Success(it)
-                        } else {
-                            Result.Error("No data")
-                        }
-                    } ?: Result.ExError(Exception("Error retrieving data"))
-
-                }
-                .retryWhen {cause, attempt ->
-                    if (cause is IOException && attempt < 5) {    // retry on IOException
-                        delay(10000)                     // delay for one second before retry
-                        true
-                    } else {                                      // do not retry otherwise
-                        false
-                    }
+                .map(::recipeIngredientResult)
+                .retryWhen { cause, attempt ->
+                    retryConnection(cause, attempt)
                 }
                 .flowOn(ioDispatcher)
+                .combine(flowLocalRecipes) { remote, local ->
+                    if (!local.isNullOrEmpty()) {
+                        local.forEach { localRecipe ->
+                            if (remote is Result.Success) {
+                                remote.data.map {
+                                    it.saved = it.id == localRecipe.id
+                                }
+                            }
+                        }
+
+                    }
+                    remote
+                }
         }
     }
 
@@ -76,23 +69,42 @@ class RecipeDataRepository @Inject constructor(
         }
     }
 
+    // TODO review the multiple runs
     override suspend fun saveRecipe(recipe: RecipeIngredients) = withContext(ioDispatcher){
         wrapEspressoIdlingResource {
-            // TODO check if we are are saving or deleting, WE just need ot check if we have a record
-            // if exist, delete otherwise :
-            // TODO Retrieve the network recipe by id and save locally
+            val dbRecipe = recipeLocalDataSource.getRecipeIngredients(recipe.id)
 
-            val dbRecipe = recipeLocalDataSource.getRecipe(recipe.id)
             // If present, remove from favourites and return
-            return@withContext dbRecipe?.run {
-                recipeLocalDataSource.deleteRecipe(recipe)
-                Result.Success(null)
-            } ?: kotlin.run {
+            dbRecipe?.run {
+                val deleteRecipe = recipeLocalDataSource.deleteRecipe(recipe)
+                recipe.saved = deleteRecipe != 0
+                Result.Success(recipe)
+            } ?: run {
                 val newRecipe = recipeLocalDataSource.saveRecipe(recipe)
-                newRecipe?.let {
-                    Result.Success(it)
-                } ?: Result.Error("No inserted")
+                newRecipe?.run {
+                    this.saved = true
+                    Result.Success(this)
+                } ?: Result.Error("No record inserted")
             }
         }
     }
+
+    private fun recipeIngredientResult(list: List<RecipeIngredients>?): Result<List<RecipeIngredients>> {
+        return list?.let {
+            if (it.count() > 0) {
+                Result.Success(it)
+            } else {
+                Result.Error("No data")
+            }
+        } ?: Result.ExError(Exception("Error retrieving data"))
+    }
+
+    // TODO find a ext fun, it's used in other repos
+    private suspend fun retryConnection(cause: Throwable, attempt: Long) =
+        if (cause is IOException && attempt < 5) {    // retry on IOException
+            delay(10000)                     // delay for one second before retry
+            true
+        } else {                                      // do not retry otherwise
+            false
+        }
 }

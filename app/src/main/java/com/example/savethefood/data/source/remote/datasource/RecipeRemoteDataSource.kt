@@ -7,6 +7,7 @@ import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.domain.RecipeIngredients
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.RecipeDataSource
+import com.example.savethefood.data.source.local.entity.RecipeEntity
 import com.example.savethefood.data.source.remote.datatransferobject.asDomainModel
 import com.example.savethefood.data.source.remote.service.FoodService
 import com.example.savethefood.util.isListOfNulls
@@ -65,8 +66,12 @@ class RecipeRemoteDataSource @Inject constructor(
         return null
     }
 
-    override suspend fun getRecipe(recipeId: Int): RecipeIngredients? {
+    override suspend fun getRecipeIngredients(recipeId: Int): RecipeIngredients? {
         return null
+    }
+
+    override fun getRecipesIngredients(): Flow<List<RecipeIngredients>?> {
+        return flow {  }
     }
 
     override suspend fun deleteRecipe(recipeId: RecipeIngredients): Int? {

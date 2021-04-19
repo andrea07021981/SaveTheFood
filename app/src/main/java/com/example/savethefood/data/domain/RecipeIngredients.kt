@@ -16,9 +16,10 @@ data class RecipeIngredients(
     val likes: Int,
     val missedIngredientCount: Int,
     val usedIngredientCount: Int,
-    val unUsedIngredientCount: Int
+    val unUsedIngredientCount: Int,
+    var saved: Boolean
 ): Parcelable {
-    constructor() : this(0,"","","",0,0,0, 0)
+    constructor() : this(0,"","","",0,0,0, 0, false)
 
     val totalIngredients: Int
         get() = usedIngredientCount + unUsedIngredientCount

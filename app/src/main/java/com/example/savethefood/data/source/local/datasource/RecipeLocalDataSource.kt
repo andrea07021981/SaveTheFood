@@ -4,11 +4,13 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.*
 import com.example.savethefood.data.source.RecipeDataSource
 import com.example.savethefood.data.source.local.dao.RecipeDatabaseDao
+import com.example.savethefood.data.source.local.entity.RecipeEntity
 import com.example.savethefood.data.source.local.entity.asDomainModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RecipeLocalDataSource @Inject constructor(
@@ -37,11 +39,15 @@ class RecipeLocalDataSource @Inject constructor(
         return null
     }
 
-    override suspend fun getRecipe(recipeId: Int): RecipeIngredients? {
-        return recipeDatabaseDao.getRecipe(recipeId).asDomainModel()
+    override suspend fun getRecipeIngredients(recipeId: Int): RecipeIngredients? {
+        return recipeDatabaseDao.getRecipe(recipeId)?.asDomainModel()
     }
 
-    override suspend fun deleteRecipe(recipeId: RecipeIngredients): Int? {
+    override fun getRecipesIngredients(): Flow<List<RecipeIngredients>?> {
+        return recipeDatabaseDao.getRecipes().asDomainModel()
+    }
+
+    override suspend fun deleteRecipe(recipeId: RecipeIngredients): Int {
         return recipeDatabaseDao.deleteRecipe(recipeId.asDatabaseModel())
     }
 }

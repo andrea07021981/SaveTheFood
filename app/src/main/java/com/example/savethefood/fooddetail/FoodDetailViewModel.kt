@@ -35,9 +35,9 @@ class FoodDetailViewModel @ViewModelInject constructor(
     val food: LiveData<FoodDomain>
         get() = _food
 
-    private val _foodDeleted = MutableLiveData<Event<Boolean>>()
-    val foodDeleted: LiveData<Event<Boolean>>
-        get() = _foodDeleted
+    private val _deleteFoodEvent = MutableLiveData<Event<Boolean>>()
+    val deleteFoodEvent: LiveData<Event<Boolean>>
+        get() = _deleteFoodEvent
 
     private val _recipeFoodEvent = MutableLiveData<Event<FoodDomain>>()
     val recipeFoodEvent: LiveData<Event<FoodDomain>>
@@ -73,7 +73,6 @@ class FoodDetailViewModel @ViewModelInject constructor(
 
     private val foodsFilterList: ArrayList<String> = arrayListOf()
     private var _foodFilter = MutableLiveData(foodsFilterList)
-    // TODO We could emit the result directly in transform nd manage it with binding adapter (instead of the status variable)
     private val _recipeList: LiveData<Result<List<RecipeIngredients>?>> = _foodFilter.switchMap {
         recipeDataRepository.getRecipesByIngredients(*it.toTypedArray())
             .onStart {
@@ -99,11 +98,10 @@ class FoodDetailViewModel @ViewModelInject constructor(
         foodsFilterList.add(_food.value?.title ?: "")
     }
 
-
     fun deleteFood() {
         viewModelScope.launch {
             try {
-                _foodDeleted.value = _food.value?.let {
+                _deleteFoodEvent.value = _food.value?.let {
                     Event(foodDataRepository.deleteFood(it) != 0)
                 } ?: Event(false)
             } catch (e: NullPointerException) {
@@ -124,7 +122,6 @@ class FoodDetailViewModel @ViewModelInject constructor(
     }
 
     fun updateRecipeList(filter: String) {
-
         with(foodsFilterList) {
             if (contains(filter)) {
                 remove(filter)
