@@ -73,6 +73,10 @@ class MainActivity : AppCompatActivity() {
             binding.toolbar.updateVisibility(destination.id)
         }
 
+        // The setupWithNavController should be use only with navdrawer and bottom nav
+        // With toolbar, The start destination of your navigation graph is considered the only top
+        // level destination. On all other destinations, the ActionBar will show the Up button
+        // we want to use the custom top level destination we must pass the appBarConfiguration
         binding.navView.setupWithNavController(navController)
     }
 
