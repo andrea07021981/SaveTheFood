@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.nav_host_fragment) as NavHostController
         val graphs = {
             setOf(
-                R.id.splashFragment, R.id.loginFragment, R.id.signUpFragment, R.id.homeFragmentContainer, R.id.recipeFragment, R.id.mapFragment
+                R.id.splashFragment, R.id.loginFragment, R.id.signUpFragment, R.id.homeFragmentContainer, R.id.recipeFragment, R.id.mapFragment, R.id.planFragment
             )
         }
         appBarConfiguration = AppBarConfiguration(graphs())
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.homeFragmentContainer, R.id.mapFragment, R.id.recipeFragment -> {
+                R.id.homeFragmentContainer, R.id.mapFragment, R.id.recipeFragment, R.id.planFragment -> {
                     binding.cordinatorBottom.visibility = View.VISIBLE
                 }
                 else -> binding.cordinatorBottom.visibility = View.GONE
@@ -73,6 +73,10 @@ class MainActivity : AppCompatActivity() {
             binding.toolbar.updateVisibility(destination.id)
         }
 
+        // The setupWithNavController should be use only with navdrawer and bottom nav
+        // With toolbar, The start destination of your navigation graph is considered the only top
+        // level destination. On all other destinations, the ActionBar will show the Up button
+        // we want to use the custom top level destination we must pass the appBarConfiguration
         binding.navView.setupWithNavController(navController)
     }
 

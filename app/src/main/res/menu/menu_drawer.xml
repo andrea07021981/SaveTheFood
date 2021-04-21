@@ -23,8 +23,8 @@
         android:contentDescription="@string/map"/>
 
     <item
-        android:id="@+id/settingsFragment"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="@string/settings"
-        android:contentDescription="@string/settings"/>
+        android:id="@+id/planFragment"
+        android:icon="@drawable/ic_planning"
+        android:title="Plan"
+        android:contentDescription="Plan"/>
 </menu>

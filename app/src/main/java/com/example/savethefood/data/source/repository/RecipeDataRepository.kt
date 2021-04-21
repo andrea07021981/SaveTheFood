@@ -11,10 +11,11 @@ import kotlinx.coroutines.flow.*
 import java.io.IOException
 import java.lang.Exception
 import javax.inject.Inject
+import javax.inject.Named
 
 class RecipeDataRepository @Inject constructor(
-    private val recipeLocalDataSource: RecipeDataSource,
-    private val recipeRemoteDataSource: RecipeDataSource,
+    @field:[Named("RecipeLocalDataSource")] private val recipeLocalDataSource: RecipeDataSource,
+    @field:[Named("RecipeRemoteDataSource")] private val recipeRemoteDataSource: RecipeDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : RecipeRepository {
 
@@ -69,22 +70,23 @@ class RecipeDataRepository @Inject constructor(
         }
     }
 
-    // TODO review the multiple runs
+    /**
+     * Save the recipe or delete it using the flag of RecipeIngredients class
+     */
     override suspend fun saveRecipe(recipe: RecipeIngredients) = withContext(ioDispatcher){
         wrapEspressoIdlingResource {
-            val dbRecipe = recipeLocalDataSource.getRecipeIngredients(recipe.id)
-
-            // If present, remove from favourites and return
-            dbRecipe?.run {
-                val deleteRecipe = recipeLocalDataSource.deleteRecipe(recipe)
-                recipe.saved = deleteRecipe != 0
-                Result.Success(recipe)
-            } ?: run {
-                val newRecipe = recipeLocalDataSource.saveRecipe(recipe)
-                newRecipe?.run {
-                    this.saved = true
-                    Result.Success(this)
-                } ?: Result.Error("No record inserted")
+            try {
+                if (recipe.saved) {
+                    val deleteRecipe = recipeLocalDataSource.deleteRecipe(recipe)
+                    recipe.saved = deleteRecipe != 0
+                    Result.Success(recipe)
+                } else {
+                    recipe.saved = true
+                    val newRecipe = recipeLocalDataSource.saveRecipe(recipe)
+                    Result.Success(newRecipe)
+                }
+            } catch (e: Exception) {
+                Result.ExError(e)
             }
         }
     }

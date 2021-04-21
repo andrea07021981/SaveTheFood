@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/recipeDetailFragment"
         android:name="com.example.savethefood.recipedetail.RecipeDetailFragment"
-        android:label="RecipeDetailFragment"
+        android:label="Recipe Detail"
         tools:layout="@layout/fragment_recipe_detail">
         <argument
             android:name="recipeResult"
@@ -35,7 +35,7 @@
     <fragment
         android:id="@+id/recipeFragment"
         android:name="com.example.savethefood.recipe.RecipeFragment"
-        android:label="RecipeFragment"
+        android:label="Recipe"
         tools:layout="@layout/fragment_receipe">
         <action
             android:id="@+id/action_recipeFragment_to_recipeDetailFragment"
@@ -110,7 +110,7 @@
     <fragment
         android:id="@+id/addFoodFragment"
         android:name="com.example.savethefood.addfood.AddFoodFragment"
-        android:label="AddFoodFragment"
+        android:label="Add Food"
         tools:layout="@layout/fragment_add_food">
         <deepLink
             android:id="@+id/deepLink"
@@ -126,5 +126,8 @@
         android:name="com.example.savethefood.home.FilterFragment"
         android:label="FilterFragment"
         tools:layout="@layout/fragment_filter"/>
-
+    <fragment
+        android:id="@+id/planFragment"
+        android:name="com.example.savethefood.plan.PlanFragment"
+        android:label="Food Plan" />
 </navigation>

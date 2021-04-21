@@ -11,6 +11,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Named
 
 //TODO Repository should receive base data (Network domain ex), and convert THEN EMIT
 
@@ -26,8 +27,8 @@ import javax.inject.Inject
  */
 @ExperimentalCoroutinesApi
 class FoodDataRepository @Inject constructor(
-    private val foodLocalDataSource: FoodDataSource,
-    private val foodRemoteDataSource: FoodDataSource,
+    @field:[Named("FoodLocalDataSource")] private val foodLocalDataSource: FoodDataSource,
+    @field:[Named("FoodRemoteDataSource")] private val foodRemoteDataSource: FoodDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : FoodRepository {
 /*

@@ -18,11 +18,13 @@ interface RecipeDataSource {
     @Throws(Exception::class)
     suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain>
 
+    @Throws(Exception::class)
     suspend fun saveRecipe(recipe: RecipeIngredients): RecipeIngredients?
 
     suspend fun getRecipeIngredients(recipeId: Int): RecipeIngredients?
 
     fun getRecipesIngredients(): Flow<List<RecipeIngredients>?>
 
+    @Throws(Exception::class)
     suspend fun deleteRecipe(recipeId: RecipeIngredients): Int?
 }
