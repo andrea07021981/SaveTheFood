@@ -126,5 +126,8 @@
         android:name="com.example.savethefood.home.FilterFragment"
         android:label="FilterFragment"
         tools:layout="@layout/fragment_filter"/>
-
+    <fragment
+        android:id="@+id/planFragment"
+        android:name="com.example.savethefood.plan.PlanFragment"
+        android:label="Food Plan" />
 </navigation>
