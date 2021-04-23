@@ -38,6 +38,9 @@ class RecipeDataRepository @Inject constructor(
         }
     }
 
+    /**
+     * Get the recipe with ingredients and combine them with the saved ones
+     */
     override fun getRecipesByIngredients(vararg foodFilter: String?): Flow<Result<List<RecipeIngredients>?>> {
         return wrapEspressoIdlingResource {
             val flowLocalRecipes = recipeLocalDataSource.getRecipesIngredients()

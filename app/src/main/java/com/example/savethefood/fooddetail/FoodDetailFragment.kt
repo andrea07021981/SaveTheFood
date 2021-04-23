@@ -1,13 +1,11 @@
 package com.example.savethefood.fooddetail
 
-import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -21,12 +19,9 @@ import androidx.transition.TransitionInflater
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.Event
 import com.example.savethefood.R
-import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
-import com.example.savethefood.home.HomeFragmentContainerDirections
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_food.*
 import kotlinx.android.synthetic.main.pair_item.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -89,7 +84,7 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
         })
 
         viewModel.recipeAdded.observe(viewLifecycleOwner) {
-            recyclerView.adapter?.notifyDataSetChanged()
+            dataBinding.recipesRecycleView.adapter?.notifyDataSetChanged()
         }
 
         viewModel.editFoodEvent.observe(viewLifecycleOwner, ::navigateTo)
