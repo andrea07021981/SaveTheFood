@@ -33,7 +33,7 @@ class FakeRecipeDataSourceTest(
         TODO("Not yet implemented")
     }
 
-    override fun getRecipesIngredients(): Flow<List<RecipeEntity>?> {
+    override fun getRecipesIngredients(): Flow<List<RecipeIngredients>?> {
         TODO("Not yet implemented")
     }
 

@@ -23,8 +23,6 @@ import com.example.savethefood.constants.QuantityType
 import com.example.savethefood.constants.StorageType
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodItem
-import com.example.savethefood.data.domain.ProductDomain
-import com.example.savethefood.food.FoodSearchAdapter
 import com.example.savethefood.fooddetail.FoodPantryAdapter
 import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
@@ -50,13 +48,6 @@ object FoodBindingUtils {
         view.setText(value)
     }
 
-    @JvmStatic
-    @BindingAdapter("bind:listFoods")
-    fun bindRecycleView(recyclerView: RecyclerView, data: List<ProductDomain>?) {
-        val adapter = recyclerView.adapter as FoodSearchAdapter
-        adapter.submitList(data)
-    }
-    
     /**
      * Uses the Glide library to load an image by URL into an [ImageView]
      */
