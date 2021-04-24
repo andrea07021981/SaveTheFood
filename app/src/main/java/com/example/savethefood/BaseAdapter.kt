@@ -12,14 +12,21 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * Base adapter with T type and DB for binding
  */
-abstract class BaseAdapter<T, DB: ViewDataBinding>(
+abstract class BaseAdapter<T, DB : ViewDataBinding>(
     private val onClickListener: BaseClickListener<T>,
-) : ListAdapter<T, BaseAdapter.BaseViewHolder<DB>>(BaseItemCallback<T>()) {
+    compareItems: (old: T, new: T) -> Boolean,
+    compareContents: (old: T, new: T) -> Boolean
+) : ListAdapter<T, BaseAdapter.BaseViewHolder<DB>>(
+    BaseItemCallback<T>(
+        compareItems,
+        compareContents
+    )
+) {
 
     protected abstract val layoutRes: Int
     protected lateinit var dataBinding: DB
 
-    class BaseViewHolder<DB: ViewDataBinding>(
+    class BaseViewHolder<DB : ViewDataBinding>(
         val binding: DB,
     ) : RecyclerView.ViewHolder(binding.root)
 
@@ -31,15 +38,30 @@ abstract class BaseAdapter<T, DB: ViewDataBinding>(
 
     abstract fun bind(holder: BaseViewHolder<DB>, clickListener: BaseClickListener<T>, item: T)
 
-    override fun onBindViewHolder(holder: BaseViewHolder<DB>, position: Int) {
-        bind(holder, onClickListener, getItem(position))
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
-    class BaseItemCallback<T> : DiffUtil.ItemCallback<T>() {
-        override fun areItemsTheSame(oldItem: T, newItem: T) = oldItem.toString() == newItem.toString()
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+    override fun onBindViewHolder(holder: BaseViewHolder<DB>, position: Int) {
+        bind(holder, onClickListener, getItem(position))
+        dataBinding.executePendingBindings()
+    }
+
+    /**
+     * Diffcall back with high order to handle it based on the type of every single adapter
+     */
+    class BaseItemCallback<T>(
+        private val compareItems: (old: T, new: T) -> Boolean,
+        private val compareContents: (old: T, new: T) -> Boolean
+    ) : DiffUtil.ItemCallback<T>() {
+        override fun areItemsTheSame(oldItem: T, newItem: T) = compareItems(oldItem, newItem)
 
         @SuppressLint("DiffUtilEquals")
-        override fun areContentsTheSame(oldItem: T, newItem: T) = oldItem == newItem
+        override fun areContentsTheSame(oldItem: T, newItem: T) = compareContents(oldItem, newItem)
     }
 
     interface Test<T> {

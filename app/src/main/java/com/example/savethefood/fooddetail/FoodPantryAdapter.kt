@@ -15,7 +15,11 @@ import com.example.savethefood.databinding.PairItemBinding
 
 class FoodPantryAdapter(
     onClickListener: BaseClickListener<FoodDomain>,
-) : BaseAdapter<FoodDomain, PairItemBinding>(onClickListener) {
+) : BaseAdapter<FoodDomain, PairItemBinding>(
+    onClickListener,
+    { old, new -> old.id == new.id },
+    { old, new -> old == new }
+) {
 
     override val layoutRes: Int
         get() = R.layout.pair_item

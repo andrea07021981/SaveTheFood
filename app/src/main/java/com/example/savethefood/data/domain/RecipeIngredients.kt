@@ -2,9 +2,6 @@ package com.example.savethefood.data.domain
 
 import android.os.Parcelable
 import com.example.savethefood.data.source.local.entity.RecipeEntity
-import com.example.savethefood.data.source.remote.datatransferobject.MissedIngredient
-import com.example.savethefood.data.source.remote.datatransferobject.UnusedIngredient
-import com.example.savethefood.data.source.remote.datatransferobject.UsedIngredient
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

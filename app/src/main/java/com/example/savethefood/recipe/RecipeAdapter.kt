@@ -7,7 +7,11 @@ import com.example.savethefood.databinding.RecipeItemBinding
 
 class RecipeAdapter(
     onClickListener: BaseClickListener<RecipeResult>,
-) : BaseAdapter<RecipeResult, RecipeItemBinding>(onClickListener) {
+) : BaseAdapter<RecipeResult, RecipeItemBinding>(
+    onClickListener,
+    { old, new -> old.id == new.id },
+    { old, new -> old == new }
+) {
 
     override val layoutRes: Int
         get() = R.layout.recipe_item

@@ -20,6 +20,7 @@ import com.example.savethefood.BaseFragment
 import com.example.savethefood.Event
 import com.example.savethefood.R
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.succeeded
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.pair_item.view.*
@@ -84,7 +85,9 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
         })
 
         viewModel.recipeAdded.observe(viewLifecycleOwner) {
-            dataBinding.recipesRecycleView.adapter?.notifyDataSetChanged()
+            if (it.succeeded) {
+                //dataBinding.recipesRecycleView.adapter?.notifyDataSetChanged()
+            }
         }
 
         viewModel.editFoodEvent.observe(viewLifecycleOwner, ::navigateTo)

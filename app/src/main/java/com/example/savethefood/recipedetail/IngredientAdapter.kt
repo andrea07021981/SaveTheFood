@@ -12,7 +12,11 @@ import com.example.savethefood.data.domain.ExtendedIngredientDomain
 
 class IngredientAdapter(
     onClickListener: BaseClickListener<ExtendedIngredientDomain>,
-) : BaseAdapter<ExtendedIngredientDomain, IngredientItemBinding>(onClickListener) {
+) : BaseAdapter<ExtendedIngredientDomain, IngredientItemBinding>(
+    onClickListener,
+    { old, new -> old.exIngredientId == new.exIngredientId },
+    { old, new -> old == new }
+) {
 
     override val layoutRes: Int
         get() = R.layout.ingredient_item
