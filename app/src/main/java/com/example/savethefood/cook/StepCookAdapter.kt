@@ -9,7 +9,11 @@ import com.example.savethefood.databinding.StepCookItemBinding
 
 class StepCookAdapter(
     onClickListener: BaseClickListener<StepDomain>,
-) : BaseAdapter<StepDomain, StepCookItemBinding>(onClickListener) {
+) : BaseAdapter<StepDomain, StepCookItemBinding>(
+    onClickListener,
+    { old, new -> old.stepNumber == new.stepNumber },
+    { old, new -> old == new }
+) {
 
     override val layoutRes: Int
         get() = R.layout.step_cook_item

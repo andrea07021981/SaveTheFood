@@ -22,6 +22,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import java.util.*
+import kotlin.collections.LinkedHashSet
 
 
 class AddFoodViewModel @ViewModelInject constructor(
@@ -33,8 +34,9 @@ class AddFoodViewModel @ViewModelInject constructor(
 
     private val foodTypeFilter = MutableLiveData<String>()
 
-    private var _foodsItems: ArraySet<FoodItem>? = null
+    private var _foodsItems: LinkedHashSet<FoodItem>? = null
     val foodItems = foodTypeFilter.switchMap { filter ->
+        // We need the livedata constructor since _foodItems is not a live data
         liveData {
             if (filter.isNullOrEmpty()) {
                 emit(_foodsItems)
@@ -136,9 +138,11 @@ class AddFoodViewModel @ViewModelInject constructor(
         }
     }
 
-    // TODO change to sorted set or treeset
-    private fun getCustomSet(): ArraySet<FoodItem> {
-        val customObjects = arraySetOf<FoodItem>()
+    /**
+     * Create a LinkedHashset, we don't have duplicates but must keep the order
+     */
+    private fun getCustomSet(): LinkedHashSet<FoodItem> {
+        val customObjects = linkedSetOf<FoodItem>()
         customObjects
             .apply {
                 FoodImage.values()

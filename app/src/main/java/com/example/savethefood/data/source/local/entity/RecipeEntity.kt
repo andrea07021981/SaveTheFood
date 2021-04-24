@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 // TODO create the complex ER relations, the entity must be like NetworkRecipeInfo
 @Entity(tableName = "Recipe")
 data class RecipeEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int,
     val title: String,
     val image: String

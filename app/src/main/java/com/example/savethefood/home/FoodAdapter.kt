@@ -7,7 +7,11 @@ import com.example.savethefood.data.domain.FoodDomain
 
 class FoodAdapter(
     onClickListener: BaseClickListener<FoodDomain>,
-) : BaseAdapter<FoodDomain, FoodItemBinding>(onClickListener) {
+) : BaseAdapter<FoodDomain, FoodItemBinding>(
+    onClickListener,
+    { old, new -> old.id == new.id },
+    { old, new -> old == new }
+) {
 
     override val layoutRes: Int
         get() = R.layout.food_item

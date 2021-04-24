@@ -1,6 +1,7 @@
 package com.example.savethefood.home
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
@@ -40,7 +41,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     @VisibleForTesting
     fun getHomeViewModel() = viewModel
 
-    private lateinit var filterType: StorageType
+    private lateinit var filterStorageType: StorageType
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,13 +59,13 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
             foodRecycleview.layoutManager = LinearLayoutManager(activity)
             foodRecycleview.adapter =
                 FoodAdapter(BaseAdapter.BaseClickListener { food ->
-                    // TODO Pass the item view
+                    // TODO Pass the item view, we need it for the transition shared element
                     viewModel.moveToFoodDetail(food)
                 })
-            //it.foodRecycleview.scheduleLayoutAnimation()
             arguments?.takeIf { it.containsKey(FILTER_LIST) }?.apply {
-                filterType = getSerializable(FILTER_LIST) as StorageType
-                viewModel.updateIndex(filterType)
+                filterStorageType = getSerializable(FILTER_LIST) as StorageType
+                viewModel.updateIndex(filterStorageType)
+                filterType = filterStorageType
             }
         }
     }
@@ -72,16 +73,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
     override fun activateObservers() {
         viewModel.detailFoodEvent.observe(viewLifecycleOwner, ::navigateTo) // TODO is it better to keep the EventObserver and navigateTo(it)?
         viewModel.addFoodEvent.observe(viewLifecycleOwner, ::navigateTo)
-
-        // TODO can we move it into homebindingutils with bindingadapter in xml?
-        viewModel.foodList.observe(viewLifecycleOwner) { list ->
-            (dataBinding.foodRecycleview.adapter as FoodAdapter)
-                .submitList(
-                    list?.filter { foodDomain ->
-                        foodDomain.storageType == filterType ||
-                                filterType == StorageType.ALL}
-                )
-        }
     }
 
     override fun <T> navigateTo(event: Event<T>?) {

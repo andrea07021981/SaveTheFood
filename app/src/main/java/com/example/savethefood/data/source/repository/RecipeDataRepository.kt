@@ -52,14 +52,11 @@ class RecipeDataRepository @Inject constructor(
                 .flowOn(ioDispatcher)
                 .combine(flowLocalRecipes) { remote, local ->
                     if (!local.isNullOrEmpty()) {
-                        local.forEach { localRecipe ->
-                            if (remote is Result.Success) {
-                                remote.data.map {
-                                    it.saved = it.id == localRecipe.id
-                                }
+                        if (remote is Result.Success) {
+                            remote.data.forEach { remoteRecipe ->
+                                remoteRecipe.saved = local.any { remoteRecipe.id == it.id}
                             }
                         }
-
                     }
                     remote
                 }
@@ -94,10 +91,13 @@ class RecipeDataRepository @Inject constructor(
         }
     }
 
+    /**
+     * Calculate the result and order the list based on the total ingredients matched
+     */
     private fun recipeIngredientResult(list: List<RecipeIngredients>?): Result<List<RecipeIngredients>> {
         return list?.let {
             if (it.count() > 0) {
-                Result.Success(it)
+                Result.Success(it.sortedBy(RecipeIngredients::id))
             } else {
                 Result.Error("No data")
             }

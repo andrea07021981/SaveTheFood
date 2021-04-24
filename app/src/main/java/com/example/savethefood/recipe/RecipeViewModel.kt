@@ -40,7 +40,7 @@ class RecipeViewModel @ViewModelInject constructor(
         get() = _reload
 
     // We could also use liveData { ....onCollect() { emit(value)}}
-    // TODO Emit Result<List<RecipeResult>?>> like fooddetail recipes
+    // TODO Emit Result<List<RecipeResult>?>> like fooddetail recipes and remove the status
     // TODO move to stateflow like https://github.com/Mori-Atsushi/android-flow-mvvm-sample
     // https://github.com/Mori-Atsushi/android-flow-mvvm-sample/blob/master/app/src/main/kotlin/com/example/flow_mvvm_sample/ui/detail/DetailViewModel.kt
     private var _recipeListResult: LiveData<List<RecipeResult>?> =

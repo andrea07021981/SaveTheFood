@@ -14,7 +14,10 @@ import com.example.savethefood.databinding.IngredientInstructionItemBinding
 
 class EquipmentInstructionAdapter(
     onClickListener: BaseClickListener<EquipmentDomain>,
-) : BaseAdapter<EquipmentDomain, EquipmentInstructionItemBinding>(onClickListener) {
+) : BaseAdapter<EquipmentDomain, EquipmentInstructionItemBinding>(
+    onClickListener,
+    { old, new -> old.equipmentId == new.equipmentId },
+    { old, new -> old == new }) {
 
     override val layoutRes: Int
         get() = R.layout.equipment_instruction_item
