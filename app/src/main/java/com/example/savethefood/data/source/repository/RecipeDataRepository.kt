@@ -52,14 +52,11 @@ class RecipeDataRepository @Inject constructor(
                 .flowOn(ioDispatcher)
                 .combine(flowLocalRecipes) { remote, local ->
                     if (!local.isNullOrEmpty()) {
-                        local.forEach { localRecipe ->
-                            if (remote is Result.Success) {
-                                remote.data.map {
-                                    it.saved = it.id == localRecipe.id
-                                }
+                        if (remote is Result.Success) {
+                            remote.data.forEach { remoteRecipe ->
+                                remoteRecipe.saved = local.any { remoteRecipe.id == it.id}
                             }
                         }
-
                     }
                     remote
                 }
