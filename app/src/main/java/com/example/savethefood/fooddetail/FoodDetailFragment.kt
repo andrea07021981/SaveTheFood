@@ -86,7 +86,8 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
 
         viewModel.recipeAdded.observe(viewLifecycleOwner) {
             if (it.succeeded) {
-                //dataBinding.recipesRecycleView.adapter?.notifyDataSetChanged()
+                // TODO it does not update the item, to fix
+                dataBinding.recipesRecycleView.adapter?.notifyDataSetChanged()
             }
         }
 

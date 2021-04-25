@@ -64,10 +64,6 @@ abstract class BaseAdapter<T, DB : ViewDataBinding>(
         override fun areContentsTheSame(oldItem: T, newItem: T) = compareContents(oldItem, newItem)
     }
 
-    interface Test<T> {
-        fun onClick(data: T)
-    }
-
     open class BaseClickListener<T>(
         open val clickListener: (data: T) -> Unit
     ) {
