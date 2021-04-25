@@ -1,9 +1,14 @@
 package com.example.savethefood.util
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRatingBar
+import androidx.core.graphics.ColorUtils
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -53,7 +58,10 @@ object RecipeBindingUtils {
 
     @JvmStatic
     @BindingAdapter("bind:listData")
-    fun bindRecipeIngredientsRecycleView(recyclerView: RecyclerView, data: Result<List<RecipeIngredients>?>) {
+    fun bindRecipeIngredientsRecycleView(
+        recyclerView: RecyclerView,
+        data: Result<List<RecipeIngredients>?>
+    ) {
         val adapter = recyclerView.adapter as RecipeIngredientsAdapter
         if (data is Result.Success) {
             adapter.submitList(data.data)
@@ -62,7 +70,10 @@ object RecipeBindingUtils {
 
     @JvmStatic
     @BindingAdapter("bind:listIngredientsInstruction")
-    fun bindIngredientInstructionsRecycleView(recyclerView: RecyclerView, data: List<IngredientsDomain>?) {
+    fun bindIngredientInstructionsRecycleView(
+        recyclerView: RecyclerView,
+        data: List<IngredientsDomain>?
+    ) {
         if (recyclerView.adapter is IngredientInstructionAdapter) {
             val adapter = recyclerView.adapter as IngredientInstructionAdapter
             adapter.submitList(data)
@@ -71,7 +82,10 @@ object RecipeBindingUtils {
 
     @JvmStatic
     @BindingAdapter("bind:listEquipmentsInstruction")
-    fun bindEquipmentInstructionsRecycleView(recyclerView: RecyclerView, data: List<EquipmentDomain>?) {
+    fun bindEquipmentInstructionsRecycleView(
+        recyclerView: RecyclerView,
+        data: List<EquipmentDomain>?
+    ) {
         if (recyclerView.adapter is EquipmentInstructionAdapter) {
             val adapter = recyclerView.adapter as EquipmentInstructionAdapter
             adapter.submitList(data)
@@ -80,7 +94,10 @@ object RecipeBindingUtils {
 
     @JvmStatic
     @BindingAdapter("bind:listIngredients")
-    fun bindIngredientsRecycleView(recyclerView: RecyclerView, data: List<ExtendedIngredientDomain>?) {
+    fun bindIngredientsRecycleView(
+        recyclerView: RecyclerView,
+        data: List<ExtendedIngredientDomain>?
+    ) {
         val adapter = recyclerView.adapter as IngredientAdapter
         adapter.submitList(data)
     }
@@ -111,7 +128,8 @@ object RecipeBindingUtils {
                 .apply(
                     RequestOptions()
                         .placeholder(R.drawable.loading_animation)
-                        .error(R.drawable.ic_broken_image))
+                        .error(R.drawable.ic_broken_image)
+                )
                 .into(imgView)
         }
     }
@@ -133,7 +151,8 @@ object RecipeBindingUtils {
                 .apply(
                     RequestOptions()
                         .placeholder(R.drawable.loading_animation)
-                        .error(R.drawable.ic_broken_image))
+                        .error(R.drawable.ic_broken_image)
+                )
                 .into(imgView)
         }
     }
@@ -155,7 +174,8 @@ object RecipeBindingUtils {
             .apply(
                 RequestOptions()
                     .placeholder(R.drawable.loading_animation)
-                    .error(R.drawable.ic_broken_image))
+                    .error(R.drawable.ic_broken_image)
+            )
             .into(imgView)
     }
 
@@ -170,7 +190,7 @@ object RecipeBindingUtils {
             in 21..40 -> 2
             in 41..60 -> 3
             in 61..80 -> 4
-            in 81..100 ->5
+            in 81..100 -> 5
             else -> 0
         }
     }
@@ -198,10 +218,13 @@ object RecipeBindingUtils {
     @BindingAdapter("bind:formattedText")
     fun TextView.formattedText(minutes: Int?) {
         text = minutes?.let {
-            String.format(context.getString(
-                R.string.format__date,
-                it.div(60),
-                it.rem(60)))
+            String.format(
+                context.getString(
+                    R.string.format__date,
+                    it.div(60),
+                    it.rem(60)
+                )
+            )
         } ?: "--"
     }
 

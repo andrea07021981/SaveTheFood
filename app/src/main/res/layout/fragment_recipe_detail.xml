@@ -69,9 +69,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
-                android:elevation="16dp"
-                app:cardCornerRadius="15dp">
+                android:elevation="16dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -88,7 +86,7 @@
                         android:gravity="start"
                         android:lineSpacingExtra="8dp"
                         android:text="@{recipeDetailViewModel.recipeDetail.recipeTitle}"
-                        android:textSize="16sp"
+                        android:textSize="32sp"
                         android:textStyle="bold"
                         android:transitionName="foodTitle"
                         app:layout_constraintEnd_toStartOf="@+id/imageButton"
@@ -102,15 +100,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
-                        android:layout_marginTop="24dp"
                         android:layout_marginEnd="3dp"
                         android:backgroundTint="@color/zxing_transparent"
+                        android:cropToPadding="false"
+                        android:onClick="@{() -> recipeDetailViewModel.moveToCookDetail(recipeDetailViewModel.recipeDetail)}"
+                        app:layout_constraintBottom_toBottomOf="@+id/name_textview"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/name_textview"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_heart_selected"
-                        android:onClick="@{() -> recipeDetailViewModel.moveToCookDetail(recipeDetailViewModel.recipeDetail)}"/>
+                        app:layout_constraintTop_toTopOf="@+id/name_textview"
+                        app:srcCompat="@drawable/ic_heart_selected" />
 
                     <androidx.appcompat.widget.AppCompatRatingBar
                         android:id="@+id/ratingBar"
@@ -126,134 +125,134 @@
                         app:layout_constraintTop_toBottomOf="@+id/name_textview"
                         bind:starsValue="@{recipeDetailViewModel.recipeDetail}" />
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardView10"
-                        android:layout_width="100dp"
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout5"
+                        android:layout_width="0dp"
                         android:layout_height="80dp"
-                        android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toStartOf="@+id/cardView11"
-                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/ratingBar">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/colorPrimaryAlpha"
+                        <TextView
+                            android:id="@+id/exp_text_view6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
                             android:gravity="center_vertical"
-                            android:orientation="vertical"
-                            android:padding="1dp">
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/view3"
+                            app:layout_constraintEnd_toStartOf="@+id/view3"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView10"
+                            bind:formattedText="@{recipeDetailViewModel.recipeDetail.recipePreparationMinutes}"
+                            tools:text="00.00" />
 
-                            <ImageView
-                                android:src="@drawable/ic_clock"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.5"
-                                android:background="@android:color/white"
-                                android:gravity="center"
-                                android:textSize="12sp"
-                                android:text="@string/time"
-                                tools:text="Time" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.5"
-                                android:background="@android:color/white"
-                                android:gravity="center"
-                                android:textStyle="bold"
-                                android:textSize="15sp"
-                                bind:formattedText="@{recipeDetailViewModel.recipeDetail.recipePreparationMinutes}"
-                                tools:text="00.00" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardView11"
-                        android:layout_width="100dp"
-                        android:layout_height="80dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toStartOf="@+id/cardView12"
-                        app:layout_constraintStart_toEndOf="@+id/cardView10"
-                        app:layout_constraintTop_toBottomOf="@+id/ratingBar">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/colorPrimaryAlpha"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:padding="1dp">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0.5"
-                                android:background="@android:color/white"
-                                android:gravity="center"
-                                android:src="@drawable/ic_health"
-                                android:text="@string/health"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.5"
-                                android:background="@android:color/white"
-                                android:gravity="center"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                bind:healthValue="@{recipeDetailViewModel.recipeDetail}"
-                                tools:text="AVERAGE" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardView12"
-                        android:layout_width="100dp"
-                        android:layout_height="80dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/cardView11"
-                        app:layout_constraintTop_toBottomOf="@+id/ratingBar">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/colorPrimaryAlpha"
+                        <TextView
+                            android:id="@+id/textView18"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:orientation="vertical"
-                            android:padding="1dp">
+                            android:text="Health"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textColor="@color/colorAccent"
+                            app:layout_constraintEnd_toStartOf="@+id/view4"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/view3"
+                            app:layout_constraintTop_toTopOf="@+id/view3" />
 
-                            <ImageView
-                                android:src="@drawable/ic_dollar"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.5"
-                                android:background="@android:color/white"
-                                android:gravity="center"
-                                android:textSize="12sp"
-                                android:text="@string/price" />
+                        <TextView
+                            android:id="@+id/exp_text_view7"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center_vertical"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/view3"
+                            app:layout_constraintEnd_toStartOf="@+id/view4"
+                            app:layout_constraintStart_toEndOf="@+id/view3"
+                            app:layout_constraintTop_toBottomOf="@+id/textView18"
+                            bind:healthValue="@{recipeDetailViewModel.recipeDetail}"
+                            tools:text="AVERAGE" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.5"
-                                android:background="@android:color/white"
-                                android:gravity="center"
-                                android:textSize="15sp"
-                                android:textStyle="bold"
-                                android:text="@{@string/format_price(recipeDetailViewModel.recipeDetail.recipePricePerServing)}"
-                                tools:text="00.00" />
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                        <TextView
+                            android:id="@+id/exp_text_view8"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center_vertical"
+                            android:text="@{@string/format_price(recipeDetailViewModel.recipeDetail.recipePricePerServing)}"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/view4"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/view4"
+                            app:layout_constraintTop_toBottomOf="@+id/textView19"
+                            tools:text="00.00" />
+
+                        <TextView
+                            android:id="@+id/textView19"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="Cost"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textColor="@color/colorAccent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/view4"
+                            app:layout_constraintTop_toTopOf="@+id/view4" />
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="Time"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textColor="@color/colorAccent"
+                            app:layout_constraintEnd_toStartOf="@+id/view3"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/view3" />
+
+                        <View
+                            android:id="@+id/view3"
+                            android:layout_width="1dp"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@android:color/darker_gray"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/textView18"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/textView10"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/view4"
+                            android:layout_width="1dp"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@android:color/darker_gray"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/textView19"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/textView18"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
                         android:id="@+id/textView2"
@@ -305,7 +304,7 @@
                         android:layout_marginTop="16dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cardView11"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5"
                         bind:listIngredients="@{recipeDetailViewModel.recipeDetail.recipeExtendedIngredients}"
                         tools:listitem="@layout/ingredient_item" />
 
