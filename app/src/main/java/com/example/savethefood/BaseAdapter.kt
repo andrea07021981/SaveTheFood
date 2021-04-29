@@ -11,6 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Base adapter with T type and DB for binding
+ * Try to add this as generic https://medium.com/coding-blocks/implementing-selection-in-recyclerview-36a9739844e0
+ * must change inner BaseViewHolder amd : ListAdapter<T, BaseAdapter.BaseViewHolder<DB>>( to
+ * ListAdapter<T, BaseAdapter<T, DB>.BaseViewHolder<DB>>(
+ * Add the tracker to the subclasses is easier?
  */
 abstract class BaseAdapter<T, DB : ViewDataBinding>(
     private val onClickListener: BaseClickListener<T>,
