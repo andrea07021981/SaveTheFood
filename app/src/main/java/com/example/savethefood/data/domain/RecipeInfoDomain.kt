@@ -8,7 +8,7 @@ data class RecipeInfoDomain(
     val recipeAggregateLikes: Int,
     val recipeAnalyzedInstructions: List<AnalyzedInstructionDomain>,
     val recipeCheap: Boolean,
-    val recipeCookingMinutes: Int,
+    val recipeCookingMinutes: Int?,
     val recipeCreditsText: String,
     val recipeCuisines: List<String>,
     val recipeDairyFree: Boolean,
@@ -21,11 +21,11 @@ data class RecipeInfoDomain(
     val recipeId: Int,
     val recipeImage: String,
     val recipeImageType: String,
-    val recipeInstructions: String,
+    val recipeInstructions: String?,
     val recipeLowFodmap: Boolean,
     val recipeOccasions: List<String>,
     val recipeOriginalId: Int?,
-    val recipePreparationMinutes: Int,
+    val recipePreparationMinutes: Int?,
     val recipePricePerServing: Double,
     val recipeReadyInMinutes: Int,
     val recipeRecipeServings: Int,
@@ -59,19 +59,19 @@ data class EquipmentDomain(
 
 @Parcelize
 data class ExtendedIngredientDomain(
-    val exIngredientAisle: String,
-    val exIngredientAmount: Double,
-    val exIngredientConsistency: String,
-    val exIngredientId: Int,
-    val exIngredientImage: String,
-    val exIngredientMeasures: MeasuresDomain,
+    val exIngredientAisle: String?,
+    val exIngredientAmount: Double?,
+    val exIngredientConsistency: String?,
+    val exIngredientId: Int?,
+    val exIngredientImage: String?,
+    val exIngredientMeasures: MeasuresDomain?,
     val exIngredientMeta: List<String>,
     val exIngredientMetaInformation: List<String>,
-    val exIngredientName: String,
-    val exIngredientOriginal: String,
-    val exIngredientOriginalName: String,
-    val exIngredientOriginalString: String,
-    val exIngredientUnit: String
+    val exIngredientName: String?,
+    val exIngredientOriginal: String?,
+    val exIngredientOriginalName: String?,
+    val exIngredientOriginalString: String?,
+    val exIngredientUnit: String?
 ) : Parcelable
 
 @Parcelize
