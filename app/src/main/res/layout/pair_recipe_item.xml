@@ -63,8 +63,7 @@
             android:onClick="@{(view) -> callback.onSaveRecipe(recipe, view)}"
             app:layout_constraintStart_toStartOf="@+id/imageButton2"
             app:layout_constraintTop_toTopOf="@+id/imageButton2"
-            bind:imageHearth="@{recipe.saved}"
-            app:srcCompat="@drawable/ic_hearth" />
+            bind:imageHeart="@{recipe.saved}" />
 
         <TextView
             android:id="@+id/textView16"

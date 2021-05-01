@@ -9,8 +9,8 @@ class RecipeAdapter(
     onClickListener: BaseClickListener<RecipeResult>,
 ) : BaseAdapter<RecipeResult, RecipeItemBinding>(
     onClickListener,
-    { old, new -> old.id == new.id },
-    { old, new -> old == new }
+    { old, new -> old === new },
+    { old, new -> old.id == new.id }
 ) {
 
     override val layoutRes: Int

@@ -291,8 +291,8 @@ object RecipeBindingUtils {
     }
 
     @JvmStatic
-    @BindingAdapter("bind:imageHearth")
-    fun ImageView.setImageHearth(isSaved: Boolean) {
+    @BindingAdapter("bind:imageHeart")
+    fun ImageView.setImageHeart(isSaved: Boolean) {
         if (isSaved) {
             setImageResource(R.drawable.ic_heart_selected)
         } else {

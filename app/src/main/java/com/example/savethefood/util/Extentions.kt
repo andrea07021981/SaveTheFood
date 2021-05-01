@@ -16,6 +16,8 @@ import com.example.savethefood.constants.FoodOrder
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.facebook.shimmer.ShimmerFrameLayout
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 

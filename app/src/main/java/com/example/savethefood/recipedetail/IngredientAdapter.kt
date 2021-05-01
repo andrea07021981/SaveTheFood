@@ -14,8 +14,8 @@ class IngredientAdapter(
     onClickListener: BaseClickListener<ExtendedIngredientDomain>,
 ) : BaseAdapter<ExtendedIngredientDomain, IngredientItemBinding>(
     onClickListener,
-    { old, new -> old.exIngredientId == new.exIngredientId },
-    { old, new -> old == new }
+    { old, new -> old === new },
+    { old, new -> old.exIngredientId == new.exIngredientId }
 ) {
 
     override val layoutRes: Int

@@ -54,7 +54,7 @@ class RecipeDataRepository @Inject constructor(
                     if (!local.isNullOrEmpty()) {
                         if (remote is Result.Success) {
                             remote.data.forEach { remoteRecipe ->
-                                remoteRecipe.saved = local.any { remoteRecipe.id == it.id}
+                                remoteRecipe.saved = local.find { remoteRecipe.id == it.id} != null
                             }
                         }
                     }
