@@ -107,7 +107,7 @@ object RecipeBindingUtils {
     fun bindStepsRecycleView(recyclerView: RecyclerView, data: RecipeInfoDomain) {
         val adapter = recyclerView.adapter as StepCookAdapter
         //TODO check if there's always one recipeAnalyzedInstructions
-        adapter.submitList(data.recipeAnalyzedInstructions[0].instructionSteps)
+        adapter.submitList(data.recipeAnalyzedInstructions.getOrNull(0)?.instructionSteps)
     }
     /**
      * Uses the Glide library to load an image by URL into an [ImageView]
@@ -291,8 +291,8 @@ object RecipeBindingUtils {
     }
 
     @JvmStatic
-    @BindingAdapter("bind:imageHearth")
-    fun ImageView.setImageHearth(isSaved: Boolean) {
+    @BindingAdapter("bind:imageHeart")
+    fun ImageView.setImageHeart(isSaved: Boolean) {
         if (isSaved) {
             setImageResource(R.drawable.ic_heart_selected)
         } else {

@@ -8,7 +8,6 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
 import com.example.savethefood.constants.Constants.BUNDLE_FOOD_KEY
-import com.example.savethefood.constants.Constants.BUNDLE_FOOD_VALUE
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodItem

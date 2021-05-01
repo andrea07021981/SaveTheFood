@@ -34,14 +34,17 @@ class RecipeCookFragment : BaseFragment<RecipeCookViewModel, FragmentRecipeCookB
         viewModel.recipeInfoDomain.observe(viewLifecycleOwner) {
             it?.let {
                 val stepList = arrayListOf<CookStepper>()
-                for (step in it.recipeAnalyzedInstructions[0].instructionSteps) {
-                    stepList.add(
-                        CookStepper(
-                            step.stepStep,
-                            step
+                it.recipeAnalyzedInstructions.forEach { analyzedInstructions ->
+                    for (step in analyzedInstructions.instructionSteps) {
+                        stepList.add(
+                            CookStepper(
+                                step.stepStep,
+                                step
+                            )
                         )
-                    )
+                    }
                 }
+
                 // Find the form view, set it up and initialize it.
                 val verticalStepperForm = dataBinding.stepperForm
                 verticalStepperForm

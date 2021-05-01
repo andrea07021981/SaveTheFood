@@ -9,8 +9,8 @@ class IngredientInstructionAdapter(
     onClickListener: BaseClickListener<IngredientsDomain>,
 ) : BaseAdapter<IngredientsDomain, IngredientInstructionItemBinding>(
     onClickListener,
-    { old, new -> old.ingredientId == new.ingredientId },
-    { old, new -> old == new }) {
+    { old, new -> old === new },
+    { old, new -> old.ingredientId == new.ingredientId }) {
 
     override val layoutRes: Int
         get() = R.layout.ingredient_instruction_item

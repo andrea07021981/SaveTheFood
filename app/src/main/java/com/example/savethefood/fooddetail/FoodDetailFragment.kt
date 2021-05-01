@@ -20,6 +20,7 @@ import com.example.savethefood.BaseFragment
 import com.example.savethefood.Event
 import com.example.savethefood.R
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.succeeded
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,7 +72,13 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
             setHasOptionsMenu(true)
             recipesRecycleView.adapter =
                 RecipeIngredientsAdapter(RecipeIngredientsAdapter.RecipeIngredientsClickListener(
-                    clickListener = {},
+                    clickListener = {
+                        // We can create a recipe result with only the id to saarch the recipe details
+                        val recipeResult = RecipeResult(it.id)
+                        findNavController()
+                            .navigate(
+                                FoodDetailFragmentDirections.actionFoodDetailFragmentToRecipeDetailFragment(recipeResult))
+                    },
                     clickSaveListener = { recipe, _ ->
                         viewModel.saveRecipe(recipe)
                     }
@@ -87,7 +94,7 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
         viewModel.recipeAdded.observe(viewLifecycleOwner) {
             if (it.succeeded) {
                 // TODO it does not update the item, to fix
-                dataBinding.recipesRecycleView.adapter?.notifyDataSetChanged()
+                //dataBinding.recipesRecycleView.adapter?.notifyDataSetChanged()
             }
         }
 

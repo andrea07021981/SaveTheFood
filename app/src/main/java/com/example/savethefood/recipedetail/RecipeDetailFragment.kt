@@ -1,6 +1,7 @@
 package com.example.savethefood.recipedetail
 
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -58,12 +59,20 @@ class RecipeDetailFragment : BaseFragment<RecipeDetailViewModel, FragmentRecipeD
         //TODO add save recipe into DB
         viewModel.recipeCookingEvent.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
-                findNavController()
-                    .navigate(
-                        RecipeDetailFragmentDirections.actionRecipeDetailFragmentToRecipeCookFragment(
-                            it
+                if (it.recipeAnalyzedInstructions.isNullOrEmpty()) {
+                    Toast.makeText(
+                        context,
+                        "Instructions are not available for this recipe",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    findNavController()
+                        .navigate(
+                            RecipeDetailFragmentDirections.actionRecipeDetailFragmentToRecipeCookFragment(
+                                it
+                            )
                         )
-                    )
+                }
             }
         })
     }

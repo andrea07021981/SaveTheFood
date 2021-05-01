@@ -8,7 +8,7 @@ data class NetworkRecipeInfo(
     val aggregateLikes: Int,
     val analyzedInstructions: List<AnalyzedInstruction>,
     val cheap: Boolean,
-    val cookingMinutes: Int,
+    val cookingMinutes: Int?,
     val creditsText: String,
     val cuisines: List<Any>,
     val dairyFree: Boolean,
@@ -21,11 +21,11 @@ data class NetworkRecipeInfo(
     val id: Int,
     val image: String,
     val imageType: String,
-    val instructions: String,
+    val instructions: String?,
     val lowFodmap: Boolean,
     val occasions: List<String>,
     val originalId: Int?,
-    val preparationMinutes: Int,
+    val preparationMinutes: Int?,
     val pricePerServing: Double,
     val readyInMinutes: Int,
     val servings: Int,
@@ -116,19 +116,19 @@ fun Equipment.asDomainModel(): EquipmentDomain {
 
 @JsonClass(generateAdapter = true)
 data class ExtendedIngredient(
-    val aisle: String,
-    val amount: Double,
-    val consistency: String,
-    val id: Int,
-    val image: String,
-    val measures: Measures,
+    val aisle: String?,
+    val amount: Double?,
+    val consistency: String?,
+    val id: Int?,
+    val image: String?,
+    val measures: Measures?,
     val meta: List<String>,
     val metaInformation: List<String>,
-    val name: String,
-    val original: String,
-    val originalName: String,
-    val originalString: String,
-    val unit: String
+    val name: String?,
+    val original: String?,
+    val originalName: String?,
+    val originalString: String?,
+    val unit: String?
 )
 
 fun ExtendedIngredient.asDomainModel(): ExtendedIngredientDomain {
@@ -138,7 +138,7 @@ fun ExtendedIngredient.asDomainModel(): ExtendedIngredientDomain {
         exIngredientConsistency = consistency,
         exIngredientId = id,
         exIngredientImage = image,
-        exIngredientMeasures = measures.asDomainModel(),
+        exIngredientMeasures = measures?.asDomainModel(),
         exIngredientMeta = meta,
         exIngredientMetaInformation = metaInformation,
         exIngredientName = name,

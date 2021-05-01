@@ -63,11 +63,11 @@
             android:name="foodDetail"
             app:argType="android.os.Bundle" />
         <action
-            android:id="@+id/action_foodDetailFragment_to_recipeFragment"
-            app:destination="@id/recipeFragment" />
-        <action
             android:id="@+id/action_foodDetailFragment_to_addFoodFragment"
             app:destination="@id/addFoodFragment" />
+        <action
+            android:id="@+id/action_foodDetailFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

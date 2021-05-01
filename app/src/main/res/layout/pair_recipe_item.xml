@@ -17,7 +17,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:onClick="@{() -> callback.onClick(recipe)}">
 
         <ImageView
             android:id="@+id/imageButton2"
@@ -63,8 +64,7 @@
             android:onClick="@{(view) -> callback.onSaveRecipe(recipe, view)}"
             app:layout_constraintStart_toStartOf="@+id/imageButton2"
             app:layout_constraintTop_toTopOf="@+id/imageButton2"
-            bind:imageHearth="@{recipe.saved}"
-            app:srcCompat="@drawable/ic_hearth" />
+            bind:imageHeart="@{recipe.saved}" />
 
         <TextView
             android:id="@+id/textView16"
