@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/shopping"
+        android:orderInCategory="100"
+        android:title="Shopping"
+        android:icon="@drawable/ic_bag"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/delete"
         android:orderInCategory="100"
         android:title="Delete"

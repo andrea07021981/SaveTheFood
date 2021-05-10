@@ -17,10 +17,10 @@
         android:enabled="false"/>
 
     <item
-        android:id="@+id/mapFragment"
-        android:icon="@drawable/ic_baseline_map_24"
-        android:title="@string/map"
-        android:contentDescription="@string/map"/>
+        android:id="@+id/bagFragment"
+        android:icon="@drawable/ic_bag_simple"
+        android:title="Bag"
+        android:contentDescription="Bag"/>
 
     <item
         android:id="@+id/planFragment"

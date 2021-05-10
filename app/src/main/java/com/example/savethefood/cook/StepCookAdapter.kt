@@ -11,8 +11,8 @@ class StepCookAdapter(
     onClickListener: BaseClickListener<StepDomain>,
 ) : BaseAdapter<StepDomain, StepCookItemBinding>(
     onClickListener,
-    { old, new -> old === new },
-    { old, new -> old.stepNumber == new.stepNumber }
+    { old, new -> old.stepNumber == new.stepNumber },
+    { old, new -> old == new }
 ) {
 
     override val layoutRes: Int

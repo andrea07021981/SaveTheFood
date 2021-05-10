@@ -36,6 +36,7 @@ class AddFoodViewModel @ViewModelInject constructor(
     private var _foodsItems: LinkedHashSet<FoodItem>? = null
     val foodItems = foodTypeFilter.switchMap { filter ->
         // We need the livedata constructor since _foodItems is not a live data
+        // The constructor livedata is also used in case of suspend fun (not flow)
         liveData {
             if (filter.isNullOrEmpty()) {
                 emit(_foodsItems)

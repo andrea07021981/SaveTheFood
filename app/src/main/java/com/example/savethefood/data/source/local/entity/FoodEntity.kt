@@ -11,6 +11,8 @@ import com.example.savethefood.data.source.local.database.StorageTypeConverter
 import com.example.savethefood.util.FoodImage
 import com.example.savethefood.constants.QuantityType
 import com.example.savethefood.constants.StorageType
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.util.*
 
 @Entity(tableName = "Food")
@@ -80,4 +82,23 @@ fun List<FoodEntity>.asDomainModel(): List<FoodDomain> {
         )
     }
 
+}
+
+fun Flow<List<FoodEntity>?>.asDomainModel(): Flow<List<FoodDomain>> {
+    return map {
+        it!!.map {
+            FoodDomain(
+                id = it.id,
+                title = it.title,
+                description = it.description,
+                img = it.img,
+                price = it.price,
+                quantityType = it.quantityType,
+                quantity = it.quantity,
+                storageType = it.storageType,
+                bestBefore = it.foodBestBefore,
+                lastUpdate = it.lastUpdate
+            )
+        }
+    }
 }
