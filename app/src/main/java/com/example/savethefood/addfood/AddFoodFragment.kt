@@ -98,7 +98,7 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
 
     override fun activateObservers() {
         viewModel.openFoodTypeDialog.observe(viewLifecycleOwner, EventObserver {
-            SearchableFragment().show(parentFragmentManager, classTag)
+            SearchableFragment().show(childFragmentManager, classTag)
         })
 
         viewModel.openDateDialog.observe(viewLifecycleOwner, EventObserver {
