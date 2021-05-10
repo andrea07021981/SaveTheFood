@@ -69,8 +69,8 @@ object BaseModule {
     @Singleton
     @Provides
     fun provideFoodDataRepository(
-        foodLocalDataSource: FoodLocalDataSource,
-        foodRemoteDataSource: FoodRemoteDataSource
+        @Named("FoodLocalDataSource") foodLocalDataSource: FoodDataSource,
+        @Named("FoodRemoteDataSource") foodRemoteDataSource: FoodDataSource
     ) : FoodRepository {
         return FoodDataRepository(foodLocalDataSource, foodRemoteDataSource)
     }
@@ -95,8 +95,8 @@ object BaseModule {
     @Singleton
     @Provides
     fun provideUserDataRepository(
-        userLocalDataSource: UserLocalDataSource,
-        userRemoteDataSource: UserRemoteDataSource
+        @Named("UserLocalDataSource") userLocalDataSource: UserDataSource,
+        @Named("UserRemoteDataSource") userRemoteDataSource: UserDataSource
     ) : UserRepository {
         return UserDataRepository(userLocalDataSource, userRemoteDataSource)
     }
@@ -127,8 +127,8 @@ object BaseModule {
     @Singleton
     @Provides
     fun provideRecipeDataRepository(
-        recipeLocalDataSource: RecipeLocalDataSource,
-        recipeRemoteDataSource: RecipeRemoteDataSource
+        @Named("RecipeLocalDataSource") recipeLocalDataSource: RecipeDataSource,
+        @Named("RecipeRemoteDataSource") recipeRemoteDataSource: RecipeDataSource
     ) : RecipeRepository {
         return RecipeDataRepository(recipeLocalDataSource, recipeRemoteDataSource)
     }

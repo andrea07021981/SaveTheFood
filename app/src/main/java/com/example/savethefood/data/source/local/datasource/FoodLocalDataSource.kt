@@ -50,7 +50,7 @@ class FoodLocalDataSource  @Inject constructor(
 
     @Throws(Exception::class)
     override fun getFoods(): Flow<List<FoodEntity>?> {
-        return foodDatabaseDao.observeFoods()
+        return foodDatabaseDao.observeFoods() // TODO use as domainmodel ext flow fun
     }
 
     override suspend fun getLocalFoods(): Result<List<FoodDomain>> {

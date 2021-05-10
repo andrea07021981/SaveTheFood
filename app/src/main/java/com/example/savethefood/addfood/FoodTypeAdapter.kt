@@ -9,8 +9,8 @@ class FoodTypeAdapter(
     onClickListener: BaseClickListener<FoodItem>,
 ) : BaseAdapter<FoodItem, FoodTypeItemBinding>(
     onClickListener,
-    { old, new -> old === new },
-    { old, new -> old.name == new.name }
+    { old, new -> old.name == new.name },
+    { old, new -> old == new }
 ) {
 
     override val layoutRes: Int
