@@ -92,10 +92,10 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
         })
 
         viewModel.recipeAdded.observe(viewLifecycleOwner) {
-            if (it.succeeded) {
+            /*if (it.succeeded) {
                 // TODO it does not update the item, to fix
                 //dataBinding.recipesRecycleView.adapter?.notifyDataSetChanged()
-            }
+            }*/
         }
 
         viewModel.editFoodEvent.observe(viewLifecycleOwner, ::navigateTo)

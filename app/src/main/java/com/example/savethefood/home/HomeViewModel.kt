@@ -28,6 +28,10 @@ class HomeViewModel @ViewModelInject constructor(
     private val foodDataRepository: FoodRepository
 ) : ViewModel() {
 
+    /**
+     * This filter class helps to fire the switchmap when we change the filter type or order
+     * The issue was that wee can't use two livedata switchmap to refresh one single livedata
+     */
     private sealed class FoodFilters {
         class Filter(val value: String): FoodFilters()
         class Order(val order: FoodOrder): FoodFilters()
