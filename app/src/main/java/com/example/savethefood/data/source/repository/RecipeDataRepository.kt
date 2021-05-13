@@ -31,7 +31,7 @@ class RecipeDataRepository @Inject constructor(
                         Result.Error("No data")
                     }
                 }
-                .retryWhen {cause, attempt ->
+                .retryWhen { cause, attempt ->
                     retryConnection(cause, attempt)
                 }
                 .flowOn(ioDispatcher)
@@ -43,24 +43,31 @@ class RecipeDataRepository @Inject constructor(
      */
     override fun getRecipesByIngredients(vararg foodFilter: String?): Flow<Result<List<RecipeIngredients>?>> {
         return wrapEspressoIdlingResource {
-            val flowLocalRecipes = recipeLocalDataSource.getRecipesIngredients()
-            recipeRemoteDataSource.getRecipesByIngredients(*foodFilter)
-                .map(::recipeIngredientResult)
+            val remoteRecipes = recipeRemoteDataSource.getRecipesByIngredients(*foodFilter)
+            recipeLocalDataSource.getRecipesIngredients()
                 .retryWhen { cause, attempt ->
                     retryConnection(cause, attempt)
                 }
-                .flowOn(ioDispatcher)
-                .combine(flowLocalRecipes) { remote, local ->
-                    if (!local.isNullOrEmpty()) {
-                        if (remote is Result.Success) {
-                            remote.data.forEach { remoteRecipe ->
-                                remoteRecipe.saved = local.find { remoteRecipe.id == it.id} != null
-                            }
-                        }
-                    }
-                    remote
+                .combine(remoteRecipes) { local, remote ->
+                    //local?.union(remote ?: listOf())
+                    local?.toMutableList()?.applyRemoteRecipes(remote)
                 }
+                .map(::recipeIngredientResult)
+                .flowOn(Dispatchers.Default)
+                .conflate()
         }
+    }
+
+    /**
+     * Create the complete list mixing the local and remote
+     */
+    private fun MutableList<RecipeIngredients>.applyRemoteRecipes(
+        remoteRecipes: List<RecipeIngredients>?
+    ): List<RecipeIngredients> {
+        val recipesToAdd =
+            remoteRecipes?.filter { recipeIngredients -> this.none { local -> local.id == recipeIngredients.id } }
+        this.addAll(recipesToAdd ?: listOf())
+        return this
     }
 
     @Throws(Exception::class)
@@ -97,7 +104,7 @@ class RecipeDataRepository @Inject constructor(
     private fun recipeIngredientResult(list: List<RecipeIngredients>?): Result<List<RecipeIngredients>> {
         return list?.let {
             if (it.count() > 0) {
-                Result.Success(it.sortedBy(RecipeIngredients::id))
+                Result.Success(it.sortedBy(RecipeIngredients::title))
             } else {
                 Result.Error("No data")
             }

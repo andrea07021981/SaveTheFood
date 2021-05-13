@@ -108,4 +108,5 @@
     <string name="notificationDescription">Notifications from Save The Food</string>
     <string name="deepLinkNotificationTitle">Deep Link</string>
     <string name="addFoodInfo">Add more info about the food</string>
+    <string name="no_recipes">No Recipes</string>
 </resources>
