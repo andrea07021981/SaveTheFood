@@ -5,7 +5,8 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="com.example.savethefood.data.Result.Error" alias="RecipesError"/>
+        <import type="android.view.View" />
         <variable
             name="foodDetailViewModel"
             type="com.example.savethefood.fooddetail.FoodDetailViewModel" />
@@ -281,6 +282,20 @@
                     bind:apiStatusVisibility="@{foodDetailViewModel.recipeList}"
                     tools:listitem="@layout/pair_recipe_item"
                     bind:listData="@{foodDetailViewModel.recipeList}"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@string/no_recipes"
+                    android:textStyle="bold"
+                    android:textSize="30sp"
+                    android:background="@android:color/white"
+                    android:gravity="center"
+                    android:visibility="@{foodDetailViewModel.recipeList instanceof RecipesError ? View.VISIBLE : View.GONE}" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

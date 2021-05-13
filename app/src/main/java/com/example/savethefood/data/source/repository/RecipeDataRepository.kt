@@ -94,7 +94,8 @@ class RecipeDataRepository @Inject constructor(
     /**
      * Calculate the result and order the list based on the total ingredients matched
      */
-    private fun recipeIngredientResult(list: List<RecipeIngredients>?): Result<List<RecipeIngredients>> {
+    private fun 
+            recipeIngredientResult(list: List<RecipeIngredients>?): Result<List<RecipeIngredients>> {
         return list?.let {
             if (it.count() > 0) {
                 Result.Success(it.sortedBy(RecipeIngredients::id))
