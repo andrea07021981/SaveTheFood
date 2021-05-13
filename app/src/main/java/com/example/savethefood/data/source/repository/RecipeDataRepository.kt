@@ -53,6 +53,8 @@ class RecipeDataRepository @Inject constructor(
                     local?.toMutableList()?.applyRemoteRecipes(remote)
                 }
                 .map(::recipeIngredientResult)
+                .flowOn(Dispatchers.Default)
+                .conflate()
         }
     }
 
