@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.savethefood.addfood.FoodTypeAdapter
 
 /**
  * Base adapter with T type and DB for binding
@@ -32,12 +33,22 @@ abstract class BaseAdapter<T, DB : ViewDataBinding>(
 
     class BaseViewHolder<DB : ViewDataBinding>(
         val binding: DB,
-    ) : RecyclerView.ViewHolder(binding.root)
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        // We need to keep the static call to avoid the error with binding and re-assignable value
+        companion object {
+            fun <DB: ViewDataBinding>from(parent: ViewGroup, layoutRes: Int): BaseViewHolder<DB> {
+                val inflate = LayoutInflater.from(parent.context)
+                val binding = DataBindingUtil.inflate<DB>(inflate, layoutRes, parent, false)
+                return BaseViewHolder(
+                    binding
+                )
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<DB> {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        dataBinding = DataBindingUtil.inflate<DB>(layoutInflater, layoutRes, parent, false)
-        return BaseViewHolder(dataBinding)
+        return BaseViewHolder.from(parent, layoutRes)
     }
 
     abstract fun bind(holder: BaseViewHolder<DB>, clickListener: BaseClickListener<T>, item: T)
@@ -51,6 +62,7 @@ abstract class BaseAdapter<T, DB : ViewDataBinding>(
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<DB>, position: Int) {
+        dataBinding = holder.binding
         bind(holder, onClickListener, getItem(position))
         dataBinding.executePendingBindings()
     }
