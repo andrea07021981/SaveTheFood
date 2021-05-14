@@ -1,5 +1,6 @@
 package com.example.savethefood.data.source.repository
 
+import android.util.Log
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
@@ -65,7 +66,14 @@ class RecipeDataRepository @Inject constructor(
         remoteRecipes: List<RecipeIngredients>?
     ): List<RecipeIngredients> {
         val recipesToAdd =
-            remoteRecipes?.filter { recipeIngredients -> this.none { local -> local.id == recipeIngredients.id } }
+            remoteRecipes
+                ?.filter {
+                    recipeIngredients -> this.none { local -> local.id == recipeIngredients.id }
+                }?.map {
+                    it.saved = false
+                    it
+                }
+        // TODO not working
         this.addAll(recipesToAdd ?: listOf())
         return this
     }
@@ -85,7 +93,7 @@ class RecipeDataRepository @Inject constructor(
             try {
                 if (recipe.saved) {
                     val deleteRecipe = recipeLocalDataSource.deleteRecipe(recipe)
-                    recipe.saved = deleteRecipe != 0
+                    recipe.saved = false
                     Result.Success(recipe)
                 } else {
                     recipe.saved = true

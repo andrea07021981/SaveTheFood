@@ -89,11 +89,10 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
 
     override fun onResume() {
         super.onResume()
-        setFragmentResultListener(REQUEST_KEY) { _, bundle ->
+        childFragmentManager.setFragmentResultListener(REQUEST_KEY, viewLifecycleOwner) { _, bundle ->
             // We use a String here, but any type that can be put in a Bundle is supported
             val result = bundle.get(BUNDLE_KEY) as FoodItem
-            viewModel.updateFood(result)
-        }
+            viewModel.updateFood(result)}
     }
 
     override fun activateObservers() {

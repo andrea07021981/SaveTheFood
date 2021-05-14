@@ -31,7 +31,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 class HomeFragmentContainer : BaseFragment<HomeViewModel, FragmentHomeContainerBinding>(),
     FragmentCallback {
 
-
     override val viewModel by viewModels<HomeViewModel>()
 
     override val layoutRes: Int
