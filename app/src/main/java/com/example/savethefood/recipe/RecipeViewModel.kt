@@ -8,7 +8,10 @@ import com.example.savethefood.Event
 import com.example.savethefood.constants.ApiCallStatus
 import com.example.savethefood.constants.ApiCallStatus.Done
 import com.example.savethefood.constants.ApiCallStatus.Loading
+import com.example.savethefood.constants.RecipeType
+import com.example.savethefood.constants.StorageType
 import com.example.savethefood.data.Result
+import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.repository.RecipeRepository
 import kotlinx.coroutines.flow.catch
@@ -39,6 +42,10 @@ class RecipeViewModel @ViewModelInject constructor(
     val reload: LiveData<Boolean>
         get() = _reload
 
+    private val _recipeDetailEvent = MutableLiveData<Event<RecipeResult>>()
+    val recipeDetailEvent: LiveData<Event<RecipeResult>>
+        get() = _recipeDetailEvent
+
     // We could also use liveData { ....onCollect() { emit(value)}}
     // TODO Emit Result<List<RecipeResult>?>> like fooddetail recipes and remove the status
     // TODO move to stateflow like https://github.com/Mori-Atsushi/android-flow-mvvm-sample
@@ -56,7 +63,7 @@ class RecipeViewModel @ViewModelInject constructor(
                     is Result.Loading -> _status.value = Loading()
                     is Result.Success -> {
                         _status.value = Done("Done")
-                        emit(value.data.results)
+                        emit(value.data)
                     }
                     is Result.ExError -> _status.value = ApiCallStatus.Error(
                         value.exception.localizedMessage
@@ -87,9 +94,26 @@ class RecipeViewModel @ViewModelInject constructor(
         }
     )
 
-    private val _recipeDetailEvent = MutableLiveData<Event<RecipeResult>>()
-    val recipeDetailEvent: LiveData<Event<RecipeResult>>
-        get() = _recipeDetailEvent
+    /**
+     * Observer for the recipeType and numbers of each.
+     * Creates a map for all types if the list is empty
+     */
+    val listByRecipeType: LiveData<Map<RecipeType, Int>?> = _recipeListResult.map { result ->
+        if (result?.size != 0) {
+            result?.groupingBy(::recipeStorageType)?.eachCount()
+        } else {
+            RecipeType.values().map {
+                it to 0
+            }.toMap()
+        }
+    }
+
+    private fun recipeStorageType(result: RecipeResult) =
+        if (result.recipeId == 0L) {
+            RecipeType.LOCAL
+        }else {
+            RecipeType.REMOTE
+        }
 
     fun moveToRecipeDetail(recipe: RecipeResult) {
         _recipeDetailEvent.value = Event(recipe)

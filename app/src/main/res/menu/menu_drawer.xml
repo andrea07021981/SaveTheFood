@@ -6,7 +6,7 @@
         android:title="@string/food"
         android:contentDescription="@string/food"/>
     <item
-        android:id="@+id/recipeFragment"
+        android:id="@+id/recipeFragmentContainer"
         android:icon="@drawable/ic_dish"
         android:title="@string/recipes"
         android:contentDescription="@string/recipes"/>
@@ -19,12 +19,12 @@
     <item
         android:id="@+id/bagFragment"
         android:icon="@drawable/ic_bag_simple"
-        android:title="Bag"
-        android:contentDescription="Bag"/>
+        android:title="@string/bag"
+        android:contentDescription="@string/bag"/>
 
     <item
         android:id="@+id/planFragment"
         android:icon="@drawable/ic_planning"
-        android:title="Plan"
-        android:contentDescription="Plan"/>
+        android:title="@string/plan"
+        android:contentDescription="@string/plan"/>
 </menu>

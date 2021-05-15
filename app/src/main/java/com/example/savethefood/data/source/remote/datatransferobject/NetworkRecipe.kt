@@ -36,6 +36,7 @@ fun NetworkRecipe.asDomainModel() : RecipeDomain {
         processingTimeMs = processingTimeMs,
         results = results.map {
             RecipeResult(
+                0L,
                 it.id,
                 baseUri,
                 it.image,

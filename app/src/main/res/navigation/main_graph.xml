@@ -33,10 +33,10 @@
             app:destination="@id/addFoodFragment" />
     </fragment>
     <fragment
-        android:id="@+id/recipeFragment"
-        android:name="com.example.savethefood.recipe.RecipeFragment"
+        android:id="@+id/recipeFragmentContainer"
+        android:name="com.example.savethefood.recipe.RecipeFragmentContainer"
         android:label="Recipe"
-        tools:layout="@layout/fragment_receipe">
+        tools:layout="@layout/fragment_recipe_container">
         <action
             android:id="@+id/action_recipeFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment" />

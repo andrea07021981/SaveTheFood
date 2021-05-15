@@ -1,11 +1,12 @@
 package com.example.savethefood.data.domain
 
 import android.os.Parcelable
-import com.example.savethefood.data.source.local.entity.RecipeEntity
+import com.example.savethefood.data.source.local.entity.RecipeIngredientEntity
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class RecipeIngredients(
+    var recipeId: Long = 0,
     val id: Int,
     val title: String,
     val image: String,
@@ -14,18 +15,23 @@ data class RecipeIngredients(
     val missedIngredientCount: Int,
     val usedIngredientCount: Int,
     val unUsedIngredientCount: Int,
-    var saved: Boolean
 ): Parcelable {
-    constructor() : this(0,"","","",0,0,0, 0, false)
+    constructor() : this(0L,0,"","","",0,0,0, 0)
 
     val totalIngredients: Int
         get() = usedIngredientCount + unUsedIngredientCount
 }
 
-fun RecipeIngredients.asDatabaseModel(): RecipeEntity {
-    return RecipeEntity(
+fun RecipeIngredients.asDatabaseModel(): RecipeIngredientEntity {
+    return RecipeIngredientEntity(
+        recipeId = recipeId,
         id = id,
         title = title,
-        image = image
+        image = image,
+        imageType = imageType,
+        likes = likes,
+        missedIngredientCount = missedIngredientCount,
+        usedIngredientCount = usedIngredientCount,
+        unUsedIngredientCount = unUsedIngredientCount
     )
 }

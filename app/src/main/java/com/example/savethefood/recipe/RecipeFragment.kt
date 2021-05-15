@@ -1,6 +1,7 @@
 package com.example.savethefood.recipe
 
 import android.content.Context
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.inputmethod.InputMethodManager
@@ -14,21 +15,22 @@ import com.example.savethefood.BaseAdapter
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.EventObserver
 import com.example.savethefood.R
+import com.example.savethefood.constants.Constants
+import com.example.savethefood.constants.RecipeType
+import com.example.savethefood.constants.StorageType
 import com.example.savethefood.cook.RecipeCookFragmentArgs
 import com.example.savethefood.data.source.repository.RecipeDataRepository
 import com.example.savethefood.databinding.FragmentReceipeBinding
 import com.example.savethefood.util.configSearchView
-import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO add tablayout, recipe online and recipe saved (need room data entities)
 // TODO use paging library
 @AndroidEntryPoint
 class RecipeFragment : BaseFragment<RecipeViewModel, FragmentReceipeBinding>() {
 
     private var foodName: String? = null
 
-    override val viewModel by viewModels<RecipeViewModel>()
+    override val viewModel: RecipeViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override val layoutRes: Int
         get() = R.layout.fragment_receipe
@@ -37,11 +39,12 @@ class RecipeFragment : BaseFragment<RecipeViewModel, FragmentReceipeBinding>() {
         get() = RecipeFragment::class.java.simpleName
 
     override fun init() {
-        if (arguments?.isEmpty == false) {
+        // TODO review it
+        /*if (arguments?.isEmpty == false) {
             foodName = RecipeFragmentArgs.fromBundle(
                 requireArguments()
             ).foodName
-        }
+        }*/
         with(dataBinding) {
             recipeViewModel = viewModel
             recipeRecycleview.layoutManager = LinearLayoutManager(activity)
@@ -56,6 +59,10 @@ class RecipeFragment : BaseFragment<RecipeViewModel, FragmentReceipeBinding>() {
                     viewModel.reloadList()
                 }
             })
+            arguments?.takeIf { it.containsKey(Constants.RECIPE_LIST) }?.apply {
+                val recipeType = getSerializable(Constants.RECIPE_LIST) as RecipeType
+                filterType = recipeType
+            }
         }
     }
 
