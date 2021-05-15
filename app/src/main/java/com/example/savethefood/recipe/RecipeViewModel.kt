@@ -56,7 +56,7 @@ class RecipeViewModel @ViewModelInject constructor(
                     is Result.Loading -> _status.value = Loading()
                     is Result.Success -> {
                         _status.value = Done("Done")
-                        emit(value.data.results)
+                        emit(value.data)
                     }
                     is Result.ExError -> _status.value = ApiCallStatus.Error(
                         value.exception.localizedMessage

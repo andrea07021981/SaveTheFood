@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface RecipeRepository {
     @Throws(Exception::class)
-    fun getRecipes(): Flow<Result<RecipeDomain>>
+    fun getRecipes(): Flow<Result<List<RecipeResult>?>>
 
     @Throws(Exception::class)
     fun getRecipesByIngredients(vararg foodFilter: String?): Flow<Result<List<RecipeIngredients>?>>

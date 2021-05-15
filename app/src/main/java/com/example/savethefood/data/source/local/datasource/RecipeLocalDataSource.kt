@@ -5,6 +5,7 @@ import com.example.savethefood.data.domain.*
 import com.example.savethefood.data.source.RecipeDataSource
 import com.example.savethefood.data.source.local.dao.RecipeDatabaseDao
 import com.example.savethefood.data.source.local.entity.asDomainModel
+import com.example.savethefood.data.source.local.entity.asRecipeDomainModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -18,7 +19,7 @@ class RecipeLocalDataSource @Inject constructor(
 
     @Throws(Exception::class)
     override fun getRecipes(): Flow<RecipeDomain?> {
-        TODO("No OP")
+        return recipeDatabaseDao.getRecipes().asRecipeDomainModel()
     }
 
     override suspend fun getRecipeById(id: Int): RecipeDomain? {

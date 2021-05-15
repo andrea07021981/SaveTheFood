@@ -5,6 +5,7 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.domain.RecipeIngredients
+import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.RecipeDataSource
 import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.*
@@ -21,12 +22,16 @@ class RecipeDataRepository @Inject constructor(
 ) : RecipeRepository {
 
     @Throws(Exception::class)
-    override fun getRecipes(): Flow<Result<RecipeDomain>> {
+    override fun getRecipes(): Flow<Result<List<RecipeResult>?>> {
         return wrapEspressoIdlingResource {
-            // TODO use CacheOnSuccess like advance coroutines with oneach and change from flow to suspend and coroutine
+            val localRecipes = recipeLocalDataSource.getRecipes()
             recipeRemoteDataSource.getRecipes()
+                .combine(localRecipes) { remote, local ->
+                    //local?.union(remote ?: listOf())
+                    remote?.results?.toMutableList().applyRemoteResultRecipes(local)
+                }
                 .map {
-                    if (it != null) {
+                    if (it.isNullOrEmpty().not()) {
                         Result.Success(it)
                     } else {
                         Result.Error("No data")
@@ -60,6 +65,17 @@ class RecipeDataRepository @Inject constructor(
     }
 
     /**
+     * Create the complete list mixing the local and remote recipes for the recipe view
+     */
+    private fun MutableList<RecipeResult>?.applyRemoteResultRecipes(
+        localRecipes: RecipeDomain?
+    ): MutableList<RecipeResult>? {
+        // We need to elaborate and compute, run works perfectly here
+        this?.addAll(localRecipes?.results?.toMutableList() ?: listOf())
+        return this
+    }
+
+    /**
      * Create the complete list mixing the local and remote
      */
     private fun MutableList<RecipeIngredients>.applyRemoteRecipes(
@@ -70,7 +86,7 @@ class RecipeDataRepository @Inject constructor(
                 ?.filter {
                     recipeIngredients -> this.none { local -> local.id == recipeIngredients.id }
                 }?.map {
-                    it.saved = false
+                    it.recipeId = 0L
                     it
                 }
         // TODO not working
@@ -87,18 +103,17 @@ class RecipeDataRepository @Inject constructor(
 
     /**
      * Save the recipe or delete it using the flag of RecipeIngredients class
+     * // TODO Spoonacular does not have a search recipe with id, call it with id and number = 1
+     * // TODO so we can save a reciperesult domain to be used in recipe local view
      */
     override suspend fun saveRecipe(recipe: RecipeIngredients) = withContext(ioDispatcher){
         wrapEspressoIdlingResource {
             try {
-                if (recipe.saved) {
+                if (recipe.recipeId > 0L) {
                     val deleteRecipe = recipeLocalDataSource.deleteRecipe(recipe)
-                    recipe.saved = false
                     Result.Success(recipe)
                 } else {
-                    recipe.saved = true
-                    //val recipeById = recipeRemoteDataSource.getRecipeById(recipe.id)
-
+                    // TODO call the search recipe and save the reciperesult domain as well as RecipeIngredients
                     val newRecipe = recipeLocalDataSource.saveRecipe(recipe)
                     Result.Success(newRecipe)
                 }

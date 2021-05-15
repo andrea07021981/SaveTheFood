@@ -3,7 +3,7 @@ package com.example.savethefood.data.source.remote.datatransferobject
 import com.example.savethefood.data.domain.RecipeIngredients
 import com.squareup.moshi.JsonClass
 
-// Use this structure only if the the json starts with "items [...]"
+// Use this structure only if the the json starts with "items[...]"
 //@JsonClass(generateAdapter = true)
 //data class NetworkRecipeIngredients(val items: List<NetworkRecipeIngredientsItem>)
 
@@ -77,6 +77,7 @@ data class MissedIngredient(
 fun List<NetworkRecipeIngredientsItem>.asDomainModel(): List<RecipeIngredients> {
     return map {
         RecipeIngredients(
+            recipeId = 0L,
             id = it.id,
             title = it.title,
             image = it.image,
@@ -84,8 +85,7 @@ fun List<NetworkRecipeIngredientsItem>.asDomainModel(): List<RecipeIngredients> 
             likes = it.likes,
             missedIngredientCount = it.missedIngredientCount,
             usedIngredientCount = it.usedIngredientCount,
-            unUsedIngredientCount = it.unusedIngredients.count(),
-            saved = false
+            unUsedIngredientCount = it.unusedIngredients.count()
         )
     }
 }

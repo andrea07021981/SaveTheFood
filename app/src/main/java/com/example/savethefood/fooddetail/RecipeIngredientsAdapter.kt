@@ -10,7 +10,7 @@ class RecipeIngredientsAdapter(
     onClickListener: BaseClickListener<RecipeIngredients>,
 ) : BaseAdapter<RecipeIngredients, PairRecipeItemBinding>(
     onClickListener,
-    { old, new -> old.id == new.id && old.saved == new.saved},
+    { old, new -> old.id == new.id && old.recipeId == new.recipeId},
     { old, new -> old === new }
 ) {
 

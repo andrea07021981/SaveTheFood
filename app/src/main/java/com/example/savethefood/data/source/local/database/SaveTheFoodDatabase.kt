@@ -21,7 +21,7 @@ import com.example.savethefood.data.source.local.entity.*
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities = [UserEntity::class, FoodEntity::class, RecipeEntity::class, RecipeInfoEntity::class], version = 2, exportSchema = false)
+@Database(entities = [UserEntity::class, FoodEntity::class, RecipeIngredientEntity::class, RecipeInfoEntity::class], version = 2, exportSchema = false)
 @TypeConverters(FoodImageConverter::class, StorageTypeConverter::class, QuantityTypeConverter::class, TimeStampConverter::class)
 abstract class SaveTheFoodDatabase : RoomDatabase() {
 

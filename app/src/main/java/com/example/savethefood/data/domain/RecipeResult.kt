@@ -6,6 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class RecipeResult(
+    val recipeId: Long = 0, // Id to distinguish the local and remote recipe
     val id: Int,
     val baseDomainUrl: String = "",
     val image: String = "",
@@ -14,7 +15,7 @@ data class RecipeResult(
     val servings: Int = 0,
     val title: String = ""
 ) : Parcelable {
-    constructor() : this(0,"","","",0,0,"")
+    constructor() : this(0L,0,"","","",0,0,"")
 
-    constructor(id: Int) : this(id,"","","",0,0,"")
+    constructor(id: Int) : this(0L, id,"","","",0,0,"")
 }

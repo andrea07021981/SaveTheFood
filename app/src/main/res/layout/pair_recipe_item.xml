@@ -64,7 +64,7 @@
             android:onClick="@{(view) -> callback.onSaveRecipe(recipe, view)}"
             app:layout_constraintStart_toStartOf="@+id/imageButton2"
             app:layout_constraintTop_toTopOf="@+id/imageButton2"
-            bind:imageHeart="@{recipe.saved}" />
+            bind:imageHeart="@{recipe.recipeId}" />
 
         <TextView
             android:id="@+id/textView16"

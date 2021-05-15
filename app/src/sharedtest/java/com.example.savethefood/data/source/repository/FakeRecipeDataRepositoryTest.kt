@@ -14,11 +14,11 @@ import kotlinx.coroutines.flow.transform
 class FakeRecipeDataRepositoryTest(
     private val fakeRecipeLocalDataSourceTest: RecipeDataSource
 ) : RecipeRepository {
-    override fun getRecipes(): Flow<Result<RecipeDomain>> {
+    override fun getRecipes(): Flow<Result<List<RecipeResult>?>> {
         return fakeRecipeLocalDataSourceTest.getRecipes()
             .transform { value ->
                 if (value != null) {
-                    emit(Result.Success(value))
+                    emit(Result.Success(value.results))
                 } else {
                     emit(Result.Error("No data"))
                 }

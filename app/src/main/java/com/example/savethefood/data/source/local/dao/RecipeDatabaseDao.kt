@@ -1,8 +1,7 @@
 package com.example.savethefood.data.source.local.dao
 
 import androidx.room.*
-import com.example.savethefood.data.source.local.entity.FoodEntity
-import com.example.savethefood.data.source.local.entity.RecipeEntity
+import com.example.savethefood.data.source.local.entity.RecipeIngredientEntity
 import kotlinx.coroutines.flow.Flow
 
 
@@ -13,16 +12,16 @@ import kotlinx.coroutines.flow.Flow
 interface RecipeDatabaseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRecipe(recipe: RecipeEntity): Long
+    suspend fun insertRecipe(recipe: RecipeIngredientEntity): Long
 
     @Transaction
-    @Query("SELECT * FROM Recipe WHERE id = :id")
-    fun getRecipe(id: Int): RecipeEntity?
+    @Query("SELECT * FROM RecipeIngredient WHERE id = :id")
+    suspend fun getRecipe(id: Int): RecipeIngredientEntity?
 
     @Transaction
-    @Query("SELECT * FROM Recipe")
-    fun getRecipes(): Flow<List<RecipeEntity>?>
+    @Query("SELECT * FROM RecipeIngredient")
+    fun getRecipes(): Flow<List<RecipeIngredientEntity>?>
 
     @Delete
-    fun deleteRecipe(food: RecipeEntity): Int
+    suspend fun deleteRecipe(food: RecipeIngredientEntity): Int
 }
