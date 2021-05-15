@@ -24,7 +24,6 @@ import java.util.*
 // TODO use paging library, too many recipes
 class RecipeViewModel @ViewModelInject constructor(
     private val recipeRepository: RecipeRepository,
-    @Assisted private val foodName: SavedStateHandle?
 ) : ViewModel() {
 
     // The internal MutableLiveData that stores the status of the most recent request
@@ -109,7 +108,7 @@ class RecipeViewModel @ViewModelInject constructor(
     }
 
     private fun recipeStorageType(result: RecipeResult) =
-        if (result.recipeId == 0L) {
+        if (result.recipeId != 0L) {
             RecipeType.LOCAL
         }else {
             RecipeType.REMOTE
