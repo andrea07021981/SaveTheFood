@@ -1,5 +1,6 @@
 package com.example.savethefood.recipe
 
+import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
@@ -33,7 +34,17 @@ class RecipeFragmentContainer : BaseFragment<RecipeViewModel, FragmentRecipeCont
         }
         setHasOptionsMenu(true)
     }
-    override fun activateObservers() {
 
+    override fun activateObservers() {
+        viewModel.listByRecipeType.observe(viewLifecycleOwner) {
+            if (it != null) {
+                for ((index, value) in it) {
+                    val linearLayout = dataBinding.recipeTabLayout.getTabAt(index.ordinal)
+                        ?.customView as LinearLayout
+                    CustomTabLayoutBinding.bind(linearLayout).countTextView.text =
+                        value.toString()
+                }
+            }
+        }
     }
 }

@@ -63,7 +63,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
                 })
             arguments?.takeIf { it.containsKey(FILTER_LIST) }?.apply {
                 filterStorageType = getSerializable(FILTER_LIST) as StorageType
-                viewModel.updateIndex(filterStorageType)
+                //viewModel.updateIndex(filterStorageType)
                 filterType = filterStorageType
             }
         }

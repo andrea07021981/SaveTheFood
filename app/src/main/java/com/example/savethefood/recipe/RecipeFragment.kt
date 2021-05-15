@@ -61,7 +61,7 @@ class RecipeFragment : BaseFragment<RecipeViewModel, FragmentReceipeBinding>() {
             })
             arguments?.takeIf { it.containsKey(Constants.RECIPE_LIST) }?.apply {
                 val recipeType = getSerializable(Constants.RECIPE_LIST) as RecipeType
-                Log.d(classTag, recipeType.type)
+                filterType = recipeType
             }
         }
     }

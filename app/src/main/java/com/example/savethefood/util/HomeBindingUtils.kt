@@ -13,10 +13,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
 import com.example.savethefood.constants.QuantityType
+import com.example.savethefood.constants.RecipeType
 import com.example.savethefood.constants.StorageType
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.home.FoodAdapter
+import com.example.savethefood.recipe.RecipeAdapter
 import java.time.LocalDate
 import java.time.Period
 import java.time.ZoneId
@@ -82,6 +85,23 @@ object HomeBindingUtils {
             } else {
                 data?.filter { foodDomain -> foodDomain.storageType == storageType }
             })
+        recyclerView.scheduleLayoutAnimation();
+    }
+
+    // TODO FInd a unique way with above method
+    @JvmStatic
+    @BindingAdapter(value = ["listData", "recipeType"], requireAll = true)
+    fun bindRecipeRecycleView(recyclerView: RecyclerView, data: List<RecipeResult>?, storageType: RecipeType?) {
+        val adapter = recyclerView.adapter as RecipeAdapter
+        adapter.submitList(
+            data?.filter {
+                if (storageType == RecipeType.REMOTE) {
+                    it.recipeId == 0L
+                } else {
+                    it.recipeId != 0L
+                }
+            }
+        )
         recyclerView.scheduleLayoutAnimation();
     }
 
