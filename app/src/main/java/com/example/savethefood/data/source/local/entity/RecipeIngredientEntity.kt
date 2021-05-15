@@ -12,7 +12,13 @@ data class RecipeEntity(
     @PrimaryKey
     val id: Int,
     val title: String,
-    val image: String
+    val image: String,
+    val imageType:String,
+    val likes: Int,
+    val missedIngredientCount: Int,
+    val usedIngredientCount: Int,
+    val unUsedIngredientCount: Int,
+    val saved: Boolean
 )
 
 fun RecipeEntity.asDomainModel(): RecipeIngredients {

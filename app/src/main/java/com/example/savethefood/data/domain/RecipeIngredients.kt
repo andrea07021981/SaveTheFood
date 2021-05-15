@@ -26,6 +26,12 @@ fun RecipeIngredients.asDatabaseModel(): RecipeEntity {
     return RecipeEntity(
         id = id,
         title = title,
-        image = image
+        image = image,
+        imageType = imageType,
+        likes = likes,
+        missedIngredientCount = missedIngredientCount,
+        usedIngredientCount = usedIngredientCount,
+        unUsedIngredientCount = unUsedIngredientCount,
+        saved = saved
     )
 }

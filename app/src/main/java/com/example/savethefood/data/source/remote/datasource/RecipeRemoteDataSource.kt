@@ -5,15 +5,14 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.RecipeDomain
 import com.example.savethefood.data.domain.RecipeInfoDomain
 import com.example.savethefood.data.domain.RecipeIngredients
-import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.source.RecipeDataSource
-import com.example.savethefood.data.source.local.entity.RecipeEntity
 import com.example.savethefood.data.source.remote.datatransferobject.asDomainModel
 import com.example.savethefood.data.source.remote.service.FoodService
 import com.example.savethefood.util.isListOfNulls
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception
@@ -29,6 +28,19 @@ class RecipeRemoteDataSource @Inject constructor(
         try {
             val recipes = foodApi.getRecipes()
             emit(recipes.asDomainModel())
+        } catch (error: Exception) {
+            Log.d("Error", error.localizedMessage)
+            throw error
+        }
+    }
+
+    override suspend fun getRecipeById(id: Int): RecipeDomain? {
+        try {
+            val recipe = foodApi.getRecipesById(id = id)
+            delay(10000)
+            return recipe?.let {
+                it.asDomainModel()
+            }
         } catch (error: Exception) {
             Log.d("Error", error.localizedMessage)
             throw error

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.*
+import com.example.savethefood.constants.Constants.FILTER_LIST
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.constants.StorageType
@@ -23,8 +24,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 // TODO also add different adapter https://proandroiddev.com/understanding-kotlin-sealed-classes-65c0adad7015
 
-
-const val FILTER_LIST = "filter_list"
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
