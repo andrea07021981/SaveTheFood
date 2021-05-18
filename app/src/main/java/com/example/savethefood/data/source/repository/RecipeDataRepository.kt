@@ -130,6 +130,7 @@ class RecipeDataRepository @Inject constructor(
     private fun recipeIngredientResult(list: List<RecipeIngredients>?): Result<List<RecipeIngredients>> {
         return list?.let {
             if (it.count() > 0) {
+                // TODO replace with generic list ext func
                 Result.Success(it.sortedBy(RecipeIngredients::title))
             } else {
                 Result.Error("No data")

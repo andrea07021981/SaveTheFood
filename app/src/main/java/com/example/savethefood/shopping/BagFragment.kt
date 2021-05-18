@@ -1,8 +1,10 @@
 package com.example.savethefood.shopping
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
+import com.example.savethefood.data.Result
 import com.example.savethefood.databinding.FragmentBagBinding
 import dagger.hilt.android.AndroidEntryPoint
 
