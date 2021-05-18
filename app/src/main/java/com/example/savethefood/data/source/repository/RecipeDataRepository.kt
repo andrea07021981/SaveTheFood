@@ -114,6 +114,7 @@ class RecipeDataRepository @Inject constructor(
                     Result.Success(recipe)
                 } else {
                     // TODO call the search recipe and save the reciperesult domain as well as RecipeIngredients
+                        // Use the coroutine sequential by default to retrieve the remote first, then save RecipeResult
                     val newRecipe = recipeLocalDataSource.saveRecipe(recipe)
                     Result.Success(newRecipe)
                 }

@@ -56,7 +56,13 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.nav_host_fragment) as NavHostController
         val graphs = {
             setOf(
-                R.id.splashFragment, R.id.loginFragment, R.id.signUpFragment, R.id.homeFragmentContainer, R.id.recipeFragmentContainer, R.id.mapFragment, R.id.planFragment
+                R.id.splashFragment,
+                R.id.loginFragment,
+                R.id.signUpFragment,
+                R.id.homeFragmentContainer,
+                R.id.recipeFragmentContainer,
+                R.id.bagFragment,
+                R.id.planFragment
             )
         }
         appBarConfiguration = AppBarConfiguration(graphs())
@@ -64,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.homeFragmentContainer, R.id.mapFragment, R.id.recipeFragmentContainer, R.id.planFragment -> {
+                R.id.homeFragmentContainer, R.id.bagFragment, R.id.recipeFragmentContainer, R.id.planFragment -> {
                     binding.cordinatorBottom.visibility = View.VISIBLE
                 }
                 else -> binding.cordinatorBottom.visibility = View.GONE
