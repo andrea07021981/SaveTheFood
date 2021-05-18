@@ -5,16 +5,20 @@ import androidx.room.Room
 import com.example.savethefood.BuildConfig
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.RecipeDataSource
+import com.example.savethefood.data.source.ShoppingDataSource
 import com.example.savethefood.data.source.UserDataSource
 import com.example.savethefood.data.source.local.dao.FoodDatabaseDao
 import com.example.savethefood.data.source.local.dao.RecipeDatabaseDao
+import com.example.savethefood.data.source.local.dao.ShoppingDatabaseDao
 import com.example.savethefood.data.source.local.dao.UserDatabaseDao
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.source.local.datasource.FoodLocalDataSource
 import com.example.savethefood.data.source.local.datasource.RecipeLocalDataSource
+import com.example.savethefood.data.source.local.datasource.ShoppingLocalDataSource
 import com.example.savethefood.data.source.local.datasource.UserLocalDataSource
 import com.example.savethefood.data.source.remote.datasource.FoodRemoteDataSource
 import com.example.savethefood.data.source.remote.datasource.RecipeRemoteDataSource
+import com.example.savethefood.data.source.remote.datasource.ShoppingRemoteDataSource
 import com.example.savethefood.data.source.remote.datasource.UserRemoteDataSource
 import com.example.savethefood.data.source.remote.service.FoodService
 import com.example.savethefood.data.source.repository.*
@@ -73,6 +77,33 @@ object BaseModule {
         @Named("FoodRemoteDataSource") foodRemoteDataSource: FoodDataSource
     ) : FoodRepository {
         return FoodDataRepository(foodLocalDataSource, foodRemoteDataSource)
+    }
+
+    @Provides
+    @Named("ShoppingRemoteDataSource")
+    fun provideShoppingRemoteDataSource(
+    ): ShoppingDataSource {
+        return ShoppingRemoteDataSource(
+        )
+    }
+
+    @Provides
+    @Named("ShoppingLocalDataSource")
+    fun provideShoppingLocalDataSource(
+        shoppingDatabaseDao: ShoppingDatabaseDao
+    ): ShoppingDataSource {
+        return ShoppingLocalDataSource(
+            shoppingDatabaseDao
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideShoppingDataRepository(
+        @Named("ShoppingLocalDataSource") shoppingLocalDataSource: ShoppingDataSource,
+        @Named("ShoppingRemoteDataSource") shoppingRemoteDataSource: ShoppingDataSource
+    ) : ShoppingRepository {
+        return ShoppingDataRepository(shoppingLocalDataSource, shoppingRemoteDataSource)
     }
 
     @Provides
@@ -165,6 +196,11 @@ object DatabaseModule {
     @Provides
     fun provideRecipeDao(database: SaveTheFoodDatabase): RecipeDatabaseDao {
         return database.recipeDatabaseDao
+    }
+
+    @Provides
+    fun provideShoppingDao(database: SaveTheFoodDatabase): ShoppingDatabaseDao {
+        return database.shoppingDatabaseDao
     }
 }
 

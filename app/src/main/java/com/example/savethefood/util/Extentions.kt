@@ -109,3 +109,13 @@ fun Bundle?.retrieveFood(): FoodDomain {
         it as FoodDomain
     }?: FoodDomain()
 }
+
+fun <T> List<T>?.getResult(): Result<List<T>> {
+    return this?.let {
+        if (it.count() > 0) {
+            Result.Success(it)
+        } else {
+            Result.Error("No data")
+        }
+    } ?: Result.ExError(java.lang.Exception("Error retrieving data"))
+}

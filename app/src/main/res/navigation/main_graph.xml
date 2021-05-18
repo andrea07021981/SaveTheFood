@@ -130,4 +130,9 @@
         android:id="@+id/planFragment"
         android:name="com.example.savethefood.plan.PlanFragment"
         android:label="Food Plan" />
+    <fragment
+        android:id="@+id/bagFragment"
+        android:name="com.example.savethefood.shopping.BagFragment"
+        android:label="BagFragment"
+        tools:layout="@layout/fragment_bag"/>
 </navigation>

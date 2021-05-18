@@ -7,10 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.savethefood.data.source.local.dao.FoodDatabaseDao
-import com.example.savethefood.data.source.local.dao.RecipeDatabaseDao
-import com.example.savethefood.data.source.local.dao.RecipeInfoDatabaseDao
-import com.example.savethefood.data.source.local.dao.UserDatabaseDao
+import com.example.savethefood.data.source.local.dao.*
 import com.example.savethefood.data.source.local.entity.*
 
 
@@ -21,7 +18,16 @@ import com.example.savethefood.data.source.local.entity.*
  * This pattern is pretty much the same for any database,
  * so you can reuse it.
  */
-@Database(entities = [UserEntity::class, FoodEntity::class, RecipeIngredientEntity::class, RecipeInfoEntity::class], version = 2, exportSchema = false)
+@Database(
+    entities = [
+        UserEntity::class,
+        FoodEntity::class,
+        RecipeIngredientEntity::class,
+        RecipeInfoEntity::class,
+        BagEntity::class
+               ],
+    version = 2,
+    exportSchema = false)
 @TypeConverters(FoodImageConverter::class, StorageTypeConverter::class, QuantityTypeConverter::class, TimeStampConverter::class)
 abstract class SaveTheFoodDatabase : RoomDatabase() {
 
@@ -35,6 +41,8 @@ abstract class SaveTheFoodDatabase : RoomDatabase() {
     abstract val recipeDatabaseDao: RecipeDatabaseDao
 
     abstract val recipeInfoDatabaseDao: RecipeInfoDatabaseDao
+
+    abstract val shoppingDatabaseDao: ShoppingDatabaseDao
 
     /**
      * Define a companion object, this allows us to add functions on the SaveTheFoodDatabase class.

@@ -26,6 +26,10 @@ class RecipeDetailViewModel @ViewModelInject constructor(
     val status: LiveData<ApiCallStatus>
         get() = _status
 
+    private var _recipeResult = MutableLiveData<RecipeResult?>()
+    val recipeResult: LiveData<RecipeResult?>
+        get() = _recipeResult
+
     private var _recipeDetail = MutableLiveData<RecipeInfoDomain?>()
     val recipeDetail: LiveData<RecipeInfoDomain?>
         get() = _recipeDetail
@@ -39,7 +43,11 @@ class RecipeDetailViewModel @ViewModelInject constructor(
         get() = _recipeCookingEvent
 
     init {
-        getRecipeDetails(recipeResult.get<RecipeResult>("recipeResult") ?: RecipeResult())
+        // TODO review this
+        with(recipeResult.get<RecipeResult>("recipeResult") ?: RecipeResult()) {
+            getRecipeDetails(this)
+            _recipeResult.value = this
+        }
     }
 
     private fun getRecipeDetails(recipeResult: RecipeResult) {

@@ -11,10 +11,12 @@ import com.example.savethefood.databinding.FragmentReceipeBinding
 import com.example.savethefood.databinding.FragmentRecipeContainerBinding
 import com.example.savethefood.home.HomeFragmentContainerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipeFragmentContainer : BaseFragment<RecipeViewModel, FragmentRecipeContainerBinding>(){
 
-    override val viewModel: RecipeViewModel by viewModels()
+    override val viewModel by viewModels<RecipeViewModel>()
 
     override val layoutRes: Int
         get() = R.layout.fragment_recipe_container

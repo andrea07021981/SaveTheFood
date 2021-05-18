@@ -114,6 +114,7 @@ class RecipeDataRepository @Inject constructor(
                     Result.Success(recipe)
                 } else {
                     // TODO call the search recipe and save the reciperesult domain as well as RecipeIngredients
+                        // Use the coroutine sequential by default to retrieve the remote first, then save RecipeResult
                     val newRecipe = recipeLocalDataSource.saveRecipe(recipe)
                     Result.Success(newRecipe)
                 }
@@ -129,6 +130,7 @@ class RecipeDataRepository @Inject constructor(
     private fun recipeIngredientResult(list: List<RecipeIngredients>?): Result<List<RecipeIngredients>> {
         return list?.let {
             if (it.count() > 0) {
+                // TODO replace with generic list ext func
                 Result.Success(it.sortedBy(RecipeIngredients::title))
             } else {
                 Result.Error("No data")
