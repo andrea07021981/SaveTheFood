@@ -23,6 +23,7 @@ import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.data.succeeded
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
+import com.example.savethefood.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.pair_item.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -133,16 +134,15 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
             viewModel.navigateToFoodEdit()
             return true
         } else if (item.itemId == R.id.delete) {
-            AlertDialog.Builder(requireContext())
-                .setTitle("Info")
-                .setMessage("Do you want to delete the food?")
-                .setNegativeButton("No") { dialog, _ -> dialog.dismiss() }
-                .setPositiveButton("Yes") { dialog, _ ->
+            buildDialog(requireContext()) {
+                title("Info")
+                message("Do you want to delete the food?")
+                negativeButton("No") { dialog, _ -> dialog.dismiss() }
+                positiveButton("Yes") { dialog, _ ->
                     viewModel.deleteFood()
                     dialog.dismiss()
                 }
-                .create()
-                .show()
+            }.show()
         }
         return super.onOptionsItemSelected(item)
     }
