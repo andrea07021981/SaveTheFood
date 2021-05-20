@@ -16,6 +16,10 @@ class FakeRecipeDataSourceTest(
         recipeResult
     }
 
+    override suspend fun getRecipeById(id: Int): RecipeDomain? {
+        TODO("Not yet implemented")
+    }
+
     override fun getRecipesByIngredients(vararg foodFilter: String?): Flow<List<RecipeIngredients>?> {
         TODO("Not yet implemented")
     }
