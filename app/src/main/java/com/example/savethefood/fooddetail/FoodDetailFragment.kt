@@ -135,10 +135,10 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
             return true
         } else if (item.itemId == R.id.delete) {
             buildDialog(requireContext()) {
-                title("Info")
-                message("Do you want to delete the food?")
-                negativeButton("No") { dialog, _ -> dialog.dismiss() }
-                positiveButton("Yes") { dialog, _ ->
+                title(getString(R.string.info))
+                message(getString(R.string.delete_food))
+                negativeButton(getString(R.string.no)) { dialog, _ -> dialog.dismiss() }
+                positiveButton(getString(R.string.yes)) { dialog, _ ->
                     viewModel.deleteFood()
                     dialog.dismiss()
                 }

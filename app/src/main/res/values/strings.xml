@@ -111,4 +111,8 @@
     <string name="no_recipes">No Recipes</string>
     <string name="bag">Bag</string>
     <string name="plan">Plan</string>
+    <string name="info">Info</string>
+    <string name="delete_food">Do you want to delete the food?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>
