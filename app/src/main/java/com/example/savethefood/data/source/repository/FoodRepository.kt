@@ -2,8 +2,11 @@ package com.example.savethefood.data.source.repository
 
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.data.domain.FoodSearchDomain
+import com.example.savethefood.util.FoodImage
 import kotlinx.coroutines.flow.Flow
+import kotlin.reflect.KProperty1
 
 interface FoodRepository {
     @Throws(Exception::class)
@@ -22,4 +25,8 @@ interface FoodRepository {
     suspend fun getLocalFoods(): Result<List<FoodDomain>>
 
     suspend fun deleteFood(food: FoodDomain): Int
+
+    fun getFoodImages(
+        orderField: KProperty1<FoodImage, String> = FoodImage::name
+    ): LinkedHashSet<FoodItem>
 }

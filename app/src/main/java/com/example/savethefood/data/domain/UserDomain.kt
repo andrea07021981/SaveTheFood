@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.example.savethefood.data.source.local.entity.UserEntity
 import kotlinx.android.parcel.Parcelize
 
+// TODO consider inline classes for properties
 @Parcelize
 data class UserDomain(
     var userName: String = "",

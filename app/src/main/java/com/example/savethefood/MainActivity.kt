@@ -92,12 +92,16 @@ class MainActivity : AppCompatActivity() {
                 .setDuration(FAB_DURATION.toLong())
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
-                        if (destination.id == R.id.homeFragmentContainer) {
-                            binding.navView.menu.getItem(2).isVisible = true
-                            this@apply.show()
-                        } else {
-                            this@apply.hide()
-                            binding.navView.menu.getItem(2).isVisible = false
+                        when (destination.id) {
+                            R.id.homeFragmentContainer,
+                            R.id.bagFragment-> {
+                                binding.navView.menu.getItem(2).isVisible = true
+                                this@apply.show()
+                            }
+                            else -> {
+                                this@apply.hide()
+                                binding.navView.menu.getItem(2).isVisible = false
+                            }
                         }
                     }
                 }).start()
