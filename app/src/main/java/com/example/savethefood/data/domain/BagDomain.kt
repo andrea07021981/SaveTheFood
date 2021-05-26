@@ -20,10 +20,10 @@ data class BagDomain(
     val id: Int,
     var title: String = "",
     val img: FoodImage,
-    val quantityType: QuantityType,
+    var quantityType: QuantityType?,
     var quantity: Double,
 ) : Parcelable {
-    constructor() : this(0, "",FoodImage.EMPTY, QuantityType.UNIT,0.0)
+    constructor() : this(0, "", FoodImage.EMPTY, QuantityType.UNIT,0.0)
 }
 
 fun BagDomain.asDatabaseModel(): BagEntity {

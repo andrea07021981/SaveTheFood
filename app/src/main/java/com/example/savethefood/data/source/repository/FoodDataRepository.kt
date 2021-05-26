@@ -2,18 +2,22 @@ package com.example.savethefood.data.source.repository
 
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.domain.asDatabaseModel
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.local.entity.asDomainModel
+import com.example.savethefood.util.FoodImage
 import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Named
+import kotlin.reflect.KProperty1
 
-//TODO Repository should receive base data (Network domain ex), and convert THEN EMIT
+//TODO Repository should receive domain data (Network, Local) already converted by datasources
+// TODO EX: local data source convert entity source to domain in return func
 
 /**
  *
@@ -188,5 +192,21 @@ class FoodDataRepository @Inject constructor(
         wrapEspressoIdlingResource {
             foodLocalDataSource.deleteFood(food.asDatabaseModel())
         }
+    }
+
+    /**
+     * Create a LinkedHashset, we don't have duplicates but must keep the order
+     */
+    override fun getFoodImages(orderField: KProperty1<FoodImage, String>): LinkedHashSet<FoodItem> {
+        val customObjects = linkedSetOf<FoodItem>()
+        customObjects
+            .apply {
+                FoodImage.values()
+                    .sortedBy(orderField)
+                    .forEach {
+                        this.add(FoodItem(it.name, it))
+                    }
+            }
+        return customObjects
     }
 }

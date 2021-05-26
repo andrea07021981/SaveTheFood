@@ -29,7 +29,7 @@ data class BagEntity(
 
     @TypeConverters(QuantityTypeConverter::class)
     @ColumnInfo(name = "quantity_type")
-    val quantityType: QuantityType,
+    val quantityType: QuantityType?,
 
     @ColumnInfo(name = "quantity")
     val quantity: Double,

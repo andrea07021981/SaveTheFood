@@ -14,6 +14,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.savethefood.constants.Constants
 import com.example.savethefood.constants.FoodOrder
 import com.example.savethefood.data.Result
+import com.example.savethefood.data.domain.BagDomain
 import com.example.savethefood.data.domain.FoodDomain
 import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.coroutines.CoroutineDispatcher
@@ -108,6 +109,12 @@ fun Bundle?.retrieveFood(): FoodDomain {
     return this?.get(Constants.BUNDLE_FOOD_VALUE)?.let {
         it as FoodDomain
     }?: FoodDomain()
+}
+
+fun Bundle?.retrieveBag(): BagDomain {
+    return this?.get(Constants.BUNDLE_BAG_VALUE)?.let {
+        it as BagDomain
+    }?: BagDomain()
 }
 
 fun <T> List<T>?.getResult(): Result<List<T>> {

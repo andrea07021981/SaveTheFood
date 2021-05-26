@@ -2,6 +2,7 @@ package com.example.savethefood.data.source.repository
 
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.domain.asDatabaseModel
 import com.example.savethefood.data.source.FoodDataSource
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.withContext
+import kotlin.reflect.KProperty1
 
 class FakeFoodDataRepositoryTest(
     private val fakeRemoteFoodDataSourceTest: FoodDataSource,
@@ -75,5 +77,9 @@ class FakeFoodDataRepositoryTest(
 
     override suspend fun deleteFood(food: FoodDomain): Int {
         return fakeLocalFoodDataSourceTest.deleteFood(food.asDatabaseModel())
+    }
+
+    override fun getFoodImages(orderField: KProperty1<FoodItem, String>): LinkedHashSet<FoodItem> {
+        TODO("Not yet implemented")
     }
 }

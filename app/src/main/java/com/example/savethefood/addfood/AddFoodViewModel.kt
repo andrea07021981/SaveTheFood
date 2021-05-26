@@ -1,8 +1,6 @@
 package com.example.savethefood.addfood
 
 import android.os.Bundle
-import androidx.collection.ArraySet
-import androidx.collection.arraySetOf
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
@@ -49,7 +47,7 @@ class AddFoodViewModel @ViewModelInject constructor(
     }
 
     init {
-        _foodsItems = getCustomSet()
+        _foodsItems = foodDataRepository.getFoodImages()
     }
 
     /**
@@ -137,23 +135,6 @@ class AddFoodViewModel @ViewModelInject constructor(
             }
         }
     }
-
-    /**
-     * Create a LinkedHashset, we don't have duplicates but must keep the order
-     */
-    private fun getCustomSet(): LinkedHashSet<FoodItem> {
-        val customObjects = linkedSetOf<FoodItem>()
-        customObjects
-            .apply {
-                FoodImage.values()
-                    .sortedBy(FoodImage::name)
-                    .forEach {
-                        this.add(FoodItem(it.name, it))
-            }
-        }
-        return customObjects
-    }
-
 
     private val handler = CoroutineExceptionHandler { _, exception ->
         println("Exception thrown within parent: $exception.")
