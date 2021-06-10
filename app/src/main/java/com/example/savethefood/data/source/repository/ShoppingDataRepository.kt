@@ -5,10 +5,12 @@ import com.example.savethefood.data.domain.BagDomain
 import com.example.savethefood.data.domain.RecipeIngredients
 import com.example.savethefood.data.source.ShoppingDataSource
 import com.example.savethefood.util.getResult
+import com.example.savethefood.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.lang.Exception
 import javax.inject.Inject
@@ -38,7 +40,15 @@ class ShoppingDataRepository @Inject constructor(
             .conflate()
     }
 
-    override suspend fun saveItemInBag(item: BagDomain): Long {
-        TODO("Not yet implemented")
+    override suspend fun saveItemInBag(item: BagDomain): Result<BagDomain> = withContext(Dispatchers.IO) {
+        wrapEspressoIdlingResource {
+            val insertFoodId = shoppingLocalDataSource.saveItemInBag(item)
+            if (insertFoodId > 0) {
+                return@withContext Result.Success(item)
+            } else {
+                return@withContext Result.Error("Error saving food")
+            }
+        }
+
     }
 }

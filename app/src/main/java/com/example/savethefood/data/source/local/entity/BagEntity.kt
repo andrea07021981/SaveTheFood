@@ -32,7 +32,7 @@ data class BagEntity(
     val quantityType: QuantityType?,
 
     @ColumnInfo(name = "quantity")
-    val quantity: Double,
+    val quantity: Double?,
 
     )
 
