@@ -1,5 +1,6 @@
 package com.example.savethefood.shopping
 
+import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -7,6 +8,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.EventObserver
 import com.example.savethefood.Notifier
@@ -18,12 +20,14 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.databinding.FragmentBagBinding
 import com.example.savethefood.databinding.FragmentBagDetailBinding
+import com.example.savethefood.fooddetail.FoodDetailFragmentArgs
+import com.example.savethefood.util.retrieveBag
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BagDetail : BaseFragment<BagViewModel, FragmentBagDetailBinding>() {
+class BagDetail : BaseFragment<BagDetailViewModel, FragmentBagDetailBinding>() {
 
-    override val viewModel: BagViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    override val viewModel: BagDetailViewModel by viewModels()
 
     override val layoutRes: Int
         get() = R.layout.fragment_bag_detail
@@ -45,6 +49,7 @@ class BagDetail : BaseFragment<BagViewModel, FragmentBagDetailBinding>() {
             val result = bundle.get(Constants.BUNDLE_KEY) as FoodItem
             viewModel.updateFood(result)}
     }
+
     override fun activateObservers() {
         viewModel.openFoodTypeDialog.observe(viewLifecycleOwner, EventObserver {
             SearchableFragment().show(childFragmentManager, classTag)

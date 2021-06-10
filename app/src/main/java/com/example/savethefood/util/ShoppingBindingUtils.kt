@@ -14,5 +14,6 @@ object ShoppingBindingUtils {
     fun bindBagRecycleView(recyclerView: RecyclerView, data: List<BagDomain>?) {
         val adapter = recyclerView.adapter as BagAdapter
         adapter.submitList(data)
+        recyclerView.scheduleLayoutAnimation()
     }
 }

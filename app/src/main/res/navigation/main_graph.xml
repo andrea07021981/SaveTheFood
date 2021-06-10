@@ -143,5 +143,9 @@
         android:id="@+id/bagDetail"
         android:name="com.example.savethefood.shopping.BagDetail"
         android:label="Item in Bag"
-        tools:layout="@layout/fragment_bag_detail"/>
+        tools:layout="@layout/fragment_bag_detail">
+        <argument
+            android:name="bagDetail"
+            app:argType="android.os.Bundle" />
+    </fragment>
 </navigation>

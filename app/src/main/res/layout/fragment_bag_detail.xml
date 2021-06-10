@@ -7,7 +7,7 @@
     <data>
         <variable
             name="bagViewModel"
-            type="com.example.savethefood.shopping.BagViewModel" />
+            type="com.example.savethefood.shopping.BagDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
