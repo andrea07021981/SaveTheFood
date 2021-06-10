@@ -10,10 +10,7 @@ import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.data.source.repository.FoodRepository
-import com.example.savethefood.util.FoodImage
-import com.example.savethefood.util.isValidDouble
-import com.example.savethefood.util.launchDataLoad
-import com.example.savethefood.util.retrieveFood
+import com.example.savethefood.util.*
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -50,24 +47,15 @@ class AddFoodViewModel @ViewModelInject constructor(
         _foodsItems = foodDataRepository.getFoodImages()
     }
 
-    /**
-     * Private class to notify the main food domain when something changes
-     */
-    private sealed class ObserverFields {
-        class FoodItemImage(val value: FoodItem = FoodItem(FoodImage.EMPTY)): ObserverFields()
-        class BestBefore(val value: Date?): ObserverFields()
-        object None: ObserverFields()
-    }
-
-    private var observerField: MutableLiveData<ObserverFields> = MutableLiveData(ObserverFields.FoodItemImage(
+    private var observerField: MutableLiveData<ObserverFormFields> = MutableLiveData(ObserverFormFields.FoodItemImage(
         FoodItem(_foodDomain.img)
     ))
 
     val foodDomain: LiveData<FoodDomain> = Transformations.map(observerField) {
         _foodDomain.apply {
             when (it) {
-                is ObserverFields.FoodItemImage -> img = it.value.img
-                is ObserverFields.BestBefore -> bestBefore = it.value ?: Date()
+                is ObserverFormFields.FoodItemImage -> img = it.value.img
+                is ObserverFormFields.BestBefore -> bestBefore = it.value ?: Date()
                 else -> Unit
             }
         }
@@ -110,11 +98,11 @@ class AddFoodViewModel @ViewModelInject constructor(
     }
 
     fun updateFood(foodItem: FoodItem) {
-        observerField.value = ObserverFields.FoodItemImage(foodItem)
+        observerField.value = ObserverFormFields.FoodItemImage(foodItem)
     }
 
     fun updateBestBefore(date: Date) {
-        observerField.value = ObserverFields.BestBefore(date)
+        observerField.value = ObserverFormFields.BestBefore(date)
     }
 
     fun save() {

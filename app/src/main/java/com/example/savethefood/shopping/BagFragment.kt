@@ -1,6 +1,10 @@
 package com.example.savethefood.shopping
 
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
@@ -22,9 +26,6 @@ class BagFragment : BaseFragment<BagViewModel, FragmentBagBinding>(), FragmentCa
     override val classTag: String
         get() = BagFragment::class.java.simpleName
 
-    val errorName = MutableLiveData<Boolean>()
-    val errorQuantity = MutableLiveData<Boolean>()
-
     override fun init() {
         with(dataBinding) {
             bagViewModel = viewModel
@@ -32,7 +33,7 @@ class BagFragment : BaseFragment<BagViewModel, FragmentBagBinding>(), FragmentCa
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = BagAdapter(
                     BaseAdapter.BaseClickListener {
-                        // TODO open the item details
+                        viewModel.navigateToBadItemDetail(it)
                     }
                 )
             }
@@ -41,7 +42,9 @@ class BagFragment : BaseFragment<BagViewModel, FragmentBagBinding>(), FragmentCa
 
     override fun activateObservers() {
         viewModel.bagDetailEvent.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(BagFragmentDirections.actionBagFragmentToBagDetail())
+            findNavController().navigate(BagFragmentDirections.actionBagFragmentToBagDetail(
+                bundleOf("bagDomain" to it)
+            ))
         })
     }
 

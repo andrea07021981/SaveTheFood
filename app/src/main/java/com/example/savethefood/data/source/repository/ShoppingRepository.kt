@@ -10,5 +10,5 @@ interface ShoppingRepository {
     fun getFoodsInBag(): Flow<Result<List<BagDomain>?>>
 
     @Throws(Exception::class)
-    suspend fun saveItemInBag(item: BagDomain): Long
+    suspend fun saveItemInBag(item: BagDomain): Result<BagDomain>
 }

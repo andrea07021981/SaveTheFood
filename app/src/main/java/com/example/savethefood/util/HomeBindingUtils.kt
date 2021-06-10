@@ -72,7 +72,7 @@ object HomeBindingUtils {
     fun bindFoodRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?) {
         val adapter = recyclerView.adapter as FoodAdapter
         adapter.submitList(data)
-        recyclerView.scheduleLayoutAnimation();
+        recyclerView.scheduleLayoutAnimation()
     }
 
     @JvmStatic

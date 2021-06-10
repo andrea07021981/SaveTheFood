@@ -19,9 +19,9 @@ import java.util.*
 data class BagDomain(
     val id: Int,
     var title: String = "",
-    val img: FoodImage,
+    var img: FoodImage,
     var quantityType: QuantityType?,
-    var quantity: Double,
+    var quantity: Double?,
 ) : Parcelable {
     constructor() : this(0, "", FoodImage.EMPTY, QuantityType.UNIT,0.0)
 }

@@ -133,7 +133,7 @@
     <fragment
         android:id="@+id/bagFragment"
         android:name="com.example.savethefood.shopping.BagFragment"
-        android:label="BagFragment"
+        android:label="Bag"
         tools:layout="@layout/fragment_bag">
         <action
             android:id="@+id/action_bagFragment_to_bagDetail"
@@ -142,6 +142,10 @@
     <fragment
         android:id="@+id/bagDetail"
         android:name="com.example.savethefood.shopping.BagDetail"
-        android:label="BagDetail"
-        tools:layout="@layout/fragment_bag_detail"/>
+        android:label="Item in Bag"
+        tools:layout="@layout/fragment_bag_detail">
+        <argument
+            android:name="bagDetail"
+            app:argType="android.os.Bundle" />
+    </fragment>
 </navigation>
