@@ -81,6 +81,15 @@ class FakeFoodDataRepositoryTest(
     }
 
     override fun getFoodImages(orderField: KProperty1<FoodImage, String>): LinkedHashSet<FoodItem> {
-        TODO("Not yet implemented")
+        val customObjects = linkedSetOf<FoodItem>()
+        customObjects
+            .apply {
+                FoodImage.values()
+                    .sortedBy(orderField)
+                    .forEach {
+                        this.add(FoodItem(it.name, it))
+                    }
+            }
+        return customObjects
     }
 }
