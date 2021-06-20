@@ -7,6 +7,7 @@ import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.domain.asDatabaseModel
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.succeeded
+import com.example.savethefood.util.FoodImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -79,7 +80,7 @@ class FakeFoodDataRepositoryTest(
         return fakeLocalFoodDataSourceTest.deleteFood(food.asDatabaseModel())
     }
 
-    override fun getFoodImages(orderField: KProperty1<FoodItem, String>): LinkedHashSet<FoodItem> {
+    override fun getFoodImages(orderField: KProperty1<FoodImage, String>): LinkedHashSet<FoodItem> {
         TODO("Not yet implemented")
     }
 }
