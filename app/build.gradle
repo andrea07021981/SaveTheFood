@@ -321,4 +321,6 @@ dependencies {
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
+    // KMM module
+    implementation project(':shared')
 }

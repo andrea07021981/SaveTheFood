@@ -24,6 +24,7 @@ import com.example.savethefood.constants.*
 import com.example.savethefood.constants.LoginAuthenticationStates.*
 import com.example.savethefood.data.source.repository.UserDataRepository
 import com.example.savethefood.databinding.FragmentLoginBinding
+import com.example.savethefood.shared.Greeting
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -50,6 +51,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
             loginViewModel = viewModel
         }
         Log.d(classTag, "Init done")
+        Log.i("Login Activity", "Hello from shared module: " + (Greeting().greeting()))
     }
 
 
