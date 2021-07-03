@@ -43,11 +43,18 @@ buildscript {
         version_crashlythics = "2.4.1"
     }
     repositories {
-        google()
+        gradlePluginPortal()
         jcenter()
+        google()
+        mavenCentral()
         
     }
+
     dependencies {
+        classpath("com.android.tools.build:gradle:${version_gradle}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin")
+        classpath("org.jetbrains.kotlin:kotlin-serialization:$version_kotlin")
+        classpath("com.squareup.sqldelight:gradle-plugin:1.4.2")
         classpath "com.android.tools.build:gradle:${version_gradle}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
         classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:$version_navigation_args"
@@ -57,6 +64,13 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
+}
+
+group = "com.jetbrains.handson"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
 }
 
 allprojects {
