@@ -3,15 +3,24 @@ package com.example.savethefood.shared.cache
 import com.example.savethefood.shared.entity.Links
 import com.example.savethefood.shared.entity.Rocket
 import com.example.savethefood.shared.entity.RocketLaunch
+import com.example.savethefood.shared.utils.FoodImage
+import com.squareup.sqldelight.ColumnAdapter
+import com.squareup.sqldelight.EnumColumnAdapter
 
 internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
-    private val database = AppDatabase(databaseDriverFactory.createDriver())
-    private val dbQuery = database.appDatabaseQueries
+    private val database = SaveTheFoodDatabase(
+        databaseDriverFactory.createDriver(),
+        Food.Adapter(
+            imgAdapter = EnumColumnAdapter(),
+            quantityTypeAdapter = EnumColumnAdapter(),
+            storageAdapter = EnumColumnAdapter()
+        )
+    )
+    private val dbQuery = database.saveTheFoodDatabaseQueries
 
     internal fun clearDatabase() {
         dbQuery.transaction {
-            dbQuery.removeAllRockets()
-            dbQuery.removeAllLaunches()
+            dbQuery.removeAllFood()
         }
     }
 

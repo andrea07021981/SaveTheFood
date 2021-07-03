@@ -1,0 +1,51 @@
+import com.example.savethefood.shared.utils.FoodImage;
+import com.example.savethefood.shared.utils.QuantityType;
+import com.example.savethefood.shared.utils.StorageType;
+
+CREATE TABLE IF NOT EXISTS Food (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    title TEXT NOT NULL, description TEXT,
+    img TEXT AS FoodImage NOT NULL,
+    price REAL,
+    quantityType TEXT AS QuantityType NOT NULL,
+    quantity REAL,
+    storage TEXT AS StorageType NOT NULL,
+    bestBefore INTEGER NOT NULL,
+    lastUpdate INTEGER NOT NULL
+);
+
+removeAllFood:
+DELETE FROM Food;
+
+CREATE TABLE IF NOT EXISTS User (
+    userId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+    username TEXT NOT NULL, 
+    email TEXT NOT NULL, 
+    password TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS RecipeIngredient (
+    recipeId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    image TEXT NOT NULL,
+    imageType TEXT NOT NULL,
+    likes INTEGER NOT NULL,
+    missedIngredientCount INTEGER NOT NULL,
+    usedIngredientCount INTEGER NOT NULL,
+    unUsedIngredientCount INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS RecipeInfo (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Bag (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    title TEXT NOT NULL,
+    img TEXT NOT NULL,
+    quantityType TEXT,
+    quantity REAL
+);
+
+
