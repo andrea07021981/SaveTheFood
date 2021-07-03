@@ -107,7 +107,7 @@ class FoodDetailViewModel @ViewModelInject constructor(
                     Event(foodDataRepository.deleteFood(it) != 0)
                 } ?: Event(false)
             } catch (e: NullPointerException) {
-                Log.e("FoodDetail", e.message)
+                Log.e("FoodDetail", e.message ?: "No Message")
                 Event(false)
             }
         }

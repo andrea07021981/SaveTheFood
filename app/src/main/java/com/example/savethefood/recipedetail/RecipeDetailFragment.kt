@@ -40,7 +40,7 @@ class RecipeDetailFragment : BaseFragment<RecipeDetailViewModel, FragmentRecipeD
                 IngredientAdapter(
                     BaseAdapter.BaseClickListener {
                         //TODO OPEN ALER DIALOG WITH CUSTOM LAYOUT INGREDIENT DETAIL
-                        Log.d(classTag, it.exIngredientName)
+                        Log.d(classTag, it.exIngredientName ?: "No Message")
                     })
             maintoolbar.setNavigationOnClickListener {
                 viewModel.backToRecipeList()
