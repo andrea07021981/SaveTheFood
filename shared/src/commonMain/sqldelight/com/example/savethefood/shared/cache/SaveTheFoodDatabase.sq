@@ -4,18 +4,53 @@ import com.example.savethefood.shared.utils.StorageType;
 
 CREATE TABLE IF NOT EXISTS Food (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    title TEXT NOT NULL, description TEXT,
+    title TEXT NOT NULL,
+    description TEXT,
     img TEXT AS FoodImage NOT NULL,
     price REAL,
     quantityType TEXT AS QuantityType NOT NULL,
     quantity REAL,
-    storage TEXT AS StorageType NOT NULL,
+    storageType TEXT AS StorageType NOT NULL,
     bestBefore INTEGER NOT NULL,
     lastUpdate INTEGER NOT NULL
 );
 
 removeAllFood:
 DELETE FROM Food;
+
+insertFood:
+INSERT OR FAIL INTO Food (id, title, description, img, price, quantityType, quantity, storageType, bestBefore, lastUpdate)
+VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?);
+
+selectFoods:
+SELECT * FROM Food;
+
+selectFoodById:
+SELECT * FROM Food
+WHERE id = ?;
+
+updateFood:
+UPDATE OR ABORT Food
+SET
+    id = ?,
+    title = ?,
+    description = ?,
+    img = ?,
+    price = ?,
+    quantityType = ?,
+    quantity = ?,
+    storageType = ?,
+    bestBefore = ?,
+    lastUpdate = ?
+WHERE
+    id = ?;
+
+deleteFoodById:
+DELETE FROM Food WHERE id = ?;
+
+lastInsertRowId:
+SELECT last_insert_rowid()
+;
 
 CREATE TABLE IF NOT EXISTS User (
     userId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 

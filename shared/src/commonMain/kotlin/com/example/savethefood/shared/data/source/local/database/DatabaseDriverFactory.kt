@@ -1,4 +1,4 @@
-package com.example.savethefood.shared.cache
+package com.example.savethefood.shared.data.source.local.database
 
 import com.squareup.sqldelight.db.SqlDriver
 

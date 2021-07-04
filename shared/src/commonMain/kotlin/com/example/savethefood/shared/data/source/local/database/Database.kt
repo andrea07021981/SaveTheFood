@@ -1,10 +1,11 @@
-package com.example.savethefood.shared.cache
+package com.example.savethefood.shared.data.source.local.database
 
-import com.example.savethefood.shared.entity.Links
-import com.example.savethefood.shared.entity.Rocket
-import com.example.savethefood.shared.entity.RocketLaunch
+import com.example.savethefood.shared.cache.Food
+import com.example.savethefood.shared.cache.SaveTheFoodDatabase
+import com.example.savethefood.shared.entity.FoodEntity
 import com.example.savethefood.shared.utils.FoodImage
-import com.squareup.sqldelight.ColumnAdapter
+import com.example.savethefood.shared.utils.QuantityType
+import com.example.savethefood.shared.utils.StorageType
 import com.squareup.sqldelight.EnumColumnAdapter
 
 internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
@@ -13,7 +14,7 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
         Food.Adapter(
             imgAdapter = EnumColumnAdapter(),
             quantityTypeAdapter = EnumColumnAdapter(),
-            storageAdapter = EnumColumnAdapter()
+            storageTypeAdapter = EnumColumnAdapter()
         )
     )
     private val dbQuery = database.saveTheFoodDatabaseQueries
@@ -24,7 +25,63 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
         }
     }
 
-    internal fun getAllLaunches(): List<RocketLaunch> {
+    internal fun insertFood(food: FoodEntity): Long {
+        return dbQuery.transactionWithResult {
+            dbQuery.insertFood(
+                id = food.id.toLong(),
+                title = food.title,
+                description = food.description,
+                img = food.img,
+                price = food.price,
+                quantityType = food.quantityType,
+                quantity = food.quantity,
+                storageType = food.storageType,
+                bestBefore = food.bestBefore,
+                lastUpdate = food.lastUpdate
+            )
+            dbQuery.lastInsertRowId().executeAsOne()
+        }
+    }
+
+    internal fun retrieveFoods(): List<FoodEntity> {
+        return dbQuery.selectFoods(::mapToFoodEntity).executeAsList()
+    }
+
+    private fun mapToFoodEntity(
+        id: Long,
+        title: String,
+        description: String?,
+        img: FoodImage,
+        price: Double?,
+        quantityType: QuantityType,
+        quantity: Double?,
+        storageType: StorageType,
+        best: Long,
+        last: Long
+    ): FoodEntity {
+        return FoodEntity(
+            id = id.toLong(),
+            title = title,
+            description = description,
+            img = img,
+            price = price,
+            quantityType = quantityType,
+            quantity = quantity,
+            storageType = storageType,
+            bestBefore = best,
+            lastUpdate = last
+        )
+    }
+    /**
+     * img TEXT AS FoodImage NOT NULL,
+    price REAL,
+    quantityType TEXT AS QuantityType NOT NULL,
+    quantity REAL,
+    storageType TEXT AS StorageType NOT NULL,
+    bestBefore INTEGER NOT NULL,
+    lastUpdate INTEGER NOT NULL
+     */
+    /*internal fun getAllLaunches(): List<RocketLaunch> {
         return dbQuery.selectAllLaunchesInfo(::mapLaunchSelecting).executeAsList()
     }
 
@@ -94,5 +151,5 @@ internal class Database(databaseDriverFactory: DatabaseDriverFactory) {
             missionPatchUrl = launch.links.missionPatchUrl,
             articleUrl = launch.links.articleUrl
         )
-    }
+    }*/
 }

@@ -1,6 +1,7 @@
 
 package com.example.savethefood.shared.entity
 
+import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.utils.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -8,7 +9,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class FoodEntity(
     @SerialName("id")
-    var id: Int = 0,
+    var id: Long = 0,
 
     @SerialName("title")
     val title: String,
@@ -32,11 +33,29 @@ data class FoodEntity(
     val storageType: StorageType,
 
     @SerialName("best_before")
-    var foodBestBefore: Int,
+    var bestBefore: Long,
 
     @SerialName("last_update")
-    var lastUpdate: Int
+    var lastUpdate: Long
 )
+
+fun List<FoodEntity>.asDomainModel(): List<FoodDomain> {
+    return map {
+        FoodDomain(
+            id = it.id,
+            title = it.title,
+            description = it.description,
+            img = it.img,
+            price = it.price,
+            quantityType = it.quantityType,
+            quantity = it.quantity,
+            storageType = it.storageType,
+            bestBefore = it.bestBefore,
+            lastUpdate = it.lastUpdate
+        )
+    }
+
+}
 
 /*fun FoodEntity.asDomainModel(): FoodDomain {
     return FoodDomain(

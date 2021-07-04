@@ -1,5 +1,6 @@
-package com.example.savethefood.shared.cache
+package com.example.savethefood.shared.data.source.local.database
 
+import com.example.savethefood.shared.cache.SaveTheFoodDatabase
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 
