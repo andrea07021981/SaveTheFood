@@ -52,6 +52,9 @@ lastInsertRowId:
 SELECT last_insert_rowid()
 ;
 
+changes:
+SELECT changes();
+
 CREATE TABLE IF NOT EXISTS User (
     userId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
     username TEXT NOT NULL, 

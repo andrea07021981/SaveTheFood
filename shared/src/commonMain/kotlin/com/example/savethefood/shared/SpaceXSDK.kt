@@ -1,13 +1,14 @@
 package com.example.savethefood.shared
 
-import com.example.savethefood.shared.data.source.local.database.Database
+import com.example.savethefood.shared.data.source.local.database.DatabaseFactory
 import com.example.savethefood.shared.data.source.local.database.DatabaseDriverFactory
-import com.example.savethefood.shared.entity.FoodEntity
+import com.example.savethefood.shared.data.source.local.entity.FoodEntity
 
 
 class SpaceXSDK (databaseDriverFactory: DatabaseDriverFactory) {
-    private val database = Database(databaseDriverFactory)
-
+    private val database =
+        DatabaseFactory(databaseDriverFactory = databaseDriverFactory).createDatabase()
+/*
 
     @Throws(Exception::class) suspend fun setFood(food: FoodEntity): List<FoodEntity> {
         val newFood = database.insertFood(food)
@@ -16,5 +17,5 @@ class SpaceXSDK (databaseDriverFactory: DatabaseDriverFactory) {
         } else {
             listOf()
         }
-    }
+    }*/
 }

@@ -1,6 +1,6 @@
 package com.example.savethefood.shared.data.domain
 
-import com.example.savethefood.shared.entity.FoodEntity
+import com.example.savethefood.shared.data.source.local.entity.FoodEntity
 import com.example.savethefood.shared.utils.FoodImage
 import com.example.savethefood.shared.utils.QuantityType
 import com.example.savethefood.shared.utils.StorageType
