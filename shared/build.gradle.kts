@@ -14,7 +14,6 @@ version = "1.0-SNAPSHOT"
 repositories {
     gradlePluginPortal()
     google()
-    jcenter()
     mavenCentral()
 }
 
@@ -35,10 +34,12 @@ kotlin {
         }
     }
 
+    // TODO create a build folder with all versions for gradle kts
     val ktorVersion = "1.4.0"
     val serializationVersion = "1.0.0-RC"
     val sqlDelightVersion = "1.4.2"
     val coroutinesVersion = "1.3.9-native-mt"
+    val lifecycleVersion = "2.4.0-alpha02"
 
     sourceSets {
         val commonMain by getting {
@@ -48,6 +49,10 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
+                // ViewModel
+                implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+                // LiveData
+                implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
             }
         }
         val commonTest by getting {
