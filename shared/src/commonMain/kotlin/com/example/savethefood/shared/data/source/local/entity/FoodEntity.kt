@@ -25,7 +25,7 @@ data class FoodEntity(
     @SerialName("price")
     val price: Double?,
 
-    @SerialName("quantity_type")
+    @SerialName("quantityType")
     val quantityType: QuantityType,
 
     @SerialName("quantity")
@@ -34,10 +34,10 @@ data class FoodEntity(
     @SerialName("storage")
     val storageType: StorageType,
 
-    @SerialName("best_before")
+    @SerialName("bestBefore")
     var bestBefore: Long,
 
-    @SerialName("last_update")
+    @SerialName("lastUpdate")
     var lastUpdate: Long
 )
 

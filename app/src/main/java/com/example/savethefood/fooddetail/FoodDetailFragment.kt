@@ -75,7 +75,7 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
                 RecipeIngredientsAdapter(RecipeIngredientsAdapter.RecipeIngredientsClickListener(
                     clickListener = {
                         // We can create a recipe result with only the id to saarch the recipe details
-                        val recipeResult = RecipeResult(it.id)
+                        val recipeResult = RecipeResult(id = it.id)
                         findNavController()
                             .navigate(
                                 FoodDetailFragmentDirections.actionFoodDetailFragmentToRecipeDetailFragment(recipeResult))
