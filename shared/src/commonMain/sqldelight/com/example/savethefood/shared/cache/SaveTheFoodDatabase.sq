@@ -114,8 +114,8 @@ SELECT * FROM RecipeIngredients WHERE id = ?;
 CREATE TABLE IF NOT EXISTS Bag (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     title TEXT NOT NULL,
-    img TEXT NOT NULL,
-    quantityType TEXT,
+    img TEXT AS FoodImage NOT NULL,
+    quantityType TEXT AS QuantityType NOT NULL,
     quantity REAL
 );
 

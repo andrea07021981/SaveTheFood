@@ -49,15 +49,15 @@ class RecipeLocalDataSource(
         return recipe.asDatabaseModel().run {
             dbQuery.transactionWithResult {
                 dbQuery.insertRecipe(
-                    recipeId = this@run.recipeId,
-                    id = this@run.id,
-                    title = this@run.title,
-                    image = this@run.image,
-                    imageType = this@run.imageType,
-                    likes = this@run.likes.toLong(),
-                    missedIngredientCount = this@run.missedIngredientCount.toLong(),
-                    usedIngredientCount = this@run.usedIngredientCount.toLong(),
-                    unUsedIngredientCount = this@run.unUsedIngredientCount.toLong(),
+                    recipeId = recipeId,
+                    id = id,
+                    title = title,
+                    image = image,
+                    imageType = imageType,
+                    likes = likes.toLong(),
+                    missedIngredientCount = missedIngredientCount.toLong(),
+                    usedIngredientCount = usedIngredientCount.toLong(),
+                    unUsedIngredientCount = unUsedIngredientCount.toLong(),
                 )
                 dbQuery.lastInsertRowId().executeAsOne()
             }
