@@ -1,4 +1,3 @@
-
 package com.example.savethefood.shared.data.source.local.entity
 
 import com.example.savethefood.shared.data.domain.FoodDomain
