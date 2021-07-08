@@ -28,8 +28,8 @@ class UserLocalDataSource(
     }
 
     override suspend fun saveUser(user: UserDomain): Long {
-        user.asDatabaseModel().run {
-            return dbQuery.transactionWithResult {
+        return user.asDatabaseModel().run {
+            dbQuery.transactionWithResult {
                 dbQuery.insertUser(
                     id = this@run.id,
                     username = this@run.userName,

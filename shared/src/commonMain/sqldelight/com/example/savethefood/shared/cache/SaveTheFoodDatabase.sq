@@ -83,7 +83,7 @@ SELECT * FROM User
 WHERE email = ? AND password = ?;
 
 
-CREATE TABLE IF NOT EXISTS RecipeIngredient (
+CREATE TABLE IF NOT EXISTS RecipeIngredients (
     recipeId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     id INTEGER NOT NULL,
     title TEXT NOT NULL,
@@ -96,20 +96,20 @@ CREATE TABLE IF NOT EXISTS RecipeIngredient (
 );
 
 removeAllRecipes:
-DELETE FROM  RecipeIngredient;
+DELETE FROM  RecipeIngredients;
 
 insertRecipe:
-INSERT OR REPLACE INTO RecipeIngredient (recipeId,id,title,image,imageType,likes,missedIngredientCount,usedIngredientCount,unUsedIngredientCount)
+INSERT OR REPLACE INTO RecipeIngredients (recipeId,id,title,image,imageType,likes,missedIngredientCount,usedIngredientCount,unUsedIngredientCount)
 VALUES (nullif(?, 0),?,?,?,?,?,?,?,?);
 
 deleteRecipeById:
-DELETE FROM RecipeIngredient WHERE recipeId = ?;
+DELETE FROM RecipeIngredients WHERE recipeId = ?;
 
 selectRecipes:
-SELECT * FROM RecipeIngredient;
+SELECT * FROM RecipeIngredients;
 
 selectRecipeById:
-SELECT * FROM RecipeIngredient WHERE id = ?;
+SELECT * FROM RecipeIngredients WHERE id = ?;
 
 CREATE TABLE IF NOT EXISTS Bag (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,

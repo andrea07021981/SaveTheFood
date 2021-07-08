@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 @Serializable
 data class RecipeIngredientEntity(
     val recipeId: Long = 0,
-    val id: Int,
+    val id: Long,
     val title: String,
     val image: String,
     val imageType:String,
