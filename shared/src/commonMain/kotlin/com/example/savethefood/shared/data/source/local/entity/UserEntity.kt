@@ -1,22 +1,21 @@
 package com.example.savethefood.data.source.local.entity
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.example.savethefood.data.domain.UserDomain
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@Entity(tableName = "User")
+@Serializable
 data class UserEntity(
-    @PrimaryKey(autoGenerate = true)
+    @SerialName("id")
     var id: Long = 0L,
 
-    @ColumnInfo(name = "username")
+    @SerialName("userName")
     val userName: String,
 
-    @ColumnInfo(name = "email")
+    @SerialName("email")
     var email: String,
 
-    @ColumnInfo(name = "password")
+    @SerialName("password")
     var password: String
 )
 

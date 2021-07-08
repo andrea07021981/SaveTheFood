@@ -24,7 +24,7 @@ interface FoodRepository {
 
     suspend fun getLocalFoods(): ActionResult<List<FoodDomain>>
 
-    suspend fun deleteFood(food: FoodDomain): Int
+    suspend fun deleteFood(food: FoodDomain): Long?
 
     fun getFoodImages(
         orderField: KProperty1<FoodImage, String> = FoodImage::name

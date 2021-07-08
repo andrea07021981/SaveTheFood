@@ -33,9 +33,9 @@ interface UserDatabaseDao {
     suspend fun clear()
 
     /**
-     * Selects and returns the user with given userId.
+     * Selects and returns the user with given id.
      */
-    @Query("SELECT * from User WHERE userId = :key")
+    @Query("SELECT * from User WHERE id = :key")
     suspend fun getUserWithId(key: Long): UserEntity?
 
     /**

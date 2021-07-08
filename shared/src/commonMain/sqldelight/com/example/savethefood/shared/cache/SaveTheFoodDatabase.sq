@@ -56,11 +56,32 @@ changes:
 SELECT changes();
 
 CREATE TABLE IF NOT EXISTS User (
-    userId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     username TEXT NOT NULL, 
     email TEXT NOT NULL, 
     password TEXT NOT NULL
 );
+
+removeAllUsers:
+DELETE FROM User;
+
+insertUser:
+INSERT OR FAIL INTO User (id,username,email,password)
+VALUES (nullif(?, 0),?,?,?);
+
+updateUser:
+UPDATE OR ABORT User
+SET id = ?,username = ?,email = ?,password = ?
+WHERE id = ?;
+
+selectUsereById:
+SELECT * FROM Food
+WHERE id = ?;
+
+selectUserByEmailPsw:
+SELECT * FROM User 
+WHERE email = ? AND password = ?;
+
 
 CREATE TABLE IF NOT EXISTS RecipeIngredient (
     recipeId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -74,9 +95,21 @@ CREATE TABLE IF NOT EXISTS RecipeIngredient (
     unUsedIngredientCount INTEGER NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS RecipeInfo (
-    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL
-);
+removeAllRecipes:
+DELETE FROM  RecipeIngredient;
+
+insertRecipe:
+INSERT OR REPLACE INTO RecipeIngredient (recipeId,id,title,image,imageType,likes,missedIngredientCount,usedIngredientCount,unUsedIngredientCount)
+VALUES (nullif(?, 0),?,?,?,?,?,?,?,?);
+
+deleteRecipeById:
+DELETE FROM RecipeIngredient WHERE recipeId = ?;
+
+selectRecipes:
+SELECT * FROM RecipeIngredient;
+
+selectRecipeById:
+SELECT * FROM RecipeIngredient WHERE id = ?;
 
 CREATE TABLE IF NOT EXISTS Bag (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -86,4 +119,12 @@ CREATE TABLE IF NOT EXISTS Bag (
     quantity REAL
 );
 
+deleteAllBags:
+DELETE FROM Bag;
 
+insertBag:
+INSERT OR REPLACE INTO Bag (id,title,img,quantityType,quantity)
+VALUES (nullif(?, 0),?,?,?,?);
+
+selectBags:
+SELECT * FROM Bag;
