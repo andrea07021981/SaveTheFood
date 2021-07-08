@@ -1,6 +1,6 @@
-package com.example.savethefood.data.source.local.entity
+package com.example.savethefood.shared.data.source.local.entity
 
-import com.example.savethefood.data.domain.UserDomain
+import com.example.savethefood.shared.data.domain.UserDomain
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

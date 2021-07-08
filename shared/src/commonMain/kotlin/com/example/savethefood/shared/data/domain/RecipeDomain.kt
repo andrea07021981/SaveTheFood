@@ -1,4 +1,4 @@
-package com.example.savethefood.data.domain
+package com.example.savethefood.shared.data.domain
 
 import kotlinx.serialization.Serializable
 
