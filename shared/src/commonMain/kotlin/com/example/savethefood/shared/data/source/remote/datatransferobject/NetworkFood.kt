@@ -1,5 +1,8 @@
 package com.example.savethefood.shared.data.source.remote.datatransferobject
 
+import com.example.savethefood.shared.data.domain.FoodDomain
+import com.example.savethefood.shared.data.source.local.entity.FoodEntity
+import io.ktor.util.date.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -67,3 +70,13 @@ data class CaloricBreakdown(
     val percentFat: Double,
     val percentProtein: Double
 )
+
+// TODO The other properties must be manually selected by the user
+fun NetworkFood.asDomainModel(): FoodDomain {
+    return FoodDomain(
+        id = id.toLong(),
+        title = title,
+        description = generatedText,
+        price = price,
+    )
+}

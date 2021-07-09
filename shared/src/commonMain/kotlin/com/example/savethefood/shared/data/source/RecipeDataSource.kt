@@ -7,6 +7,10 @@ import com.example.savethefood.shared.data.domain.RecipeIngredients
 import kotlinx.coroutines.flow.Flow
 
 interface RecipeDataSource {
+
+    val tag: String
+        get() = RecipeDataSource::class.simpleName!!
+
     @Throws(Exception::class)
     fun getRecipes(): Flow<RecipeDomain?>
 

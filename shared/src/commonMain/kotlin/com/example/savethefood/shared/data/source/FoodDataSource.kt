@@ -8,6 +8,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface FoodDataSource {
 
+    val tag: String
+        get() = FoodDataSource::class.simpleName!!
+
     @Throws(Exception::class)
     suspend fun getFoodByUpc(barcode: String): ActionResult<FoodDomain>
 
@@ -16,6 +19,8 @@ interface FoodDataSource {
 
     @Throws(Exception::class)
     suspend fun getFoodById(id: Int): ActionResult<FoodDomain>
+
+    suspend fun updateFoods(food: FoodDomain)
 
     suspend fun insertNewFood(food: FoodDomain): Long
 

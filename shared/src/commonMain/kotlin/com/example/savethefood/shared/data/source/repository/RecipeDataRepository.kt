@@ -11,38 +11,35 @@ import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 
 
 class RecipeDataRepository(
     private val recipeLocalDataSource: RecipeDataSource,
-    //private val recipeRemoteDataSource: RecipeDataSource,
+    private val recipeRemoteDataSource: RecipeDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : RecipeRepository {
 
     @Throws(Exception::class)
     override fun getRecipes(): Flow<ActionResult<List<RecipeResult>?>> {
         val localRecipes = recipeLocalDataSource.getRecipes()
-        // TODO WAIT THE REMOTE SOURCE
-        /*recipeRemoteDataSource.getRecipes()
+        recipeRemoteDataSource.getRecipes()
             .combine(localRecipes) { remote, local ->
                 //local?.union(remote ?: listOf())
                 remote?.results?.toMutableList().applyRemoteResultRecipes(local)
             }
             .map {
                 if (it.isNullOrEmpty().not()) {
-                    Result.Success(it)
+                    ActionResult.Success(it)
                 } else {
-                    Result.Error("No data")
+                    ActionResult.Error("No data")
                 }
             }
             .retryWhen { cause, attempt ->
                 retryConnection(cause, attempt)
             }
-            .flowOn(ioDispatcher)*/
+            .flowOn(ioDispatcher)
         return flowOf()
     }
 
@@ -50,8 +47,7 @@ class RecipeDataRepository(
      * Get the recipe with ingredients and combine them with the saved ones
      */
     override fun getRecipesByIngredients(vararg foodFilter: String?): Flow<ActionResult<List<RecipeIngredients>?>> {
-        // TODO WAIT THE REMOTE SOURCE
-        /*val remoteRecipes = recipeRemoteDataSource.getRecipesByIngredients(*foodFilter)
+        val remoteRecipes = recipeRemoteDataSource.getRecipesByIngredients(*foodFilter)
         recipeLocalDataSource.getRecipesIngredients()
             .retryWhen { cause, attempt ->
                 retryConnection(cause, attempt)
@@ -62,7 +58,7 @@ class RecipeDataRepository(
             }
             .map(::recipeIngredientResult)
             .flowOn(Dispatchers.Default)
-            .conflate()*/
+            .conflate()
         return flowOf()
     }
 
@@ -98,9 +94,7 @@ class RecipeDataRepository(
 
     @Throws(Exception::class)
     override suspend fun getRecipeInfo(id: Int): ActionResult<RecipeInfoDomain> = withContext(ioDispatcher) {
-        // TODO WAIT THE REMOTE SOURCE
-        //recipeRemoteDataSource.getRecipeInfo(id)
-        TODO("Not yet implemented")
+        recipeRemoteDataSource.getRecipeInfo(id)
     }
 
     /**

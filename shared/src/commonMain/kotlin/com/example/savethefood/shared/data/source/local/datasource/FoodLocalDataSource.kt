@@ -36,6 +36,11 @@ class FoodLocalDataSource constructor(
         TODO("Not yet implemented")
     }
 
+    // TODO there is no way to update clearly with the current version, wait new releases
+    override suspend fun updateFoods(food: FoodDomain) {
+        insertNewFood(food)
+    }
+
     override suspend fun insertNewFood(food: FoodDomain): Long {
         val entity = food.asDatabaseModel()
         return dbQuery.transactionWithResult {
