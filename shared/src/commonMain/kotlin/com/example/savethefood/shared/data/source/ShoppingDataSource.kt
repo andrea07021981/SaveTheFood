@@ -5,6 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface ShoppingDataSource {
 
+    val tag: String
+        get() = ShoppingDataSource::class.simpleName!!
+
     @Throws(Exception::class)
     fun getFoodsInBag(): Flow<List<BagDomain>?>
 

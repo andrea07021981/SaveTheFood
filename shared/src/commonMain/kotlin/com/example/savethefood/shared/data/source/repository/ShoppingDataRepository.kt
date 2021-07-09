@@ -14,7 +14,7 @@ import kotlinx.coroutines.withContext
 
 class ShoppingDataRepository(
     private val shoppingLocalDataSource: ShoppingDataSource,
-    //private val shoppingRemoteDataSource: ShoppingDataSource,
+    private val shoppingRemoteDataSource: ShoppingDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ShoppingRepository {
 

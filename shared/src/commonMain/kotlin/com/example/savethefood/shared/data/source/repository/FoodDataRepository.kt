@@ -28,28 +28,54 @@ DatabaseFactory(DatabaseDriverFactory(this)).createDatabase()
 @ExperimentalCoroutinesApi
 class FoodDataRepository (
     private val foodLocalDataSource: FoodDataSource,
-    //private val foodRemoteDataSource: FoodDataSource,
+    private val foodRemoteDataSource: FoodDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : FoodRepository {
 
     @Throws(Exception::class)
     override suspend fun getApiFoodUpc(barcode: String): ActionResult<FoodDomain> = coroutineScope{
-        TODO("Not yet implemented")
+        val foodRetrieved = foodRemoteDataSource.getFoodByUpc(barcode)
+        if (foodRetrieved is ActionResult.Success) {
+            val saveNewFood = foodLocalDataSource.insertNewFood(foodRetrieved.data)
+            if (saveNewFood == 0L) {
+                return@coroutineScope ActionResult.Error("Not saved")
+            } else {
+                return@coroutineScope ActionResult.Success(foodRetrieved.data)
+            }
+        } else {
+            return@coroutineScope foodRetrieved
+        }
     }
 
     @Throws(Exception::class)
     override suspend fun getApiFoodQuery(query: String): ActionResult<FoodSearchDomain>? = coroutineScope{
-        TODO("Not yet implemented")
+        foodRemoteDataSource.getFoodByQuery(query)
     }
 
     @Throws(Exception::class)
     override suspend fun getApiFoodById(id: Int): ActionResult<FoodDomain> = coroutineScope{
-        TODO("Not yet implemented")
+        val foodByIdResult = foodRemoteDataSource.getFoodById(id)
+        if (foodByIdResult is ActionResult.Success) {
+            foodLocalDataSource.insertNewFood(foodByIdResult.data)
+            return@coroutineScope foodByIdResult
+        } else {
+            throw Exception(foodByIdResult.toString())
+        }
     }
 
     @Throws(Exception::class)
     override suspend fun refreshData() = coroutineScope{
-        TODO("Not yet implemented")
+        val localFoods = foodLocalDataSource.getLocalFoods()
+        if (localFoods is ActionResult.Success) {
+            for (food in localFoods.data) {
+                val foodById = foodRemoteDataSource.getFoodById(food.id.toInt())
+                if (foodById is ActionResult.Success) {
+                    foodLocalDataSource.updateFoods(foodById.data)
+                }
+            }
+        } else{
+            throw Exception(localFoods.toString())
+        }
     }
 
     override suspend fun saveNewFood(food: FoodDomain): ActionResult<FoodDomain> = withContext(Dispatchers.Default) {

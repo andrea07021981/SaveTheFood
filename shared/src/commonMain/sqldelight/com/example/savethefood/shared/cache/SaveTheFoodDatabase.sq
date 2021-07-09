@@ -19,7 +19,7 @@ removeAllFood:
 DELETE FROM Food;
 
 insertFood:
-INSERT OR FAIL INTO Food (id, title, description, img, price, quantityType, quantity, storageType, bestBefore, lastUpdate)
+INSERT OR REPLACE INTO Food (id, title, description, img, price, quantityType, quantity, storageType, bestBefore, lastUpdate)
 VALUES (nullif(?, 0),?,?,?,?,?,?,?,?,?);
 
 selectFoods:

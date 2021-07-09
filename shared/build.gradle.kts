@@ -40,6 +40,7 @@ kotlin {
     val sqlDelightVersion = "1.4.2"
     val coroutinesVersion = "1.3.9-native-mt"
     val lifecycleVersion = "2.4.0-alpha02"
+    val logbackVersion = "1.2.3"
 
     sourceSets {
         val commonMain by getting {
@@ -49,6 +50,8 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
+                implementation("ch.qos.logback:logback-classic:$logbackVersion")
+                implementation("io.ktor:ktor-client-logging:$ktorVersion")
 
             }
         }
