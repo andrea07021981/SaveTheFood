@@ -49,10 +49,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
-                // ViewModel
-                implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-                // LiveData
-                implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+
             }
         }
         val commonTest by getting {

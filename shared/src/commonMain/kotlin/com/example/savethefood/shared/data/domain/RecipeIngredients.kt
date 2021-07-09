@@ -6,7 +6,7 @@ import com.example.savethefood.shared.data.source.local.entity.RecipeIngredientE
 @Serializable
 data class RecipeIngredients(
     var recipeId: Long = 0,
-    val id: Int,
+    val id: Long,
     val title: String,
     val image: String,
     val imageType: String,

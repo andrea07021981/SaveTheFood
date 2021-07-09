@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RecipeResult(
     val recipeId: Long = 0, // Id to distinguish the local and remote recipe
-    val id: Int,
+    val id: Long,
     val baseDomainUrl: String = "",
     val image: String = "",
     val sourceUrl: String?,

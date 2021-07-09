@@ -44,19 +44,16 @@ buildscript {
     }
     repositories {
         gradlePluginPortal()
-        jcenter()
         google()
         mavenCentral()
         
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:${version_gradle}")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin")
-        classpath("org.jetbrains.kotlin:kotlin-serialization:$version_kotlin")
-        classpath("com.squareup.sqldelight:gradle-plugin:1.4.2")
         classpath "com.android.tools.build:gradle:${version_gradle}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$version_kotlin"
+        classpath "com.squareup.sqldelight:gradle-plugin:1.4.2"
         classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:$version_navigation_args"
         classpath "com.google.gms:google-services:$version_play"
         classpath "com.google.firebase:firebase-crashlytics-gradle:$version_crashlythics"
@@ -65,9 +62,6 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-
-group = "com.jetbrains.handson"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
