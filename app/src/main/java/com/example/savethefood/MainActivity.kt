@@ -3,6 +3,7 @@ package com.example.savethefood
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -18,7 +19,10 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.savethefood.databinding.ActivityMainBinding
+import com.example.savethefood.shared.data.source.remote.service.FoodServiceApi
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 const val FAB_DURATION = 500
 internal interface FragmentCallback {
@@ -50,6 +54,15 @@ class MainActivity : AppCompatActivity() {
 
         // Init the notifications
         Notifier.init(this)
+
+        GlobalScope.launch {
+            try {
+                val foodByUpc = FoodServiceApi().getFoodByUpc("041631000564")
+                Log.d("Web api", foodByUpc.title)
+            } catch (e: Exception) {
+                Log.d("Web api error", e.localizedMessage ?: "No message")
+            }
+        }
     }
 
     private fun setUpNavigation(binding: ActivityMainBinding) {
