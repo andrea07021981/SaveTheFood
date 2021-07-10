@@ -30,3 +30,5 @@ fun <T> List<T>?.getResult(): ActionResult<List<T>> {
         }
     } ?: ActionResult.ExError(Exception("Error retrieving data"))
 }
+
+fun String.isValidEmail(): Boolean = matches(Regex("^\\S+@\\S+\$"))
