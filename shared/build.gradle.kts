@@ -42,6 +42,7 @@ kotlin {
     val lifecycleVersion = "2.4.0-alpha02"
     val logbackVersion = "1.2.3"
     val mokoMvvmVersion = "0.10.0"
+    val koinVersion = "3.0.1"
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -55,6 +56,9 @@ kotlin {
                 // MOKO - MVVM
                 implementation("dev.icerock.moko:mvvm:$mokoMvvmVersion")
 
+                // KOIN for DI
+                // Koin for Kotlin Multiplatform
+                implementation("io.insert-koin:koin-core:$koinVersion")
             }
         }
         val commonTest by getting {

@@ -6,6 +6,9 @@ import io.ktor.client.request.*
 import kotlin.jvm.Volatile
 
 // TODO use DI to pass the HttpClient and remove the companion
+/**
+ * The APi calls use url for path and query for query search
+ */
 class FoodServiceApi(
 
 ) {
