@@ -11,7 +11,7 @@ UNDER DEVELOPMENT: Porting of the business logic into the shared KMM module. Ste
 5 - Migrata data classes
 6 - Migrate Repository
 7 - Migrate VMs
-
+8 - add Jetpack compose https://developer.android.com/jetpack/compose
 
 <img align="left" width="250" height="500" src="images/login.png">
 <img align="left" width="250" height="500" src="images/signUp.png">

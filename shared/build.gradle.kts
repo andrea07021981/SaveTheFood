@@ -41,7 +41,8 @@ kotlin {
     val coroutinesVersion = "1.3.9-native-mt"
     val lifecycleVersion = "2.4.0-alpha02"
     val logbackVersion = "1.2.3"
-
+    val mokoMvvmVersion = "0.10.0"
+    val koinVersion = "3.0.1"
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -52,7 +53,12 @@ kotlin {
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
                 implementation("ch.qos.logback:logback-classic:$logbackVersion")
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
+                // MOKO - MVVM
+                implementation("dev.icerock.moko:mvvm:$mokoMvvmVersion")
 
+                // KOIN for DI
+                // Koin for Kotlin Multiplatform
+                implementation("io.insert-koin:koin-core:$koinVersion")
             }
         }
         val commonTest by getting {
