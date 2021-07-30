@@ -40,7 +40,7 @@ class FakeFoodDataRepositoryTest(
     }
 
     override suspend fun getApiFoodById(id: Int): Result<FoodDomain> {
-        fakeLocalFoodDataSourceTest.getFoodById(id).apply {
+        fakeRemoteFoodDataSourceTest.getFoodById(id).apply {
             return if (this != null && this.succeeded) {
                 this
             } else{

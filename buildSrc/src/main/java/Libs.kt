@@ -98,7 +98,7 @@ object Libs {
     const val androidTestCore = "androidx.test:core:${Versions.androidX_test_core}"
 
     // Dependencies for Android instrumented unit tests
-    const val mockito = "org.mockito:mockito-core:${Versions.coroutine}"
+    const val mockito = "org.mockito:mockito-core:${Versions.mockito}"
     const val mockitoDex = "com.linkedin.dexmaker:dexmaker-mockito:${Versions.dex_maker}"
 
     //Test Espresso idling resources

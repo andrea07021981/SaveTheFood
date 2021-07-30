@@ -26,7 +26,7 @@ object Versions {
     const val robolectric = "4.2"
     const val hamcrest = "1.3"
     const val archTesting = "2.1.0"
-    const val mockito = "3.5.13"
+    const val mockito = "3.11.2"
     const val dex_maker = "2.12.1"
     const val work = "2.5.0"
     const val analytics = "18.0.2"
