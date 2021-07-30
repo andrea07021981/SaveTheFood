@@ -322,5 +322,5 @@ dependencies {
     implementation(Libs.shimmer)
 
     // KMM module
-    implementation(project(":shared"))
+    api(project(":shared"))
 }

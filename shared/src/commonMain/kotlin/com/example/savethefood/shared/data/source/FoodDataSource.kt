@@ -1,6 +1,6 @@
 package com.example.savethefood.shared.data.source
 
-import com.example.savethefood.shared.data.ActionResult
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.data.domain.FoodSearchDomain
 import com.example.savethefood.shared.data.source.local.entity.FoodEntity
@@ -12,13 +12,13 @@ interface FoodDataSource {
         get() = FoodDataSource::class.simpleName!!
 
     @Throws(Exception::class)
-    suspend fun getFoodByUpc(barcode: String): ActionResult<FoodDomain>
+    suspend fun getFoodByUpc(barcode: String): Result<FoodDomain>
 
     @Throws(Exception::class)
-    suspend fun getFoodByQuery(barcode: String): ActionResult<FoodSearchDomain>?
+    suspend fun getFoodByQuery(barcode: String): Result<FoodSearchDomain>?
 
     @Throws(Exception::class)
-    suspend fun getFoodById(id: Int): ActionResult<FoodDomain>
+    suspend fun getFoodById(id: Int): Result<FoodDomain>
 
     suspend fun updateFoods(food: FoodDomain)
 
@@ -26,7 +26,7 @@ interface FoodDataSource {
 
     fun getFoods(): Flow<List<FoodDomain>?>
 
-    suspend fun getLocalFoods(): ActionResult<List<FoodDomain>>
+    suspend fun getLocalFoods(): Result<List<FoodDomain>>
 
     suspend fun deleteFood(food: FoodEntity): Long?
 }

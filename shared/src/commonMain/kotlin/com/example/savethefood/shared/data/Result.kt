@@ -20,13 +20,13 @@ package com.example.savethefood.shared.data
  * A generic class that holds a value with its loading status.
  * @param <T>
  */
-sealed class ActionResult<out R> {
+sealed class Result<out R> {
 
-    data class Success<out T>(val data: T) : ActionResult<T>()
-    data class ExError(val exception: Exception) : ActionResult<Nothing>()
-    data class Error(val message: String) : ActionResult<Nothing>()
-    object Loading : ActionResult<Nothing>()
-    object Idle : ActionResult<Nothing>()
+    data class Success<out T>(val data: T) : Result<T>()
+    data class ExError(val exception: Exception) : Result<Nothing>()
+    data class Error(val message: String) : Result<Nothing>()
+    object Loading : Result<Nothing>()
+    object Idle : Result<Nothing>()
 
     override fun toString(): String {
         return when (this) {
@@ -40,7 +40,7 @@ sealed class ActionResult<out R> {
 }
 
 /**
- * `true` if [ActionResult] is of type [Success] & holds non-null [Success.data].
+ * `true` if [Result] is of type [Success] & holds non-null [Success.data].
  */
-val ActionResult<*>.succeeded
-    get() = this is ActionResult.Success && data != null
+val Result<*>.succeeded
+    get() = this is Result.Success && data != null

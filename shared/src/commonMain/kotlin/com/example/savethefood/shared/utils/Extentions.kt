@@ -1,6 +1,6 @@
 package com.example.savethefood.shared.utils
 
-import com.example.savethefood.shared.data.ActionResult
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.FoodDomain
 
 fun Double?.isValidDouble(): Boolean {
@@ -21,14 +21,14 @@ fun List<FoodDomain>.customSortBy(order: FoodOrder): List<FoodDomain> {
 
 fun <T> List<T>.isListOfNulls(): Boolean = this.all { it == null }
 
-fun <T> List<T>?.getResult(): ActionResult<List<T>> {
+fun <T> List<T>?.getResult(): Result<List<T>> {
     return this?.let {
         if (it.count() > 0) {
-            ActionResult.Success(it)
+            Result.Success(it)
         } else {
-            ActionResult.Error("No data")
+            Result.Error("No data")
         }
-    } ?: ActionResult.ExError(Exception("Error retrieving data"))
+    } ?: Result.ExError(Exception("Error retrieving data"))
 }
 
 fun String.isValidEmail(): Boolean = matches(Regex("^\\S+@\\S+\$"))

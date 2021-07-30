@@ -220,10 +220,10 @@ object RecipeBindingUtils {
         text = minutes?.let {
             String.format(
                 context.getString(
-                    R.string.format__date,
-                    it.div(60),
-                    it.rem(60)
-                )
+                    R.string.format__date
+                ),
+                it.div(60),
+                it.rem(60)
             )
         } ?: "--"
     }
