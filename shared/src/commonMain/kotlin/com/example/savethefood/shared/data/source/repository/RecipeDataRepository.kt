@@ -1,11 +1,10 @@
 package com.example.savethefood.shared.data.source.repository
 
-import com.example.savethefood.shared.data.ActionResult
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.RecipeDomain
 import com.example.savethefood.shared.data.domain.RecipeInfoDomain
 import com.example.savethefood.shared.data.domain.RecipeIngredients
 import com.example.savethefood.shared.data.domain.RecipeResult
-import com.example.savethefood.shared.data.source.FoodDataSource
 import com.example.savethefood.shared.data.source.RecipeDataSource
 import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.CoroutineDispatcher
@@ -22,7 +21,7 @@ class RecipeDataRepository(
 ) : RecipeRepository {
 
     @Throws(Exception::class)
-    override fun getRecipes(): Flow<ActionResult<List<RecipeResult>?>> {
+    override fun getRecipes(): Flow<Result<List<RecipeResult>?>> {
         val localRecipes = recipeLocalDataSource.getRecipes()
         recipeRemoteDataSource.getRecipes()
             .combine(localRecipes) { remote, local ->
@@ -31,9 +30,9 @@ class RecipeDataRepository(
             }
             .map {
                 if (it.isNullOrEmpty().not()) {
-                    ActionResult.Success(it)
+                    Result.Success(it)
                 } else {
-                    ActionResult.Error("No data")
+                    Result.Error("No data")
                 }
             }
             .retryWhen { cause, attempt ->
@@ -46,7 +45,7 @@ class RecipeDataRepository(
     /**
      * Get the recipe with ingredients and combine them with the saved ones
      */
-    override fun getRecipesByIngredients(vararg foodFilter: String?): Flow<ActionResult<List<RecipeIngredients>?>> {
+    override fun getRecipesByIngredients(vararg foodFilter: String?): Flow<Result<List<RecipeIngredients>?>> {
         val remoteRecipes = recipeRemoteDataSource.getRecipesByIngredients(*foodFilter)
         recipeLocalDataSource.getRecipesIngredients()
             .retryWhen { cause, attempt ->
@@ -93,7 +92,7 @@ class RecipeDataRepository(
     }
 
     @Throws(Exception::class)
-    override suspend fun getRecipeInfo(id: Int): ActionResult<RecipeInfoDomain> = withContext(ioDispatcher) {
+    override suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain> = withContext(ioDispatcher) {
         recipeRemoteDataSource.getRecipeInfo(id)
     }
 
@@ -106,34 +105,34 @@ class RecipeDataRepository(
         try {
             if (recipe.recipeId > 0L) {
                 val deleteRecipe = recipeLocalDataSource.deleteRecipe(recipe)
-                ActionResult.Success(recipe)
+                Result.Success(recipe)
             } else {
                 // TODO call the search recipe and save the reciperesult domain as well as RecipeIngredients
                     // Use the coroutine sequential by default to retrieve the remote first, then save RecipeResult
                 val newRecipe = recipeLocalDataSource.saveRecipe(recipe)
                 if (newRecipe != null) {
-                    ActionResult.Success(recipeLocalDataSource.getRecipeIngredients(newRecipe.toInt()))
+                    Result.Success(recipeLocalDataSource.getRecipeIngredients(newRecipe.toInt()))
                 } else {
                     throw Exception("Recipe not saved")
                 }
             }
         } catch (e: Exception) {
-            ActionResult.ExError(e)
+            Result.ExError(e)
         }
     }
 
     /**
      * Calculate the result and order the list based on the total ingredients matched
      */
-    private fun recipeIngredientResult(list: List<RecipeIngredients>?): ActionResult<List<RecipeIngredients>> {
+    private fun recipeIngredientResult(list: List<RecipeIngredients>?): Result<List<RecipeIngredients>> {
         return list?.let {
             if (it.count() > 0) {
                 // TODO replace with generic list ext func
-                ActionResult.Success(it.sortedBy(RecipeIngredients::title))
+                Result.Success(it.sortedBy(RecipeIngredients::title))
             } else {
-                ActionResult.Error("No data")
+                Result.Error("No data")
             }
-        } ?: ActionResult.ExError(Exception("Error retrieving data"))
+        } ?: Result.ExError(Exception("Error retrieving data"))
     }
 
     // TODO find a ext fun, it's used in other repos

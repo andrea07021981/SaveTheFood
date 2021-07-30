@@ -1,6 +1,6 @@
 package com.example.savethefood.shared.viewmodel
 
-import com.example.savethefood.shared.data.ActionResult
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.data.source.repository.UserRepository
 import com.example.savethefood.shared.utils.Event
@@ -95,19 +95,19 @@ class LoginViewModel(
         }
     }
 
-    private inline fun doLogin(crossinline block: suspend () -> ActionResult<UserDomain>) {
+    private inline fun doLogin(crossinline block: suspend () -> Result<UserDomain>) {
         viewModelScope.launch {
             _loginAuthenticationState.value = LoginAuthenticationStates.Authenticating()
             when (val result = block()) {
-                is ActionResult.Success -> {
+                is Result.Success -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.Authenticated(user = result.data)
                 }
-                is ActionResult.Error -> _loginAuthenticationState.value =
+                is Result.Error -> _loginAuthenticationState.value =
                     LoginAuthenticationStates.InvalidAuthentication(result.message)
-                is ActionResult.ExError -> _loginAuthenticationState.value =
+                is Result.ExError -> _loginAuthenticationState.value =
                     LoginAuthenticationStates.InvalidAuthentication(result.exception.toString())
-                is ActionResult.Loading -> _loginAuthenticationState.value =
+                is Result.Loading -> _loginAuthenticationState.value =
                     LoginAuthenticationStates.Authenticating()
                 else -> LoginAuthenticationStates.Idle
             }

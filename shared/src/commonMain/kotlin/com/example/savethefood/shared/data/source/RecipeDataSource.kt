@@ -1,6 +1,6 @@
 package com.example.savethefood.shared.data.source
 
-import com.example.savethefood.shared.data.ActionResult
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.RecipeDomain
 import com.example.savethefood.shared.data.domain.RecipeInfoDomain
 import com.example.savethefood.shared.data.domain.RecipeIngredients
@@ -21,7 +21,7 @@ interface RecipeDataSource {
     fun getRecipesByIngredients(vararg foodFilter: String?): Flow<List<RecipeIngredients>?>
 
     @Throws(Exception::class)
-    suspend fun getRecipeInfo(id: Int): ActionResult<RecipeInfoDomain>
+    suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain>
 
     @Throws(Exception::class)
     suspend fun saveRecipe(recipe: RecipeIngredients): Long?

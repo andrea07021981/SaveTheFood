@@ -1,6 +1,6 @@
 package com.example.savethefood.shared.data.source.repository
 
-import com.example.savethefood.shared.data.ActionResult
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.data.domain.FoodItem
 import com.example.savethefood.shared.data.domain.FoodSearchDomain
@@ -33,14 +33,14 @@ class FoodDataRepository (
 ) : FoodRepository {
 
     @Throws(Exception::class)
-    override suspend fun getApiFoodUpc(barcode: String): ActionResult<FoodDomain> = coroutineScope{
+    override suspend fun getApiFoodUpc(barcode: String): Result<FoodDomain> = coroutineScope{
         val foodRetrieved = foodRemoteDataSource.getFoodByUpc(barcode)
-        if (foodRetrieved is ActionResult.Success) {
+        if (foodRetrieved is Result.Success) {
             val saveNewFood = foodLocalDataSource.insertNewFood(foodRetrieved.data)
             if (saveNewFood == 0L) {
-                return@coroutineScope ActionResult.Error("Not saved")
+                return@coroutineScope Result.Error("Not saved")
             } else {
-                return@coroutineScope ActionResult.Success(foodRetrieved.data)
+                return@coroutineScope Result.Success(foodRetrieved.data)
             }
         } else {
             return@coroutineScope foodRetrieved
@@ -48,14 +48,14 @@ class FoodDataRepository (
     }
 
     @Throws(Exception::class)
-    override suspend fun getApiFoodQuery(query: String): ActionResult<FoodSearchDomain>? = coroutineScope{
+    override suspend fun getApiFoodQuery(query: String): Result<FoodSearchDomain>? = coroutineScope{
         foodRemoteDataSource.getFoodByQuery(query)
     }
 
     @Throws(Exception::class)
-    override suspend fun getApiFoodById(id: Int): ActionResult<FoodDomain> = coroutineScope{
+    override suspend fun getApiFoodById(id: Int): Result<FoodDomain> = coroutineScope{
         val foodByIdResult = foodRemoteDataSource.getFoodById(id)
-        if (foodByIdResult is ActionResult.Success) {
+        if (foodByIdResult is Result.Success) {
             foodLocalDataSource.insertNewFood(foodByIdResult.data)
             return@coroutineScope foodByIdResult
         } else {
@@ -66,10 +66,10 @@ class FoodDataRepository (
     @Throws(Exception::class)
     override suspend fun refreshData() = coroutineScope{
         val localFoods = foodLocalDataSource.getLocalFoods()
-        if (localFoods is ActionResult.Success) {
+        if (localFoods is Result.Success) {
             for (food in localFoods.data) {
                 val foodById = foodRemoteDataSource.getFoodById(food.id.toInt())
-                if (foodById is ActionResult.Success) {
+                if (foodById is Result.Success) {
                     foodLocalDataSource.updateFoods(foodById.data)
                 }
             }
@@ -78,16 +78,16 @@ class FoodDataRepository (
         }
     }
 
-    override suspend fun saveNewFood(food: FoodDomain): ActionResult<FoodDomain> = withContext(Dispatchers.Default) {
+    override suspend fun saveNewFood(food: FoodDomain): Result<FoodDomain> = withContext(Dispatchers.Default) {
         val insertFoodId = foodLocalDataSource.insertNewFood(food)
         if (insertFoodId > 0) {
-            return@withContext ActionResult.Success(food)
+            return@withContext Result.Success(food)
         } else {
-            return@withContext ActionResult.Error("Error saving food")
+            return@withContext Result.Error("Error saving food")
         }
     }
 
-    override fun getFoods(): Flow<ActionResult<List<FoodDomain>>> {
+    override fun getFoods(): Flow<Result<List<FoodDomain>>> {
         return foodLocalDataSource.getFoods()
             .onEach {
                 check(it != null)
@@ -95,13 +95,13 @@ class FoodDataRepository (
             .map {
                 when {
                     it == null -> {
-                        ActionResult.Error("No data")
+                        Result.Error("No data")
                     }
                     it.isNotEmpty() -> {
-                        ActionResult.Success(it)
+                        Result.Success(it)
                     }
                     else -> {
-                        ActionResult.Success(emptyList())
+                        Result.Success(emptyList())
                     }
                 }
             }.retryWhen {cause, attempt ->
@@ -120,7 +120,7 @@ class FoodDataRepository (
             .conflate()
     }
 
-    override suspend fun getLocalFoods(): ActionResult<List<FoodDomain>> {
+    override suspend fun getLocalFoods(): Result<List<FoodDomain>> {
         TODO("Not yet implemented")
     }
 

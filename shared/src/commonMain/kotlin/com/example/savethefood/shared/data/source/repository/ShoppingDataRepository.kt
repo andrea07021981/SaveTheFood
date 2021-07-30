@@ -1,8 +1,7 @@
 package com.example.savethefood.shared.data.source.repository
 
-import com.example.savethefood.shared.data.ActionResult
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.BagDomain
-import com.example.savethefood.shared.data.source.RecipeDataSource
 import com.example.savethefood.shared.data.source.ShoppingDataSource
 import com.example.savethefood.shared.utils.getResult
 import io.ktor.utils.io.errors.*
@@ -18,7 +17,7 @@ class ShoppingDataRepository(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ShoppingRepository {
 
-    override fun getFoodsInBag(): Flow<ActionResult<List<BagDomain>?>> {
+    override fun getFoodsInBag(): Flow<Result<List<BagDomain>?>> {
         return shoppingLocalDataSource.getFoodsInBag()
             .retryWhen { cause, attempt ->
                 // TODO same as recipe, find another way
@@ -36,12 +35,12 @@ class ShoppingDataRepository(
             .conflate()
     }
 
-    override suspend fun saveItemInBag(item: BagDomain): ActionResult<BagDomain> = withContext(Dispatchers.Default) {
+    override suspend fun saveItemInBag(item: BagDomain): Result<BagDomain> = withContext(Dispatchers.Default) {
         val insertFoodId = shoppingLocalDataSource.saveItemInBag(item)
         if (insertFoodId > 0) {
-            return@withContext ActionResult.Success(item)
+            return@withContext Result.Success(item)
         } else {
-            return@withContext ActionResult.Error("Error saving food")
+            return@withContext Result.Error("Error saving food")
         }
     }
 }

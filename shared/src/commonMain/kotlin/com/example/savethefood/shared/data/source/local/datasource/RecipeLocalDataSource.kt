@@ -2,14 +2,13 @@ package com.example.savethefood.shared.data.source.local.datasource
 
 import com.example.savethefood.shared.cache.SaveTheFoodDatabase
 import com.example.savethefood.shared.cache.SaveTheFoodDatabaseQueries
-import com.example.savethefood.shared.data.ActionResult
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.RecipeDomain
 import com.example.savethefood.shared.data.domain.RecipeInfoDomain
 import com.example.savethefood.shared.data.domain.RecipeIngredients
 import com.example.savethefood.shared.data.domain.asDatabaseModel
 import com.example.savethefood.shared.data.source.RecipeDataSource
 import com.example.savethefood.shared.data.source.local.entity.RecipeIngredientEntity
-import com.example.savethefood.shared.data.source.local.entity.UserEntity
 import com.example.savethefood.shared.data.source.local.entity.asDomainModel
 import com.example.savethefood.shared.data.source.local.entity.asRecipeDomainModel
 import kotlinx.coroutines.Dispatchers
@@ -41,7 +40,7 @@ class RecipeLocalDataSource(
     }
 
     @Throws(Exception::class)
-    override suspend fun getRecipeInfo(id: Int): ActionResult<RecipeInfoDomain> = coroutineScope {
+    override suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain> = coroutineScope {
         TODO("No OP")
     }
 

@@ -1,6 +1,6 @@
 package com.example.savethefood.shared.data.source.remote.datasource
 
-import com.example.savethefood.shared.data.ActionResult
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.RecipeDomain
 import com.example.savethefood.shared.data.domain.RecipeInfoDomain
 import com.example.savethefood.shared.data.domain.RecipeIngredients
@@ -60,12 +60,12 @@ class RecipeRemoteDataSource(
     }
 
     @Throws(Exception::class)
-    override suspend fun getRecipeInfo(id: Int): ActionResult<RecipeInfoDomain> = coroutineScope {
+    override suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain> = coroutineScope {
         return@coroutineScope try {
             val recipe = client.getRecipeInfo(id)
-            ActionResult.Success(recipe.asDomainModel())
+            Result.Success(recipe.asDomainModel())
         } catch (error: Exception) {
-            ActionResult.ExError(error)
+            Result.ExError(error)
         }
     }
 

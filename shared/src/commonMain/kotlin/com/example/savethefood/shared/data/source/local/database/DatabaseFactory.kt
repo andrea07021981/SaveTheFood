@@ -10,7 +10,7 @@ import com.example.savethefood.shared.utils.StorageType
 import com.squareup.sqldelight.EnumColumnAdapter
 
 // TODO inject databaseDriverFactory, remove from here
-internal class DatabaseFactory(
+class DatabaseFactory(
     val databaseDriverFactory: DatabaseDriverFactory
 ) {
 

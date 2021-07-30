@@ -14,6 +14,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     gradlePluginPortal()
     google()
+    jcenter()
     mavenCentral()
 }
 
@@ -41,7 +42,7 @@ kotlin {
     val coroutinesVersion = "1.3.9-native-mt"
     val lifecycleVersion = "2.4.0-alpha02"
     val logbackVersion = "1.2.3"
-    val mokoMvvmVersion = "0.10.0"
+    val mokoMvvmVersion = "0.11.0"
     val koinVersion = "3.0.1"
     sourceSets {
         val commonMain by getting {

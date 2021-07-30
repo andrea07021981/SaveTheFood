@@ -1,6 +1,6 @@
 package com.example.savethefood.shared.data.source.repository
 
-import com.example.savethefood.shared.data.ActionResult
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.RecipeInfoDomain
 import com.example.savethefood.shared.data.domain.RecipeIngredients
 import com.example.savethefood.shared.data.domain.RecipeResult
@@ -8,13 +8,13 @@ import kotlinx.coroutines.flow.Flow
 
 interface RecipeRepository {
     @Throws(Exception::class)
-    fun getRecipes(): Flow<ActionResult<List<RecipeResult>?>>
+    fun getRecipes(): Flow<Result<List<RecipeResult>?>>
 
     @Throws(Exception::class)
-    fun getRecipesByIngredients(vararg foodFilter: String?): Flow<ActionResult<List<RecipeIngredients>?>>
+    fun getRecipesByIngredients(vararg foodFilter: String?): Flow<Result<List<RecipeIngredients>?>>
 
     @Throws(Exception::class)
-    suspend fun getRecipeInfo(id: Int): ActionResult<RecipeInfoDomain>
+    suspend fun getRecipeInfo(id: Int): Result<RecipeInfoDomain>
 
-    suspend fun saveRecipe(recipe: RecipeIngredients): ActionResult<RecipeIngredients?>
+    suspend fun saveRecipe(recipe: RecipeIngredients): Result<RecipeIngredients?>
 }

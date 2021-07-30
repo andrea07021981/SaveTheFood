@@ -1,6 +1,6 @@
 package com.example.savethefood.shared.data.source.repository
 
-import com.example.savethefood.shared.data.ActionResult
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.data.source.UserDataSource
 import com.example.savethefood.shared.data.source.local.entity.UserEntity
@@ -20,7 +20,7 @@ class UserDataRepository(
         return userLocalDataSource.saveUser(user)
     }
 
-    override suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher): ActionResult<UserDomain> {
+    override suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher): Result<UserDomain> {
         return try {
             val userDb =
                 userLocalDataSource.getUser(user.email, user.password)
@@ -28,12 +28,12 @@ class UserDataRepository(
                         //CAll the API like firebase auth, no local user
                     }
             if (userDb is UserEntity) {
-                ActionResult.Success(userDb.asDomainModel())
+                Result.Success(userDb.asDomainModel())
             } else {
-                ActionResult.Error("User Not found")
+                Result.Error("User Not found")
             }
         } catch (e: Exception) {
-            ActionResult.ExError(e)
+            Result.ExError(e)
         }
     }
 }

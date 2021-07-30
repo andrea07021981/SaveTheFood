@@ -2,12 +2,11 @@ package com.example.savethefood.shared.data.source.local.datasource
 
 import com.example.savethefood.shared.cache.SaveTheFoodDatabase
 import com.example.savethefood.shared.cache.SaveTheFoodDatabaseQueries
-import com.example.savethefood.shared.data.ActionResult
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.data.domain.FoodSearchDomain
 import com.example.savethefood.shared.data.domain.asDatabaseModel
 import com.example.savethefood.shared.data.source.FoodDataSource
-import com.example.savethefood.shared.data.source.local.database.DatabaseFactory
 import com.example.savethefood.shared.data.source.local.entity.FoodEntity
 import com.example.savethefood.shared.data.source.local.entity.asDomainModel
 import com.example.savethefood.shared.utils.FoodImage
@@ -24,15 +23,15 @@ class FoodLocalDataSource constructor(
 
     private val dbQuery: SaveTheFoodDatabaseQueries = foodDatabase.saveTheFoodDatabaseQueries
 
-    override suspend fun getFoodByUpc(barcode: String): ActionResult<FoodDomain> {
+    override suspend fun getFoodByUpc(barcode: String): Result<FoodDomain> {
         TODO("No OP")
     }
 
-    override suspend fun getFoodByQuery(barcode: String): ActionResult<FoodSearchDomain>? {
+    override suspend fun getFoodByQuery(barcode: String): Result<FoodSearchDomain>? {
         TODO("No OP")
     }
 
-    override suspend fun getFoodById(id: Int): ActionResult<FoodDomain> {
+    override suspend fun getFoodById(id: Int): Result<FoodDomain> {
         TODO("Not yet implemented")
     }
 
@@ -93,7 +92,7 @@ class FoodLocalDataSource constructor(
         )
     }
 
-    override suspend fun getLocalFoods(): ActionResult<List<FoodDomain>> {
+    override suspend fun getLocalFoods(): Result<List<FoodDomain>> {
         TODO("Not yet implemented")
     }
 

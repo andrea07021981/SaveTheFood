@@ -1,10 +1,9 @@
 package com.example.savethefood.shared.data.source.repository
 
-import com.example.savethefood.shared.data.ActionResult
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.UserDomain
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
     /**
@@ -12,5 +11,5 @@ interface UserRepository {
      */
     suspend fun saveNewUser(user: UserDomain): Long
 
-    suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher = Dispatchers.Default): ActionResult<UserDomain>
+    suspend fun getUser(user: UserDomain, ioDispatcher: CoroutineDispatcher = Dispatchers.Default): Result<UserDomain>
 }
