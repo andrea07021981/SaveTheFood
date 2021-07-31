@@ -6,7 +6,10 @@ plugins {
     kotlin("jvm") version "1.5.30-M1"
 }
 repositories {
+    google()
     jcenter()
+    gradlePluginPortal()
+    mavenCentral()
 }
 dependencies {
     implementation(kotlin("stdlib-jdk8"))

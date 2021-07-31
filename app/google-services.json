@@ -1,0 +1,143 @@
+{
+  "project_info": {
+    "project_number": "851659397443",
+    "firebase_url": "https://save-the-food-project.firebaseio.com",
+    "project_id": "save-the-food-project",
+    "storage_bucket": "save-the-food-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851659397443:android:2206014b7826d88ecdb7f6",
+        "android_client_info": {
+          "package_name": "com.example.savethefood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851659397443-ovugevmsed72otlm39o19a4imitrun3f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.savethefood",
+            "certificate_hash": "707a380bf380d97577bd12a1294def9a4a26321e"
+          }
+        },
+        {
+          "client_id": "851659397443-2iocl2neo8o8ld5imqloe1niiobo5kkf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhSM--ItSRyGTgai2_EjMLyUE91ysz6N8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851659397443-2iocl2neo8o8ld5imqloe1niiobo5kkf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "851659397443-ltjlam7b8nc6oph3qp54l6a9igja34k5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.andreafranco.SaveTheFood"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851659397443:android:c916a4681140ea96cdb7f6",
+        "android_client_info": {
+          "package_name": "com.example.savethefood.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851659397443-oq6bgr3ikod1b2ughesobqravr3930vj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.savethefood.dev",
+            "certificate_hash": "707a380bf380d97577bd12a1294def9a4a26321e"
+          }
+        },
+        {
+          "client_id": "851659397443-2iocl2neo8o8ld5imqloe1niiobo5kkf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhSM--ItSRyGTgai2_EjMLyUE91ysz6N8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851659397443-2iocl2neo8o8ld5imqloe1niiobo5kkf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "851659397443-ltjlam7b8nc6oph3qp54l6a9igja34k5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.andreafranco.SaveTheFood"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851659397443:android:1d7430b745f82937cdb7f6",
+        "android_client_info": {
+          "package_name": "com.example.savethefood.uat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851659397443-vb4hboreqjm1iv26mhimfp5vanice65t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.savethefood.uat",
+            "certificate_hash": "707a380bf380d97577bd12a1294def9a4a26321e"
+          }
+        },
+        {
+          "client_id": "851659397443-2iocl2neo8o8ld5imqloe1niiobo5kkf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhSM--ItSRyGTgai2_EjMLyUE91ysz6N8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851659397443-2iocl2neo8o8ld5imqloe1niiobo5kkf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "851659397443-ltjlam7b8nc6oph3qp54l6a9igja34k5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.andreafranco.SaveTheFood"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

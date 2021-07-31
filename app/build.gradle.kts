@@ -135,34 +135,36 @@ android {
 }
 
 fun getCurrentVersionSuffix(): String {
-    val currentFlavor = getCurrentFlavor()
-    if (currentFlavor == "prod") {
-        return "-prod"
-    } else if (currentFlavor == "uat") {
-        return "-uat"
-    } else if (currentFlavor == "dev") {
-        return "-dev"
-    } else {
-        return "-dev"
+    return when (getCurrentFlavor()) {
+        "prod" -> {
+            "-prod"
+        }
+        "uat" -> {
+            "-uat"
+        }
+        "dev" -> {
+            "-dev"
+        }
+        else -> {
+            "-dev"
+        }
     }
 }
 
 fun getCurrentFlavor(): String {
-    val taskRequestName = getGradle().getStartParameter().getTaskRequests().toString()
+    val taskRequestName = gradle.startParameter.taskRequests.toString()
 
-    var pattern: Pattern
-
-    if (taskRequestName.contains("assemble"))
-        pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+    var pattern: Pattern = if (taskRequestName.contains("assemble"))
+        Pattern.compile("assemble(\\w+)(Release|Debug)")
     else
-        pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
+        Pattern.compile("generate(\\w+)(Release|Debug)")
 
     val matcher: Matcher = pattern.matcher(taskRequestName)
 
-    if (matcher.find()) {
-        return matcher.group(1).toLowerCase()
+    return if (matcher.find()) {
+        matcher.group(1).toLowerCase()
     } else {
-        return ""
+        ""
     }
 }
 
@@ -322,5 +324,5 @@ dependencies {
     implementation(Libs.shimmer)
 
     // KMM module
-    api(project(":shared"))
+    implementation(project(":shared"))
 }

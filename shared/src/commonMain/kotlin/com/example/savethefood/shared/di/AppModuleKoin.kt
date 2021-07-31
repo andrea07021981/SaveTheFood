@@ -1,7 +1,7 @@
 package com.example.savethefood.shared.di
 
 
-// TODO ad koin but wait the sqldelight injenction
+// TODO ad koin but wait the sqldelight injection. For now manual DI in the module
 /*
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
     appDeclaration()
@@ -17,3 +17,4 @@ val commonUserModule = module {
     single { UserLocalDataSource(get()) }
 }
 */
+

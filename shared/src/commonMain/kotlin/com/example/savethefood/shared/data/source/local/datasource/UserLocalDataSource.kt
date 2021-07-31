@@ -5,15 +5,8 @@ import com.example.savethefood.shared.cache.SaveTheFoodDatabaseQueries
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.data.domain.asDatabaseModel
 import com.example.savethefood.shared.data.source.UserDataSource
-import com.example.savethefood.shared.data.source.local.entity.FoodEntity
 import com.example.savethefood.shared.data.source.local.entity.UserEntity
 import com.example.savethefood.shared.data.source.local.entity.asDomainModel
-import com.example.savethefood.shared.utils.FoodImage
-import com.example.savethefood.shared.utils.QuantityType
-import com.example.savethefood.shared.utils.StorageType
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class UserLocalDataSource(
     private val foodDatabase: SaveTheFoodDatabase
@@ -21,7 +14,6 @@ class UserLocalDataSource(
 
     private val dbQuery: SaveTheFoodDatabaseQueries = foodDatabase.saveTheFoodDatabaseQueries
 
-    @Throws(Exception::class)
     override suspend fun getUser(email: String, password: String): UserDomain {
         return dbQuery.selectUserByEmailPsw(email, password, ::mapToUserEntity)
             .executeAsOne().asDomainModel()
