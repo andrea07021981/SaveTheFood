@@ -164,6 +164,15 @@ object BaseModule {
         return RecipeDataRepository(recipeLocalDataSource, recipeRemoteDataSource)
     }
 
+    // TODO temporary injection, read DIBuilder
+    @Singleton
+    @Provides
+    fun provideSharedUserDataRepository(
+        @ApplicationContext appContext: Context
+    ) : com.example.savethefood.shared.data.source.repository.UserRepository {
+        return DIBuilder.getSharedUserRepository(appContext)
+    }
+
 }
 
 /**
