@@ -5,14 +5,11 @@ import androidx.lifecycle.*
 import com.example.savethefood.BuildConfig
 import com.example.savethefood.Event
 import com.example.savethefood.R
-import com.example.savethefood.constants.LoginAuthenticationStates
-import com.example.savethefood.constants.LoginAuthenticationStates.*
-import com.example.savethefood.constants.LoginStateValue
-import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.UserDomain
-import com.example.savethefood.data.source.repository.UserRepository
+import com.example.savethefood.shared.data.domain.UserDomain
+import com.example.savethefood.shared.data.source.repository.UserRepository
+import com.example.savethefood.shared.utils.LoginAuthenticationStates
+import com.example.savethefood.shared.utils.LoginStateValue
 import com.example.savethefood.util.isValidEmail
-import com.example.savethefood.util.isValidPassword
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
@@ -103,22 +100,31 @@ class LoginViewModel @ViewModelInject constructor(
             email.valueStatus.value?.equals(LoginStateValue.NONE) == true &&
                     password.valueStatus.value?.equals(LoginStateValue.NONE) == true ->
                 doLogin {
-                    userDataRepository.getUser(UserDomain(email = email.value, password = password.value))
+                    userDataRepository.getUser(
+                        UserDomain(
+                        userName = email.value,
+                        email = email.value,
+                        password = password.value)
+                    )
                 }
         }
     }
 
-    private inline fun doLogin(crossinline block: suspend () -> Result<UserDomain>) {
+    private inline fun doLogin(crossinline block: suspend () -> com.example.savethefood.shared.data.Result<UserDomain>) {
         viewModelScope.launch {
-            _loginAuthenticationState.value = Authenticating()
+            _loginAuthenticationState.value = LoginAuthenticationStates.Authenticating()
             when (val result = block()) {
-                is Result.Success -> {
-                    _loginAuthenticationState.value = Authenticated(user = result.data)
+                is com.example.savethefood.shared.data.Result.Success -> {
+                    _loginAuthenticationState.value =
+                        LoginAuthenticationStates.Authenticated(user = result.data)
                 }
-                is Result.Error -> _loginAuthenticationState.value = InvalidAuthentication(result.message)
-                is Result.ExError -> _loginAuthenticationState.value = InvalidAuthentication(result.exception.toString())
-                is Result.Loading -> _loginAuthenticationState.value = Authenticating()
-                else -> Idle
+                is com.example.savethefood.shared.data.Result.Error -> _loginAuthenticationState.value =
+                    LoginAuthenticationStates.InvalidAuthentication(result.message)
+                is com.example.savethefood.shared.data.Result.ExError -> _loginAuthenticationState.value =
+                    LoginAuthenticationStates.InvalidAuthentication(result.exception.toString())
+                is com.example.savethefood.shared.data.Result.Loading -> _loginAuthenticationState.value =
+                    LoginAuthenticationStates.Authenticating()
+                else -> LoginAuthenticationStates.Idle
             }
         }
     }
@@ -142,7 +148,7 @@ class LoginViewModel @ViewModelInject constructor(
     }
 
     fun resetState() {
-        _loginAuthenticationState.value = Idle
+        _loginAuthenticationState.value = LoginAuthenticationStates.Idle
     }
 
     fun moveToSignUp() {

@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import br.com.simplepass.loadingbutton.animatedDrawables.ProgressType
@@ -20,11 +19,10 @@ import br.com.simplepass.loadingbutton.customViews.ProgressButton
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.EventObserver
 import com.example.savethefood.R
-import com.example.savethefood.constants.*
-import com.example.savethefood.constants.LoginAuthenticationStates.*
-import com.example.savethefood.data.source.repository.UserDataRepository
 import com.example.savethefood.databinding.FragmentLoginBinding
 import com.example.savethefood.shared.Greeting
+import com.example.savethefood.shared.utils.LoginAuthenticationStates
+import com.example.savethefood.shared.utils.LoginAuthenticationStates.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -99,7 +97,6 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
                             "x" to dataBinding.loginButton.x,
                             "y" to dataBinding.loginButton.y
                         )
-                        bundle.putParcelable("user", state.user)
                         findNavController()
                             .navigate(
                                 LoginFragmentDirections.actionLoginFragmentToHomeFragmentContainer(

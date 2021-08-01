@@ -14,7 +14,7 @@ class UserDataRepository(
 ) : UserRepository {
 
     /**
-     * SAve locally for now, TODO save online, retrieve data and save locally Firebase
+     * Save locally for now, TODO save online, retrieve data and save locally Firebase
      */
     override suspend fun saveNewUser(user: UserDomain): Long {
         return userLocalDataSource.saveUser(user)
@@ -27,8 +27,8 @@ class UserDataRepository(
                     ?: kotlin.run {
                         //CAll the API like firebase auth, no local user
                     }
-            if (userDb is UserEntity) {
-                Result.Success(userDb.asDomainModel())
+            if (userDb is UserDomain) {
+                Result.Success(userDb)
             } else {
                 Result.Error("User Not found")
             }
