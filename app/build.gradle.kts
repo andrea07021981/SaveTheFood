@@ -324,5 +324,5 @@ dependencies {
     implementation(Libs.shimmer)
 
     // KMM module
-    implementation(project(":shared"))
+    implementation(project(path = ":shared"))
 }

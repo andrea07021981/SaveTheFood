@@ -35,9 +35,10 @@ object LoginBindingUtils {
     @JvmStatic
     @ExperimentalCoroutinesApi
     @BindingAdapter("bind:hasLoginError")
-    fun TextInputLayout.hasLoginError(error: LoginStateValue?) {
+    fun TextInputLayout.hasLoginError(error: com.example.savethefood.shared.utils.LoginStateValue?) {
         when (error) {
-            LoginStateValue.INVALID_FORMAT, LoginStateValue.INVALID_LENGTH -> setError(error.message)
+            com.example.savethefood.shared.utils.LoginStateValue.INVALID_FORMAT,
+            com.example.savethefood.shared.utils.LoginStateValue.INVALID_LENGTH -> setError(error.message)
             else -> setError(null)
         }
     }

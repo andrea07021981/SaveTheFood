@@ -23,7 +23,6 @@ class UserLocalDataSource(
         return user.asDatabaseModel().run {
             dbQuery.transactionWithResult {
                 dbQuery.insertUser(
-                    id = this@run.id,
                     username = this@run.userName,
                     email = this@run.email,
                     password = this@run.password

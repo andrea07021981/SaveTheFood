@@ -66,8 +66,8 @@ removeAllUsers:
 DELETE FROM User;
 
 insertUser:
-INSERT OR FAIL INTO User (id,username,email,password)
-VALUES (nullif(?, 0),?,?,?);
+INSERT OR REPLACE INTO User (username,email,password)
+VALUES (?,?,?);
 
 updateUser:
 UPDATE OR ABORT User
