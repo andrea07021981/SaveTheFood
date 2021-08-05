@@ -10,6 +10,7 @@ import kotlinx.coroutines.*
 import javax.inject.Inject
 import javax.inject.Named
 
+@Deprecated("Moved to kmm module")
 class UserDataRepository @Inject constructor(
     @field:[Named("UserLocalDataSource")] private val userLocalDataSource: UserDataSource,
     @field:[Named("UserRemoteDataSource")] private val userRemoteDataSource: UserDataSource,

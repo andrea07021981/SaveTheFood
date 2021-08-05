@@ -24,6 +24,7 @@ interface FoodDataSource {
 
     suspend fun insertNewFood(food: FoodDomain): Long
 
+    @Throws(Exception::class)
     fun getFoods(): Flow<List<FoodDomain>?>
 
     suspend fun getLocalFoods(): Result<List<FoodDomain>>

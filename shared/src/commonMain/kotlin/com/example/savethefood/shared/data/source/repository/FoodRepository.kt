@@ -12,10 +12,13 @@ interface FoodRepository {
     @Throws(Exception::class)
     suspend fun getApiFoodUpc(barcode: String): Result<FoodDomain>
 
+    @Throws(Exception::class)
     suspend fun getApiFoodQuery(query: String): Result<FoodSearchDomain>?
 
+    @Throws(Exception::class)
     suspend fun getApiFoodById(id: Int): Result<FoodDomain>
 
+    @Throws(Exception::class)
     suspend fun refreshData()
 
     suspend fun saveNewFood(food: FoodDomain): Result<FoodDomain>

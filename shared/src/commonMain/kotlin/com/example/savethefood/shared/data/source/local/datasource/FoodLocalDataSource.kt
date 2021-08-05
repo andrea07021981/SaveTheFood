@@ -59,7 +59,6 @@ class FoodLocalDataSource constructor(
         }
     }
 
-    @Throws(Exception::class)
     override fun getFoods(): Flow<List<FoodDomain>?> {
         return flowOf(
             dbQuery.selectFoods(::mapToFoodEntity).executeAsList().asDomainModel()

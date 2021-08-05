@@ -8,9 +8,9 @@ plugins {
     id("com.squareup.sqldelight")
 }
 // TODO create a build folder with all versions for gradle kts
-val ktorVersion = "1.4.0"
+val ktorVersion = "1.6.2"
 val serializationVersion = "1.0.0-RC"
-val sqlDelightVersion = "1.5.1"
+val sqlDelightVersion = "1.4.2"
 val coroutinesVersion = "1.3.9-native-mt"
 val lifecycleVersion = "2.4.0-alpha02"
 val logbackVersion = "1.2.3"

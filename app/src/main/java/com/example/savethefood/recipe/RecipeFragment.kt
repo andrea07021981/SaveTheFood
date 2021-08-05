@@ -1,14 +1,12 @@
 package com.example.savethefood.recipe
 
 import android.content.Context
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.inputmethod.InputMethodManager
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.BaseAdapter
@@ -17,9 +15,6 @@ import com.example.savethefood.EventObserver
 import com.example.savethefood.R
 import com.example.savethefood.constants.Constants
 import com.example.savethefood.constants.RecipeType
-import com.example.savethefood.constants.StorageType
-import com.example.savethefood.cook.RecipeCookFragmentArgs
-import com.example.savethefood.data.source.repository.RecipeDataRepository
 import com.example.savethefood.databinding.FragmentReceipeBinding
 import com.example.savethefood.util.configSearchView
 import dagger.hilt.android.AndroidEntryPoint
