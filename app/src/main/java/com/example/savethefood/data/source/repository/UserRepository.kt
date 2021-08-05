@@ -6,6 +6,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
+@Deprecated("Moved to kmm module")
 interface UserRepository {
     /**
      * SAve locally for now, TODO save online, retrieve data and save locally

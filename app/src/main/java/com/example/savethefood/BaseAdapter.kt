@@ -85,4 +85,13 @@ abstract class BaseAdapter<T, DB : ViewDataBinding>(
     ) {
         fun onClick(data: T) = clickListener(data)
     }
+
+    // TODO remove the inherited clicklistener with two params, do like
+    /**
+     * open class BaseClickListener<T, R>(
+    open val clickListener: (data: T, view: R?) -> Unit
+    ) {
+    fun onClick(data: T, view: R? = null) = clickListener(data, view)
+    }
+     */
 }

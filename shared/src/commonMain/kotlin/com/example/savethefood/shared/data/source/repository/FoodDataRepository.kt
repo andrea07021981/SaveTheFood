@@ -25,6 +25,8 @@ DatabaseFactory(DatabaseDriverFactory(this)).createDatabase()
 )
 )
  */
+
+// TODO remove the @Throws(Exception::class) from the class implementation, they are already declared into the interfaces
 @ExperimentalCoroutinesApi
 class FoodDataRepository (
     private val foodLocalDataSource: FoodDataSource,

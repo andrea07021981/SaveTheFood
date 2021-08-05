@@ -7,7 +7,7 @@ import com.example.savethefood.data.source.local.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-//TODO remote login
+@Deprecated("Moved to kmm module")
 class UserRemoteDataSource @Inject constructor() : UserDataSource {
     override suspend fun getUser(email: String, password: String): UserEntity? {
         TODO("Not yet implemented")

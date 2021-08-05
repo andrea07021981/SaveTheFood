@@ -18,6 +18,7 @@ import javax.inject.Inject
 import kotlin.Exception
 import kotlin.jvm.Throws
 
+@Deprecated("Moved to kmm module")
 class UserLocalDataSource @Inject constructor(
     private val userDatabaseDao: UserDatabaseDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO

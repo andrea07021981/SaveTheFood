@@ -6,7 +6,6 @@ import com.example.savethefood.BuildConfig
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.RecipeDataSource
 import com.example.savethefood.data.source.ShoppingDataSource
-import com.example.savethefood.data.source.UserDataSource
 import com.example.savethefood.data.source.local.dao.FoodDatabaseDao
 import com.example.savethefood.data.source.local.dao.RecipeDatabaseDao
 import com.example.savethefood.data.source.local.dao.ShoppingDatabaseDao
@@ -15,13 +14,19 @@ import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
 import com.example.savethefood.data.source.local.datasource.FoodLocalDataSource
 import com.example.savethefood.data.source.local.datasource.RecipeLocalDataSource
 import com.example.savethefood.data.source.local.datasource.ShoppingLocalDataSource
-import com.example.savethefood.data.source.local.datasource.UserLocalDataSource
 import com.example.savethefood.data.source.remote.datasource.FoodRemoteDataSource
 import com.example.savethefood.data.source.remote.datasource.RecipeRemoteDataSource
 import com.example.savethefood.data.source.remote.datasource.ShoppingRemoteDataSource
-import com.example.savethefood.data.source.remote.datasource.UserRemoteDataSource
 import com.example.savethefood.data.source.remote.service.FoodService
 import com.example.savethefood.data.source.repository.*
+import com.example.savethefood.shared.*
+import com.example.savethefood.shared.data.source.UserDataSource
+import com.example.savethefood.shared.data.source.local.database.DatabaseDriverFactory
+import com.example.savethefood.shared.data.source.local.database.DatabaseFactory
+import com.example.savethefood.shared.data.source.local.datasource.UserLocalDataSource
+import com.example.savethefood.shared.data.source.remote.datasource.UserRemoteDataSource
+import com.example.savethefood.shared.data.source.repository.UserDataRepository
+import com.example.savethefood.shared.data.source.repository.UserRepository
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -115,11 +120,10 @@ object BaseModule {
     @Provides
     @Named("UserLocalDataSource")
     fun provideUserLocalDataSource(
-        userDatabaseDao: UserDatabaseDao
+        userDatabaseDao: com.example.savethefood.shared.cache.SaveTheFoodDatabase
     ): UserDataSource {
         return UserLocalDataSource(
-            userDatabaseDao,
-            Dispatchers.IO
+            userDatabaseDao
         )
     }
 
@@ -167,10 +171,10 @@ object BaseModule {
     // TODO temporary injection, read DIBuilder
     @Singleton
     @Provides
-    fun provideSharedUserDataRepository(
-        @ApplicationContext appContext: Context
-    ) : com.example.savethefood.shared.data.source.repository.UserRepository {
-        return DIBuilder.getSharedUserRepository(appContext)
+    fun provideDatabaseShared(
+        @ApplicationContext context: Context
+    ): com.example.savethefood.shared.cache.SaveTheFoodDatabase {
+        return DatabaseFactory(DatabaseDriverFactory(context)).createDatabase()
     }
 
 }

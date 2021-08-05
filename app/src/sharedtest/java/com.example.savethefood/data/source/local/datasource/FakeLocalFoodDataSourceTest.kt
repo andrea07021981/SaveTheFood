@@ -5,6 +5,7 @@ import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.local.entity.FoodEntity
+import com.example.savethefood.data.source.local.entity.asDomainModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -49,8 +50,8 @@ class FakeLocalFoodDataSourceTest(
     }
 
     override suspend fun deleteFood(food: FoodEntity): Int {
-        foodList.remove(food).also {
-            return food!!.id
+        foodList.remove(food.asDomainModel()).also {
+            return food.id
         }
     }
 }
