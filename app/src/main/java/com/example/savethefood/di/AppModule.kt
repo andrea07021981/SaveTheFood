@@ -168,7 +168,7 @@ object BaseModule {
         return RecipeDataRepository(recipeLocalDataSource, recipeRemoteDataSource)
     }
 
-    // TODO temporary injection, read DIBuilder
+    // TODO temporary injection, need to fix Koin in kmm
     @Singleton
     @Provides
     fun provideDatabaseShared(

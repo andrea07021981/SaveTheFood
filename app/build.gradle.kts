@@ -4,7 +4,7 @@ import java.util.regex.Pattern
 plugins {
     id(Plugins.androidApp)
     kotlin(Plugins.kotlin)
-    kotlin(Plugins.extentions)
+    kotlin(Plugins.extensions)
     kotlin(Plugins.kapt)
     id(Plugins.safeArgs)
     id(Plugins.services)
@@ -322,6 +322,8 @@ dependencies {
     implementation(Libs.stepper)
 
     implementation(Libs.shimmer)
+
+    implementation(Libs.koinAndroid)
 
     // KMM module
     implementation(project(path = ":shared"))

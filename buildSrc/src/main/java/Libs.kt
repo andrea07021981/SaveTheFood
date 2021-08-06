@@ -150,4 +150,25 @@ object Libs {
     const val stepper = "com.ernestoyaquello.stepperform:vertical-stepper-form:${Versions.stepper}"
 
     const val shimmer = "com.facebook.shimmer:shimmer:${Versions.shimmer}"
+
+    const val koinAndroid = "io.insert-koin:koin-android:${Versions.koin}"
+    const val koinNative = "io.insert-koin:koin-core:${Versions.koin}"
+
+    const val ktorNative = "io.ktor:ktor-client-core:${Versions.ktorVersion}"
+    const val ktorAndroid = "io.ktor:ktor-client-android:${Versions.ktorVersion}"
+    const val ktorIos = "io.ktor:ktor-client-ios:${Versions.ktorVersion}"
+    const val ktorClientLogging = "io.ktor:ktor-client-logging:${Versions.ktorVersion}"
+
+    const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.serializationVersion}"
+    const val ktorSerialization = "io.ktor:ktor-client-serialization:${Versions.ktorVersion}"
+
+    const val sqlDelightRuntime = "com.squareup.sqldelight:runtime:${Versions.sqlDelightVersion}"
+    const val sqlDelightAndroid = "com.squareup.sqldelight:android-driver:${Versions.sqlDelightVersion}"
+    const val sqlDelightNative = "com.squareup.sqldelight:native-driver:${Versions.sqlDelightVersion}"
+
+    const val logBack = "ch.qos.logback:logback-classic:${Versions.logbackVersion}"
+
+    const val moko = "dev.icerock.moko:mvvm:${Versions.mokoMvvmVersion}"
+
+
 }

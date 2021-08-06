@@ -5,13 +5,11 @@
       <map>
         <entry key="app/src/main/res/layout/bag_item.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/food_item.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/fragment_food_detail.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/pair_item.xml" value="0.10309017223910841" />
       </map>
     </option>
-  </component>
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/savethefood/di/DIBuilder.kt" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
