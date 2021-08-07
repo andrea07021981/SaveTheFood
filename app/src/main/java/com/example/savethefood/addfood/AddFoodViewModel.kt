@@ -4,13 +4,14 @@ import android.os.Bundle
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.example.savethefood.Event
 import com.example.savethefood.constants.Constants.BUNDLE_FOOD_KEY
-import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.FoodItem
-import com.example.savethefood.data.source.repository.FoodRepository
-import com.example.savethefood.util.*
+import com.example.savethefood.shared.data.domain.FoodDomain
+import com.example.savethefood.shared.data.domain.FoodItem
+import com.example.savethefood.shared.utils.Event
+import com.example.savethefood.shared.utils.isValidDouble
+import com.example.savethefood.util.ObserverFormFields
+import com.example.savethefood.util.launchDataLoad
+import com.example.savethefood.util.retrieveFood
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -20,7 +21,7 @@ import kotlin.collections.LinkedHashSet
 
 
 class AddFoodViewModel @ViewModelInject constructor(
-    private val foodDataRepository: FoodRepository,
+    private val foodDataRepository: com.example.savethefood.shared.data.source.repository.FoodRepository,
     @Assisted val food: SavedStateHandle
 ) : ViewModel() {
 
@@ -55,7 +56,7 @@ class AddFoodViewModel @ViewModelInject constructor(
         _foodDomain.apply {
             when (it) {
                 is ObserverFormFields.FoodItemImage -> img = it.value.img
-                is ObserverFormFields.BestBefore -> bestBefore = it.value ?: Date()
+                is ObserverFormFields.BestBefore -> bestBefore = it.value?.time ?: Date().time
                 else -> Unit
             }
         }
@@ -72,12 +73,12 @@ class AddFoodViewModel @ViewModelInject constructor(
     val barcodeFoodEvent: LiveData<Event<Unit>>
         get() = _barcodeFoodEvent
 
-    private val _saveFoodEvent = MutableLiveData<Result<FoodDomain>>()
-    val saveFoodEvent: LiveData<Result<FoodDomain>>
+    private val _saveFoodEvent = MutableLiveData<com.example.savethefood.shared.data.Result<FoodDomain>>()
+    val saveFoodEvent: LiveData<com.example.savethefood.shared.data.Result<FoodDomain>>
         get() = _saveFoodEvent
 
-    private val _newFoodFoodEvent = MutableLiveData<Result<FoodDomain>>()
-    val newFoodFoodEvent: LiveData<Result<FoodDomain>>
+    private val _newFoodFoodEvent = MutableLiveData<com.example.savethefood.shared.data.Result<FoodDomain>>()
+    val newFoodFoodEvent: LiveData<com.example.savethefood.shared.data.Result<FoodDomain>>
         get() = _newFoodFoodEvent
 
     private val _openFoodTypeDialog = MutableLiveData<Event<Unit>>()
@@ -90,7 +91,7 @@ class AddFoodViewModel @ViewModelInject constructor(
 
     @Deprecated("Removed the datepicker")
     val updateBestBefore: (Calendar) -> Unit = { date ->
-        _foodDomain.bestBefore = date.time
+        _foodDomain.bestBefore = date.time.time
     }
 
     fun updateFilter(filter: String) {
@@ -142,9 +143,9 @@ class AddFoodViewModel @ViewModelInject constructor(
                     foodJob.join()
                 }
             } catch (error: JsonDataException) {
-                _newFoodFoodEvent.value = Result.Error(error.toString())
+                _newFoodFoodEvent.value = com.example.savethefood.shared.data.Result.Error(error.toString())
             } catch (generic: Exception) {
-                _newFoodFoodEvent.value = Result.Error(generic.toString())
+                _newFoodFoodEvent.value = com.example.savethefood.shared.data.Result.Error(generic.toString())
             }
         }.invokeOnCompletion {
         }
@@ -155,7 +156,7 @@ class AddFoodViewModel @ViewModelInject constructor(
     }
 
     fun openDateDialog() {
-        _openDateDialog.value = Event(_foodDomain.bestBefore ?: Date())
+        _openDateDialog.value = Event(Date(_foodDomain.bestBefore ?: 0)) // TODO fix zero
     }
 
     fun navigateToBarcodeReader() {

@@ -1,9 +1,12 @@
 package com.example.savethefood.shared.data.domain
 
+import com.example.savethefood.shared.Parcelable
+import com.example.savethefood.shared.Parcelize
 import kotlinx.serialization.Serializable
 import com.example.savethefood.shared.data.source.local.entity.RecipeIngredientEntity
 
 @Serializable
+@Parcelize
 data class RecipeIngredients(
     var recipeId: Long = 0,
     val id: Long,
@@ -14,7 +17,7 @@ data class RecipeIngredients(
     val missedIngredientCount: Int,
     val usedIngredientCount: Int,
     val unUsedIngredientCount: Int,
-) {
+) : Parcelable{
     val totalIngredients: Int
         get() = usedIngredientCount + unUsedIngredientCount
 }

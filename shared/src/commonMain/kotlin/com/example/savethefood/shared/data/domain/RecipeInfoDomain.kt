@@ -1,8 +1,11 @@
 package com.example.savethefood.shared.data.domain
 
+import com.example.savethefood.shared.Parcelable
+import com.example.savethefood.shared.Parcelize
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Parcelize
 data class RecipeInfoDomain(
     val recipeAggregateLikes: Int,
     val recipeAnalyzedInstructions: List<AnalyzedInstructionDomain>,
@@ -41,22 +44,25 @@ data class RecipeInfoDomain(
     val recipeVeryPopular: Boolean,
     val recipeWeightWatcherSmartPoints: Int,
     val recipeWinePairing: WinePairingDomain
-)
+) : Parcelable
 
 @Serializable
+@Parcelize
 data class AnalyzedInstructionDomain(
     val instructionName: String,
     val instructionSteps: List<StepDomain>
-)
+) : Parcelable
 
 @Serializable
+@Parcelize
 data class EquipmentDomain(
     val equipmentId: Int,
     val equipmentImage: String,
     val equipmentName: String
-)
+) : Parcelable
 
 @Serializable
+@Parcelize
 data class ExtendedIngredientDomain(
     val exIngredientAisle: String?,
     val exIngredientAmount: Double?,
@@ -71,50 +77,57 @@ data class ExtendedIngredientDomain(
     val exIngredientOriginalName: String?,
     val exIngredientOriginalString: String?,
     val exIngredientUnit: String?
-)
+) : Parcelable
 
 @Serializable
+@Parcelize
 data class IngredientsDomain(
     val ingredientId: Int,
     val ingredientImage: String,
     val ingredientName: String
-)
+) : Parcelable
 
 @Serializable
+@Parcelize
 data class LengthDomain(
     val lengthNumber: Int,
     val lengthUnit: String
-)
+): Parcelable
 
 @Serializable
+@Parcelize
 data class MeasuresDomain(
     val measureMetric: MetricDomain,
     val measureUs: UsDomain
-)
+) : Parcelable
 
 @Serializable
+@Parcelize
 data class MetricDomain(
     val metricAmount: Double,
     val metricUnitLong: String,
     val metricUnitShort: String
-)
+) : Parcelable
 
 @Serializable
+@Parcelize
 data class StepDomain(
     val stepEquipment: List<EquipmentDomain>,
     val stepIngredients: List<IngredientsDomain>,
     val stepLength: LengthDomain?,
     val stepNumber: Int,
     val stepStep: String
-)
+) : Parcelable
 
 @Serializable
+@Parcelize
 data class UsDomain(
     val amount: Double,
     val unitLong: String,
     val unitShort: String
-)
+) : Parcelable
 
 @Serializable
+@Parcelize
 class WinePairingDomain(
-)
+) : Parcelable

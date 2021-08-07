@@ -12,7 +12,7 @@
 
         <variable
             name="filterType"
-            type="com.example.savethefood.constants.StorageType" />
+            type="com.example.savethefood.shared.utils.StorageType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

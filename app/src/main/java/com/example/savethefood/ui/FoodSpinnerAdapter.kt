@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.databinding.AdapterFoodSpinnerBinding
+import com.example.savethefood.shared.data.domain.FoodItem
 
 // ADD two way data binding observers
 /**

@@ -19,11 +19,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
 import com.example.savethefood.addfood.FoodTypeAdapter
-import com.example.savethefood.constants.QuantityType
-import com.example.savethefood.constants.StorageType
-import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.fooddetail.FoodPantryAdapter
+import com.example.savethefood.shared.data.domain.FoodDomain
+import com.example.savethefood.shared.data.domain.FoodItem
+import com.example.savethefood.shared.utils.QuantityType
+import com.example.savethefood.shared.utils.StorageType
 import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -91,6 +91,25 @@ object FoodBindingUtils {
     ) {
         view.init(
             year, month, day
+        ) { _, currentYear, monthOfYear, dayOfMonth ->
+            val calendar = Calendar.getInstance().apply {
+                set(currentYear, monthOfYear, dayOfMonth)
+                time
+            }
+            block(calendar)
+        }
+    }
+
+    @JvmStatic
+    @RequiresApi(Build.VERSION_CODES.O)
+    @BindingAdapter("bind:date", "bind:onDateChanged")
+    fun bindDate(
+        view: DatePicker, timeInMillis: Long, block: (Calendar) -> Unit
+    ) {
+        val cal = Calendar.getInstance()
+        cal.time = Date(timeInMillis)
+        view.init(
+            cal[Calendar.YEAR], cal[Calendar.MONTH], cal[Calendar.DAY_OF_MONTH]
         ) { _, currentYear, monthOfYear, dayOfMonth ->
             val calendar = Calendar.getInstance().apply {
                 set(currentYear, monthOfYear, dayOfMonth)
@@ -197,12 +216,13 @@ object FoodBindingUtils {
         }
     }
 
+    // TODO delete it after porting
     @JvmStatic
     @RequiresApi(Build.VERSION_CODES.O)
     @BindingAdapter("bind:dateToString")
-    fun TextInputEditText.bindTextDate(value: Date?) {
+    fun TextInputEditText.bindTextDate(value: Long?) {
         value?.let {
-            val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(value)
+            val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date(it))
             setText(formattedDate)
         } ?: setText("")
     }
@@ -210,10 +230,10 @@ object FoodBindingUtils {
     @RequiresApi(Build.VERSION_CODES.O)
     @JvmStatic
     @InverseBindingAdapter(attribute = "bind:dateToString")
-    fun TextInputEditText.getDateFromBinding(): Date? {
+    fun TextInputEditText.getDateFromBinding(): Long? {
         return try {
             val result = LocalDate.parse(text, DateTimeFormatter.ISO_DATE)
-            Date.from(result.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            result.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
         } catch (ex: DateTimeParseException) {
             null
         }
@@ -255,9 +275,9 @@ object FoodBindingUtils {
     @JvmStatic
     @RequiresApi(Build.VERSION_CODES.O)
     @BindingAdapter("bind:formatExpiringDate")
-    fun TextView.bindFormatExpiringDate(date: Date) {
+    fun TextView.bindFormatExpiringDate(date: Long) {
         val currentDate = LocalDate.now()
-        val oldDate = date.toInstant()
+        val oldDate = Date(date).toInstant()
             .atZone(ZoneId.systemDefault())
             .toLocalDate()
         val diff = ChronoUnit.DAYS.between(currentDate, oldDate)
@@ -281,9 +301,9 @@ object FoodBindingUtils {
     @JvmStatic
     @RequiresApi(Build.VERSION_CODES.O)
     @BindingAdapter("bind:formatExpiringLabel")
-    fun TextView.bindFormatExpiringLabel(date: Date) {
+    fun TextView.bindFormatExpiringLabel(date: Long) {
         val currentDate = LocalDate.now()
-        val oldDate = date.toInstant()
+        val oldDate = Date(date).toInstant()
             .atZone(ZoneId.systemDefault())
             .toLocalDate()
         val diff = ChronoUnit.DAYS.between(currentDate, oldDate)
@@ -304,12 +324,29 @@ object FoodBindingUtils {
         }
     }
 
+    // TODO remove after porting
     @JvmStatic
     @RequiresApi(Build.VERSION_CODES.O)
     @BindingAdapter("bind:daysIn")
     fun TextView.bindDaysIn(date: Date) {
         val currentDate = LocalDate.now()
         val lastUpdate = date.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+        val diff = ChronoUnit.DAYS.between(currentDate, lastUpdate)
+        text = context.resources.getQuantityString(
+            R.plurals.days,
+            abs(diff).toInt(),
+            abs(diff).toInt()
+        )
+    }
+
+    @JvmStatic
+    @RequiresApi(Build.VERSION_CODES.O)
+    @BindingAdapter("bind:daysIn")
+    fun TextView.bindDaysIn(date: Long) {
+        val currentDate = LocalDate.now()
+        val lastUpdate = Date(date).toInstant()
             .atZone(ZoneId.systemDefault())
             .toLocalDate()
         val diff = ChronoUnit.DAYS.between(currentDate, lastUpdate)

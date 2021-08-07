@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_recipe_detail">
         <argument
             android:name="recipeResult"
-            app:argType="com.example.savethefood.data.domain.RecipeResult" />
+            app:argType="com.example.savethefood.shared.data.domain.RecipeResult" />
         <action
             android:id="@+id/action_recipeDetailFragment_to_recipeCookFragment"
             app:destination="@id/recipeCookFragment" />
@@ -52,7 +52,7 @@
         tools:layout="@layout/fragment_recipe_cook">
         <argument
             android:name="recipeInfoDomain"
-            app:argType="com.example.savethefood.data.domain.RecipeInfoDomain" />
+            app:argType="com.example.savethefood.shared.data.domain.RecipeInfoDomain" />
     </fragment>
     <fragment
         android:id="@+id/foodDetailFragment"

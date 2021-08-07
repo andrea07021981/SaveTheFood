@@ -2,7 +2,6 @@ package com.example.savethefood.data.source.remote.datatransferobject
 
 import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.domain.ProductDomain
-import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)

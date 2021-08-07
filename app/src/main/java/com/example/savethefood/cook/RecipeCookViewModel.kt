@@ -4,8 +4,7 @@ import android.app.Application
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.RecipeInfoDomain
+import com.example.savethefood.shared.data.domain.RecipeInfoDomain
 
 
 class RecipeCookViewModel @ViewModelInject constructor(

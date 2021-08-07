@@ -14,9 +14,9 @@ class SpacesItemDecoration(private val mSpace: Int) : RecyclerView.ItemDecoratio
         outRect.bottom = mSpace
 
         // Add top margin only for the first items to avoid double space between items
-        if (parent.getLayoutManager() is StaggeredGridLayoutManager && parent.getChildAdapterPosition(
+        if (parent.layoutManager is StaggeredGridLayoutManager && parent.getChildAdapterPosition(
                 view
-            ) <= (parent.getLayoutManager() as StaggeredGridLayoutManager).getSpanCount()
+            ) <= (parent.layoutManager as StaggeredGridLayoutManager).spanCount
         )
             outRect.top = mSpace
     }

@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.BaseAdapter
 import com.example.savethefood.R
-import com.example.savethefood.data.domain.StepDomain
 import com.example.savethefood.databinding.StepCookItemBinding
+import com.example.savethefood.shared.data.domain.StepDomain
 import ernestoyaquello.com.verticalstepperform.Step
 
 class CookStepper(

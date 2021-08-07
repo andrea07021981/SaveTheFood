@@ -1,5 +1,7 @@
 package com.example.savethefood.shared.data.domain
 
+import com.example.savethefood.shared.Parcelable
+import com.example.savethefood.shared.Parcelize
 import com.example.savethefood.shared.data.source.local.entity.FoodEntity
 import com.example.savethefood.shared.utils.FoodImage
 import com.example.savethefood.shared.utils.QuantityType
@@ -9,6 +11,7 @@ import kotlinx.serialization.Serializable
 
 //Food
 @Serializable
+@Parcelize
 data class FoodDomain(
     var title: String = "",
     var description: String? = "",
@@ -20,7 +23,7 @@ data class FoodDomain(
     var storageType: StorageType = StorageType.FRIDGE,
     var bestBefore: Long? = GMTDate().timestamp,
     var lastUpdate: Long? = GMTDate().timestamp,
-)
+) : Parcelable
 
 fun FoodDomain.asDatabaseModel(): FoodEntity {
     return FoodEntity(

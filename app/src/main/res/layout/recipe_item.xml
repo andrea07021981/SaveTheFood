@@ -8,7 +8,7 @@
 
         <variable
             name="recipeItem"
-            type="com.example.savethefood.data.domain.RecipeResult" />
+            type="com.example.savethefood.shared.data.domain.RecipeResult" />
 
         <variable
             name="recipeCallback"

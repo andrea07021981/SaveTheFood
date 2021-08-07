@@ -16,9 +16,9 @@ import com.example.savethefood.R
 import com.example.savethefood.constants.Constants.BUNDLE_KEY
 import com.example.savethefood.constants.Constants.REQUEST_KEY
 import com.example.savethefood.constants.FoodOrder
-import com.example.savethefood.constants.StorageType
 import com.example.savethefood.databinding.CustomTabLayoutBinding
 import com.example.savethefood.databinding.FragmentHomeContainerBinding
+import com.example.savethefood.shared.utils.StorageType
 import com.example.savethefood.util.configSearchView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
@@ -64,7 +64,7 @@ class HomeFragmentContainer : BaseFragment<HomeViewModel, FragmentHomeContainerB
             }
         }
 
-        viewModel.errorData.observe(viewLifecycleOwner, EventObserver {
+        viewModel.errorData.observe(viewLifecycleOwner, com.example.savethefood.shared.utils.EventObserver {
             Snackbar.make(dataBinding.root, getString(R.string.no_data), Snackbar.LENGTH_LONG)
                 .show()
         })
@@ -96,7 +96,7 @@ class HomeFragmentContainer : BaseFragment<HomeViewModel, FragmentHomeContainerB
         super.onResume()
         setFragmentResultListener(REQUEST_KEY) { _, bundle ->
             // We use a String here, but any type that can be put in a Bundle is supported
-            val result = bundle.get(BUNDLE_KEY) as FoodOrder
+            val result = bundle.get(BUNDLE_KEY) as com.example.savethefood.shared.utils.FoodOrder
             viewModel.updateDataList(result)
         }
     }

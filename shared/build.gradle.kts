@@ -35,6 +35,7 @@ kotlin {
                 implementation(Libs.serialization)
                 implementation(Libs.ktorSerialization)
                 implementation(Libs.sqlDelightRuntime)
+                implementation(Libs.sqlDelightCoroutines)
                 implementation(Libs.logBack)
                 implementation(Libs.ktorClientLogging)
                 // MOKO - MVVM

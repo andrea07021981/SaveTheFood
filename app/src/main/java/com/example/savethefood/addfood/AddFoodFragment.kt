@@ -11,19 +11,17 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.savethefood.BaseFragment
-import com.example.savethefood.EventObserver
 import com.example.savethefood.Notifier
 import com.example.savethefood.R
 import com.example.savethefood.constants.Constants.BUNDLE_KEY
 import com.example.savethefood.constants.Constants.REQUEST_KEY
-import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.databinding.FragmentAddFoodBinding
+import com.example.savethefood.shared.data.domain.FoodItem
+import com.example.savethefood.shared.utils.EventObserver
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
@@ -133,7 +131,7 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
 
         viewModel.saveFoodEvent.observe(viewLifecycleOwner) {
             when (it) {
-                is Result.Success -> {
+                is com.example.savethefood.shared.data.Result.Success -> {
                     if (shortCutState == ShortCutState.SHORT_LINK) {
                         val bundle = bundleOf("foodDomain" to it.data)
                         val pendingIntent = findNavController()
@@ -145,7 +143,7 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
                     }
                     findNavController().popBackStack()
                 }
-                is Result.ExError, is Result.Error -> Toast.makeText(
+                is com.example.savethefood.shared.data.Result.ExError, is com.example.savethefood.shared.data.Result.Error -> Toast.makeText(
                     context,
                     "Error saving food",
                     Toast.LENGTH_LONG

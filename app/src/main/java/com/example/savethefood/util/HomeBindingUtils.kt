@@ -12,20 +12,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
-import com.example.savethefood.constants.QuantityType
 import com.example.savethefood.constants.RecipeType
-import com.example.savethefood.constants.StorageType
-import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.home.FoodAdapter
 import com.example.savethefood.recipe.RecipeAdapter
+import com.example.savethefood.shared.data.domain.FoodDomain
 import java.time.LocalDate
 import java.time.Period
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.*
 import kotlin.math.abs
+import com.example.savethefood.shared.data.*
+import com.example.savethefood.shared.data.domain.RecipeResult
+import com.example.savethefood.shared.utils.FoodImage
+import com.example.savethefood.shared.utils.QuantityType
+import com.example.savethefood.shared.utils.StorageType
 
 object HomeBindingUtils {
 
@@ -36,7 +37,7 @@ object HomeBindingUtils {
     @BindingAdapter("bind:goneIfNotNull")
     fun goneIfNotNull(view: View, it: Result<List<FoodDomain>>?) {
         view.visibility = it?.let { result ->
-            if (result is Result.Loading) View.VISIBLE else View.GONE
+            if (result is com.example.savethefood.shared.data.Result.Loading) View.VISIBLE else View.GONE
         } ?: View.VISIBLE
     }
 
@@ -105,12 +106,39 @@ object HomeBindingUtils {
         recyclerView.scheduleLayoutAnimation();
     }
 
+    // TODO remove it after porting
     @JvmStatic
     @RequiresApi(Build.VERSION_CODES.O)
     @BindingAdapter("bind:formatExpireDate")
     fun TextView.bindFormatDate(date: Date) {
         val currentDate = LocalDate.now()
         val oldDate = date.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+        val diff = ChronoUnit.DAYS.between(currentDate, oldDate)
+
+        when {
+            diff in 0..3 -> {
+                text = context.getString(R.string.expiring_in_date, diff)
+                setTextColor(ContextCompat.getColor(context, android.R.color.holo_orange_light))
+            }
+            diff < 0 -> {
+                text = context.getString(R.string.expired_from, abs(diff))
+                setTextColor(ContextCompat.getColor(context, android.R.color.holo_red_light))
+            }
+            else -> {
+                text = context.getString(R.string.days_in, diff)
+                setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+            }
+        }
+    }
+
+    @JvmStatic
+    @RequiresApi(Build.VERSION_CODES.O)
+    @BindingAdapter("bind:formatExpireDate")
+    fun TextView.bindFormatDate(date: Long) {
+        val currentDate = LocalDate.now()
+        val oldDate = Date(date).toInstant()
             .atZone(ZoneId.systemDefault())
             .toLocalDate()
         val diff = ChronoUnit.DAYS.between(currentDate, oldDate)

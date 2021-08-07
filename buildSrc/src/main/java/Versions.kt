@@ -59,7 +59,7 @@ object Versions {
     const val koin = "3.1.2"
     const val ktorVersion = "1.6.2"
     const val serializationVersion = "1.0.0-RC"
-    const val sqlDelightVersion = "1.4.2"
+    const val sqlDelightVersion = "1.5.0"
     const val coroutinesVersion = "1.3.9-native-mt"
     const val lifecycleVersion = "2.4.0-alpha02"
     const val logbackVersion = "1.2.3"

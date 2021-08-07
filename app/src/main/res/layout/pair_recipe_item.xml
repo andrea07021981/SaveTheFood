@@ -7,7 +7,7 @@
     <data>
         <variable
             name="recipe"
-            type="com.example.savethefood.data.domain.RecipeIngredients" />
+            type="com.example.savethefood.shared.data.domain.RecipeIngredients" />
 
         <variable
             name="callback"

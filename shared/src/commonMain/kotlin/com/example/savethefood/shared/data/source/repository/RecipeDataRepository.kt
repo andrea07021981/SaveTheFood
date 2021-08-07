@@ -23,7 +23,7 @@ class RecipeDataRepository(
     @Throws(Exception::class)
     override fun getRecipes(): Flow<Result<List<RecipeResult>?>> {
         val localRecipes = recipeLocalDataSource.getRecipes()
-        recipeRemoteDataSource.getRecipes()
+        return recipeRemoteDataSource.getRecipes()
             .combine(localRecipes) { remote, local ->
                 //local?.union(remote ?: listOf())
                 remote?.results?.toMutableList().applyRemoteResultRecipes(local)
@@ -39,7 +39,6 @@ class RecipeDataRepository(
                 retryConnection(cause, attempt)
             }
             .flowOn(ioDispatcher)
-        return flowOf()
     }
 
     /**
@@ -47,18 +46,17 @@ class RecipeDataRepository(
      */
     override fun getRecipesByIngredients(vararg foodFilter: String?): Flow<Result<List<RecipeIngredients>?>> {
         val remoteRecipes = recipeRemoteDataSource.getRecipesByIngredients(*foodFilter)
-        recipeLocalDataSource.getRecipesIngredients()
+        return recipeLocalDataSource.getRecipesIngredients()
             .retryWhen { cause, attempt ->
                 retryConnection(cause, attempt)
             }
             .combine(remoteRecipes) { local, remote ->
                 //local?.union(remote ?: listOf())
-                local?.toMutableList()?.applyRemoteRecipes(remote)
+                local?.toMutableList()?.applyRemoteRecipes(remote) // TODO test it
             }
             .map(::recipeIngredientResult)
             .flowOn(Dispatchers.Default)
             .conflate()
-        return flowOf()
     }
 
     /**

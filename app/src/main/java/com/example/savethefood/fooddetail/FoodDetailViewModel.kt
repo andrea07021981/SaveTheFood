@@ -5,13 +5,11 @@ import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.example.savethefood.Event
 import com.example.savethefood.constants.Constants.BUNDLE_FOOD_KEY
-import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.RecipeIngredients
-import com.example.savethefood.data.source.repository.FoodRepository
-import com.example.savethefood.data.source.repository.RecipeRepository
+import com.example.savethefood.shared.data.domain.FoodDomain
+import com.example.savethefood.shared.data.domain.RecipeIngredients
+import com.example.savethefood.shared.data.source.repository.RecipeRepository
+import com.example.savethefood.shared.utils.Event
 import com.example.savethefood.util.launchDataLoad
 import com.example.savethefood.util.retrieveFood
 import kotlinx.coroutines.flow.catch
@@ -22,13 +20,13 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class FoodDetailViewModel @ViewModelInject constructor(
-    private val foodDataRepository: FoodRepository,
+    private val foodDataRepository: com.example.savethefood.shared.data.source.repository.FoodRepository,
     private val recipeDataRepository: RecipeRepository,
     @Assisted food: SavedStateHandle
 ) : ViewModel() {
 
-    private val _recipeAdded = MutableLiveData<Result<RecipeIngredients?>>()
-    val recipeAdded: LiveData<Result<RecipeIngredients?>>
+    private val _recipeAdded = MutableLiveData<com.example.savethefood.shared.data.Result<RecipeIngredients?>>()
+    val recipeAdded: LiveData<com.example.savethefood.shared.data.Result<RecipeIngredients?>>
         get() = _recipeAdded
 
     private val _food = MutableLiveData<FoodDomain>()
@@ -54,18 +52,18 @@ class FoodDetailViewModel @ViewModelInject constructor(
     // Collect the list without and filter the current food
     // TODO can we move all methods in repositories but either keep the transform or handle
     // TODO it with databinding, remove errordata and use the result live recipes
-    private val _foodList: LiveData<List<FoodDomain>?> = foodDataRepository.getFoods()
+    private val _foodList: LiveData<List<com.example.savethefood.shared.data.domain.FoodDomain>?> = foodDataRepository.getFoods()
         .onStart {
-            emit(Result.Loading)
+            emit(com.example.savethefood.shared.data.Result.Loading)
         }
         .catch { error ->
-            emit(Result.ExError(Exception(error.message)))
+            emit(com.example.savethefood.shared.data.Result.ExError(Exception(error.message)))
         }
         .transform { value ->
             when (value) {
-                is Result.Success -> emit(value.data.filter { it.id != _food.value?.id }) // Remove the current food
-                is Result.ExError -> _errorData.value = Event(value.exception.localizedMessage)
-                is Result.Error -> _errorData.value = Event(value.message)
+                is com.example.savethefood.shared.data.Result.Success -> emit(value.data.filter { it.id != _food.value?.id }) // Remove the current food
+                is com.example.savethefood.shared.data.Result.ExError -> _errorData.value = Event(value.exception.localizedMessage)
+                is com.example.savethefood.shared.data.Result.Error -> _errorData.value = Event(value.message)
                 else -> Unit
             }
         }
@@ -75,13 +73,13 @@ class FoodDetailViewModel @ViewModelInject constructor(
 
     private val foodsFilterList: ArrayList<String> = arrayListOf()
     private var _foodFilter = MutableLiveData(foodsFilterList)
-    private val _recipeList: LiveData<Result<List<RecipeIngredients>?>> = _foodFilter.switchMap {
+    private val _recipeList: LiveData<com.example.savethefood.shared.data.Result<List<RecipeIngredients>?>> = _foodFilter.switchMap {
         recipeDataRepository.getRecipesByIngredients(*it.toTypedArray())
             .onStart {
-                emit(Result.Loading)
+                emit(com.example.savethefood.shared.data.Result.Loading)
             }
             .catch { error ->
-                emit(Result.ExError(Exception(error.message)))
+                emit(com.example.savethefood.shared.data.Result.ExError(Exception(error.message)))
             }
             .transform { value ->
                 emit(value)
@@ -93,7 +91,7 @@ class FoodDetailViewModel @ViewModelInject constructor(
             .asLiveData(viewModelScope.coroutineContext)
     }
 
-    val recipeList: LiveData<Result<List<RecipeIngredients>?>> = _recipeList
+    val recipeList: LiveData<com.example.savethefood.shared.data.Result<List<RecipeIngredients>?>> = _recipeList
 
     init {
         _food.value = food.get<Bundle>(BUNDLE_FOOD_KEY).retrieveFood()
@@ -104,7 +102,7 @@ class FoodDetailViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             try {
                 _deleteFoodEvent.value = _food.value?.let {
-                    Event(foodDataRepository.deleteFood(it) != 0)
+                    Event(foodDataRepository.deleteFood(it) != 0L)
                 } ?: Event(false)
             } catch (e: NullPointerException) {
                 Log.e("FoodDetail", e.message ?: "No Message")

@@ -1,21 +1,17 @@
 package com.example.savethefood.home
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.*
 import com.example.savethefood.constants.Constants.FILTER_LIST
-import com.example.savethefood.data.domain.FoodDomain
 import com.example.savethefood.databinding.FragmentHomeBinding
-import com.example.savethefood.constants.StorageType
-import com.example.savethefood.work.BaseAdapterClickListener
+import com.example.savethefood.shared.data.domain.FoodDomain
+import com.example.savethefood.shared.utils.Event
+import com.example.savethefood.shared.utils.StorageType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 

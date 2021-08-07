@@ -4,12 +4,11 @@ import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.Event
-import com.example.savethefood.constants.ApiCallStatus
-import com.example.savethefood.constants.ApiCallStatus.*
-import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.RecipeInfoDomain
-import com.example.savethefood.data.domain.RecipeResult
-import com.example.savethefood.data.source.repository.RecipeRepository
+import com.example.savethefood.shared.data.domain.RecipeInfoDomain
+import com.example.savethefood.shared.data.domain.RecipeResult
+import com.example.savethefood.shared.data.source.repository.RecipeRepository
+import com.example.savethefood.shared.utils.ApiCallStatus
+import com.example.savethefood.shared.utils.ApiCallStatus.*
 import kotlinx.coroutines.launch
 
 class RecipeDetailViewModel @ViewModelInject constructor(
@@ -55,15 +54,15 @@ class RecipeDetailViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             try {
                 _status.value = Loading("Loading")
-                val recipe = recipeRepository.getRecipeInfo(recipeResult.id)
-                if (recipe is Result.Success) {
+                val recipe = recipeRepository.getRecipeInfo(recipeResult.id.toInt())
+                if (recipe is com.example.savethefood.shared.data.Result.Success) {
                     _recipeDetail.value = recipe.data
                 } else {
                     throw Exception(recipe.toString())
                 }
                 _status.value = Done("Done")
             } catch (e: Exception) {
-                _status.value = ApiCallStatus.Error(toString())
+                _status.value = Error(toString())
                 _recipeDetail.value = null
             }
         }

@@ -1,16 +1,9 @@
 package com.example.savethefood.cook
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.BaseAdapter
 import com.example.savethefood.R
 import com.example.savethefood.databinding.EquipmentInstructionItemBinding
-import com.example.savethefood.data.domain.EquipmentDomain
-import com.example.savethefood.data.domain.IngredientsDomain
-import com.example.savethefood.databinding.IngredientInstructionItemBinding
+import com.example.savethefood.shared.data.domain.EquipmentDomain
 
 class EquipmentInstructionAdapter(
     onClickListener: BaseClickListener<EquipmentDomain>,

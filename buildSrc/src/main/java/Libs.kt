@@ -165,6 +165,7 @@ object Libs {
     const val sqlDelightRuntime = "com.squareup.sqldelight:runtime:${Versions.sqlDelightVersion}"
     const val sqlDelightAndroid = "com.squareup.sqldelight:android-driver:${Versions.sqlDelightVersion}"
     const val sqlDelightNative = "com.squareup.sqldelight:native-driver:${Versions.sqlDelightVersion}"
+    const val sqlDelightCoroutines = "com.squareup.sqldelight:coroutines-extensions:${Versions.sqlDelightVersion}"
 
     const val logBack = "ch.qos.logback:logback-classic:${Versions.logbackVersion}"
 

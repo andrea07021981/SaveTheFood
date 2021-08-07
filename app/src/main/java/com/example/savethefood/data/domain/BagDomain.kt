@@ -1,17 +1,10 @@
 package com.example.savethefood.data.domain
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
-import androidx.room.TypeConverters
-import com.example.savethefood.data.source.local.entity.FoodEntity
-import com.example.savethefood.util.FoodImage
 import com.example.savethefood.constants.QuantityType
-import com.example.savethefood.constants.StorageType
-import com.example.savethefood.data.source.local.database.FoodImageConverter
-import com.example.savethefood.data.source.local.database.QuantityTypeConverter
 import com.example.savethefood.data.source.local.entity.BagEntity
+import com.example.savethefood.util.FoodImage
 import kotlinx.android.parcel.Parcelize
-import java.util.*
 
 
 //Food

@@ -8,7 +8,7 @@
 
         <variable
             name="ingredientItem"
-            type="com.example.savethefood.data.domain.IngredientsDomain" />
+            type="com.example.savethefood.shared.data.domain.IngredientsDomain" />
     </data>
 
     <androidx.cardview.widget.CardView

@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.savethefood.constants.Constants.FILTER_LIST
-import com.example.savethefood.constants.StorageType
+import com.example.savethefood.shared.utils.StorageType
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi

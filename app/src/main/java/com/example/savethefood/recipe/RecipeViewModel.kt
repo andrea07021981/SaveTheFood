@@ -1,24 +1,18 @@
 package com.example.savethefood.recipe
 
 import androidx.annotation.VisibleForTesting
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.example.savethefood.Event
-import com.example.savethefood.constants.ApiCallStatus
-import com.example.savethefood.constants.ApiCallStatus.Done
-import com.example.savethefood.constants.ApiCallStatus.Loading
-import com.example.savethefood.constants.RecipeType
-import com.example.savethefood.constants.StorageType
-import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.RecipeResult
-import com.example.savethefood.data.source.repository.RecipeRepository
+import com.example.savethefood.shared.data.domain.RecipeResult
+import com.example.savethefood.shared.data.source.repository.RecipeRepository
+import com.example.savethefood.shared.utils.ApiCallStatus
+import com.example.savethefood.shared.utils.ApiCallStatus.*
+import com.example.savethefood.shared.utils.Event
+import com.example.savethefood.shared.utils.RecipeType
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.transform
-import java.lang.Exception
 import java.util.*
 
 // TODO use paging library, too many recipes
@@ -52,19 +46,19 @@ class RecipeViewModel @ViewModelInject constructor(
     private var _recipeListResult: LiveData<List<RecipeResult>?> =
         recipeRepository.getRecipes()
             .onStart {
-                emit(Result.Loading)
+                emit(com.example.savethefood.shared.data.Result.Loading)
             }
             .catch { error ->
-                emit(Result.ExError(Exception(error.message)))
+                emit(com.example.savethefood.shared.data.Result.ExError(Exception(error.message)))
             }
             .transform { value ->
                 when (value) {
-                    is Result.Loading -> _status.value = Loading()
-                    is Result.Success -> {
+                    is com.example.savethefood.shared.data.Result.Loading -> _status.value = Loading()
+                    is com.example.savethefood.shared.data.Result.Success -> {
                         _status.value = Done("Done")
                         emit(value.data)
                     }
-                    is Result.ExError -> _status.value = ApiCallStatus.Error(
+                    is com.example.savethefood.shared.data.Result.ExError -> _status.value = Error(
                         value.exception.localizedMessage
                     )
                     else -> Unit
@@ -80,7 +74,7 @@ class RecipeViewModel @ViewModelInject constructor(
     // This is the observable property, it changes every time the month filter changes (the original values never changes)
     val recipeListResult = Transformations.distinctUntilChanged(
         Transformations.switchMap(searchFilter) { // OR    _searchFilter.switchMap { used to refresh/trigger changed livedata
-            if (it != null && it.isNotEmpty()) {
+            if (it.isNullOrEmpty().not()) {
                 _recipeListResult.map { list ->
                     list?.filter { recipe ->
                         recipe.title.toLowerCase(Locale.getDefault())

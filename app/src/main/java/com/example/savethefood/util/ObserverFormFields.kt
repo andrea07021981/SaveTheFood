@@ -1,6 +1,7 @@
 package com.example.savethefood.util
 
-import com.example.savethefood.data.domain.FoodItem
+import com.example.savethefood.shared.data.domain.FoodItem
+import com.example.savethefood.shared.utils.FoodImage
 import java.util.*
 
 /**

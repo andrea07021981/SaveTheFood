@@ -3,8 +3,8 @@ package com.example.savethefood.fooddetail
 import android.view.View
 import com.example.savethefood.BaseAdapter
 import com.example.savethefood.R
-import com.example.savethefood.data.domain.RecipeIngredients
 import com.example.savethefood.databinding.PairRecipeItemBinding
+import com.example.savethefood.shared.data.domain.RecipeIngredients
 
 class RecipeIngredientsAdapter(
     onClickListener: BaseClickListener<RecipeIngredients>,
