@@ -4,14 +4,30 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/bag_item.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/date_picker_layout.xml" value="0.2371859296482412" />
+        <entry key="app/src/main/res/layout/drawerlayout_content.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/equipment_instruction_item.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/food_item.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/food_type_item.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/fragment_add_food.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/fragment_bag.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/fragment_bag_detail.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/fragment_filter.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/fragment_food_detail.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/fragment_fridge.xml" value="0.21197916666666666" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.10371376811594203" />
+        <entry key="app/src/main/res/layout/fragment_home_container.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/fragment_receipe.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/fragment_recipe_detail.xml" value="0.10371376811594203" />
+        <entry key="app/src/main/res/layout/ingredient_instruction_item.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/ingredient_item.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/pair_item.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/pair_recipe_item.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/recipe_item.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/step_cook_item.xml" value="0.10309017223910841" />
       </map>
     </option>
-  </component>
-  <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/example/savethefood/di/DIBuilder.kt" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

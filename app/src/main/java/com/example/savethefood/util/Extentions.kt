@@ -14,8 +14,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.savethefood.constants.Constants
 import com.example.savethefood.constants.FoodOrder
 import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.BagDomain
-import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.shared.data.domain.BagDomain
+import com.example.savethefood.shared.data.domain.FoodDomain
 import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -63,15 +63,15 @@ fun MenuItem.configSearchView(activity: Activity, hint: String = "Type Value", b
 /**
  * Dispatchers.Main.immediate is set as the default CoroutineDispatcher for viewModelScope
  */
-inline fun <T> ViewModel.launchDataLoad(loader: MutableLiveData<Result<T>>, crossinline block: suspend () -> Result<T>): Job {
+inline fun <T> ViewModel.launchDataLoad(loader: MutableLiveData<com.example.savethefood.shared.data.Result<T>>, crossinline block: suspend () -> com.example.savethefood.shared.data.Result<T>): Job {
     return viewModelScope.launch {
         try {
-            loader.value = Result.Loading
+            loader.value = com.example.savethefood.shared.data.Result.Loading
             loader.value = block()
         } catch (error: Exception) {
-            loader.value = Result.ExError(error)
+            loader.value = com.example.savethefood.shared.data.Result.ExError(error)
         } finally {
-            loader.value = Result.Idle
+            loader.value = com.example.savethefood.shared.data.Result.Idle
         }
     }
 }

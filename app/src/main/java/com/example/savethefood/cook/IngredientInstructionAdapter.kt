@@ -2,8 +2,8 @@ package com.example.savethefood.cook
 
 import com.example.savethefood.BaseAdapter
 import com.example.savethefood.R
-import com.example.savethefood.data.domain.IngredientsDomain
 import com.example.savethefood.databinding.IngredientInstructionItemBinding
+import com.example.savethefood.shared.data.domain.IngredientsDomain
 
 class IngredientInstructionAdapter(
     onClickListener: BaseClickListener<IngredientsDomain>,

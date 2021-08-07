@@ -9,8 +9,8 @@ import com.example.savethefood.BaseAdapter
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.EventObserver
 import com.example.savethefood.R
-import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.databinding.FragmentRecipeDetailBinding
+import com.example.savethefood.shared.data.domain.RecipeResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

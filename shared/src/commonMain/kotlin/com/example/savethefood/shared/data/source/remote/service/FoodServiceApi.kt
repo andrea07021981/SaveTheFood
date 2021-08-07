@@ -49,27 +49,27 @@ class FoodServiceApi(
 
     suspend fun getFoodById(id: Int): NetworkFood {
         return client.apiGet {
-            url("food/products/$id")
+            url("$baseUrl/food/products/$id")
         }
     }
 
     suspend fun getRecipes(limit: Int = 100): NetworkRecipe {
         return client.apiGet {
-            url("recipes/search")
+            url("$baseUrl/recipes/search")
             parameter("number", limit)
         }
     }
 
     suspend fun getRecipesById(id: Int): NetworkRecipe? {
         return client.apiGet {
-            url("recipes/search")
+            url("$baseUrl/recipes/search")
             parameter("id", id)
         }
     }
 
     suspend fun getRecipesByIngredient(ingredients: String?): List<NetworkRecipeIngredientsItem> {
         return client.apiGet {
-            url("recipes/findByIngredients")
+            url("$baseUrl/recipes/findByIngredients")
             parameter("ingredients", ingredients)
         }
     }
@@ -77,7 +77,7 @@ class FoodServiceApi(
     //@GET("recipes/{id}/information")
     suspend fun getRecipeInfo(id: Int): NetworkRecipeInfo {
         return client.apiGet {
-            url("recipes/$id/information")
+            url("$baseUrl/recipes/$id/information")
         }
     }
 }

@@ -14,7 +14,7 @@ import javax.inject.Inject
 class RefreshDataWorker @Inject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
-    private val foodDataRepository: FoodRepository
+    private val foodDataRepository: com.example.savethefood.shared.data.source.repository.FoodRepository
 ): CoroutineWorker(context, params) {
 
     companion object {

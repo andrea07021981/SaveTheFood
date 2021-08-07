@@ -2,9 +2,6 @@ package com.example.savethefood.data.source.repository
 
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.FoodItem
-import com.example.savethefood.data.domain.FoodSearchDomain
-import com.example.savethefood.data.domain.asDatabaseModel
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.succeeded
 import com.example.savethefood.util.FoodImage

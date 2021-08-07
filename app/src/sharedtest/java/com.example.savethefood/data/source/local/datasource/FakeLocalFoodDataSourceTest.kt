@@ -2,7 +2,6 @@ package com.example.savethefood.data.source.local.datasource
 
 import com.example.savethefood.data.Result
 import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.FoodSearchDomain
 import com.example.savethefood.data.source.FoodDataSource
 import com.example.savethefood.data.source.local.entity.FoodEntity
 import com.example.savethefood.data.source.local.entity.asDomainModel

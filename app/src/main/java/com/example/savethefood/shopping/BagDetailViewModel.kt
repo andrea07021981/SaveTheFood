@@ -1,34 +1,24 @@
 package com.example.savethefood.shopping
 
 import android.os.Bundle
-import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.example.savethefood.Event
-import com.example.savethefood.addfood.AddFoodViewModel
 import com.example.savethefood.constants.Constants
-import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.BagDomain
-import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.FoodItem
-import com.example.savethefood.data.source.repository.FoodRepository
-import com.example.savethefood.data.source.repository.ShoppingRepository
+import com.example.savethefood.shared.data.domain.BagDomain
+import com.example.savethefood.shared.data.domain.FoodItem
+import com.example.savethefood.shared.utils.Event
 import com.example.savethefood.util.ObserverFormFields
 import com.example.savethefood.util.isValidDouble
 import com.example.savethefood.util.launchDataLoad
 import com.example.savethefood.util.retrieveBag
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.transform
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.LinkedHashSet
 
 
 class BagDetailViewModel @ViewModelInject constructor(
-    private val shoppingDataRepository: ShoppingRepository,
-    private val foodDataRepository: FoodRepository,
+    private val shoppingDataRepository: com.example.savethefood.shared.data.source.repository.ShoppingRepository,
+    private val foodDataRepository: com.example.savethefood.shared.data.source.repository.FoodRepository,
     @Assisted val bag: SavedStateHandle
 ) : ViewModel(){
 
@@ -41,8 +31,8 @@ class BagDetailViewModel @ViewModelInject constructor(
     val openFoodTypeDialog: LiveData<Event<Unit>>
         get() = _openFoodTypeDialog
 
-    private val _saveFoodEvent = MutableLiveData<Result<BagDomain>>()
-    val saveFoodEvent: LiveData<Result<BagDomain>>
+    private val _saveFoodEvent = MutableLiveData<com.example.savethefood.shared.data.Result<BagDomain>>()
+    val saveFoodEvent: LiveData<com.example.savethefood.shared.data.Result<BagDomain>>
         get() = _saveFoodEvent
 
     val errorName = MutableLiveData<Boolean>()

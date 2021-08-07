@@ -1,32 +1,25 @@
 package com.example.savethefood.util
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Color
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRatingBar
-import androidx.core.graphics.ColorUtils
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
-import com.example.savethefood.constants.ApiCallStatus
-import com.example.savethefood.constants.ApiCallStatus.Done
-import com.example.savethefood.constants.ApiCallStatus.Loading
-import com.example.savethefood.constants.UrlImagesPath
 import com.example.savethefood.cook.EquipmentInstructionAdapter
 import com.example.savethefood.cook.IngredientInstructionAdapter
 import com.example.savethefood.cook.StepCookAdapter
-import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.*
 import com.example.savethefood.fooddetail.RecipeIngredientsAdapter
 import com.example.savethefood.recipe.RecipeAdapter
 import com.example.savethefood.recipedetail.IngredientAdapter
+import com.example.savethefood.shared.data.Result
+import com.example.savethefood.shared.data.domain.*
+import com.example.savethefood.shared.utils.ApiCallStatus
+import com.example.savethefood.shared.utils.UrlImagesPath
 import com.facebook.shimmer.ShimmerFrameLayout
 
 object RecipeBindingUtils {
@@ -35,7 +28,7 @@ object RecipeBindingUtils {
     @BindingAdapter("bind:recipeApiStatus")
     fun bindStatus(statusImageView: ImageView, status: ApiCallStatus) {
         when (status){
-            is Loading -> {
+            is ApiCallStatus.Loading -> {
                 statusImageView.visibility = View.VISIBLE
                 statusImageView.setImageResource(R.drawable.loading_animation)
             }
@@ -43,7 +36,7 @@ object RecipeBindingUtils {
                 statusImageView.visibility = View.VISIBLE
                 statusImageView.setImageResource(R.drawable.ic_broken_image)
             }
-            is Done -> {
+            is ApiCallStatus.Done -> {
                 statusImageView.visibility = View.GONE
             }
         }
@@ -60,10 +53,10 @@ object RecipeBindingUtils {
     @BindingAdapter("bind:listData")
     fun bindRecipeIngredientsRecycleView(
         recyclerView: RecyclerView,
-        data: Result<List<RecipeIngredients>?>
+        data: com.example.savethefood.shared.data.Result<List<RecipeIngredients>?>
     ) {
         val adapter = recyclerView.adapter as RecipeIngredientsAdapter
-        if (data is Result.Success) {
+        if (data is com.example.savethefood.shared.data.Result.Success) {
             adapter.submitList(data.data)
         }
     }
@@ -235,7 +228,7 @@ object RecipeBindingUtils {
     @BindingAdapter("bind:shimmer")
     fun setShimmer(view: ShimmerFrameLayout, status: ApiCallStatus?) {
         when (status) {
-            is Loading -> {
+            is ApiCallStatus.Loading -> {
                 view.visibility = View.VISIBLE
                 view.start()
             }
@@ -270,7 +263,7 @@ object RecipeBindingUtils {
     @JvmStatic
     @BindingAdapter("bind:apiStatusVisibility")
     fun RecyclerView.setApiStatusVisibility(status: ApiCallStatus?) {
-        visibility = if (status == Loading()) {
+        visibility = if (status == ApiCallStatus.Loading()) {
             View.GONE
         } else {
             View.VISIBLE

@@ -62,7 +62,7 @@ class RecipeFragment : BaseFragment<RecipeViewModel, FragmentReceipeBinding>() {
     }
 
     override fun activateObservers() {
-        viewModel.recipeDetailEvent.observe(this.viewLifecycleOwner, EventObserver {
+        viewModel.recipeDetailEvent.observe(this.viewLifecycleOwner, com.example.savethefood.shared.utils.EventObserver {
             it.let {
                 val bundle = bundleOf("recipeResult" to it)
                 findNavController()

@@ -3,30 +3,29 @@ package com.example.savethefood.di
 import android.content.Context
 import androidx.room.Room
 import com.example.savethefood.BuildConfig
-import com.example.savethefood.data.source.FoodDataSource
-import com.example.savethefood.data.source.RecipeDataSource
-import com.example.savethefood.data.source.ShoppingDataSource
 import com.example.savethefood.data.source.local.dao.FoodDatabaseDao
 import com.example.savethefood.data.source.local.dao.RecipeDatabaseDao
 import com.example.savethefood.data.source.local.dao.ShoppingDatabaseDao
 import com.example.savethefood.data.source.local.dao.UserDatabaseDao
 import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
-import com.example.savethefood.data.source.local.datasource.FoodLocalDataSource
-import com.example.savethefood.data.source.local.datasource.RecipeLocalDataSource
-import com.example.savethefood.data.source.local.datasource.ShoppingLocalDataSource
-import com.example.savethefood.data.source.remote.datasource.FoodRemoteDataSource
-import com.example.savethefood.data.source.remote.datasource.RecipeRemoteDataSource
-import com.example.savethefood.data.source.remote.datasource.ShoppingRemoteDataSource
 import com.example.savethefood.data.source.remote.service.FoodService
-import com.example.savethefood.data.source.repository.*
 import com.example.savethefood.shared.*
+import com.example.savethefood.shared.data.source.FoodDataSource
+import com.example.savethefood.shared.data.source.RecipeDataSource
+import com.example.savethefood.shared.data.source.ShoppingDataSource
 import com.example.savethefood.shared.data.source.UserDataSource
 import com.example.savethefood.shared.data.source.local.database.DatabaseDriverFactory
 import com.example.savethefood.shared.data.source.local.database.DatabaseFactory
+import com.example.savethefood.shared.data.source.local.datasource.FoodLocalDataSource
+import com.example.savethefood.shared.data.source.local.datasource.RecipeLocalDataSource
+import com.example.savethefood.shared.data.source.local.datasource.ShoppingLocalDataSource
 import com.example.savethefood.shared.data.source.local.datasource.UserLocalDataSource
+import com.example.savethefood.shared.data.source.remote.datasource.FoodRemoteDataSource
+import com.example.savethefood.shared.data.source.remote.datasource.RecipeRemoteDataSource
+import com.example.savethefood.shared.data.source.remote.datasource.ShoppingRemoteDataSource
 import com.example.savethefood.shared.data.source.remote.datasource.UserRemoteDataSource
-import com.example.savethefood.shared.data.source.repository.UserDataRepository
-import com.example.savethefood.shared.data.source.repository.UserRepository
+import com.example.savethefood.shared.data.source.remote.service.FoodServiceApi
+import com.example.savethefood.shared.data.source.repository.*
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -58,7 +57,7 @@ object BaseModule {
     @Provides
     @Named("FoodRemoteDataSource")
     fun provideFoodRemoteDataSource(
-        foodApi: FoodService
+        foodApi: FoodServiceApi
     ): FoodDataSource {
         return FoodRemoteDataSource(
             foodApi
@@ -68,10 +67,10 @@ object BaseModule {
     @Provides
     @Named("FoodLocalDataSource")
     fun provideFoodLocalDataSource(
-        foodDatabaseDao: FoodDatabaseDao
+        foodDatabase: com.example.savethefood.shared.cache.SaveTheFoodDatabase
     ): FoodDataSource {
         return FoodLocalDataSource(
-            foodDatabaseDao
+            foodDatabase
         )
     }
 
@@ -95,10 +94,10 @@ object BaseModule {
     @Provides
     @Named("ShoppingLocalDataSource")
     fun provideShoppingLocalDataSource(
-        shoppingDatabaseDao: ShoppingDatabaseDao
+        foodDatabase: com.example.savethefood.shared.cache.SaveTheFoodDatabase
     ): ShoppingDataSource {
         return ShoppingLocalDataSource(
-            shoppingDatabaseDao
+            foodDatabase
         )
     }
 
@@ -142,7 +141,7 @@ object BaseModule {
     @Provides
     @Named("RecipeRemoteDataSource")
     fun provideRecipeRemoteDataSource(
-        foodApi: FoodService
+        foodApi: FoodServiceApi
     ): RecipeDataSource {
         return RecipeRemoteDataSource(
             foodApi
@@ -152,10 +151,10 @@ object BaseModule {
     @Provides
     @Named("RecipeLocalDataSource")
     fun provideRecipeLocalDataSource(
-        foodDatabaseDao: RecipeDatabaseDao
+        foodDatabase: com.example.savethefood.shared.cache.SaveTheFoodDatabase
     ): RecipeDataSource {
         return RecipeLocalDataSource(
-            foodDatabaseDao
+            foodDatabase
         )
     }
 
@@ -168,7 +167,7 @@ object BaseModule {
         return RecipeDataRepository(recipeLocalDataSource, recipeRemoteDataSource)
     }
 
-    // TODO temporary injection, read DIBuilder
+    // TODO temporary injection, need to fix Koin in kmm
     @Singleton
     @Provides
     fun provideDatabaseShared(
@@ -272,5 +271,8 @@ object NetworkModule {
     @Provides
     fun provideRetrofitService(retrofit: Retrofit): FoodService = retrofit.create(
         FoodService::class.java)
+
+    @Provides
+    fun provideKtorService(): FoodServiceApi = FoodServiceApi()
 
 }

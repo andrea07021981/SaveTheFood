@@ -6,6 +6,9 @@ import android.os.Build
 import android.os.Bundle
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
+import com.example.savethefood.login.LoginViewModel
+import com.example.savethefood.shared.di.commonUserModule
+import com.example.savethefood.shared.di.initKoin
 import com.example.savethefood.work.RefreshDataWorker
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -15,12 +18,18 @@ import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.component.KoinComponent
+import org.koin.dsl.module
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltAndroidApp
-class SaveTheFoodApplication : Application() {
+class SaveTheFoodApplication : Application(), KoinComponent {
 
     private val applicationScope = CoroutineScope(Dispatchers.Default)
 
@@ -29,6 +38,7 @@ class SaveTheFoodApplication : Application() {
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
+    @ExperimentalCoroutinesApi
     override fun onCreate() {
         super.onCreate()
         // Obtain the FirebaseAnalytics instance.
@@ -42,7 +52,15 @@ class SaveTheFoodApplication : Application() {
             param(FirebaseAnalytics.Param.CONTENT_TYPE, "image")
         }
 
-
+        // TODO review how to manage koin in kmm, wait the stable release
+        /*var viewmodel = module {
+            viewModel { LoginViewModel(userDataRepository = get()) }
+        }
+        initKoin {
+            androidLogger()
+            androidContext(this@SaveTheFoodApplication)
+            modules(commonUserModule, viewmodel)
+        }*/
         delayedInit()
     }
 

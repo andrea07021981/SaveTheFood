@@ -2,8 +2,9 @@ package com.example.savethefood.addfood
 
 import com.example.savethefood.BaseAdapter
 import com.example.savethefood.R
-import com.example.savethefood.data.domain.FoodItem
 import com.example.savethefood.databinding.FoodTypeItemBinding
+import com.example.savethefood.shared.data.domain.FoodItem
+import com.example.savethefood.shared.data.domain.*
 
 class FoodTypeAdapter(
     onClickListener: BaseClickListener<FoodItem>,

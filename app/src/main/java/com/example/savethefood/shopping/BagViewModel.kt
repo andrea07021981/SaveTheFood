@@ -2,10 +2,9 @@ package com.example.savethefood.shopping
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.example.savethefood.Event
-import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.BagDomain
-import com.example.savethefood.data.source.repository.ShoppingRepository
+import com.example.savethefood.shared.data.domain.BagDomain
+import com.example.savethefood.shared.data.source.repository.ShoppingRepository
+import com.example.savethefood.shared.utils.Event
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.transform
@@ -21,15 +20,15 @@ class BagViewModel @ViewModelInject constructor(
     val bagList: LiveData<List<BagDomain>?> =
         shoppingDataRepository.getFoodsInBag()
             .onStart {
-                emit(Result.Loading)
+                emit(com.example.savethefood.shared.data.Result.Loading)
             }
             .catch { error ->
-                emit(Result.ExError(Exception(error.message)))
+                emit(com.example.savethefood.shared.data.Result.ExError(Exception(error.message)))
             }
             .transform { value ->
                 when (value) {
-                    is Result.Loading -> Unit
-                    is Result.Success -> emit(value.data)
+                    is com.example.savethefood.shared.data.Result.Loading -> Unit
+                    is com.example.savethefood.shared.data.Result.Success -> emit(value.data)
                     else -> Unit
                 }
             }

@@ -48,7 +48,7 @@ object Notifier {
         }
     }
 
-    fun postNotification(id: Int, context: Context, intent: PendingIntent) {
+    fun postNotification(id: Long, context: Context, intent: PendingIntent) {
         val builder = NotificationCompat.Builder(context, channelId)
         builder.setContentTitle(context.getString(R.string.deepLinkNotificationTitle))
             .setSmallIcon(R.drawable.food_added)

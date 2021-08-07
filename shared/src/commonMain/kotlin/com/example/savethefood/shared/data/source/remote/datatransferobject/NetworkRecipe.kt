@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 data class NetworkRecipe(
     val baseUri: String,
     val expires: Long,
-    val isStale: Boolean,
+    val isStale: Boolean = false,
     val number: Int,
     val offset: Int,
     val processingTimeMs: Int,

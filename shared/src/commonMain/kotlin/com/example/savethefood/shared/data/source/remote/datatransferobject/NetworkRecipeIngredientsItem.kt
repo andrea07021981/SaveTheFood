@@ -25,7 +25,7 @@ data class NetworkRecipeIngredientsItem(
 
 @Serializable
 data class UnusedIngredient(
-    val aisle: String?,
+    val aisle: String? = null,
     val amount: Double,
     val id: Int,
     val image: String,
@@ -42,9 +42,9 @@ data class UnusedIngredient(
 
 @Serializable
 data class UsedIngredient(
-    val aisle: String?,
+    val aisle: String? = null,
     val amount: Double,
-    val extendedName: String?,
+    val extendedName: String? = null,
     val id: Int,
     val image: String,
     val meta: List<String>,
@@ -60,7 +60,7 @@ data class UsedIngredient(
 
 @Serializable
 data class MissedIngredient(
-    val aisle: String?,
+    val aisle: String? = null,
     val amount: Double,
     val id: Int,
     val image: String,

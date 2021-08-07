@@ -8,7 +8,7 @@
 
         <variable
             name="bagDomain"
-            type="com.example.savethefood.data.domain.BagDomain" />
+            type="com.example.savethefood.shared.data.domain.BagDomain" />
 
         <variable
             name="bagCallback"

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.example.savethefood.constants.FoodOrder"/>
+        <import type="com.example.savethefood.shared.utils.FoodOrder"/>
         <variable
             name="viewmodel"
             type="com.example.savethefood.home.HomeViewModel" />

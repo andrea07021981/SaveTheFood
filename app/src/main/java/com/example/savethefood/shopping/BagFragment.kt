@@ -10,6 +10,7 @@ import com.example.savethefood.*
 import com.example.savethefood.FragmentCallback
 import com.example.savethefood.addfood.SearchableFragment
 import com.example.savethefood.databinding.FragmentBagBinding
+import com.example.savethefood.shared.utils.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

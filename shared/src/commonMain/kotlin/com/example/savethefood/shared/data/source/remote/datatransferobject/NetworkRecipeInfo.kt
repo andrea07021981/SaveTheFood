@@ -9,7 +9,7 @@ data class NetworkRecipeInfo(
     val aggregateLikes: Int,
     val analyzedInstructions: List<AnalyzedInstruction>,
     val cheap: Boolean,
-    val cookingMinutes: Int?,
+    val cookingMinutes: Int? = null,
     val creditsText: String,
     val cuisines: List<String>,
     val dairyFree: Boolean,
@@ -22,18 +22,18 @@ data class NetworkRecipeInfo(
     val id: Int,
     val image: String,
     val imageType: String,
-    val instructions: String?,
+    val instructions: String? = null,
     val lowFodmap: Boolean,
     val occasions: List<String>,
     val originalId: Int?,
-    val preparationMinutes: Int?,
+    val preparationMinutes: Int? = null,
     val pricePerServing: Double,
     val readyInMinutes: Int,
     val servings: Int,
     val sourceName: String,
     val sourceUrl: String,
     val spoonacularScore: Double,
-    val spoonacularSourceUrl: String?,
+    val spoonacularSourceUrl: String? = null,
     val summary: String,
     val sustainable: Boolean,
     val title: String,
@@ -117,19 +117,19 @@ fun Equipment.asDomainModel(): EquipmentDomain {
 
 @Serializable
 data class ExtendedIngredient(
-    val aisle: String?,
-    val amount: Double?,
-    val consistency: String?,
-    val id: Int?,
-    val image: String?,
-    val measures: Measures?,
+    val aisle: String? = null,
+    val amount: Double? = null,
+    val consistency: String? = null,
+    val id: Int? = null,
+    val image: String? = null,
+    val measures: Measures? = null,
     val meta: List<String>,
     val metaInformation: List<String>,
-    val name: String?,
-    val original: String?,
-    val originalName: String?,
-    val originalString: String?,
-    val unit: String?
+    val name: String? = null,
+    val original: String? = null,
+    val originalName: String? = null,
+    val originalString: String? = null,
+    val unit: String? = null
 )
 
 fun ExtendedIngredient.asDomainModel(): ExtendedIngredientDomain {
@@ -208,7 +208,7 @@ fun Metric.asDomainModel(): MetricDomain {
 data class Step(
     val equipment: List<Equipment>,
     val ingredients: List<Ingredients>,
-    val length: Length?,
+    val length: Length? = null,
     val number: Int,
     val step: String
 )

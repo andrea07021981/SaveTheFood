@@ -11,6 +11,8 @@ import com.example.savethefood.shared.data.source.local.entity.asDomainModel
 import com.example.savethefood.shared.data.source.local.entity.asRecipeDomainModel
 import com.example.savethefood.shared.utils.FoodImage
 import com.example.savethefood.shared.utils.QuantityType
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
@@ -21,9 +23,7 @@ class ShoppingLocalDataSource(
     private val dbQuery: SaveTheFoodDatabaseQueries = foodDatabase.saveTheFoodDatabaseQueries
 
     override fun getFoodsInBag(): Flow<List<BagDomain>?> {
-        return flowOf(
-            dbQuery.selectBags(::mapToBagEntity).executeAsList().asDomainModel()
-        )
+        return dbQuery.selectBags(::mapToBagEntity).asFlow().mapToList().asDomainModel()
     }
 
     override suspend fun saveItemInBag(item: BagDomain): Long {

@@ -1,27 +1,19 @@
 package com.example.savethefood.shopping
 
-import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.EventObserver
-import com.example.savethefood.Notifier
 import com.example.savethefood.R
-import com.example.savethefood.addfood.AddFoodFragment
 import com.example.savethefood.addfood.SearchableFragment
 import com.example.savethefood.constants.Constants
 import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.FoodItem
-import com.example.savethefood.databinding.FragmentBagBinding
 import com.example.savethefood.databinding.FragmentBagDetailBinding
-import com.example.savethefood.fooddetail.FoodDetailFragmentArgs
-import com.example.savethefood.util.retrieveBag
+import com.example.savethefood.shared.data.domain.FoodItem
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -51,17 +43,18 @@ class BagDetail : BaseFragment<BagDetailViewModel, FragmentBagDetailBinding>() {
     }
 
     override fun activateObservers() {
-        viewModel.openFoodTypeDialog.observe(viewLifecycleOwner, EventObserver {
+        viewModel.openFoodTypeDialog.observe(viewLifecycleOwner, com.example.savethefood.shared.utils.EventObserver {
             SearchableFragment().show(childFragmentManager, classTag)
         })
 
         viewModel.saveFoodEvent.observe(viewLifecycleOwner) {
             when (it) {
-                is Result.Success -> {
+                is com.example.savethefood.shared.data.Result.Success -> {
                     // TODO Add the deep link ass add food
                     findNavController().popBackStack()
                 }
-                is Result.ExError, is Result.Error -> Toast.makeText(
+                is com.example.savethefood.shared.data.Result.ExError,
+                is com.example.savethefood.shared.data.Result.Error -> Toast.makeText(
                     context,
                     "Error saving food in bag",
                     Toast.LENGTH_LONG

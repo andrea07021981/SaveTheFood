@@ -1,14 +1,9 @@
 package com.example.savethefood.recipedetail
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.BaseAdapter
 import com.example.savethefood.R
 import com.example.savethefood.databinding.IngredientItemBinding
-import com.example.savethefood.data.domain.ExtendedIngredientDomain
+import com.example.savethefood.shared.data.domain.ExtendedIngredientDomain
 
 class IngredientAdapter(
     onClickListener: BaseClickListener<ExtendedIngredientDomain>,

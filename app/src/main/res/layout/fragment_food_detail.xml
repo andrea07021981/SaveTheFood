@@ -5,7 +5,7 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.example.savethefood.data.Result.Error" alias="RecipesError"/>
+        <import type="com.example.savethefood.shared.data.Result.Error" alias="RecipesError"/>
         <import type="android.view.View" />
         <variable
             name="foodDetailViewModel"

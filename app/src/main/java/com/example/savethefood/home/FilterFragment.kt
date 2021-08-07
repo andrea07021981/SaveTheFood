@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
-import com.example.savethefood.EventObserver
 import com.example.savethefood.constants.Constants.BUNDLE_KEY
 import com.example.savethefood.constants.Constants.REQUEST_KEY
-import com.example.savethefood.constants.FoodOrder
 import com.example.savethefood.databinding.FragmentFilterBinding
+import com.example.savethefood.shared.utils.EventObserver
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 

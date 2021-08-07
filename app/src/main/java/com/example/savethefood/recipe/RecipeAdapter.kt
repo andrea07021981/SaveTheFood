@@ -2,8 +2,8 @@ package com.example.savethefood.recipe
 
 import com.example.savethefood.BaseAdapter
 import com.example.savethefood.R
-import com.example.savethefood.data.domain.RecipeResult
 import com.example.savethefood.databinding.RecipeItemBinding
+import com.example.savethefood.shared.data.domain.RecipeResult
 
 class RecipeAdapter(
     onClickListener: BaseClickListener<RecipeResult>,

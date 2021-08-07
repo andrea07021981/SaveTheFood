@@ -2,9 +2,9 @@ package com.example.savethefood.shopping
 
 import com.example.savethefood.BaseAdapter
 import com.example.savethefood.R
-import com.example.savethefood.data.domain.BagDomain
 import com.example.savethefood.databinding.BagItemBinding
 import com.example.savethefood.generated.callback.OnClickListener
+import com.example.savethefood.shared.data.domain.BagDomain
 
 class BagAdapter(
     val onClickListener: BaseClickListener<BagDomain>

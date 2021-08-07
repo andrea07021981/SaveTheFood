@@ -1,21 +1,13 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
-    kotlin("multiplatform")
-    kotlin("plugin.serialization")
-    id("com.android.library")
-    id("kotlin-android-extensions")
-    id("com.squareup.sqldelight")
+    kotlin(Plugins.multiplatform)
+    kotlin(Plugins.serialization)
+    id(Plugins.androidLib)
+    kotlin(Plugins.extensions)
+    id(Plugins.sqlDelight)
 }
 // TODO create a build folder with all versions for gradle kts
-val ktorVersion = "1.6.2"
-val serializationVersion = "1.0.0-RC"
-val sqlDelightVersion = "1.4.2"
-val coroutinesVersion = "1.3.9-native-mt"
-val lifecycleVersion = "2.4.0-alpha02"
-val logbackVersion = "1.2.3"
-val mokoMvvmVersion = "0.11.0"
-val koinVersion = "3.0.1"
 
 kotlin {
     android()
@@ -38,19 +30,20 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-                implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
-                implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
-                implementation("ch.qos.logback:logback-classic:$logbackVersion")
-                implementation("io.ktor:ktor-client-logging:$ktorVersion")
+                implementation(Libs.coroutineCore)
+                implementation(Libs.ktorNative)
+                implementation(Libs.serialization)
+                implementation(Libs.ktorSerialization)
+                implementation(Libs.sqlDelightRuntime)
+                implementation(Libs.sqlDelightCoroutines)
+                implementation(Libs.logBack)
+                implementation(Libs.ktorClientLogging)
                 // MOKO - MVVM
-                implementation("dev.icerock.moko:mvvm:$mokoMvvmVersion")
+                implementation(Libs.moko)
 
                 // KOIN for DI
                 // Koin for Kotlin Multiplatform
-                implementation("io.insert-koin:koin-core:$koinVersion")
+                implementation(Libs.koinNative)
             }
         }
         val commonTest by getting {
@@ -61,8 +54,8 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-android:$ktorVersion")
-                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
+                implementation(Libs.ktorAndroid)
+                implementation(Libs.sqlDelightAndroid)
             }
         }
 
@@ -74,8 +67,8 @@ kotlin {
         }
         val iosMain by getting  {
             dependencies {
-                implementation("io.ktor:ktor-client-ios:$ktorVersion")
-                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
+                implementation(Libs.ktorIos)
+                implementation(Libs.sqlDelightNative)
             }
         }
         val iosTest by getting

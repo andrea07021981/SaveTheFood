@@ -3,7 +3,7 @@ package com.example.savethefood.home
 import com.example.savethefood.BaseAdapter
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FoodItemBinding
-import com.example.savethefood.data.domain.FoodDomain
+import com.example.savethefood.shared.data.domain.FoodDomain
 
 class FoodAdapter(
     onClickListener: BaseClickListener<FoodDomain>,

@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -17,12 +16,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
 import com.example.savethefood.BaseFragment
-import com.example.savethefood.Event
 import com.example.savethefood.R
-import com.example.savethefood.data.domain.FoodDomain
-import com.example.savethefood.data.domain.RecipeResult
-import com.example.savethefood.data.succeeded
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
+import com.example.savethefood.shared.data.domain.FoodDomain
+import com.example.savethefood.shared.data.domain.RecipeResult
 import com.example.savethefood.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.pair_item.view.*
@@ -108,7 +105,7 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
         inflater.inflate(R.menu.menu_edit, menu)
     }
 
-    override fun <T> navigateTo(event: Event<T>?) {
+    override fun <T> navigateTo(event: com.example.savethefood.shared.utils.Event<T>?) {
         event?.let {
             if (it.hasBeenHandled) return
             when (val content = it.getContentIfNotHandled()) {

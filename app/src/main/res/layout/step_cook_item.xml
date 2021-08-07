@@ -9,7 +9,7 @@
         <import type="android.view.View"/>
         <variable
             name="stepItem"
-            type="com.example.savethefood.data.domain.StepDomain" />
+            type="com.example.savethefood.shared.data.domain.StepDomain" />
 
         <variable
             name="stepCallback"

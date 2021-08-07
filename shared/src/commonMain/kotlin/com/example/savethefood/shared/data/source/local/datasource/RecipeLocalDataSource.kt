@@ -11,6 +11,8 @@ import com.example.savethefood.shared.data.source.RecipeDataSource
 import com.example.savethefood.shared.data.source.local.entity.RecipeIngredientEntity
 import com.example.savethefood.shared.data.source.local.entity.asDomainModel
 import com.example.savethefood.shared.data.source.local.entity.asRecipeDomainModel
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -25,9 +27,7 @@ class RecipeLocalDataSource(
 
     @Throws(Exception::class)
     override fun getRecipes(): Flow<RecipeDomain?> {
-        return flowOf(
-            dbQuery.selectRecipes(::mapToRecipeEntity).executeAsList().asRecipeDomainModel()
-        )
+        return  dbQuery.selectRecipes(::mapToRecipeEntity).asFlow().mapToList().asRecipeDomainModel()
     }
 
     override suspend fun getRecipeById(id: Int): RecipeDomain? {
@@ -68,9 +68,7 @@ class RecipeLocalDataSource(
     }
 
     override fun getRecipesIngredients(): Flow<List<RecipeIngredients>?> {
-        return flowOf(
-            dbQuery.selectRecipes(::mapToRecipeEntity).executeAsList().asDomainModel()
-        )
+        return dbQuery.selectRecipes(::mapToRecipeEntity).asFlow().mapToList().asDomainModel()
     }
 
     override suspend fun deleteRecipe(recipeId: RecipeIngredients): Long? {
