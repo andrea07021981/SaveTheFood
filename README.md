@@ -4,12 +4,12 @@ I've build one activity app with some navigation levels. I worked with Jetpack c
 IMPORTANT: Create a free api key here and change it in file ApiKey ----> https://spoonacular.com/food-api
 
 UNDER DEVELOPMENT: Porting of the business logic into the shared KMM module. Steps:
-1 - Migrate room to sqldelight
-2 - Migrate Retrofit to KTOR
-3 - Migrate Business local datasource
-4 - Migrate Business local remotesource
-5 - Migrata data classes
-6 - Migrate Repository
+1 - Migrate room to sqldelight (DONE)
+2 - Migrate Retrofit to KTOR (DONE)
+3 - Migrate Business local datasource (DONE)
+4 - Migrate Business local remotesource (DONE)
+5 - Migrata data classes (DONE)
+6 - Migrate Repository (DONE)
 7 - Migrate VMs
 8 - add Jetpack compose https://developer.android.com/jetpack/compose
 
