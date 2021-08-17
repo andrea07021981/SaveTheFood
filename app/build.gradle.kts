@@ -1,6 +1,7 @@
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
+// TODO remove all dependecies that are used in kmm module (retrofit, etc)
 plugins {
     id(Plugins.androidApp)
     kotlin(Plugins.kotlin)

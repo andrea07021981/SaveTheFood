@@ -7,9 +7,9 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.annotation.AnimRes
 import androidx.databinding.BindingAdapter
-import com.example.savethefood.constants.LoginAuthenticationStates
-import com.example.savethefood.constants.LoginAuthenticationStates.*
 import com.example.savethefood.constants.LoginStateValue
+import com.example.savethefood.shared.utils.LoginAuthenticationStates
+import com.example.savethefood.shared.utils.LoginAuthenticationStates.*
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.ExperimentalCoroutinesApi

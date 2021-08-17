@@ -16,10 +16,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.example.savethefood.MainCoroutineRuleAndroid
 import com.example.savethefood.R
-import com.example.savethefood.constants.LoginAuthenticationStates
-import com.example.savethefood.data.domain.UserDomain
 import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
 import com.example.savethefood.data.source.repository.FakeUserDataRepositoryTest
+import com.example.savethefood.shared.data.domain.UserDomain
+import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.util.DataBindingIdlingResource
 import com.example.savethefood.util.EspressoIdlingResource
 import com.example.savethefood.util.monitorFragment

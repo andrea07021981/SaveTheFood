@@ -7,6 +7,19 @@ import androidx.appcompat.app.AlertDialog
 
 /**
  * Domain-Specific language for building a dialog
+ * If we need another param, ad example an Int, we can use AlertDialog.Builder.(Int) and use it with it
+ *
+ * This fun uses the additional receiver which makes easier the build with this. We can also use
+ * the high order without receiver, but we need to access the properties with it
+ * 
+ * inline fun buildDialog(
+    context: Context,
+    buildDialog: (AlertDialog.Builder) -> Unit
+    ): AlertDialog {
+        val builder = AlertDialog.Builder(context)
+        buildDialog(builder)
+        return builder.create()
+    }
  */
 inline fun buildDialog(
     context: Context,

@@ -6,19 +6,15 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.savethefood.constants.Constants
 import com.example.savethefood.constants.FoodOrder
-import com.example.savethefood.data.Result
 import com.example.savethefood.shared.data.domain.BagDomain
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.facebook.shimmer.ShimmerFrameLayout
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -117,12 +113,12 @@ fun Bundle?.retrieveBag(): BagDomain {
     }?: BagDomain()
 }
 
-fun <T> List<T>?.getResult(): Result<List<T>> {
+fun <T> List<T>?.getResult(): com.example.savethefood.shared.data.Result<List<T>> {
     return this?.let {
         if (it.count() > 0) {
-            Result.Success(it)
+            com.example.savethefood.shared.data.Result.Success(it)
         } else {
-            Result.Error("No data")
+            com.example.savethefood.shared.data.Result.Error("No data")
         }
-    } ?: Result.ExError(java.lang.Exception("Error retrieving data"))
+    } ?: com.example.savethefood.shared.data.Result.ExError(java.lang.Exception("Error retrieving data"))
 }

@@ -7,11 +7,9 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.savethefood.BaseFragment
-import com.example.savethefood.EventObserver
 import com.example.savethefood.R
 import com.example.savethefood.addfood.SearchableFragment
 import com.example.savethefood.constants.Constants
-import com.example.savethefood.data.Result
 import com.example.savethefood.databinding.FragmentBagDetailBinding
 import com.example.savethefood.shared.data.domain.FoodItem
 import dagger.hilt.android.AndroidEntryPoint

@@ -8,7 +8,7 @@
 
         <variable
             name="productItem"
-            type="com.example.savethefood.data.domain.ProductDomain" />
+            type="com.example.savethefood.shared.data.domain.ProductDomain" />
 
         <variable
             name="searchFoodCallback"

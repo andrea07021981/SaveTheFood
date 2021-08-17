@@ -5,7 +5,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
-import com.example.savethefood.data.domain.StepDomain
 import com.example.savethefood.databinding.FragmentRecipeCookBinding
 import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint

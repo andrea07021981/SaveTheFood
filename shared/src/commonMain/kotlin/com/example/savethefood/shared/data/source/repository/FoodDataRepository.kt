@@ -114,6 +114,8 @@ class FoodDataRepository (
                     false
                 }
             }
+            // Emits only if any item in room has changed. Non needed for now, the query always extracts all food
+            //.distinctUntilChanged()
             // FLOWON is the correct way to change the context. The collection remains in main thread, but this flow goes in IO concurrently
             .flowOn(ioDispatcher)
             // We can tell flow to make the buffer "conflated". It removes the buffer from flowOn
