@@ -4,6 +4,7 @@ import com.example.savethefood.shared.data.source.remote.datatransferobject.*
 import io.ktor.client.*
 import io.ktor.client.request.*
 import kotlin.jvm.Volatile
+import kotlin.native.concurrent.ThreadLocal
 
 // TODO use DI to pass the HttpClient and remove the companion
 /**
@@ -16,6 +17,7 @@ class FoodServiceApi(
     private val baseUrl: String = "https://api.spoonacular.com/"
     private val apiKey = "dc03ecff1b4e4630b92c6cf4d7412449"
 
+    @ThreadLocal
     companion object {
         @Volatile
         private var httpClient: HttpClient? = null
@@ -27,6 +29,25 @@ class FoodServiceApi(
         }
     }
 
+
+    // DSL generic to build the request
+    /**
+     * We could also have used:
+     *  private suspend inline fun <reified T> HttpClient.apiGet(
+            block: HttpRequestBuilder.() -> Unit = {}
+        ) : T = get {
+            val request = HttpRequestBuilder()
+            parameter("apiKey", apiKey)
+            request.block()
+
+            OR
+
+            with(HttpRequestBuilder()) {
+                parameter("apiKey", apiKey)
+                this.block()
+            }
+        }
+     */
     private suspend inline fun <reified T> HttpClient.apiGet(
         block: HttpRequestBuilder.() -> Unit = {}
     ) : T = get {

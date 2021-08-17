@@ -1,5 +1,6 @@
 package com.example.savethefood.constants
 
+@Deprecated("Moved to shared")
 enum class LoginStateValue(
     val message: String
 ) {

@@ -3,13 +3,8 @@ package com.example.savethefood.di
 import android.content.Context
 import androidx.room.Room
 import com.example.savethefood.BuildConfig
-import com.example.savethefood.data.source.local.dao.FoodDatabaseDao
-import com.example.savethefood.data.source.local.dao.RecipeDatabaseDao
-import com.example.savethefood.data.source.local.dao.ShoppingDatabaseDao
-import com.example.savethefood.data.source.local.dao.UserDatabaseDao
-import com.example.savethefood.data.source.local.database.SaveTheFoodDatabase
-import com.example.savethefood.data.source.remote.service.FoodService
 import com.example.savethefood.shared.*
+import com.example.savethefood.shared.cache.SaveTheFoodDatabase
 import com.example.savethefood.shared.data.source.FoodDataSource
 import com.example.savethefood.shared.data.source.RecipeDataSource
 import com.example.savethefood.shared.data.source.ShoppingDataSource
@@ -67,7 +62,7 @@ object BaseModule {
     @Provides
     @Named("FoodLocalDataSource")
     fun provideFoodLocalDataSource(
-        foodDatabase: com.example.savethefood.shared.cache.SaveTheFoodDatabase
+        foodDatabase: SaveTheFoodDatabase
     ): FoodDataSource {
         return FoodLocalDataSource(
             foodDatabase
@@ -94,7 +89,7 @@ object BaseModule {
     @Provides
     @Named("ShoppingLocalDataSource")
     fun provideShoppingLocalDataSource(
-        foodDatabase: com.example.savethefood.shared.cache.SaveTheFoodDatabase
+        foodDatabase: SaveTheFoodDatabase
     ): ShoppingDataSource {
         return ShoppingLocalDataSource(
             foodDatabase
@@ -119,7 +114,7 @@ object BaseModule {
     @Provides
     @Named("UserLocalDataSource")
     fun provideUserLocalDataSource(
-        userDatabaseDao: com.example.savethefood.shared.cache.SaveTheFoodDatabase
+        userDatabaseDao: SaveTheFoodDatabase
     ): UserDataSource {
         return UserLocalDataSource(
             userDatabaseDao
@@ -151,7 +146,7 @@ object BaseModule {
     @Provides
     @Named("RecipeLocalDataSource")
     fun provideRecipeLocalDataSource(
-        foodDatabase: com.example.savethefood.shared.cache.SaveTheFoodDatabase
+        foodDatabase: SaveTheFoodDatabase
     ): RecipeDataSource {
         return RecipeLocalDataSource(
             foodDatabase
@@ -167,15 +162,6 @@ object BaseModule {
         return RecipeDataRepository(recipeLocalDataSource, recipeRemoteDataSource)
     }
 
-    // TODO temporary injection, need to fix Koin in kmm
-    @Singleton
-    @Provides
-    fun provideDatabaseShared(
-        @ApplicationContext context: Context
-    ): com.example.savethefood.shared.cache.SaveTheFoodDatabase {
-        return DatabaseFactory(DatabaseDriverFactory(context)).createDatabase()
-    }
-
 }
 
 /**
@@ -185,7 +171,16 @@ object BaseModule {
 @Module
 object DatabaseModule {
 
+    // TODO temporary injection, need to fix Koin in kmm
+    @Singleton
     @Provides
+    fun provideDatabaseShared(
+        @ApplicationContext context: Context
+    ): SaveTheFoodDatabase {
+        return DatabaseFactory(DatabaseDriverFactory(context)).createDatabase()
+    }
+
+    /*@Provides
     @Singleton
     fun provideDatabase(@ApplicationContext appContext: Context): SaveTheFoodDatabase {
         return Room.databaseBuilder(
@@ -193,9 +188,9 @@ object DatabaseModule {
             SaveTheFoodDatabase::class.java,
             "save_the_food_database.db"
         ).build()
-    }
+    }*/
 
-    @Provides
+    /*@Provides
     fun provideFoodDao(database: SaveTheFoodDatabase): FoodDatabaseDao {
         return database.foodDatabaseDao
     }
@@ -213,7 +208,7 @@ object DatabaseModule {
     @Provides
     fun provideShoppingDao(database: SaveTheFoodDatabase): ShoppingDatabaseDao {
         return database.shoppingDatabaseDao
-    }
+    }*/
 }
 
 @Module
@@ -267,10 +262,10 @@ object NetworkModule {
             .client(okHttpClient)
             .build()
     }
-
+/*
     @Provides
     fun provideRetrofitService(retrofit: Retrofit): FoodService = retrofit.create(
-        FoodService::class.java)
+        FoodService::class.java)*/
 
     @Provides
     fun provideKtorService(): FoodServiceApi = FoodServiceApi()

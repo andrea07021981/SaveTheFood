@@ -1,5 +1,6 @@
 package com.example.savethefood.constants
 
+@Deprecated("Moved to shared")
 class UrlImagesPath {
     companion object {
         const val INGREDIENTS = "https://spoonacular.com/cdn/ingredients_100x100/"

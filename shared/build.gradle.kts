@@ -63,12 +63,25 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")
+                implementation(KotlinTestLibs.jvm)
+                implementation(KotlinTestLibs.junit)
+                implementation(AndroidTestLibs.core)
+                implementation(AndroidTestLibs.junit)
+                implementation(AndroidTestLibs.runner)
+                implementation(AndroidTestLibs.rules)
+                implementation(Libs.coroutineeTest)
+                implementation(Libs.robolectric)
             }
         }
         val iosMain by getting  {
             dependencies {
                 implementation(Libs.ktorIos)
                 implementation(Libs.sqlDelightNative)
+                implementation(Libs.coroutineCore) {
+                    version {
+                        strictly(Versions.coroutine)
+                    }
+                }
             }
         }
         val iosTest by getting

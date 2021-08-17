@@ -14,10 +14,12 @@ import com.example.savethefood.shared.utils.QuantityType
 import com.example.savethefood.shared.utils.StorageType
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 
 class FoodLocalDataSource constructor(
@@ -63,7 +65,10 @@ class FoodLocalDataSource constructor(
     }
 
     override fun getFoods(): Flow<List<FoodDomain>?> {
-        return dbQuery.selectFoods(::mapToFoodEntity).asFlow().mapToList().asDomainModel()
+        return dbQuery.selectFoods(::mapToFoodEntity)
+            .asFlow()
+            .mapToList()
+            .asDomainModel()
     }
 
     private fun mapToFoodEntity(

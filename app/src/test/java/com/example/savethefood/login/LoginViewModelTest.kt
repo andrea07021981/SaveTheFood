@@ -1,30 +1,5 @@
 package com.example.savethefood.login;
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import com.example.savethefood.MainCoroutineRule
-import com.example.savethefood.constants.LoginAuthenticationStates
-import com.example.savethefood.data.Result
-import com.example.savethefood.data.domain.UserDomain
-import com.example.savethefood.data.source.local.datasource.FakeUserDataSourceTest
-import com.example.savethefood.data.source.repository.FakeUserDataRepositoryTest
-import com.example.savethefood.viewmodel.getOrAwaitValue
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.setMain
-import org.hamcrest.CoreMatchers.*
-import org.hamcrest.MatcherAssert.assertThat
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
-
-import org.junit.runner.RunWith;
-
 /**
  * Complete login viewmodel ok
  * // TODO move to instrumented

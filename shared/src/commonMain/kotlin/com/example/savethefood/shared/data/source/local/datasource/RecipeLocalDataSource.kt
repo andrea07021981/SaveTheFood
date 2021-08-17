@@ -13,6 +13,7 @@ import com.example.savethefood.shared.data.source.local.entity.asDomainModel
 import com.example.savethefood.shared.data.source.local.entity.asRecipeDomainModel
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -27,7 +28,10 @@ class RecipeLocalDataSource(
 
     @Throws(Exception::class)
     override fun getRecipes(): Flow<RecipeDomain?> {
-        return  dbQuery.selectRecipes(::mapToRecipeEntity).asFlow().mapToList().asRecipeDomainModel()
+        return  dbQuery.selectRecipes(::mapToRecipeEntity)
+            .asFlow()
+            .mapToList()
+            .asRecipeDomainModel()
     }
 
     override suspend fun getRecipeById(id: Int): RecipeDomain? {
