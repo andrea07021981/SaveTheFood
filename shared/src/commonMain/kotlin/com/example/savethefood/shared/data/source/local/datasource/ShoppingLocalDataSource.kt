@@ -11,6 +11,7 @@ import com.example.savethefood.shared.data.source.local.entity.asDomainModel
 import com.example.savethefood.shared.data.source.local.entity.asRecipeDomainModel
 import com.example.savethefood.shared.utils.FoodImage
 import com.example.savethefood.shared.utils.QuantityType
+import com.example.savethefood.shared.utils.mapToBagEntity
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.CoroutineDispatcher
@@ -41,21 +42,5 @@ class ShoppingLocalDataSource(
                 dbQuery.lastInsertRowId().executeAsOne()
             }
         }
-    }
-
-    private fun mapToBagEntity(
-        id: Long,
-        title: String,
-        img: FoodImage,
-        quantityType: QuantityType,
-        quantity: Double?,
-    ): BagEntity {
-        return BagEntity(
-            id = id.toInt(),
-            title = title,
-            img = img,
-            quantityType = quantityType,
-            quantity = quantity
-        )
     }
 }

@@ -7,6 +7,7 @@ import com.example.savethefood.shared.data.domain.asDatabaseModel
 import com.example.savethefood.shared.data.source.UserDataSource
 import com.example.savethefood.shared.data.source.local.entity.UserEntity
 import com.example.savethefood.shared.data.source.local.entity.asDomainModel
+import com.example.savethefood.shared.utils.mapToUserEntity
 
 class UserLocalDataSource(
     private val foodDatabase: SaveTheFoodDatabase
@@ -30,19 +31,5 @@ class UserLocalDataSource(
                 dbQuery.lastInsertRowId().executeAsOne()
             }
         }
-    }
-
-    private fun mapToUserEntity(
-        id: Long,
-        username: String,
-        email: String,
-        password: String
-    ): UserEntity {
-        return UserEntity(
-            id = id,
-            userName = username,
-            email = email,
-            password = password
-        )
     }
 }

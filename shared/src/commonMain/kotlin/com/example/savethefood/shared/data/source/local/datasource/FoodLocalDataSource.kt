@@ -12,6 +12,7 @@ import com.example.savethefood.shared.data.source.local.entity.asDomainModel
 import com.example.savethefood.shared.utils.FoodImage
 import com.example.savethefood.shared.utils.QuantityType
 import com.example.savethefood.shared.utils.StorageType
+import com.example.savethefood.shared.utils.mapToFoodEntity
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.CoroutineDispatcher
@@ -69,32 +70,6 @@ class FoodLocalDataSource constructor(
             .asFlow()
             .mapToList()
             .asDomainModel()
-    }
-
-    private fun mapToFoodEntity(
-        id: Long,
-        title: String,
-        description: String?,
-        img: FoodImage,
-        price: Double?,
-        quantityType: QuantityType,
-        quantity: Double?,
-        storageType: StorageType,
-        best: Long,
-        last: Long
-    ): FoodEntity {
-        return FoodEntity(
-            id = id,
-            title = title,
-            description = description,
-            img = img,
-            price = price,
-            quantityType = quantityType,
-            quantity = quantity,
-            storageType = storageType,
-            bestBefore = best,
-            lastUpdate = last
-        )
     }
 
     override suspend fun getLocalFoods(): Result<List<FoodDomain>> {

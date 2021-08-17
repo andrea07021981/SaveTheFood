@@ -30,7 +30,7 @@ SELECT * FROM Food
 WHERE id = ?;
 
 updateFood:
-UPDATE OR ABORT Food
+UPDATE Food
 SET
     id = ?,
     title = ?,

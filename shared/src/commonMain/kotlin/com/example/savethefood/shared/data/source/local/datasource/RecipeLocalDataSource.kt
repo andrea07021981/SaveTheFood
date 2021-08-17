@@ -11,6 +11,7 @@ import com.example.savethefood.shared.data.source.RecipeDataSource
 import com.example.savethefood.shared.data.source.local.entity.RecipeIngredientEntity
 import com.example.savethefood.shared.data.source.local.entity.asDomainModel
 import com.example.savethefood.shared.data.source.local.entity.asRecipeDomainModel
+import com.example.savethefood.shared.utils.mapToRecipeEntity
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import kotlinx.coroutines.CoroutineDispatcher
@@ -82,29 +83,5 @@ class RecipeLocalDataSource(
                 dbQuery.changes().executeAsOneOrNull()
             }
         }
-    }
-
-    private fun mapToRecipeEntity(
-        recipeId: Long = 0,
-        id: Long,
-        title: String,
-        image: String,
-        imageType:String,
-        likes: Long,
-        missedIngredientCount: Long,
-        usedIngredientCount: Long,
-        unUsedIngredientCount: Long
-    ): RecipeIngredientEntity {
-        return RecipeIngredientEntity(
-            recipeId = recipeId,
-            id = id,
-            title = title,
-            image = image,
-            imageType = imageType,
-            likes = likes.toInt(),
-            missedIngredientCount = missedIngredientCount.toInt(),
-            usedIngredientCount = usedIngredientCount.toInt(),
-            unUsedIngredientCount = unUsedIngredientCount.toInt()
-        )
     }
 }
