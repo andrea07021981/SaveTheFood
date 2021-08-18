@@ -10,8 +10,9 @@ UNDER DEVELOPMENT: Porting of the business logic into the shared KMM module. Ste
 4 - Migrate Business local remotesource (DONE)
 5 - Migrata data classes (DONE)
 6 - Migrate Repository (DONE)
-7 - Migrate VMs
-8 - add Jetpack compose https://developer.android.com/jetpack/compose
+7 - Add testing modules (UNDER DEV)
+8 - Migrate VMs
+9 - add Jetpack compose https://developer.android.com/jetpack/compose
 
 <img align="left" width="250" height="500" src="images/login.png">
 <img align="left" width="250" height="500" src="images/signUp.png">
