@@ -4,9 +4,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.AnimRes
 import androidx.databinding.BindingAdapter
+import com.example.savethefood.R
 import com.example.savethefood.constants.LoginStateValue
 import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.shared.utils.LoginAuthenticationStates.*
@@ -21,6 +23,24 @@ object LoginBindingUtils {
     fun View.animation(@AnimRes resource: Int) {
         val animation = AnimationUtils.loadAnimation(context, resource)
         startAnimation(animation)
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind:loadViewAnimationView")
+    fun View.animationView(visible: Boolean) {
+        if (visible) {
+            val animation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+            startAnimation(animation)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind:loadViewAnimationButton")
+    fun Button.animationButton(visible: Boolean) {
+        if (visible) {
+            val animation = AnimationUtils.loadAnimation(context, R.anim.bounce)
+            startAnimation(animation)
+        }
     }
 
     @JvmStatic

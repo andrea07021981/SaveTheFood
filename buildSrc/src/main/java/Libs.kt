@@ -27,6 +27,7 @@ object Libs {
     // Coroutines
     const val coroutineCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutine}"
     const val coroutineAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutine}"
+    const val coroutineNative = "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:${Versions.coroutine}"
 
     // Navigation
     const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"

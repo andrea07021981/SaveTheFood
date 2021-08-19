@@ -40,7 +40,6 @@ kotlin {
                 implementation(Libs.ktorClientLogging)
                 // MOKO - MVVM
                 implementation(Libs.moko)
-
                 // KOIN for DI
                 // Koin for Kotlin Multiplatform
                 implementation(Libs.koinNative)
@@ -56,6 +55,7 @@ kotlin {
             dependencies {
                 implementation(Libs.ktorAndroid)
                 implementation(Libs.sqlDelightAndroid)
+                implementation(Libs.koinAndroid)
             }
         }
 
@@ -84,7 +84,12 @@ kotlin {
                 }
             }
         }
-        val iosTest by getting
+        val iosTest by getting {
+            dependencies {
+                implementation(Libs.sqlDelightNative)
+                implementation(Libs.coroutineNative)
+            }
+        }
     }
 }
 

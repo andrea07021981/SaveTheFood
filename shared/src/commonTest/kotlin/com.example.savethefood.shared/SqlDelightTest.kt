@@ -16,24 +16,10 @@ import kotlin.test.assertNotEquals
 class SqlDelightTest : BaseTest() {
 
     lateinit var database: SaveTheFoodDatabase
-    var foodDomain = FoodDomain()
 
-    // TODO create a builder to insert N record of food, user, etc in set up
     @BeforeTest
     fun setUp() = runTest {
         database = testDbConnection()
-        foodDomain = foodDomain.copy(
-            "title",
-            "desc",
-            1,
-            FoodImage.EMPTY,
-            12.0,
-            QuantityType.UNIT,
-            2.0,
-            StorageType.DRY,
-            GMTDate().timestamp,
-            GMTDate().timestamp
-        )
     }
 
     @Test
@@ -44,55 +30,14 @@ class SqlDelightTest : BaseTest() {
 
     @Test
     fun `Add a food`() {
-        database.saveTheFoodDatabaseQueries.insertFood(
-            1,
-            "title",
-            "desc",
-            FoodImage.EMPTY,
-            12.0,
-            QuantityType.UNIT,
-            2.0,
-            StorageType.DRY,
-            GMTDate().timestamp,
-            GMTDate().timestamp
-        )
+        addTempFood()
         val foodId = database.saveTheFoodDatabaseQueries.selectFoodById(1).executeAsOne()
         assertEquals(foodId.title, "title")
     }
 
     @Test
-    fun `Delete a food`() {
-        database.saveTheFoodDatabaseQueries.insertFood(
-            1,
-            "title",
-            "desc",
-            FoodImage.EMPTY,
-            12.0,
-            QuantityType.UNIT,
-            2.0,
-            StorageType.DRY,
-            GMTDate().timestamp,
-            GMTDate().timestamp
-        )
-        database.saveTheFoodDatabaseQueries.deleteFoodById(1)
-        val deletedId = database.saveTheFoodDatabaseQueries.changes().executeAsOneOrNull()
-        assertEquals(deletedId, 1)
-    }
-
-    @Test
     fun `Update a food`() {
-        database.saveTheFoodDatabaseQueries.insertFood(
-            1,
-            "title",
-            "desc",
-            FoodImage.EMPTY,
-            12.0,
-            QuantityType.UNIT,
-            2.0,
-            StorageType.DRY,
-            GMTDate().timestamp,
-            GMTDate().timestamp
-        )
+        addTempFood()
         val food = database.saveTheFoodDatabaseQueries.selectFoodById(1).executeAsOne()
         database.saveTheFoodDatabaseQueries.updateFood(
             1,
@@ -108,6 +53,29 @@ class SqlDelightTest : BaseTest() {
             1
         )
         val updatedFood = database.saveTheFoodDatabaseQueries.selectFoodById(1).executeAsOne()
-        assertEquals(updatedFood.title, "new title")
+        assertNotEquals(updatedFood.title, food.title)
+    }
+
+    @Test
+    fun `Delete a food`() {
+        addTempFood()
+        database.saveTheFoodDatabaseQueries.deleteFoodById(1)
+        val deletedId = database.saveTheFoodDatabaseQueries.changes().executeAsOneOrNull()
+        assertEquals(deletedId, 1)
+    }
+
+    private fun addTempFood() {
+        database.saveTheFoodDatabaseQueries.insertFood(
+            1,
+            "title",
+            "desc",
+            FoodImage.EMPTY,
+            12.0,
+            QuantityType.UNIT,
+            2.0,
+            StorageType.DRY,
+            GMTDate().timestamp,
+            GMTDate().timestamp
+        )
     }
 }

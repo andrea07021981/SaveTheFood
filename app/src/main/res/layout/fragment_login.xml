@@ -43,7 +43,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chef_imageview"
-                bind:loadViewAnimation="@{loginViewModel.animationResourceView}">
+                bind:loadViewAnimationView="@{true}">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout2"
@@ -155,7 +155,7 @@
                         app:spinning_bar_color="#FFFFFF"
                         app:spinning_bar_padding="2dp"
                         app:spinning_bar_width="3dp"
-                        bind:loadViewAnimation="@{loginViewModel.animationResourceButton}" />
+                        bind:loadViewAnimationButton="@{true}" />
 
                     <TextView
                         android:id="@+id/textView"
@@ -196,7 +196,7 @@
                         app:spinning_bar_color="#FFFFFF"
                         app:spinning_bar_padding="2dp"
                         app:spinning_bar_width="3dp"
-                        bind:loadViewAnimation="@{loginViewModel.animationResourceButton}" />
+                        bind:loadViewAnimationButton="@{true}" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
