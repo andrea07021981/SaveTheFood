@@ -11,8 +11,9 @@ UNDER DEVELOPMENT: Porting of the business logic into the shared KMM module. Ste
 5 - Migrata data classes (DONE)
 6 - Migrate Repository (DONE)
 7 - Add testing modules (UNDER DEV)
-8 - Migrate VMs
-9 - add Jetpack compose https://developer.android.com/jetpack/compose
+8 - add Jetpack compose https://developer.android.com/jetpack/compose
+9 - Migrate VMs
+10- Create one single VM for both ios and android (we probably need to use the StateFlow and SharedFlow)
 
 <img align="left" width="250" height="500" src="images/login.png">
 <img align="left" width="250" height="500" src="images/signUp.png">
