@@ -18,7 +18,6 @@ import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
 
-// TODO Need to be fixed the named interfaces, return error
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
     appDeclaration()
     modules(listOf(platformModule, commonUserModule, commonFoodModule, commonRecipeModule))

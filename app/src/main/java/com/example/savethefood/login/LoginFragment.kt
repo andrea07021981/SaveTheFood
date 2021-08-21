@@ -31,6 +31,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
 
+    // TODO when koin added, use sharedViewModel
     override val viewModel by activityViewModels<LoginViewModel>()
 
     override val layoutRes: Int

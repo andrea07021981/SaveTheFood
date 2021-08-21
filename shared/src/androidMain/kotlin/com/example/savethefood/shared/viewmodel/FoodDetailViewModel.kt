@@ -17,8 +17,9 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 
+//TODO in order to call it, use stateViewModel instead of viewmodel
 actual class FoodDetailViewModel actual constructor(
-    private val foodDataRepository: com.example.savethefood.shared.data.source.repository.FoodRepository,
+    private val foodDataRepository: FoodRepository,
     private val recipeDataRepository: RecipeRepository,
 ) : ViewModel() {
 
