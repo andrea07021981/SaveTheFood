@@ -1,18 +1,13 @@
-package com.example.savethefood.addfood
+package com.example.savethefood.shared.viewmodel
 
 import android.os.Bundle
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.example.savethefood.constants.Constants.BUNDLE_FOOD_KEY
+import com.example.savethefood.shared.constant.Constants.BUNDLE_FOOD_KEY
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.data.domain.FoodItem
-import com.example.savethefood.shared.utils.Event
-import com.example.savethefood.shared.utils.isValidDouble
-import com.example.savethefood.util.ObserverFormFields
-import com.example.savethefood.util.launchDataLoad
-import com.example.savethefood.util.retrieveFood
-import com.squareup.moshi.JsonDataException
+import com.example.savethefood.shared.data.source.repository.FoodRepository
+import com.example.savethefood.shared.data.source.repository.RecipeRepository
+import com.example.savethefood.shared.utils.*
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
@@ -20,13 +15,23 @@ import java.util.*
 import kotlin.collections.LinkedHashSet
 
 
-@Deprecated("Moved to shared")
-class AddFoodViewModel @ViewModelInject constructor(
-    private val foodDataRepository: com.example.savethefood.shared.data.source.repository.FoodRepository,
-    @Assisted val food: SavedStateHandle
+actual class AddFoodViewModel actual constructor(
+    private val foodDataRepository: FoodRepository
 ) : ViewModel() {
 
-    private val _foodDomain: FoodDomain = food.get<Bundle>(BUNDLE_FOOD_KEY).retrieveFood()
+    private lateinit var currentState: SavedStateHandle
+
+    constructor(
+        foodDataRepository: FoodRepository,
+        state: SavedStateHandle
+    ) : this(foodDataRepository) {
+        with(state) {
+            currentState = this
+            _foodDomain = get<Bundle>(BUNDLE_FOOD_KEY).retrieveFood()
+        }
+    }
+
+    private lateinit var _foodDomain: FoodDomain
 
     private val foodTypeFilter = MutableLiveData<String>()
 
@@ -143,8 +148,6 @@ class AddFoodViewModel @ViewModelInject constructor(
                     }
                     foodJob.join()
                 }
-            } catch (error: JsonDataException) {
-                _newFoodFoodEvent.value = com.example.savethefood.shared.data.Result.Error(error.toString())
             } catch (generic: Exception) {
                 _newFoodFoodEvent.value = com.example.savethefood.shared.data.Result.Error(generic.toString())
             }

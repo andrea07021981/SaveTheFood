@@ -1,29 +1,31 @@
-package com.example.savethefood.shopping
+package com.example.savethefood.shared.viewmodel
 
 import android.os.Bundle
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.example.savethefood.constants.Constants
+import com.example.savethefood.shared.constant.Constants
 import com.example.savethefood.shared.data.domain.BagDomain
 import com.example.savethefood.shared.data.domain.FoodItem
-import com.example.savethefood.shared.utils.Event
-import com.example.savethefood.util.ObserverFormFields
-import com.example.savethefood.util.isValidDouble
-import com.example.savethefood.util.launchDataLoad
-import com.example.savethefood.util.retrieveBag
+import com.example.savethefood.shared.data.source.repository.FoodRepository
+import com.example.savethefood.shared.data.source.repository.ShoppingRepository
+import com.example.savethefood.shared.utils.*
 import java.util.*
 import kotlin.collections.LinkedHashSet
 
 
-@Deprecated("Moved to shared")
-class BagDetailViewModel @ViewModelInject constructor(
-    private val shoppingDataRepository: com.example.savethefood.shared.data.source.repository.ShoppingRepository,
-    private val foodDataRepository: com.example.savethefood.shared.data.source.repository.FoodRepository,
-    @Assisted val bag: SavedStateHandle
+actual class BagDetailViewModel actual constructor(
+    private val shoppingDataRepository: ShoppingRepository,
+    private val foodDataRepository: FoodRepository
 ) : ViewModel(){
 
-    private var _foodBag: BagDomain = bag.get<Bundle>(Constants.BUNDLE_BAG_KEY).retrieveBag()
+    constructor(
+        shoppingDataRepository: ShoppingRepository,
+        foodDataRepository: FoodRepository,
+        state: SavedStateHandle
+    ) : this(shoppingDataRepository, foodDataRepository) {
+        _foodBag = state.get<Bundle>(Constants.BUNDLE_BAG_KEY).retrieveBag()
+    }
+
+    private var _foodBag: BagDomain = BagDomain()
 
     private var _bagDetailEvent = MutableLiveData<Event<BagDomain>>()
     val bagDetailEvent = _bagDetailEvent

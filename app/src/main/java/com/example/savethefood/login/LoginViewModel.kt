@@ -13,6 +13,7 @@ import com.example.savethefood.util.isValidEmail
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
+@Deprecated("Moved to shared")
 @ExperimentalCoroutinesApi
 class LoginViewModel @ViewModelInject constructor(
     private val userDataRepository: UserRepository

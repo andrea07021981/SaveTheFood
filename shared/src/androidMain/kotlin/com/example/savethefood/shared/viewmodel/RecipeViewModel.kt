@@ -1,7 +1,6 @@
-package com.example.savethefood.recipe
+package com.example.savethefood.shared.viewmodel
 
 import androidx.annotation.VisibleForTesting
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.savethefood.shared.data.domain.RecipeResult
 import com.example.savethefood.shared.data.source.repository.RecipeRepository
@@ -16,8 +15,7 @@ import kotlinx.coroutines.flow.transform
 import java.util.*
 
 // TODO use paging library, too many recipes
-@Deprecated("Moved to shared")
-class RecipeViewModel @ViewModelInject constructor(
+actual class RecipeViewModel actual constructor(
     private val recipeDataRepository: RecipeRepository,
 ) : ViewModel() {
 

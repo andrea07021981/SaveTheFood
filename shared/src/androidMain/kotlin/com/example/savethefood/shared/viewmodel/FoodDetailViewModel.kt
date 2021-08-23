@@ -18,6 +18,17 @@ import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 
 //TODO in order to call it, use stateViewModel instead of viewmodel
+// we need to add the custom costructor since with koin in shared we had to use the second constructor
+// It does not work with the by stateViewModel()
+/**
+ * EX:
+ *
+    override val viewModel: FoodDetailViewModel by stateViewModel(
+        state = { bundleOf("food" to args.foodDetail) },
+        clazz = FoodDetailViewModel::class
+    )
+
+ */
 actual class FoodDetailViewModel actual constructor(
     private val foodDataRepository: FoodRepository,
     private val recipeDataRepository: RecipeRepository,
@@ -102,6 +113,7 @@ actual class FoodDetailViewModel actual constructor(
     val recipeList: LiveData<com.example.savethefood.shared.data.Result<List<RecipeIngredients>?>> = _recipeList
 
     init {
+        // TODO we must move the update of food in secondary constructor, inits come before it
         _food.value = currentState.get<Bundle>(BUNDLE_FOOD_KEY).retrieveFood()
         foodsFilterList.add(_food.value?.title ?: "")
     }

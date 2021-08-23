@@ -1,12 +1,9 @@
-package com.example.savethefood.home
+package com.example.savethefood.shared.viewmodel
 
 import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.FoodDomain
+import com.example.savethefood.shared.data.source.repository.FoodRepository
 import com.example.savethefood.shared.utils.Event
 import com.example.savethefood.shared.utils.FoodOrder
 import com.example.savethefood.shared.utils.StorageType
@@ -20,10 +17,8 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.HashMap
 
-@Deprecated("Moved to shared")
-// TODO use homwviewmodel for edit and add? save resources
-class HomeViewModel @ViewModelInject constructor(
-    private val foodDataRepository: com.example.savethefood.shared.data.source.repository.FoodRepository
+actual class HomeViewModel actual constructor(
+    private val foodDataRepository: FoodRepository
 ) : ViewModel() {
 
     /**

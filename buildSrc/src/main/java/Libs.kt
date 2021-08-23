@@ -1,3 +1,5 @@
+
+// TODO create sub objects like PeopleInSpace app
 object Libs {
 
     const val kotlinStd = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
@@ -159,6 +161,8 @@ object Libs {
     const val ktorAndroid = "io.ktor:ktor-client-android:${Versions.ktorVersion}"
     const val ktorIos = "io.ktor:ktor-client-ios:${Versions.ktorVersion}"
     const val ktorClientLogging = "io.ktor:ktor-client-logging:${Versions.ktorVersion}"
+    const val ktorServerTest = "io.ktor:ktor-server-test-host:${Versions.ktorVersion}"
+    const val ktorTest = "org.jetbrains.kotlin:kotlin-test:${Versions.ktorVersion}"
 
     const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.serializationVersion}"
     const val ktorSerialization = "io.ktor:ktor-client-serialization:${Versions.ktorVersion}"

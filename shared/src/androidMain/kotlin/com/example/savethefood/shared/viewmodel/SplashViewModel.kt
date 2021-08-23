@@ -1,16 +1,12 @@
-package com.example.savethefood.splash
+package com.example.savethefood.shared.viewmodel
 
 import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.savethefood.Event
-import com.example.savethefood.R
+import com.example.savethefood.shared.utils.Event
 
-@Deprecated("Moved to shared")
-class SplashViewModel : ViewModel() {
-
-    val animationResource = R.anim.bounce
+actual class SplashViewModel : ViewModel() {
 
     private val _loginEvent = MutableLiveData<Event<Unit>>()
     val loginEvent: LiveData<Event<Unit>>

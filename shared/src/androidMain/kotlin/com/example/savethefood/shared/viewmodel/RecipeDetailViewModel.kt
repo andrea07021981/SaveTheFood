@@ -1,22 +1,28 @@
-package com.example.savethefood.recipedetail
+package com.example.savethefood.shared.viewmodel
 
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.example.savethefood.Event
 import com.example.savethefood.shared.data.domain.RecipeInfoDomain
 import com.example.savethefood.shared.data.domain.RecipeResult
+import com.example.savethefood.shared.data.source.repository.FoodRepository
 import com.example.savethefood.shared.data.source.repository.RecipeRepository
 import com.example.savethefood.shared.utils.ApiCallStatus
 import com.example.savethefood.shared.utils.ApiCallStatus.*
+import com.example.savethefood.shared.utils.Event
 import kotlinx.coroutines.launch
 
-@Deprecated("Moved to shared")
-class RecipeDetailViewModel @ViewModelInject constructor(
-    private val recipeDataRepository: RecipeRepository,
-    @Assisted recipeResult: SavedStateHandle
+actual class RecipeDetailViewModel actual constructor(
+    private val recipeDataRepository: RecipeRepository
 ) : ViewModel() {
 
+    constructor(
+        recipeDataRepository: RecipeRepository,
+        state: SavedStateHandle
+    ) : this(recipeDataRepository) {
+        with(state.get<RecipeResult>("recipeResult") ?: RecipeResult()) {
+            getRecipeDetails(this)
+            _recipeResult.value = this
+        }
+    }
     //TODO ADD CHECK STATUS OF SAVED RECIPE AND BIND IT
 
     // The internal MutableLiveData that stores the status of the most recent request
@@ -41,14 +47,6 @@ class RecipeDetailViewModel @ViewModelInject constructor(
     private val _recipeCookingEvent = MutableLiveData<Event<RecipeInfoDomain>>()
     val recipeCookingEvent: LiveData<Event<RecipeInfoDomain>>
         get() = _recipeCookingEvent
-
-    init {
-        // TODO review this
-        with(recipeResult.get<RecipeResult>("recipeResult") ?: RecipeResult()) {
-            getRecipeDetails(this)
-            _recipeResult.value = this
-        }
-    }
 
     private fun getRecipeDetails(recipeResult: RecipeResult) {
         // TODO move to livedata constructor, remove status and use the result that we will recive from repository to show the status

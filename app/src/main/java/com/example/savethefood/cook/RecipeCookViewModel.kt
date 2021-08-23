@@ -7,6 +7,7 @@ import androidx.lifecycle.*
 import com.example.savethefood.shared.data.domain.RecipeInfoDomain
 
 
+@Deprecated("Moved to shared")
 class RecipeCookViewModel @ViewModelInject constructor(
     @Assisted private val recipe: SavedStateHandle
 ) : ViewModel(){
