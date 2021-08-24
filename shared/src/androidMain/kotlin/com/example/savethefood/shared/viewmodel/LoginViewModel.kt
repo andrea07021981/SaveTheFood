@@ -1,10 +1,7 @@
 package com.example.savethefood.shared.viewmodel
 
 import androidx.databinding.library.BuildConfig
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.data.source.repository.UserRepository
 import com.example.savethefood.shared.utils.Event
@@ -23,16 +20,21 @@ actual class LoginViewModel actual constructor(
         private val TAG = LoginViewModel::class.java.simpleName
     }
 
-    private val _genericError = MutableLiveData<Event<Unit>>()
-    val genericError: LiveData<Event<Unit>> = _genericError
+    private val _genericError = MutableLiveData<ArrayList<String>>()
+    val genericError: LiveData<ArrayList<String>> = _genericError
 
     abstract class LoginStatus(var value: String) {
 
-        private var _valueStatus = MutableLiveData<LoginStateValue>(LoginStateValue.NONE)
+        private var _valueStatus = MutableLiveData(LoginStateValue.EMPTY_FIELD)
         val valueStatus: LiveData<LoginStateValue> = _valueStatus
 
+        internal var errMessage = LoginStateValue.EMPTY_FIELD.message
+
         open val onFocusChanged: (String) -> Unit = {
-            _valueStatus.value = checkStatus(it)
+            with(checkStatus(it)) {
+                _valueStatus.value = this
+                errMessage = message
+            }
         }
 
         abstract val checkStatus: (String) -> LoginStateValue
@@ -88,19 +90,18 @@ actual class LoginViewModel actual constructor(
         get() = _navigateToSignUpFragment
 
     fun onSignInClick(){
-        when {
-            email.valueStatus.value?.equals(LoginStateValue.EMPTY_FIELD) == true ||
-                    password.valueStatus.value?.equals(LoginStateValue.EMPTY_FIELD) == true  -> _genericError.value = Event(Unit)
-            email.valueStatus.value?.equals(LoginStateValue.NONE) == true &&
-                    password.valueStatus.value?.equals(LoginStateValue.NONE) == true ->
-                doLogin {
-                    userDataRepository.getUser(
-                        UserDomain(
+        val errorMessages = checkErrors()
+        if (errorMessages.isEmpty()) {
+            doLogin {
+                userDataRepository.getUser(
+                    UserDomain(
                         userName = email.value,
                         email = email.value,
                         password = password.value)
-                    )
-                }
+                )
+            }
+        } else {
+            _genericError.value = errorMessages
         }
     }
 
@@ -124,21 +125,32 @@ actual class LoginViewModel actual constructor(
     }
 
     fun onSignUpClick(){
-        when {
-            userName.valueStatus.value?.equals(LoginStateValue.EMPTY_FIELD) == true ||
-                email.valueStatus.value?.equals(LoginStateValue.EMPTY_FIELD) == true ||
-                    password.valueStatus.value?.equals(LoginStateValue.EMPTY_FIELD) == true  -> _genericError.value = Event(Unit)
-            email.valueStatus.value?.equals(LoginStateValue.NONE) == true &&
-                email.valueStatus.value?.equals(LoginStateValue.NONE) == true &&
-                    password.valueStatus.value?.equals(LoginStateValue.NONE) == true ->
-                viewModelScope.launch {
-                    val newUserId = userDataRepository.saveNewUser(UserDomain(
-                        userName = userName.value,
-                        email = email.value,
-                        password = password.value))
-                    _signUpEvent.value = Event(newUserId)
-                }
+        val errorMessages = checkErrors()
+        if (errorMessages.isEmpty()) {
+            viewModelScope.launch {
+                val newUserId = userDataRepository.saveNewUser(UserDomain(
+                    userName = userName.value,
+                    email = email.value,
+                    password = password.value))
+                _signUpEvent.value = Event(newUserId)
+            }
+        } else {
+            _genericError.value = errorMessages
         }
+    }
+
+    private fun checkErrors(): ArrayList<String> {
+        val errorMessages = arrayListOf<String>()
+        if (userName.errMessage.isNotEmpty()) {
+            errorMessages.add("Username ${userName.errMessage}")
+        }
+        if (email.errMessage.isNotEmpty()) {
+            errorMessages.add("Email ${email.errMessage}")
+        }
+        if (password.errMessage.isNotEmpty()) {
+            errorMessages.add("Password ${password.errMessage}")
+        }
+        return errorMessages
     }
 
     fun resetState() {

@@ -5,6 +5,6 @@ pluginManagement {
         mavenCentral()
     }
 }
-rootProject.name= "Save The Food"
+rootProject.name= "Save_The_Food"
 include(":app")
 include(":shared")

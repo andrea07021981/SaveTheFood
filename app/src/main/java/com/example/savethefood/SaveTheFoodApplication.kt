@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Build
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
+import com.example.savethefood.shared.di.initKoin
 import com.example.savethefood.work.RefreshDataWorker
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -15,6 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -43,10 +45,9 @@ class SaveTheFoodApplication : Application(), KoinComponent {
             param(FirebaseAnalytics.Param.CONTENT_TYPE, "image")
         }
 
-        // TODO when ready with Koin in shared module, enable it and remove hilt
-        /*initKoin {
+        initKoin {
             androidContext(this@SaveTheFoodApplication)
-        }*/
+        }
         delayedInit()
     }
 
