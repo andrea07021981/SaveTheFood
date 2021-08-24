@@ -13,13 +13,14 @@ import com.example.savethefood.util.isValidEmail
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
+@Deprecated("Moved to shared")
 @ExperimentalCoroutinesApi
-class LoginViewModel @ViewModelInject constructor(
+class LoginViewModelDep @ViewModelInject constructor(
     private val userDataRepository: UserRepository
 ) : ViewModel() {
 
     companion object {
-        private val TAG = LoginViewModel::class.java.simpleName
+        private val TAG = LoginViewModelDep::class.java.simpleName
     }
 
     val animationResourceView = R.anim.fade_in

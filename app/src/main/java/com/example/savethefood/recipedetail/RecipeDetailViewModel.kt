@@ -11,8 +11,9 @@ import com.example.savethefood.shared.utils.ApiCallStatus
 import com.example.savethefood.shared.utils.ApiCallStatus.*
 import kotlinx.coroutines.launch
 
+@Deprecated("Moved to shared")
 class RecipeDetailViewModel @ViewModelInject constructor(
-    private val recipeRepository: RecipeRepository,
+    private val recipeDataRepository: RecipeRepository,
     @Assisted recipeResult: SavedStateHandle
 ) : ViewModel() {
 
@@ -54,7 +55,7 @@ class RecipeDetailViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             try {
                 _status.value = Loading("Loading")
-                val recipe = recipeRepository.getRecipeInfo(recipeResult.id.toInt())
+                val recipe = recipeDataRepository.getRecipeInfo(recipeResult.id.toInt())
                 if (recipe is com.example.savethefood.shared.data.Result.Success) {
                     _recipeDetail.value = recipe.data
                 } else {

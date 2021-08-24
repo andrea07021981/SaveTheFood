@@ -24,6 +24,12 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
 
+    // TODO with koin,
+    /**
+     * override val viewModel: HomeViewModel by lazy {
+        requireParentFragment().getViewModel()
+        }
+     */
     override val viewModel: HomeViewModel by viewModels(ownerProducer = { requireParentFragment() })
     override val layoutRes: Int
         get() = R.layout.fragment_home

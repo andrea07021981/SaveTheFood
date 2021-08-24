@@ -17,21 +17,24 @@ import androidx.navigation.fragment.findNavController
 import br.com.simplepass.loadingbutton.animatedDrawables.ProgressType
 import br.com.simplepass.loadingbutton.customViews.ProgressButton
 import com.example.savethefood.BaseFragment
-import com.example.savethefood.EventObserver
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentLoginBinding
 import com.example.savethefood.shared.Greeting
+import com.example.savethefood.shared.utils.EventObserver
 import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.shared.utils.LoginAuthenticationStates.*
+import com.example.savethefood.shared.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
 
-    override val viewModel by activityViewModels<LoginViewModel>()
+    // TODO when koin added, use sharedViewModel
+    override val viewModel: LoginViewModel by sharedViewModel()
 
     override val layoutRes: Int
         get() = R.layout.fragment_login
@@ -70,7 +73,8 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
         })
 
         viewModel.genericError.observe(viewLifecycleOwner) {
-            Toast.makeText(context, "Values required", Toast.LENGTH_SHORT).show()
+            // TODO temporary, need to add the error in textfield
+            Toast.makeText(context, it.joinToString(separator = "\n"), Toast.LENGTH_SHORT).show()
         }
     }
 

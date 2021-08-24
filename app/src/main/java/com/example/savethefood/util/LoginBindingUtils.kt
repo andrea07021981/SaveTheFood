@@ -9,9 +9,9 @@ import android.widget.Toast
 import androidx.annotation.AnimRes
 import androidx.databinding.BindingAdapter
 import com.example.savethefood.R
-import com.example.savethefood.constants.LoginStateValue
 import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.shared.utils.LoginAuthenticationStates.*
+import com.example.savethefood.shared.utils.LoginStateValue
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -55,10 +55,10 @@ object LoginBindingUtils {
     @JvmStatic
     @ExperimentalCoroutinesApi
     @BindingAdapter("bind:hasLoginError")
-    fun TextInputLayout.hasLoginError(error: com.example.savethefood.shared.utils.LoginStateValue?) {
+    fun TextInputLayout.hasLoginError(error: LoginStateValue?) {
         when (error) {
-            com.example.savethefood.shared.utils.LoginStateValue.INVALID_FORMAT,
-            com.example.savethefood.shared.utils.LoginStateValue.INVALID_LENGTH -> setError(error.message)
+            LoginStateValue.INVALID_FORMAT,
+            LoginStateValue.INVALID_LENGTH -> setError(error.message)
             else -> setError(null)
         }
     }

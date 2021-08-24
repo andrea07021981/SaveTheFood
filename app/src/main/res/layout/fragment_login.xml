@@ -6,7 +6,7 @@
     <data>
         <variable
             name="loginViewModel"
-            type="com.example.savethefood.login.LoginViewModel" />
+            type="com.example.savethefood.shared.viewmodel.LoginViewModel" />
     </data>
 
     <LinearLayout

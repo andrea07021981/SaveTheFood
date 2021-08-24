@@ -16,8 +16,9 @@ import kotlinx.coroutines.flow.transform
 import java.util.*
 
 // TODO use paging library, too many recipes
+@Deprecated("Moved to shared")
 class RecipeViewModel @ViewModelInject constructor(
-    private val recipeRepository: RecipeRepository,
+    private val recipeDataRepository: RecipeRepository,
 ) : ViewModel() {
 
     // The internal MutableLiveData that stores the status of the most recent request
@@ -44,7 +45,7 @@ class RecipeViewModel @ViewModelInject constructor(
     // TODO move to stateflow like https://github.com/Mori-Atsushi/android-flow-mvvm-sample
     // https://github.com/Mori-Atsushi/android-flow-mvvm-sample/blob/master/app/src/main/kotlin/com/example/flow_mvvm_sample/ui/detail/DetailViewModel.kt
     private var _recipeListResult: LiveData<List<RecipeResult>?> =
-        recipeRepository.getRecipes()
+        recipeDataRepository.getRecipes()
             .onStart {
                 emit(com.example.savethefood.shared.data.Result.Loading)
             }
