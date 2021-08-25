@@ -15,12 +15,21 @@ import com.example.savethefood.BaseAdapter
 import com.example.savethefood.constants.Constants.BUNDLE_KEY
 import com.example.savethefood.constants.Constants.REQUEST_KEY
 import com.example.savethefood.databinding.FragmentSearchableBinding
+import com.example.savethefood.shared.viewmodel.AddFoodViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.getViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 @AndroidEntryPoint
 class SearchableFragment : DialogFragment() {
 
     private val viewModel: AddFoodViewModel by viewModels(ownerProducer = { requireParentFragment() })
+
+    // Or we could use the lazy with Koin:
+    //override val viewModel: ChairViewModel by lazy {
+    //    requireParentFragment().getViewModel()
+    //}
+
 
     override fun onStart() {
         super.onStart()

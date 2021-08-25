@@ -21,6 +21,9 @@ actual class AddFoodViewModel actual constructor(
 
     private lateinit var currentState: SavedStateHandle
 
+    // TODO error with koin, we can't use lateinit, it craches
+    private var _foodDomain = FoodDomain()
+
     constructor(
         foodDataRepository: FoodRepository,
         state: SavedStateHandle
@@ -30,8 +33,6 @@ actual class AddFoodViewModel actual constructor(
             _foodDomain = get<Bundle>(BUNDLE_FOOD_KEY).retrieveFood()
         }
     }
-
-    private lateinit var _foodDomain: FoodDomain
 
     private val foodTypeFilter = MutableLiveData<String>()
 

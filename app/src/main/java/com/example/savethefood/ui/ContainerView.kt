@@ -5,13 +5,10 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.RelativeLayout
-import androidx.core.view.children
-import androidx.core.view.get
 import com.example.savethefood.R
-import com.example.savethefood.addfood.AddFoodViewModel
 import com.example.savethefood.databinding.ContainerViewBinding
 import com.example.savethefood.databinding.DatePickerLayoutBinding
-import kotlinx.android.synthetic.main.container_view.view.*
+import com.example.savethefood.shared.viewmodel.AddFoodViewModel
 
 /**
  * UI custom container for UI forms

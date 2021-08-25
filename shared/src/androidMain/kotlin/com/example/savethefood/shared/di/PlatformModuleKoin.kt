@@ -10,7 +10,7 @@ import org.koin.dsl.module
 
 actual val platformModule = module {
     single { DatabaseDriverFactory(androidContext()) }
-    viewModel { AddFoodViewModel(foodDataRepository = get()) }
+    viewModel { AddFoodViewModel(foodDataRepository = get(), state = get()) }
     viewModel { FoodDetailViewModel(foodDataRepository = get(), recipeDataRepository = get(), state = get()) }
     viewModel { HomeViewModel(foodDataRepository = get()) }
     viewModel { LoginViewModel(userDataRepository = get()) }

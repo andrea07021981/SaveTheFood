@@ -8,7 +8,7 @@
 
         <variable
             name="addFoodViewModel"
-            type="com.example.savethefood.addfood.AddFoodViewModel" />
+            type="com.example.savethefood.shared.viewmodel.AddFoodViewModel" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
