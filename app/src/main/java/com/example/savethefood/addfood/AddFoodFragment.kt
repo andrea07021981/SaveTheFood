@@ -20,16 +20,18 @@ import com.example.savethefood.R
 import com.example.savethefood.constants.Constants.BUNDLE_KEY
 import com.example.savethefood.constants.Constants.REQUEST_KEY
 import com.example.savethefood.databinding.FragmentAddFoodBinding
+import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.data.domain.FoodItem
 import com.example.savethefood.shared.utils.EventObserver
+import com.example.savethefood.shared.viewmodel.AddFoodViewModel
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.zxing.integration.android.IntentIntegrator
 import com.google.zxing.integration.android.IntentResult
 import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import java.util.*
 
 
-@AndroidEntryPoint
 class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>() {
 
     private val args: AddFoodFragmentArgs by navArgs()
@@ -42,7 +44,10 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
 
     private lateinit var startBarcodeForResult: ActivityResultLauncher<Intent>
 
-    override val viewModel by viewModels<AddFoodViewModel>()
+    override val viewModel: AddFoodViewModel by stateViewModel(
+        state = { args.foodDetail ?: bundleOf()},
+        clazz = AddFoodViewModel::class
+    )
 
     override val layoutRes: Int
         get() = R.layout.fragment_add_food

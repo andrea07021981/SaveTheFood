@@ -4,10 +4,7 @@ import androidx.databinding.library.BuildConfig
 import androidx.lifecycle.*
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.data.source.repository.UserRepository
-import com.example.savethefood.shared.utils.Event
-import com.example.savethefood.shared.utils.LoginAuthenticationStates
-import com.example.savethefood.shared.utils.LoginStateValue
-import com.example.savethefood.shared.utils.isValidEmail
+import com.example.savethefood.shared.utils.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
@@ -50,10 +47,6 @@ actual class LoginViewModel actual constructor(
     }
 
     val email = object : LoginStatus("") {
-        init {
-            value = "a@a.com"
-        }
-
         override val checkStatus: (String) -> LoginStateValue = {
             when {
                 !it.isValidEmail() -> LoginStateValue.INVALID_FORMAT
@@ -61,18 +54,29 @@ actual class LoginViewModel actual constructor(
                 else -> LoginStateValue.NONE
             }
         }
+
+        init {
+            // TODO Dev phase
+            value = "a@a.com"
+            with(checkStatus(value)) {
+                errMessage = message
+            }
+        }
     }
 
     val password = object : LoginStatus("") {
-        init {
-            value = "aaaaaaaa"
-        }
-
         override val checkStatus: (String) -> LoginStateValue = {
             when {
-                !it.isValidEmail() -> LoginStateValue.INVALID_FORMAT
+                !it.isValidPassword() -> LoginStateValue.INVALID_FORMAT
                 it.isEmpty() -> LoginStateValue.INVALID_LENGTH
                 else -> LoginStateValue.NONE
+            }
+        }
+
+        init {
+            value = "aaaaaaaa"
+            with(checkStatus(value)) {
+                errMessage = message
             }
         }
     }
@@ -125,7 +129,7 @@ actual class LoginViewModel actual constructor(
     }
 
     fun onSignUpClick(){
-        val errorMessages = checkErrors()
+        val errorMessages = checkErrors(true)
         if (errorMessages.isEmpty()) {
             viewModelScope.launch {
                 val newUserId = userDataRepository.saveNewUser(UserDomain(
@@ -139,9 +143,9 @@ actual class LoginViewModel actual constructor(
         }
     }
 
-    private fun checkErrors(): ArrayList<String> {
+    private fun checkErrors(isSignUp: Boolean = false): ArrayList<String> {
         val errorMessages = arrayListOf<String>()
-        if (userName.errMessage.isNotEmpty()) {
+        if (userName.errMessage.isNotEmpty() && isSignUp) {
             errorMessages.add("Username ${userName.errMessage}")
         }
         if (email.errMessage.isNotEmpty()) {
