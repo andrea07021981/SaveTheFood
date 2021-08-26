@@ -8,6 +8,7 @@ import com.example.savethefood.shared.data.domain.FoodItem
 import com.example.savethefood.shared.data.source.repository.FoodRepository
 import com.example.savethefood.shared.data.source.repository.RecipeRepository
 import com.example.savethefood.shared.utils.*
+import io.ktor.util.date.*
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
@@ -24,13 +25,20 @@ actual class AddFoodViewModel actual constructor(
     // TODO error with koin, we can't use lateinit, it craches
     private var _foodDomain = FoodDomain()
 
+    // TODO find a way to update the foodItem and date
     constructor(
         foodDataRepository: FoodRepository,
         state: SavedStateHandle
     ) : this(foodDataRepository) {
         with(state) {
             currentState = this
-            _foodDomain = get<Bundle>(BUNDLE_FOOD_KEY).retrieveFood()
+            _foodDomain = retrieveFood()
+            _foodsItems?.find { item ->
+                item.name == _foodDomain.img.name
+            }?.let {
+                updateFood(it)
+            }
+            updateBestBefore(Date(_foodDomain.bestBefore ?: GMTDate().timestamp))
         }
     }
 

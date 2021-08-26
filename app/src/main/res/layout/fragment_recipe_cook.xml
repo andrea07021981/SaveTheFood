@@ -6,7 +6,7 @@
     <data>
         <variable
             name="recipeCookViewModel"
-            type="com.example.savethefood.cook.RecipeCookViewModel" />
+            type="com.example.savethefood.shared.viewmodel.RecipeCookViewModel" />
     </data>
     <ernestoyaquello.com.verticalstepperform.VerticalStepperFormView
         android:id="@+id/stepper_form"

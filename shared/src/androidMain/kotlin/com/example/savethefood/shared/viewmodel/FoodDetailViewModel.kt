@@ -34,14 +34,13 @@ actual class FoodDetailViewModel actual constructor(
     private val recipeDataRepository: RecipeRepository,
 ) : ViewModel() {
 
-    private lateinit var currentState: SavedStateHandle
-
     constructor(
         foodDataRepository: FoodRepository,
         recipeDataRepository: RecipeRepository,
         state: SavedStateHandle
         ) : this(foodDataRepository, recipeDataRepository) {
-            currentState = state
+            _food.value = state.retrieveFood()
+            foodsFilterList.add(_food.value?.title ?: "")
         }
 
     private val _recipeAdded = MutableLiveData<com.example.savethefood.shared.data.Result<RecipeIngredients?>>()
@@ -114,8 +113,8 @@ actual class FoodDetailViewModel actual constructor(
 
     init {
         // TODO we must move the update of food in secondary constructor, inits come before it
-        _food.value = currentState.get<Bundle>(BUNDLE_FOOD_KEY).retrieveFood()
-        foodsFilterList.add(_food.value?.title ?: "")
+        /*_food.value = currentState.get<Bundle>(BUNDLE_FOOD_KEY).retrieveFood()
+        foodsFilterList.add(_food.value?.title ?: "")*/
     }
 
     fun deleteFood() {

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.savethefood.shared.constant.Constants
@@ -32,10 +33,8 @@ inline fun <T> ViewModel.launchDataLoad(loader: MutableLiveData<com.example.save
     }
 }
 
-fun Bundle?.retrieveFood(): FoodDomain {
-    return this?.get(Constants.BUNDLE_FOOD_VALUE)?.let {
-        it as FoodDomain
-    }?: FoodDomain()
+fun SavedStateHandle?.retrieveFood(): FoodDomain {
+    return this?.get<FoodDomain>(Constants.BUNDLE_FOOD_VALUE) ?: FoodDomain()
 }
 
 fun Bundle?.retrieveBag(): BagDomain {
