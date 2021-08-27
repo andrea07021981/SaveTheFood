@@ -8,10 +8,10 @@
         <import type="android.view.View"/>
         <variable
             name="recipeViewModel"
-            type="com.example.savethefood.recipe.RecipeViewModel" />
+            type="com.example.savethefood.shared.viewmodel.RecipeViewModel" />
         <variable
             name="filterType"
-            type="com.example.savethefood.constants.RecipeType" />
+            type="com.example.savethefood.shared.utils.RecipeType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

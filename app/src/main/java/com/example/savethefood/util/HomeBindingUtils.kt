@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.savethefood.R
-import com.example.savethefood.constants.RecipeType
 import com.example.savethefood.home.FoodAdapter
 import com.example.savethefood.recipe.RecipeAdapter
 import com.example.savethefood.shared.data.domain.FoodDomain
@@ -26,6 +25,7 @@ import com.example.savethefood.shared.data.*
 import com.example.savethefood.shared.data.domain.RecipeResult
 import com.example.savethefood.shared.utils.FoodImage
 import com.example.savethefood.shared.utils.QuantityType
+import com.example.savethefood.shared.utils.RecipeType
 import com.example.savethefood.shared.utils.StorageType
 
 object HomeBindingUtils {

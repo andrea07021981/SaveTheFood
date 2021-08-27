@@ -19,4 +19,7 @@ actual val platformModule = module {
     viewModel { RecipeCookViewModel(state = get()) }
     viewModel { RecipeDetailViewModel(recipeDataRepository = get(), state = get()) }
     viewModel { RecipeViewModel(recipeDataRepository = get()) }
+    viewModel { BagDetailViewModel(shoppingDataRepository = get(), foodDataRepository = get(), state = get()) }
+    viewModel { BagViewModel(shoppingDataRepository = get()) }
+    viewModel { SplashViewModel() }
 }

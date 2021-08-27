@@ -2,13 +2,16 @@ package com.example.savethefood.shared.di
 
 import com.example.savethefood.shared.data.source.FoodDataSource
 import com.example.savethefood.shared.data.source.RecipeDataSource
+import com.example.savethefood.shared.data.source.ShoppingDataSource
 import com.example.savethefood.shared.data.source.UserDataSource
 import com.example.savethefood.shared.data.source.local.database.DatabaseFactory
 import com.example.savethefood.shared.data.source.local.datasource.FoodLocalDataSource
 import com.example.savethefood.shared.data.source.local.datasource.RecipeLocalDataSource
+import com.example.savethefood.shared.data.source.local.datasource.ShoppingLocalDataSource
 import com.example.savethefood.shared.data.source.local.datasource.UserLocalDataSource
 import com.example.savethefood.shared.data.source.remote.datasource.FoodRemoteDataSource
 import com.example.savethefood.shared.data.source.remote.datasource.RecipeRemoteDataSource
+import com.example.savethefood.shared.data.source.remote.datasource.ShoppingRemoteDataSource
 import com.example.savethefood.shared.data.source.remote.datasource.UserRemoteDataSource
 import com.example.savethefood.shared.data.source.remote.service.FoodServiceApi
 import com.example.savethefood.shared.data.source.repository.*
@@ -17,10 +20,10 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
-
+// TODO add a common module for db and network
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
     appDeclaration()
-    modules(listOf(platformModule, commonUserModule, commonFoodModule, commonRecipeModule))
+    modules(listOf(platformModule, commonUserModule, commonFoodModule, commonRecipeModule, commonShoppingModule))
 }
 
 // called by iOS
@@ -62,6 +65,19 @@ val commonRecipeModule = module {
         RecipeDataRepository(
             recipeLocalDataSource = get(named("recipeLocalDataSource")),
             recipeRemoteDataSource = get(named("recipeRemoteDataSource"))
+        )
+    }
+}
+
+val commonShoppingModule = module {
+    single { DatabaseFactory(databaseDriverFactory = get()).createDatabase() }
+    single { FoodServiceApi() }
+    single<ShoppingDataSource>(named("shoppingLocalDataSource")) { ShoppingLocalDataSource(get()) }
+    single<ShoppingDataSource>(named("shoppingRemoteDataSource")) { ShoppingRemoteDataSource() }
+    single<ShoppingRepository> {
+        ShoppingDataRepository(
+            shoppingLocalDataSource = get(named("shoppingLocalDataSource")),
+            shoppingRemoteDataSource = get(named("shoppingRemoteDataSource"))
         )
     }
 }

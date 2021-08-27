@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.savethefood.constants.Constants
-import com.example.savethefood.constants.RecipeType
+import com.example.savethefood.shared.utils.RecipeType
 
 class RecipeFragmentContainerAdapter(
     fragmentManager: FragmentManager,

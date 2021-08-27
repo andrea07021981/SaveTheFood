@@ -4,19 +4,18 @@ import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
-import com.example.savethefood.constants.RecipeType
-import com.example.savethefood.constants.StorageType
 import com.example.savethefood.databinding.CustomTabLayoutBinding
-import com.example.savethefood.databinding.FragmentReceipeBinding
 import com.example.savethefood.databinding.FragmentRecipeContainerBinding
-import com.example.savethefood.home.HomeFragmentContainerAdapter
+import com.example.savethefood.shared.utils.RecipeType
+import com.example.savethefood.shared.viewmodel.RecipeViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @AndroidEntryPoint
 class RecipeFragmentContainer : BaseFragment<RecipeViewModel, FragmentRecipeContainerBinding>(){
 
-    override val viewModel by viewModels<RecipeViewModel>()
+    override val viewModel: RecipeViewModel by viewModel()
 
     override val layoutRes: Int
         get() = R.layout.fragment_recipe_container

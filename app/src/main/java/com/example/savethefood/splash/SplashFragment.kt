@@ -1,22 +1,18 @@
 package com.example.savethefood.splash
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentSplashBinding
+import com.example.savethefood.shared.viewmodel.SplashViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashFragment : BaseFragment<SplashViewModel, FragmentSplashBinding>() {
 
-    override val viewModel by viewModels<SplashViewModel>()
+    override val viewModel: SplashViewModel by viewModel()
 
     override val layoutRes: Int
         get() = R.layout.fragment_splash

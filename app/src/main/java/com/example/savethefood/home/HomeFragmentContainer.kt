@@ -10,28 +10,27 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.savethefood.BaseFragment
-import com.example.savethefood.EventObserver
 import com.example.savethefood.FragmentCallback
 import com.example.savethefood.R
 import com.example.savethefood.constants.Constants.BUNDLE_KEY
 import com.example.savethefood.constants.Constants.REQUEST_KEY
-import com.example.savethefood.constants.FoodOrder
 import com.example.savethefood.databinding.CustomTabLayoutBinding
 import com.example.savethefood.databinding.FragmentHomeContainerBinding
 import com.example.savethefood.shared.utils.StorageType
+import com.example.savethefood.shared.viewmodel.HomeViewModel
 import com.example.savethefood.util.configSearchView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragmentContainer : BaseFragment<HomeViewModel, FragmentHomeContainerBinding>(),
     FragmentCallback {
 
-    override val viewModel by viewModels<HomeViewModel>()
+    override val viewModel: HomeViewModel by viewModel()
 
     override val layoutRes: Int
         get() = R.layout.fragment_home_container

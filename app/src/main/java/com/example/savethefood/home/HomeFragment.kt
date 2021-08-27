@@ -12,6 +12,7 @@ import com.example.savethefood.databinding.FragmentHomeBinding
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.utils.Event
 import com.example.savethefood.shared.utils.StorageType
+import com.example.savethefood.shared.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 

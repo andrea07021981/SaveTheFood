@@ -45,6 +45,10 @@ actual class AddFoodViewModel actual constructor(
     private val foodTypeFilter = MutableLiveData<String>()
 
     private var _foodsItems: LinkedHashSet<FoodItem>? = null
+
+    // TODO replac with map, it is an observable and we could avoid the livedata constructor
+    // TODO we can probably replace all the liveData constructors with map
+    // map { _foodItems.filter { ..... }}
     val foodItems = foodTypeFilter.switchMap { filter ->
         // We need the livedata constructor since _foodItems is not a live data
         // The constructor livedata is also used in case of suspend fun (not flow)

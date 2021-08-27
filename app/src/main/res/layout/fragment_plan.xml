@@ -8,7 +8,7 @@
 
         <variable
             name="plaViewModel"
-            type="com.example.savethefood.plan.PlanViewModel" />
+            type="com.example.savethefood.shared.viewmodel.PlanViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

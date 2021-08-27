@@ -3,20 +3,20 @@ package com.example.savethefood.shopping
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.savethefood.*
 import com.example.savethefood.FragmentCallback
-import com.example.savethefood.addfood.SearchableFragment
 import com.example.savethefood.databinding.FragmentBagBinding
 import com.example.savethefood.shared.utils.EventObserver
+import com.example.savethefood.shared.viewmodel.BagViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @AndroidEntryPoint
 class BagFragment : BaseFragment<BagViewModel, FragmentBagBinding>(), FragmentCallback {
 
-    override val viewModel by viewModels<BagViewModel>()
+    override val viewModel: BagViewModel by viewModel()
 
     override val layoutRes: Int
         get() = R.layout.fragment_bag

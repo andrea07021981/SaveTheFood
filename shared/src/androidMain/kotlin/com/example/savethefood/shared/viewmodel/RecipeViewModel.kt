@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.transform
 import java.util.*
 
 // TODO use paging library, too many recipes
+// TODO add caching system to handle errors and avoid calling the API with same params
+// TODO for example, use onCatch to handle error and retrieve from cache instead of network
 actual class RecipeViewModel actual constructor(
     private val recipeDataRepository: RecipeRepository,
 ) : ViewModel() {

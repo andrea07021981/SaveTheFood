@@ -12,17 +12,14 @@ import com.example.savethefood.shared.utils.FoodOrder
 import com.example.savethefood.shared.utils.StorageType
 import com.example.savethefood.shared.utils.customSortBy
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.HashMap
 
 @Deprecated("Moved to shared")
 // TODO use homwviewmodel for edit and add? save resources
-class HomeViewModel @ViewModelInject constructor(
+class HomeViewModelOld @ViewModelInject constructor(
     private val foodDataRepository: com.example.savethefood.shared.data.source.repository.FoodRepository
 ) : ViewModel() {
 

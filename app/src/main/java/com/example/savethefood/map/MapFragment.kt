@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentMapBinding
+import com.example.savethefood.shared.viewmodel.MapViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MapFragment : BaseFragment<MapViewModel, FragmentMapBinding>() {
     //TODO This class allows the user to save local places where he found particular food  Then we can use geofence to let him know when he's near
@@ -28,7 +30,7 @@ class MapFragment : BaseFragment<MapViewModel, FragmentMapBinding>() {
         private val TAG = MapFragment::class.java.name
     }
 
-    override val viewModel by viewModels<MapViewModel>()
+    override val viewModel: MapViewModel by viewModel()
 
     override val layoutRes: Int
         get() = R.layout.fragment_map

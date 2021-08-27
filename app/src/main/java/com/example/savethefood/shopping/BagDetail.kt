@@ -6,18 +6,29 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.savethefood.BaseFragment
 import com.example.savethefood.R
 import com.example.savethefood.addfood.SearchableFragment
 import com.example.savethefood.constants.Constants
 import com.example.savethefood.databinding.FragmentBagDetailBinding
+import com.example.savethefood.recipedetail.RecipeDetailFragmentArgs
 import com.example.savethefood.shared.data.domain.FoodItem
+import com.example.savethefood.shared.viewmodel.BagDetailViewModel
+import com.example.savethefood.shared.viewmodel.FoodDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.viewmodel.ext.android.stateViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @AndroidEntryPoint
 class BagDetail : BaseFragment<BagDetailViewModel, FragmentBagDetailBinding>() {
 
-    override val viewModel: BagDetailViewModel by viewModels()
+    private val args: BagDetailArgs by navArgs()
+
+    override val viewModel: BagDetailViewModel by stateViewModel(
+        state = { args.bagDetail },
+        clazz = BagDetailViewModel::class
+    )
 
     override val layoutRes: Int
         get() = R.layout.fragment_bag_detail

@@ -9,15 +9,12 @@ import com.example.savethefood.shared.utils.ApiCallStatus
 import com.example.savethefood.shared.utils.ApiCallStatus.*
 import com.example.savethefood.shared.utils.Event
 import com.example.savethefood.shared.utils.RecipeType
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.*
 import java.util.*
 
 // TODO use paging library, too many recipes
 @Deprecated("Moved to shared")
-class RecipeViewModel @ViewModelInject constructor(
+class RecipeViewModelOld @ViewModelInject constructor(
     private val recipeDataRepository: RecipeRepository,
 ) : ViewModel() {
 

@@ -4,8 +4,6 @@ import android.content.Context
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.IntRange
-import androidx.annotation.NonNull
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,11 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.savethefood.BaseAdapter
 import com.example.savethefood.BaseFragment
-import com.example.savethefood.EventObserver
 import com.example.savethefood.R
 import com.example.savethefood.constants.Constants
-import com.example.savethefood.constants.RecipeType
 import com.example.savethefood.databinding.FragmentReceipeBinding
+import com.example.savethefood.shared.utils.RecipeType
+import com.example.savethefood.shared.viewmodel.RecipeViewModel
 import com.example.savethefood.util.configSearchView
 import dagger.hilt.android.AndroidEntryPoint
 
