@@ -8,7 +8,7 @@
         <import type="android.view.View"/>
         <variable
             name="homeViewModel"
-            type="com.example.savethefood.home.HomeViewModel" />
+            type="com.example.savethefood.shared.viewmodel.HomeViewModel" />
 
         <variable
             name="filterType"

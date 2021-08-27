@@ -22,6 +22,7 @@ class RecipeDataRepository(
 
     @Throws(Exception::class)
     override fun getRecipes(): Flow<Result<List<RecipeResult>?>> {
+        // TODO add a cache system in memory if an exception occurs
         val localRecipes = recipeLocalDataSource.getRecipes()
         return recipeRemoteDataSource.getRecipes()
             .combine(localRecipes) { remote, local ->

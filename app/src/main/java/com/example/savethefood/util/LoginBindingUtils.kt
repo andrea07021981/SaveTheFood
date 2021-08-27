@@ -26,7 +26,7 @@ object LoginBindingUtils {
     }
 
     @JvmStatic
-    @BindingAdapter("bind:loadViewAnimationView")
+    @BindingAdapter("bind:loadViewAnimationFade")
     fun View.animationView(visible: Boolean) {
         if (visible) {
             val animation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
@@ -35,8 +35,8 @@ object LoginBindingUtils {
     }
 
     @JvmStatic
-    @BindingAdapter("bind:loadViewAnimationButton")
-    fun Button.animationButton(visible: Boolean) {
+    @BindingAdapter("bind:loadViewAnimation")
+    fun View.animationButton(visible: Boolean) {
         if (visible) {
             val animation = AnimationUtils.loadAnimation(context, R.anim.bounce)
             startAnimation(animation)

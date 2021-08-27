@@ -39,7 +39,7 @@ class AddFoodViewModelDep @ViewModelInject constructor(
                 emit(_foodsItems)
             } else {
                 emit(_foodsItems?.filter {
-                    it.name.contains(filter.toUpperCase())
+                    it.name.contains(filter.uppercase(Locale.getDefault()))
                 })
             }
         }
@@ -64,11 +64,11 @@ class AddFoodViewModelDep @ViewModelInject constructor(
     }
 
     // TODO use custom set for livedata or transformations to update
-    val errorName = MutableLiveData<Boolean>()
-    val errorDescription = MutableLiveData<Boolean>()
-    val errorPrice = MutableLiveData<Boolean>()
-    val errorQuantity = MutableLiveData<Boolean>()
-    val errorDate = MutableLiveData<Boolean>()
+    private val errorName = MutableLiveData<Boolean>()
+    private val errorDescription = MutableLiveData<Boolean>()
+    private val errorPrice = MutableLiveData<Boolean>()
+    private val errorQuantity = MutableLiveData<Boolean>()
+    private val errorDate = MutableLiveData<Boolean>()
 
     private val _barcodeFoodEvent = MutableLiveData<Event<Unit>>()
     val barcodeFoodEvent: LiveData<Event<Unit>>

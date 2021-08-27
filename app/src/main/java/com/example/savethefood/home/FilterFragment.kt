@@ -11,6 +11,7 @@ import com.example.savethefood.constants.Constants.BUNDLE_KEY
 import com.example.savethefood.constants.Constants.REQUEST_KEY
 import com.example.savethefood.databinding.FragmentFilterBinding
 import com.example.savethefood.shared.utils.EventObserver
+import com.example.savethefood.shared.viewmodel.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 

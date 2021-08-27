@@ -9,7 +9,7 @@
         <import type="android.view.View" />
         <variable
             name="foodDetailViewModel"
-            type="com.example.savethefood.fooddetail.FoodDetailViewModel" />
+            type="com.example.savethefood.shared.viewmodel.FoodDetailViewModel" />
     </data>
 
     <LinearLayout

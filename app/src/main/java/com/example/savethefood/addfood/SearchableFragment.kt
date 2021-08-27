@@ -25,7 +25,7 @@ class SearchableFragment : DialogFragment() {
 
     private val viewModel: AddFoodViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
-    // Or we could use the lazy with Koin:
+    // Or we could use the lazy with Koin, but it is already created by Koin so no needed here:
     //override val viewModel: ChairViewModel by lazy {
     //    requireParentFragment().getViewModel()
     //}

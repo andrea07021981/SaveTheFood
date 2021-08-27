@@ -3,6 +3,7 @@ package com.example.savethefood.fooddetail
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -20,10 +21,12 @@ import com.example.savethefood.R
 import com.example.savethefood.databinding.FragmentFoodDetailBinding
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.data.domain.RecipeResult
+import com.example.savethefood.shared.viewmodel.FoodDetailViewModel
 import com.example.savethefood.util.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.pair_item.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 // TODO add cale dar with weekly meal plan, map with people who are sharing food (click on marker and see the list of foods)
 @ExperimentalCoroutinesApi
@@ -32,7 +35,10 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
 
     private val args: FoodDetailFragmentArgs by navArgs()
 
-    override val viewModel by viewModels<FoodDetailViewModel>()
+    override val viewModel: FoodDetailViewModel by stateViewModel(
+        state = { args.foodDetail },
+        clazz = FoodDetailViewModel::class
+    )
 
     override val layoutRes: Int
         get() = R.layout.fragment_food_detail
@@ -87,6 +93,7 @@ class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailB
 
     override fun activateObservers() {
         viewModel.food.observe(viewLifecycleOwner, {
+            Log.d("Food value", it.toString())
         })
 
         viewModel.recipeAdded.observe(viewLifecycleOwner) {

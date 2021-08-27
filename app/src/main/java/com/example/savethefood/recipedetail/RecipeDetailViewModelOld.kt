@@ -12,7 +12,7 @@ import com.example.savethefood.shared.utils.ApiCallStatus.*
 import kotlinx.coroutines.launch
 
 @Deprecated("Moved to shared")
-class RecipeDetailViewModel @ViewModelInject constructor(
+class RecipeDetailViewModelOld @ViewModelInject constructor(
     private val recipeDataRepository: RecipeRepository,
     @Assisted recipeResult: SavedStateHandle
 ) : ViewModel() {

@@ -8,7 +8,7 @@
 
         <variable
             name="recipeDetailViewModel"
-            type="com.example.savethefood.recipedetail.RecipeDetailViewModel" />
+            type="com.example.savethefood.shared.viewmodel.RecipeDetailViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

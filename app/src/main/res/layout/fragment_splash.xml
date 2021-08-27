@@ -7,7 +7,7 @@
     <data>
         <variable
             name="splashViewModel"
-            type="com.example.savethefood.splash.SplashViewModel" />
+            type="com.example.savethefood.shared.viewmodel.SplashViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:loadViewAnimation="@{splashViewModel.animationResource}"
+            bind:loadViewAnimation="@{true}"
             app:srcCompat="@drawable/ic_food" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

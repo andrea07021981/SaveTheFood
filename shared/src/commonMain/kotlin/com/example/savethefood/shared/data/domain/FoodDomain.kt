@@ -8,11 +8,12 @@ import com.example.savethefood.shared.utils.QuantityType
 import com.example.savethefood.shared.utils.StorageType
 import io.ktor.util.date.*
 import kotlinx.serialization.Serializable
+import kotlin.jvm.JvmOverloads
 
-//Food
+//Food, added JvmOverloads so we expose multiple overload constructors
 @Serializable
 @Parcelize
-data class FoodDomain(
+data class FoodDomain  @JvmOverloads constructor(
     var title: String = "",
     var description: String? = "",
     var id: Long = 0L,

@@ -4,10 +4,7 @@ import android.os.Build
 import androidx.lifecycle.*
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.data.source.repository.FoodRepository
-import com.example.savethefood.shared.utils.Event
-import com.example.savethefood.shared.utils.FoodOrder
-import com.example.savethefood.shared.utils.StorageType
-import com.example.savethefood.shared.utils.customSortBy
+import com.example.savethefood.shared.utils.*
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
@@ -20,6 +17,7 @@ import kotlin.collections.HashMap
 actual class HomeViewModel actual constructor(
     private val foodDataRepository: FoodRepository
 ) : ViewModel() {
+
 
     /**
      * This filter class helps to fire the switchmap when we change the filter type or order
@@ -145,7 +143,7 @@ actual class HomeViewModel actual constructor(
     private fun initData() {
         try {
             viewModelScope.launch {
-                 //_foodList.addSource(foodDataRepository.getFoods(), _foodList::setValue)
+                //_foodList.addSource(foodDataRepository.getFoods(), _foodList::setValue)
             }.invokeOnCompletion {
             }
         } catch (e: Exception) {
