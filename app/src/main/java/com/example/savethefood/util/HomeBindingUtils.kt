@@ -37,7 +37,7 @@ object HomeBindingUtils {
     @BindingAdapter("bind:goneIfNotNull")
     fun goneIfNotNull(view: View, it: Result<List<FoodDomain>>?) {
         view.visibility = it?.let { result ->
-            if (result is com.example.savethefood.shared.data.Result.Loading) View.VISIBLE else View.GONE
+            if (result is Result.Loading) View.VISIBLE else View.GONE
         } ?: View.VISIBLE
     }
 

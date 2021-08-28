@@ -53,7 +53,8 @@ class BagDetail : BaseFragment<BagDetailViewModel, FragmentBagDetailBinding>() {
 
     override fun activateObservers() {
         viewModel.openFoodTypeDialog.observe(viewLifecycleOwner, com.example.savethefood.shared.utils.EventObserver {
-            SearchableFragment().show(childFragmentManager, classTag)
+            //SearchableFragment().show(childFragmentManager, classTag)
+            // TODO add a spinner for grocery category and for the priority of a specific food
         })
 
         viewModel.saveFoodEvent.observe(viewLifecycleOwner) {

@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/layout/fragment_bag_detail.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_filter.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_food_detail.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/fragment_food_type.xml" value="0.17028985507246377" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_home_container.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1" />
@@ -20,6 +21,7 @@
         <entry key="app/src/main/res/layout/fragment_searchable.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_signup.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/pair_item.xml" value="0.12487335359675786" />
         <entry key="app/src/main/res/layout/step_cook_item.xml" value="0.10309017223910841" />
       </map>
     </option>

@@ -194,7 +194,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Pick up the best pairing"
+                android:text="@string/pick_up_the_best_pairing"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -211,7 +211,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView13"
-                bind:listData="@{foodDetailViewModel.foodList}"
+                bind:listPantryData="@{foodDetailViewModel.foodList}"
                 tools:listitem="@layout/pair_item" />
 
             <TextView
