@@ -46,7 +46,7 @@ actual class AddFoodViewModel actual constructor(
 
     private var _foodsItems: LinkedHashSet<FoodItem>? = null
 
-    // TODO replac with map, it is an observable and we could avoid the livedata constructor
+    // TODO replace with map, it is an observable and we could avoid the livedata constructor
     // TODO we can probably replace all the liveData constructors with map
     // map { _foodItems.filter { ..... }}
     val foodItems = foodTypeFilter.switchMap { filter ->
@@ -71,11 +71,11 @@ actual class AddFoodViewModel actual constructor(
         FoodItem(_foodDomain.img)
     ))
 
-    val foodDomain: LiveData<FoodDomain> = Transformations.map(observerField) {
+    val foodDomain: LiveData<FoodDomain> = observerField.map {
         _foodDomain.apply {
             when (it) {
                 is ObserverFormFields.FoodItemImage -> img = it.value.img
-                is ObserverFormFields.BestBefore -> bestBefore = it.value?.time ?: Date().time
+                is ObserverFormFields.BestBefore -> bestBefore = it.value ?: Date().time
                 else -> Unit
             }
         }
@@ -122,7 +122,7 @@ actual class AddFoodViewModel actual constructor(
     }
 
     fun updateBestBefore(date: Date) {
-        observerField.value = ObserverFormFields.BestBefore(date)
+        observerField.value = ObserverFormFields.BestBefore(date.time)
     }
 
     fun save() {
@@ -157,7 +157,8 @@ actual class AddFoodViewModel actual constructor(
             try {
                 supervisorScope {
                     val foodJob = launch(childExceptionHandler) {
-                        _newFoodFoodEvent.value = foodDataRepository.getApiFoodUpc(barcode)
+                        val result = foodDataRepository.getApiFoodUpc(barcode)
+                        _newFoodFoodEvent.value = result
                     }
                     foodJob.join()
                 }

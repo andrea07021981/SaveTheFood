@@ -3,6 +3,7 @@ package com.example.savethefood.shopping
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -45,10 +46,10 @@ class BagDetail : BaseFragment<BagDetailViewModel, FragmentBagDetailBinding>() {
 
     override fun onResume() {
         super.onResume()
-        childFragmentManager.setFragmentResultListener(Constants.REQUEST_KEY, viewLifecycleOwner) { _, bundle ->
+        /*childFragmentManager.setFragmentResultListener(Constants.REQUEST_KEY, viewLifecycleOwner) { _, bundle ->
             // We use a String here, but any type that can be put in a Bundle is supported
             val result = bundle.get(Constants.BUNDLE_KEY) as FoodItem
-            viewModel.updateFood(result)}
+            viewModel.updateFood(result)}*/
     }
 
     override fun activateObservers() {

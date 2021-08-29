@@ -7,7 +7,7 @@
         <entry key="app/src/main/res/layout/date_picker_layout.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_add_food.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_bag.xml" value="0.10309017223910841" />
-        <entry key="app/src/main/res/layout/fragment_bag_detail.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/layout/fragment_bag_detail.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_filter.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_food_detail.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_food_type.xml" value="0.17028985507246377" />

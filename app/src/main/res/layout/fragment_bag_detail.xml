@@ -147,6 +147,58 @@
                         </RadioGroup>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/food_type_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="16dp"
+                            android:background="@drawable/rounded_container"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginBottom="16dp"
+                                android:orientation="horizontal" >
+
+                                <Spinner
+                                    android:id="@+id/cat_spinner"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    bind:categoryEntries="@{bagViewModel.categoryItems}"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/food_type_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_alignBottom="@+id/food_type_view"
+                            android:background="@android:color/white"
+                            android:includeFontPadding="false"
+                            android:layout_marginBottom="16dp"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:text="Food Type"
+                            android:textSize="12sp"
+                            android:textColor="@color/colorAccent"
+                            android:textAppearance="@android:style/TextAppearance.Medium" />
+                    </RelativeLayout>
                     <Button
                         android:id="@+id/save_button"
                         android:layout_width="match_parent"
@@ -157,5 +209,6 @@
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
