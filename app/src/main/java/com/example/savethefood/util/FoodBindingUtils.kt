@@ -359,8 +359,8 @@ object FoodBindingUtils {
 
     // TODO multiple binding list adapter, find a generic one with a when condition
     @JvmStatic
-    @BindingAdapter("bind:listData")
-    fun bindFoodRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?) {
+    @BindingAdapter("bind:listPantryData")
+    fun bindPantryRecycleView(recyclerView: RecyclerView, data: List<FoodDomain>?) {
         val adapter = recyclerView.adapter as FoodPantryAdapter
         adapter.submitList(data)
         recyclerView.scheduleLayoutAnimation();

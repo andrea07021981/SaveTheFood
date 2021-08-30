@@ -12,6 +12,13 @@ plugins {
 kotlin {
     android()
 
+    /*tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        kotlinOptions {
+            jvmTarget = "1.8"
+            freeCompilerArgs = freeCompilerArgs + "-Xopt-in=kotlin.RequiresOptIn"
+        }
+    }*/
+
     val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
         if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
             ::iosArm64
@@ -72,6 +79,7 @@ kotlin {
                 implementation(Libs.coroutineeTest)
                 implementation(Libs.robolectric)
             }
+
         }
         val iosMain by getting  {
             dependencies {
@@ -82,6 +90,8 @@ kotlin {
                         strictly(Versions.coroutine)
                     }
                 }
+                // we need to tell the compiler where to look for generated Kotlin Native classes. It could be added to commonMain as well, but we only need those classes in iOS binary.
+                //kotlin.srcDir("${buildDir.absolutePath}/generated/source/kaptKotlin/")
             }
         }
         val iosTest by getting {
@@ -121,6 +131,12 @@ android {
         kotlinOptions {
             jvmTarget = "11"
         }
+    }
+    // Always show the result of every unit test when running via command line, even if it passes.
+    testOptions.unitTests {
+        isIncludeAndroidResources = true
+        isReturnDefaultValues = true //It's mandatory to not break unit tests
+        // ...
     }
 }
 

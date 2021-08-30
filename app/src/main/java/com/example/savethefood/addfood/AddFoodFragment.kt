@@ -113,8 +113,8 @@ class AddFoodFragment : BaseFragment<AddFoodViewModel, FragmentAddFoodBinding>()
                         // With SDK > O
                         //LocalDate.of(year, month, dayOfMonth)
 
-                            this.set(year, month, dayOfMonth)
-                            viewModel.updateBestBefore(this.time)
+                        this.set(year, month, dayOfMonth)
+                        viewModel.updateBestBefore(this.time)
                     }, get(Calendar.YEAR), get(Calendar.MONTH), get(Calendar.DAY_OF_MONTH)
                 ).show()
             }

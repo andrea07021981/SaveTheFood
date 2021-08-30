@@ -1,6 +1,8 @@
 package com.example.savethefood.shopping
 
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController

@@ -74,6 +74,13 @@ android {
         }
     }
 
+    // TODO Temporary workaround waiting https://issuetracker.google.com/issues/169249668
+    lint {
+        disable("NullSafeMutableLiveData")
+        isAbortOnError = false
+    }
+
+
     signingConfigs {
         create("release") {
             storeFile = file("/Users/andreafranco/.android/debug.keystore")

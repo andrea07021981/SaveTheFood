@@ -2,11 +2,14 @@ package com.example.savethefood.shared.viewmodel
 
 import androidx.lifecycle.*
 import com.example.savethefood.shared.data.domain.BagDomain
+import com.example.savethefood.shared.data.domain.FoodItem
 import com.example.savethefood.shared.data.source.repository.ShoppingRepository
 import com.example.savethefood.shared.utils.Event
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.transform
+import java.util.*
+import kotlin.collections.LinkedHashSet
 
 
 actual class BagViewModel actual constructor(

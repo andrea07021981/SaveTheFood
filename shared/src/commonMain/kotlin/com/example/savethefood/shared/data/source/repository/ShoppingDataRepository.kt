@@ -2,6 +2,7 @@ package com.example.savethefood.shared.data.source.repository
 
 import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.BagDomain
+import com.example.savethefood.shared.data.domain.CategoryItem
 import com.example.savethefood.shared.data.source.ShoppingDataSource
 import com.example.savethefood.shared.utils.getResult
 import io.ktor.utils.io.errors.*
@@ -43,4 +44,11 @@ class ShoppingDataRepository(
             return@withContext Result.Error("Error saving food")
         }
     }
+
+    override fun getFoodCategories(): LinkedHashSet<CategoryItem> = linkedSetOf(
+        CategoryItem("Fruit"),
+        CategoryItem("Meat"),
+        CategoryItem("Vegetables"),
+        CategoryItem("Fish")
+    )
 }
