@@ -9,6 +9,7 @@ import platform.CoreFoundation.CFRunLoopGetCurrent
 import platform.CoreFoundation.CFRunLoopRun
 import platform.CoreFoundation.CFRunLoopStop
 
+/*
 actual abstract class BaseTest {
     @OptIn(DelicateCoroutinesApi::class)
     actual fun <T> runTest(block: suspend CoroutineScope.() -> T) {
@@ -26,3 +27,4 @@ actual abstract class BaseTest {
         error?.also { throw it }
     }
 }
+*/
