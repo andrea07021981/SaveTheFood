@@ -48,6 +48,7 @@ actual class AddFoodViewModel actual constructor(
 
     // TODO replace with map, it is an observable and we could avoid the livedata constructor
     // TODO we can probably replace all the liveData constructors with map
+    // TODO switchmap is usefull when we need to call the repo again and return a flow.aslivedata
     // map { _foodItems.filter { ..... }}
     val foodItems = foodTypeFilter.switchMap { filter ->
         // We need the livedata constructor since _foodItems is not a live data
