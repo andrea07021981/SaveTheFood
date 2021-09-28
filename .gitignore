@@ -13,3 +13,4 @@
 .externalNativeBuild
 .cxx
 /com/example/savethefood/network/service/ApiKey.kt
+/buildSrc/
