@@ -7,5 +7,6 @@ actual class LoginViewModel actual constructor(
     val userDataRepository: UserRepository
 ) {
 
+    // TODO add basic code here (Flows, etc), then inherit Swift controller viewmodel from here (it extends ObservableObject)
     val test = MutableLiveData<String>("Value from shared")
 }

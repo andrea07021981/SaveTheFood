@@ -20,6 +20,7 @@ import com.example.savethefood.util.configSearchView
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO use paging library
+// TODO with compose, use like jetspack the horizontal list (started, first, second, sweet, etc)
 @AndroidEntryPoint
 class RecipeFragment : BaseFragment<RecipeViewModel, FragmentReceipeBinding>() {
 

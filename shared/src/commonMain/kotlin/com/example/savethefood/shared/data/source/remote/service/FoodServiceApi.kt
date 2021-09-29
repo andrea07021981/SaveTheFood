@@ -37,7 +37,7 @@ class FoodServiceApi(
             block: HttpRequestBuilder.() -> Unit = {}
         ) : T = get {
             val request = HttpRequestBuilder()
-            parameter("apiKey", apiKey)
+            request.parameter("apiKey", apiKey)
             request.block()
 
             OR
@@ -53,6 +53,7 @@ class FoodServiceApi(
     ) : T = get {
         parameter("apiKey", apiKey)
         apply(block)
+        // OR block()
     }
 
     suspend fun getFoodByUpc(type: String): NetworkFood {

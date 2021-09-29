@@ -31,6 +31,7 @@ class AddFoodViewModelDep @ViewModelInject constructor(
     private val foodTypeFilter = MutableLiveData<String>()
 
     private var _foodsItems: LinkedHashSet<FoodItem>? = null
+    // We could replace with map
     val foodItems = foodTypeFilter.switchMap { filter ->
         // We need the livedata constructor since _foodItems is not a live data
         // The constructor livedata is also used in case of suspend fun (not flow)
@@ -44,6 +45,19 @@ class AddFoodViewModelDep @ViewModelInject constructor(
             }
         }
     }
+
+    // OR using map
+/*    val foodItems = foodTypeFilter.map { filter ->
+        // We need the livedata constructor since _foodItems is not a live data
+        // The constructor livedata is also used in case of suspend fun (not flow)
+        if (filter.isNullOrEmpty()) {
+            _foodsItems
+        } else {
+            _foodsItems?.filter {
+                it.name.contains(filter.uppercase(Locale.getDefault()))
+            }
+        }
+    }*/
 
     init {
         _foodsItems = foodDataRepository.getFoodImages()
