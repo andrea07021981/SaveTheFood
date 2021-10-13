@@ -29,6 +29,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.viewmodel.ext.android.stateViewModel
 
 // TODO add cale dar with weekly meal plan, map with people who are sharing food (click on marker and see the list of foods)
+
+// TODO line 86, we can pass custom parcellable or serializable if we have one value
+// TODO otherwise use bundle. FIX it in all the usages
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class FoodDetailFragment : BaseFragment<FoodDetailViewModel, FragmentFoodDetailBinding>() {

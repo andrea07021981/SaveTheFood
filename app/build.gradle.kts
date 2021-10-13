@@ -11,6 +11,7 @@ plugins {
     id(Plugins.services)
     //id(Plugins.crashlythics)
     id(Plugins.hilt)
+    id("kotlin-android")
 }
 
 configurations {
@@ -31,6 +32,9 @@ android {
         versionName = Application.versionName
         testInstrumentationRunner = "com.example.savethefood.CustomTestRunner"
         buildConfigField("String", "BASE_FOOD_URL", "\"https://api.spoonacular.com/\"")
+        vectorDrawables {
+            useSupportLibrary = true
+        }
 
         //Export DB Schema
         javaCompileOptions {
@@ -39,6 +43,7 @@ android {
             }
         }
         buildFeatures {
+            compose = true
             viewBinding = true // View binding is a very much simpler version/a subset of data binding.
             //The difference between the two is that view binding is only for view
             // references and not for binding UI with data sources
@@ -134,6 +139,11 @@ android {
             buildConfigField("String", "BASE_URL", "\"http://dev.com/api/\"")
             resValue("string", "app_name", "Save The Food Dev")
         }
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.compose
+        kotlinCompilerVersion = Versions.kotlin
     }
 
     // Enable parcellable
@@ -332,6 +342,27 @@ dependencies {
     implementation(Libs.shimmer)
 
     implementation(Libs.koinAndroid)
+
+    // Compose
+    implementation(Compose.runtime)
+    implementation(Compose.runtimeLiveData)
+    implementation(Compose.foundation)
+    implementation(Compose.layout)
+    implementation(Compose.ui)
+    implementation(Compose.uiUtil)
+    implementation(Compose.material)
+    implementation(Compose.animation)
+    implementation(Compose.iconsExtended)
+    implementation(Compose.tooling)
+    implementation(Compose.activityCompose)
+    implementation(Compose.viewModelCompose)
+    implementation(Compose.navigationCompose)
+    implementation(Compose.constraintCompose)
+    implementation(Compose.coilCompose)
+    implementation(Compose.uiTest)
+    implementation(Accompanist.insets)
+    implementation(Accompanist.systemuicontroller)
+    implementation(Accompanist.flowlayouts)
 
     // KMM module
     implementation(project(path = ":shared"))

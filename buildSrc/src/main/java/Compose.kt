@@ -1,0 +1,21 @@
+object Compose {
+    const val snapshot = ""
+    const val version = "0.18.0"
+
+    const val foundation = "androidx.compose.foundation:foundation:${Versions.compose}"
+    const val layout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
+    const val ui = "androidx.compose.ui:ui:${Versions.compose}"
+    const val uiUtil = "androidx.compose.ui:ui-util:${Versions.compose}"
+    const val runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
+    const val runtimeLiveData = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
+    const val material = "androidx.compose.material:material:${Versions.compose}"
+    const val animation = "androidx.compose.animation:animation:${Versions.compose}"
+    const val tooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
+    const val iconsExtended = "androidx.compose.material:material-icons-extended:${Versions.compose}"
+    const val activityCompose = "androidx.activity:activity-compose:${Versions.compose}"
+    const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
+    const val navigationCompose = "androidx.navigation:navigation-compose:2.4.0-alpha06"
+    const val constraintCompose = "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
+    const val coilCompose = "io.coil-kt:coil-compose:1.3.0"
+    const val uiTest = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
+}
