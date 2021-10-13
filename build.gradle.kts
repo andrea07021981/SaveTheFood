@@ -16,7 +16,7 @@ buildscript {
 
     dependencies {
         classpath("com.android.tools.build:gradle:7.0.1")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
         classpath(Dependencies.serialization)
         classpath(Dependencies.sqlDelightPlugin)
         classpath(Dependencies.navigationPlugin)
@@ -37,6 +37,21 @@ allprojects {
         maven(url = "https://www.jetbrains.com/intellij-repository/releases")
         maven(url = "https://jetbrains.bintray.com/intellij-third-party-dependencies")
     }
+}
+
+subprojects {
+    repositories {
+        google()
+        mavenCentral()
+
+        if (!Compose.snapshot.isEmpty()) {
+            maven(url = "https://androidx.dev/snapshots/builds/${Compose.snapshot}/artifacts/repository/")
+        }
+        if (Compose.version.endsWith("SNAPSHOT")) {
+            maven(url = "https://oss.sonatype.org/content/repositories/snapshots/")
+        }
+    }
+
 }
 
 /**

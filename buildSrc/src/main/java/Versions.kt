@@ -5,7 +5,7 @@ object Versions {
     const val navigation = "2.3.3"
     const val constraintLayout = "2.0.4"
     const val gradle = "4.1.0"
-    const val kotlin = "1.5.21"
+    const val kotlin = "1.5.31"
     const val sqlDelight = "1.5.1"
     const val lifecycleExtensions = "2.2.0"
     const val archLifecycle = "2.4.0-alpha03"
@@ -64,4 +64,6 @@ object Versions {
     const val logbackVersion = "1.2.3"
     const val mokoMvvmVersion = "0.11.0"
     const val koinVersion = "3.1.2"
+    const val compose = "1.0.4"
+    const val accompanist = "0.18.0"
 }

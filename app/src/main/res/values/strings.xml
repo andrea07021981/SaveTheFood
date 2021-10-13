@@ -116,4 +116,5 @@
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="pick_up_the_best_pairing">Pick up the best pairing</string>
+    <string name="title_activity_main_compose">MainActivityCompose</string>
 </resources>
