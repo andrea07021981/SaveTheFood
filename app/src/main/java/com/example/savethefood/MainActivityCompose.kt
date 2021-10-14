@@ -8,31 +8,29 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
+import com.example.savethefood.ui.compose.MainApp
+import com.example.savethefood.ui.compose.SaveTheFoodApp
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 
 class MainActivityCompose : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // TODO Enable it when home scaffold is ready
+        // This app draws behind the system bars, so we want to handle fitting system windows
+        //WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            SaveTheFoodTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
+            SaveTheFoodApp {
+                MainApp()
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    SaveTheFoodTheme {
-        Greeting("Android")
+    SaveTheFoodApp {
+        MainApp()
     }
 }
