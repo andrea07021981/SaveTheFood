@@ -8,9 +8,9 @@ import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val LightColorPalette = SaveTheFoodColors(
-    brand = Shadow5,
+    brand = Ocean0,
     brandSecondary = Ocean3,
-    uiBackground = Neutral0,
+    uiBackground = Ocean9,
     uiBorder = Neutral4,
     uiFloated = FunctionalGrey,
     textSecondary = Neutral7,

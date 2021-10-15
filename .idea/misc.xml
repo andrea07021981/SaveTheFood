@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../layout/compose-model-1634161334160.xml" value="0.1" />
+        <entry key="../../../../../layout/compose-model-1634314165982.xml" value="0.125" />
+        <entry key="app/src/main/res/drawable-anydpi/ic_food_add.xml" value="0.23645833333333333" />
+        <entry key="app/src/main/res/drawable/ic_food.xml" value="0.23645833333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.45" />
         <entry key="app/src/main/res/layout/date_picker_layout.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_add_food.xml" value="0.10309017223910841" />
