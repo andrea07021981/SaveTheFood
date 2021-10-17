@@ -8,7 +8,7 @@ object MainDestinations {
 }
 
 // TODO use same as Rally screen but inside body add everything. Need to add navcontroller in constructor line 56
-
+// TODO we should use sealed class, we can pass data through constructors dynamically (ENUM is static)
 /*
 /*
  * Copyright 2021 The Android Open Source Project

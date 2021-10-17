@@ -18,7 +18,7 @@ class MainActivityCompose : ComponentActivity() {
         super.onCreate(savedInstanceState)
         // TODO Enable it when home scaffold is ready
         // This app draws behind the system bars, so we want to handle fitting system windows
-        //WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             SaveTheFoodApp {
                 MainApp()

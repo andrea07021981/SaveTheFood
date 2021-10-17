@@ -35,7 +35,7 @@ class FoodServiceApi(
      * We could also have used:
      *  private suspend inline fun <reified T> HttpClient.apiGet(
             block: HttpRequestBuilder.() -> Unit = {}
-        ) : T = get {
+        ) : T {
             val request = HttpRequestBuilder()
             request.parameter("apiKey", apiKey)
             request.block()
