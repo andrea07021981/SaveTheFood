@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.Dp
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 
 /**
- * Wrap Material [androidx.compose.material.Scaffold] and set [SavetheFooTheme] colors.
+ * Wrap Material [androidx.compose.material.Scaffold] and set [SavetheFoodTheme] colors.
  */
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -54,7 +54,7 @@ fun SaveTheFoodScaffold(
     drawerBackgroundColor: Color = SaveTheFoodTheme.colors.uiBackground,
     drawerContentColor: Color = SaveTheFoodTheme.colors.textSecondary,
     drawerScrimColor: Color = SaveTheFoodTheme.colors.uiBorder,
-    backgroundColor: Color = SaveTheFoodTheme.colors.uiBackground,
+    backgroundColor: Color = SaveTheFoodTheme.colors.brand,
     contentColor: Color = SaveTheFoodTheme.colors.textSecondary,
     content: @Composable (PaddingValues) -> Unit
 ) {

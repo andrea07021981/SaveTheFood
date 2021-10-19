@@ -20,9 +20,9 @@ package com.example.savethefood.shared.data
  * A generic class that holds a value with its loading status.
  * @param <T>
  */
-sealed class Result<out R> {
+sealed class Result<out T> {
 
-    data class Success<out T>(val data: T) : Result<T>()
+    data class Success<T>(val data: T) : Result<T>()
     data class ExError(val exception: Exception) : Result<Nothing>()
     data class Error(val message: String) : Result<Nothing>()
     object Loading : Result<Nothing>()

@@ -4,10 +4,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -17,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.savethefood.shared.data.domain.FoodDomain
+import com.example.savethefood.ui.theme.SaveTheFoodTheme
 
 // TODO follow this for the tabrow (the old TabLayout) https://proandroiddev.com/how-to-use-tabs-in-jetpack-compose-41491be61c39
 
@@ -55,7 +59,13 @@ fun NavGraphBuilder.addHomeGraph(
     modifier: Modifier = Modifier
 ) {
     composable(HomeSections.FOOD.route) { from ->
-        Food(onFoodSelected = { onSelected(it, from) }, modifier = modifier)
+        // TODO test purpose, remove it
+        Food(
+            onFoodSelected = { onSelected(it, from) },
+            modifier = modifier
+        ) {
+            Text(text = HomeSections.FOOD.name)
+        }
     }
     composable(HomeSections.RECIPE.route) { from ->
         Text(text = HomeSections.RECIPE.name)
@@ -70,16 +80,14 @@ fun NavGraphBuilder.addHomeGraph(
 
 @Composable
 fun Food(
+    modifier: Modifier,
+    color: Color = SaveTheFoodTheme.colors.uiBackground,
+    contentColor: Color = SaveTheFoodTheme.colors.textSecondary,
     onFoodSelected: (Long) -> Unit,
-    modifier: Modifier
+    content: @Composable () -> Unit
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-    ) {
-        Text(text = HomeSections.FOOD.name)
-    }
+    // This allows to propagate the content color for all the children through the tree
+    CompositionLocalProvider(LocalContentColor provides contentColor, content = content)
 }
 
 /**
