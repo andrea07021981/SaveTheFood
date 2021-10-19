@@ -19,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
+import com.google.accompanist.insets.systemBarsPadding
 import kotlin.properties.Delegates
 
 // TODO use composition local to pass down through the composition alpha and text color (codelab layout)
@@ -44,6 +45,7 @@ fun SaveTheFoodApp(content: @Composable () -> Unit) {
 @Composable
 fun MainApp() {
     // A surface container using the 'color' color from the theme
+    // TODO maybe remove and pass the colors for the Splash
     Surface(
         contentColor = SaveTheFoodTheme.colors.textPrimary,
         color = SaveTheFoodTheme.colors.uiBackground,
@@ -66,9 +68,9 @@ fun MainApp() {
                 val scaffoldState = rememberScaffoldState()
                 SaveTheFoodScaffold(
                     // This add the space of the status bar since have enabled setDecorFitsSystemWindows
-                    // TODO MOVE IT INTO NAVGRAPH? WE CAN USE systemBarsPadding FOR BOTH TOP AND BOTTOM NAV
+                    // TODO now we use statusBarsPadding for top padding, MOVE IT INTO NAVGRAPH? WE CAN USE systemBarsPadding FOR BOTH TOP AND BOTTOM NAV
                     // TODO here https://medium.com/mobile-app-development-publication/android-jetpack-compose-inset-padding-made-easy-5f156a790979
-                    modifier = Modifier.statusBarsPadding(),
+                    modifier = Modifier.systemBarsPadding(),
                     contentColor = SaveTheFoodTheme.colors.textPrimary,
                     bottomBar = { MainBottomNav(navController = navController, tabs = tabs) },
                     scaffoldState = scaffoldState
