@@ -27,6 +27,7 @@ import androidx.core.app.NotificationManagerCompat
 
 /**
  * Utility to initialize and create a notification
+ * // TODO change it to builder with DSL
  */
 object Notifier {
 

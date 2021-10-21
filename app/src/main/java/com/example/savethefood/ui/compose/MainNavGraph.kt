@@ -40,6 +40,7 @@ fun MainNavGraph(
             startDestination = HomeSections.FOOD.route
         ) {
             // TODO Use generic func AccountsCard Rally (Use for list of foods as well with generic adapter)
+            // TODO we need a generic since th onSeleected could be fooddomain, recipeDomain, etc.. We ecan make onSelected generic and use when is
             addHomeGraph(
                 onSelected = { id: Long, from: NavBackStackEntry ->
                     // In order to discard duplicated navigation events, we check the Lifecycle
@@ -54,6 +55,9 @@ fun MainNavGraph(
     }
 }
 
+/**
+ * Add only the composable root navigation for the bottom nav
+ */
 fun NavGraphBuilder.addHomeGraph(
     onSelected: (Long, NavBackStackEntry) -> Unit,
     modifier: Modifier = Modifier
@@ -68,7 +72,12 @@ fun NavGraphBuilder.addHomeGraph(
         }
     }
     composable(HomeSections.RECIPE.route) { from ->
-        Text(text = HomeSections.RECIPE.name)
+        Food(
+            onFoodSelected = { onSelected(it, from) },
+            modifier = modifier
+        ) {
+            Text(text = HomeSections.RECIPE.name)
+        }
     }
     composable(HomeSections.BAG.route) { from ->
         Text(text = HomeSections.BAG.name)

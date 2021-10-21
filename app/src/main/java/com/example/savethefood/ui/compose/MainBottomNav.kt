@@ -1,13 +1,17 @@
 package com.example.savethefood.ui.compose
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -22,7 +26,9 @@ fun MainBottomNav(
     color: Color = SaveTheFoodTheme.colors.uiBackground,
     contentColor: Color = SaveTheFoodTheme.colors.iconInteractive
 ) {
-    BottomNavigation(
+    // TODO Difference with BottomNavigation?? Is it correct from UI/UX side? Can we manage the add food fab differently?
+    BottomAppBar(
+        cutoutShape = CircleShape,
         backgroundColor = color,
         contentColor = contentColor
     ) {
@@ -36,6 +42,7 @@ fun MainBottomNav(
                 label = { Text(stringResource(section.title)) },
                 selected = currentDestination?.hierarchy?.any { it.route == section.route } == true,
                 onClick = {
+                    // Check avoid reload same page
                     if (section.route != currentRoute) {
                         navController.navigate(section.route) {
                             // Pop up to the start destination of the graph to
