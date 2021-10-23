@@ -20,7 +20,7 @@ class EquipmentInstructionAdapter(
         clickListener: BaseClickListener<EquipmentDomain>,
         item: EquipmentDomain
     ) {
-        with(dataBinding) {
+        with(holder.binding) {
             equipmentItem = item
         }
     }

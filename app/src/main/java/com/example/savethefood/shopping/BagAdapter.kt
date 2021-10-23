@@ -21,7 +21,7 @@ class BagAdapter(
         clickListener: BaseClickListener<BagDomain>,
         item: BagDomain
     ) {
-        with(dataBinding) {
+        with(holder.binding) {
             bagDomain = item
             bagCallback = clickListener
         }

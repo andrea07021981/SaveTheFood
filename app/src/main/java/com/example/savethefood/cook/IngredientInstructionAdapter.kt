@@ -20,7 +20,7 @@ class IngredientInstructionAdapter(
         clickListener: BaseClickListener<IngredientsDomain>,
         item: IngredientsDomain
     ) {
-        with(dataBinding) {
+        with(holder.binding) {
             ingredientItem = item
         }
     }

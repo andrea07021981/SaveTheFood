@@ -2,6 +2,7 @@ package com.example.savethefood.ui.compose
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -18,7 +19,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 
-// TODO pass the color and content from up? maybe it is inherited from savethefoodscaffold, we do not need the param
+// TODO create custom BottomAppBar for Cradle shade
 @Composable
 fun MainBottomNav(
     navController: NavController,
@@ -28,7 +29,7 @@ fun MainBottomNav(
 ) {
     // TODO Difference with BottomNavigation?? Is it correct from UI/UX side? Can we manage the add food fab differently?
     BottomAppBar(
-        cutoutShape = CircleShape,
+        cutoutShape = CircleShape, // TODO change this for the shape? Create a custom bottom nav?
         backgroundColor = color,
         contentColor = contentColor
     ) {
@@ -36,6 +37,7 @@ fun MainBottomNav(
         val currentDestination = navBackStackEntry?.destination
         val currentRoute = navBackStackEntry?.destination?.route
 
+        //does not work, create a custom bottom like jet
         tabs.forEach { section ->
             BottomNavigationItem(
                 icon = { Icon(section.icon, contentDescription = null) },

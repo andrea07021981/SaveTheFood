@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.Modifier
 import androidx.compose.material.*
+import androidx.compose.material.FabPosition
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
@@ -78,13 +79,14 @@ fun MainApp() {
                     floatingActionButton = {
                         FloatingActionButton(
                             shape = CircleShape,
-                            onClick = { /*TODO*/ }) {
+                            onClick = { /*TODO*/ }
+                        ) {
                             Icon(imageVector = Icons.Default.Add, contentDescription = "add")
                         }
                     },
                     isFloatingActionButtonDocked = true,
                     floatingActionButtonPosition = FabPosition.Center,
-                    scaffoldState = scaffoldState
+                    scaffoldState = scaffoldState,
                 ) { innerPaddingModifier ->
                     MainNavGraph(
                         navController = navController,
