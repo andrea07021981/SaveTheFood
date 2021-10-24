@@ -3,7 +3,6 @@ package com.example.savethefood.ui.compose
 import android.content.res.Configuration
 import androidx.compose.animation.*
 import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -13,14 +12,12 @@ import androidx.compose.material.FabPosition
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.systemBarsPadding
 
 // TODO use composition local to pass down through the composition alpha and text color (codelab layout)
@@ -45,6 +42,7 @@ fun SaveTheFoodApp(content: @Composable () -> Unit) {
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 fun MainApp() {
     // A surface container using the 'color' color from the theme
@@ -98,6 +96,7 @@ fun MainApp() {
     }
 }
 
+@ExperimentalAnimationApi
 @Preview
 @Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
