@@ -64,5 +64,15 @@ fun MainBottomNav(
                 }
             )
         }
+
+        // TODO, maybe remove the fab and change the UI style?
+        if (currentRoute == HomeSections.FOOD.route) {
+            BottomNavigationItem(
+                icon = { },
+                label = {  },
+                onClick = { },
+                selected = false
+            )
+        }
     }
 }

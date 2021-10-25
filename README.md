@@ -11,11 +11,17 @@ UNDER DEVELOPMENT: Porting of the business logic into the shared KMM module. Ste
 5 - Migrata data classes (DONE)
 6 - Migrate Repository (DONE)
 7 - Add testing modules (UNDER DEV)
-8 - add Jetpack compose https://developer.android.com/jetpack/compose
+8 - add Jetpack compose https://developer.android.com/jetpack/compose (UNDER DEV)
 8.1 Use example animation codelab https://developer.android.com/codelabs/jetpack-compose-animation
     but not using borders. We can add a baseline to the bottom of the tab with a similar left-right animation
 9 - Migrate VMs
 10- Create one single VM for both ios and android (we probably need to use the StateFlow and SharedFlow)
+
+Main branches
+
+1 - Master          -> Current dev with compose
+2 - finalbeforekmm  -> Project without shared module (Hilt, Retrofit, Room)
+3 - sharedmodulekmm -> Project with KMM shared module (Koin, KTOR, SQLDelight)
 
 <img align="left" width="250" height="500" src="images/login.png">
 <img align="left" width="250" height="500" src="images/signUp.png">
