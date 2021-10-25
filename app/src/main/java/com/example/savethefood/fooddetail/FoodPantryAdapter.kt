@@ -22,7 +22,7 @@ class FoodPantryAdapter(
         clickListener: BaseClickListener<FoodDomain>,
         item: FoodDomain
     ) {
-        with(dataBinding) {
+        with(holder.binding) {
             foodDomain = item
             foodCallback = clickListener as PantryBaseClickListener?
         }

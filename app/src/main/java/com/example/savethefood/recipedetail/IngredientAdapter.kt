@@ -21,7 +21,7 @@ class IngredientAdapter(
         clickListener: BaseClickListener<ExtendedIngredientDomain>,
         item: ExtendedIngredientDomain
     ) {
-        with(dataBinding) {
+        with(holder.binding) {
             ingredientItem = item
             ingredientCallback = clickListener
         }

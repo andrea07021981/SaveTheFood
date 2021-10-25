@@ -8,7 +8,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.savethefood.addfood.FoodTypeAdapter
 
 /**
  * Base adapter with T type and DB for binding
@@ -29,7 +28,7 @@ abstract class BaseAdapter<T, DB : ViewDataBinding>(
 ) {
 
     protected abstract val layoutRes: Int
-    protected lateinit var dataBinding: DB
+    //protected lateinit var dataBinding: DB // TODO make it private and pass it through the bind fun (holder not needed?) After taht, we can even remove the var databinding
 
     class BaseViewHolder<DB : ViewDataBinding>(
         val binding: DB,
@@ -51,7 +50,11 @@ abstract class BaseAdapter<T, DB : ViewDataBinding>(
         return BaseViewHolder.from(parent, layoutRes)
     }
 
-    abstract fun bind(holder: BaseViewHolder<DB>, clickListener: BaseClickListener<T>, item: T)
+    abstract fun bind(
+        holder: BaseViewHolder<DB>, // TODO can we remove it and pass only the binding?
+        clickListener: BaseClickListener<T>,
+        item: T
+    )
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
@@ -62,13 +65,17 @@ abstract class BaseAdapter<T, DB : ViewDataBinding>(
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<DB>, position: Int) {
-        dataBinding = holder.binding
+        /*dataBinding = holder.binding
         bind(holder, onClickListener, getItem(position))
-        dataBinding.executePendingBindings()
+        dataBinding.executePendingBindings()*/
+        with(holder.binding) {
+            bind(holder, onClickListener, getItem(position))
+            executePendingBindings()
+        }
     }
 
     /**
-     * Diffcall back with high order to handle it based on the type of every single adapter
+     * Diff call back with high order to handle it based on the type of every single adapter
      */
     class BaseItemCallback<T>(
         private val compareItems: (old: T, new: T) -> Boolean,

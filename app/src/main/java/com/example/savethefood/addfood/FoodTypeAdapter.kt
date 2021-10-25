@@ -22,7 +22,7 @@ class FoodTypeAdapter(
         clickListener: BaseClickListener<FoodItem>,
         item: FoodItem
     ) {
-        with(dataBinding) {
+        with(holder.binding) {
             foodItem = item
             foodCallback = clickListener
         }

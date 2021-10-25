@@ -22,7 +22,7 @@ class RecipeIngredientsAdapter(
         clickListener: BaseClickListener<RecipeIngredients>,
         item: RecipeIngredients
     ) {
-        with(dataBinding) {
+        with(holder.binding) {
             recipe = item
             callback = clickListener as RecipeIngredientsClickListener?
         }

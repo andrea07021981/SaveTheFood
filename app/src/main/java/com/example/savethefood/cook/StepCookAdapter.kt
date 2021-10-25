@@ -25,7 +25,7 @@ class StepCookAdapter(
         clickListener: BaseClickListener<StepDomain>,
         item: StepDomain
     ) {
-        with(dataBinding) {
+        with(holder.binding) {
             stepItem = item
             stepCallback = clickListener
             val ingredientManager = LinearLayoutManager(this.ingredientsRecyclerView.context, LinearLayoutManager.HORIZONTAL, false)

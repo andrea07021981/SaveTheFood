@@ -21,7 +21,7 @@ class RecipeAdapter(
         clickListener: BaseClickListener<RecipeResult>,
         item: RecipeResult
     ) {
-        with(dataBinding) {
+        with(holder.binding) {
             recipeItem = item
             recipeCallback = clickListener
         }
