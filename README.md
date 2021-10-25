@@ -8,7 +8,7 @@ UNDER DEVELOPMENT: Porting of the business logic into the shared KMM module. Ste
 2 - Migrate Retrofit to KTOR (DONE)
 3 - Migrate Business local datasource (DONE)
 4 - Migrate Business local remotesource (DONE)
-5 - Migrata data classes (DONE)
+5 - Migrate data classes (DONE)
 6 - Migrate Repository (DONE)
 7 - Add testing modules (UNDER DEV)
 8 - add Jetpack compose https://developer.android.com/jetpack/compose (UNDER DEV)
