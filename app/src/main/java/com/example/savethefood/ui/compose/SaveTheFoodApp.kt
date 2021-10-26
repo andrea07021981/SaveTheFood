@@ -42,7 +42,6 @@ fun SaveTheFoodApp(content: @Composable () -> Unit) {
     }
 }
 
-@ExperimentalAnimationApi
 @Composable
 fun MainApp() {
     // A surface container using the 'color' color from the theme
@@ -96,7 +95,6 @@ fun MainApp() {
     }
 }
 
-@ExperimentalAnimationApi
 @Preview
 @Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable

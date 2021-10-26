@@ -17,7 +17,7 @@ import kotlin.collections.LinkedHashSet
 
 
 @Deprecated("Moved to shared")
-class BagDetailViewModelOld @ViewModelInject constructor(
+class BagDetailViewModel @ViewModelInject constructor(
     private val shoppingDataRepository: com.example.savethefood.shared.data.source.repository.ShoppingRepository,
     private val foodDataRepository: com.example.savethefood.shared.data.source.repository.FoodRepository,
     @Assisted val bag: SavedStateHandle

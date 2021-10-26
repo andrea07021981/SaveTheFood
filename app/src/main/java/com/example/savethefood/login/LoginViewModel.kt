@@ -15,12 +15,12 @@ import kotlinx.coroutines.launch
 
 @Deprecated("Moved to shared")
 @ExperimentalCoroutinesApi
-class LoginViewModelDep @ViewModelInject constructor(
+class LoginViewModel @ViewModelInject constructor(
     private val userDataRepository: UserRepository
 ) : ViewModel() {
 
     companion object {
-        private val TAG = LoginViewModelDep::class.java.simpleName
+        private val TAG = LoginViewModel::class.java.simpleName
     }
 
     val animationResourceView = R.anim.fade_in
