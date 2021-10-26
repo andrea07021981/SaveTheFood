@@ -20,8 +20,11 @@ UNDER DEVELOPMENT: Porting of the business logic into the shared KMM module. Ste
 Main branches
 
 1 - Master          -> Current dev with compose
+
 2 - finalbeforekmm  -> Project without shared module (Hilt, Retrofit, Room)
+
 3 - sharedmodulekmm -> Project with KMM shared module (Koin, KTOR, SQLDelight)
+
 
 <img align="left" width="250" height="500" src="images/login.png">
 <img align="left" width="250" height="500" src="images/signUp.png">
