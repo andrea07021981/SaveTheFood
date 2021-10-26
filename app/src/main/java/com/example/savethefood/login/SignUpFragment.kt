@@ -12,7 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-//TODO Add ontext change to the strenght password and use library https://github.com/nulab/zxcvbn4j/issues/75 and binding, customview like
+//TODO Add ontext change to the strenght password and use library https://github.com/nulab/zxcvbn4j/issues/75 and binding
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment<LoginViewModel, FragmentSignupBinding>() {

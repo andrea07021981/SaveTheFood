@@ -3,7 +3,7 @@ package com.example.savethefood.map
 import androidx.lifecycle.ViewModel
 
 @Deprecated("Moved to shared")
-class MapViewModelOld(
+class MapViewModel(
 
 ) : ViewModel() {
 

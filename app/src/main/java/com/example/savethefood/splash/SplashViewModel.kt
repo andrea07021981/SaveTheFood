@@ -8,7 +8,7 @@ import com.example.savethefood.Event
 import com.example.savethefood.R
 
 @Deprecated("Moved to shared")
-class SplashViewModelOld : ViewModel() {
+class SplashViewModel : ViewModel() {
 
     val animationResource = R.anim.bounce
 

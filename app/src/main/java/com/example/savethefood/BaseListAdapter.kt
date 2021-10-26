@@ -1,4 +1,4 @@
-package com.example.savethefood.work
+package com.example.savethefood
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

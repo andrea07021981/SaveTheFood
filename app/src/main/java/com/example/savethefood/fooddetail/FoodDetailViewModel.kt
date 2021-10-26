@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 
 @Deprecated("Moved to shared")
-class FoodDetailViewModelOld @ViewModelInject constructor(
+class FoodDetailViewModel @ViewModelInject constructor(
     private val foodDataRepository: com.example.savethefood.shared.data.source.repository.FoodRepository,
     private val recipeDataRepository: RecipeRepository,
     @Assisted food: SavedStateHandle

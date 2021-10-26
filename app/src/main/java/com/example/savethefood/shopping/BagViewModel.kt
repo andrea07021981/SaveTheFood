@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.transform
 
 
 @Deprecated("Moved to shared")
-class BagViewModelOld @ViewModelInject constructor(
+class BagViewModel @ViewModelInject constructor(
     private val shoppingDataRepository: ShoppingRepository,
 ) : ViewModel(){
 

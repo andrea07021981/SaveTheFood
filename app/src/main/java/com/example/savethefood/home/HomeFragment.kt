@@ -19,8 +19,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 // TODO add weekly recipe scheduler
 
-// TODO also add different adapter https://proandroiddev.com/understanding-kotlin-sealed-classes-65c0adad7015
-
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
