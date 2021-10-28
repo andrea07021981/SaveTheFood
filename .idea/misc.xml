@@ -17,9 +17,15 @@
         <entry key="../../../../../layout/compose-model-1635297352545.xml" value="1.0" />
         <entry key="../../../../../layout/compose-model-1635297352643.xml" value="0.1838826794392437" />
         <entry key="../../../../../layout/compose-model-1635363263786.xml" value="0.7067307692307693" />
+        <entry key="../../../../../layout/compose-model-1635374241054.xml" value="0.5" />
         <entry key="../../../../../layout/compose-model-1635374241069.xml" value="0.7736842105263158" />
+        <entry key="../../../../../layout/compose-model-1635439797373.xml" value="0.19166666666666668" />
+        <entry key="../../../../../layout/compose-model-1635451754991.xml" value="0.1" />
+        <entry key="../../../../../layout/compose-model-1635456890457.xml" value="0.1" />
+        <entry key="../../../../../layout/compose-model-1635457168323.xml" value="0.5" />
         <entry key="../../../../../layout/custom_preview.xml" value="0.234375" />
         <entry key="app/src/main/res/drawable-anydpi/ic_food_add.xml" value="0.23645833333333333" />
+        <entry key="app/src/main/res/drawable/empty.xml" value="0.19166666666666668" />
         <entry key="app/src/main/res/drawable/ic_food.xml" value="0.23645833333333333" />
         <entry key="app/src/main/res/drawable/tab_background.xml" value="0.23645833333333333" />
         <entry key="app/src/main/res/drawable/tab_text.xml" value="0.23645833333333333" />
@@ -27,7 +33,7 @@
         <entry key="app/src/main/res/layout/bag_item.xml" value="0.1887031408308004" />
         <entry key="app/src/main/res/layout/custom_tab_layout.xml" value="0.12409420289855072" />
         <entry key="app/src/main/res/layout/date_picker_layout.xml" value="0.10309017223910841" />
-        <entry key="app/src/main/res/layout/food_item.xml" value="0.12771739130434784" />
+        <entry key="app/src/main/res/layout/food_item.xml" value="0.375" />
         <entry key="app/src/main/res/layout/food_type_item.xml" value="0.12681159420289856" />
         <entry key="app/src/main/res/layout/fragment_add_food.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_bag.xml" value="0.10309017223910841" />

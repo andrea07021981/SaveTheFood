@@ -64,6 +64,12 @@ object Versions {
     const val logbackVersion = "1.2.3"
     const val mokoMvvmVersion = "0.11.0"
     const val koinVersion = "3.1.2"
+
+    // Compose
     const val compose = "1.0.4"
     const val accompanist = "0.18.0"
+    const val constraintCompose = "1.0.0-rc01"
+    const val viewModelCompose = "1.0.0-alpha07"
+    const val navigationCompose = "2.4.0-alpha06"
+    const val coilCompose = "1.3.0"
 }
