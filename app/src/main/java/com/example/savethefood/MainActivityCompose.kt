@@ -14,7 +14,7 @@ import com.example.savethefood.ui.compose.SaveTheFoodApp
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 
 // TODO use same structure with LazyRow for home page like Jeetpack feed OR
-// TODO  follow todo app here (vertical list for storage type (5 elements by due date closer), click + to add, click arrow to eexpand the list ) https://www.justinmind.com/blog/list-ui-design/
+// TODO  follow todo app here (vertical list for storage type (5 elements by due date closer), click + to add, click arrow to eexpand the list ) https://www.justinmindH.com/blog/list-ui-design/
 // TODO OR horizontal view with 5 items close to best before, click arrow and list switch to veertical and expands
 class MainActivityCompose : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
