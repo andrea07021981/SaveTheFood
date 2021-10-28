@@ -5,16 +5,26 @@ IMPORTANT: Create a free api key here and change it in file ApiKey ----> https:/
 
 UNDER DEVELOPMENT: Porting of the business logic into the shared KMM module. Steps:
 1 - Migrate room to sqldelight (DONE)
+
 2 - Migrate Retrofit to KTOR (DONE)
+
 3 - Migrate Business local datasource (DONE)
+
 4 - Migrate Business local remotesource (DONE)
+
 5 - Migrate data classes (DONE)
+
 6 - Migrate Repository (DONE)
+
 7 - Add testing modules (UNDER DEV)
+
 8 - add Jetpack compose https://developer.android.com/jetpack/compose (UNDER DEV)
+
 8.1 Use example animation codelab https://developer.android.com/codelabs/jetpack-compose-animation
     but not using borders. We can add a baseline to the bottom of the tab with a similar left-right animation
+    
 9 - Migrate VMs
+
 10- Create one single VM for both ios and android (we probably need to use the StateFlow and SharedFlow)
 
 Main branches

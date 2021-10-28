@@ -122,3 +122,6 @@ fun <T> List<T>?.getResult(): com.example.savethefood.shared.data.Result<List<T>
         }
     } ?: com.example.savethefood.shared.data.Result.ExError(java.lang.Exception("Error retrieving data"))
 }
+
+fun String.getResourceByName(context: Context): Int =
+    context.resources.getIdentifier(this, "drawable", context.packageName)
