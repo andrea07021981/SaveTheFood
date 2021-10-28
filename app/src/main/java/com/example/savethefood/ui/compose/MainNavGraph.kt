@@ -1,14 +1,15 @@
 package com.example.savethefood.ui.compose
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Button
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.LocalContentColor
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.Lifecycle
@@ -20,6 +21,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.savethefood.shared.data.domain.FoodDomain
+import com.example.savethefood.ui.compose.pantry.FoodItem
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 
 // TODO follow this for the tabrow (the old TabLayout) https://proandroiddev.com/how-to-use-tabs-in-jetpack-compose-41491be61c39
@@ -64,6 +66,7 @@ fun NavGraphBuilder.addHomeGraph(
 ) {
     composable(HomeSections.FOOD.route) { from ->
         // TODO test purpose, remove it
+        // TODO add vm here and in every composable
         Food(
             onFoodSelected = { onSelected(it, from) },
             modifier = modifier
@@ -80,7 +83,35 @@ fun NavGraphBuilder.addHomeGraph(
         }
     }
     composable(HomeSections.BAG.route) { from ->
-        Text(text = HomeSections.BAG.name)
+        // TODO TEst for list, I will remove it
+        val data by rememberSaveable {
+            mutableStateOf(
+                listOf(
+                    FoodDomain(title = "Test 1"),
+                    FoodDomain(title = "Test 2"),
+                    FoodDomain(title = "Test 3"),
+                    FoodDomain(title = "Test 4"),
+                    FoodDomain(title = "Test 5"),
+                    FoodDomain(title = "Test 6"),
+                    FoodDomain(title = "Test 7")
+                )
+            )
+        }
+
+        LazyColumn(modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth())
+        {
+            items(data) {
+                Column(modifier = Modifier.fillParentMaxWidth()) {
+                    FoodItem(
+                        foodDomain = it,
+                        onFoodClick = {
+                            Log.d("TEST", it.toString())
+                        })
+                }
+            }
+        }
     }
     composable(HomeSections.PLAN.route) { from ->
         Text(text = HomeSections.PLAN.name)
