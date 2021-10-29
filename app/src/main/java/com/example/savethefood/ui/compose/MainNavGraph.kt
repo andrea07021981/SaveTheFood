@@ -21,6 +21,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.savethefood.shared.data.domain.FoodDomain
+import com.example.savethefood.shared.utils.FoodImage
+import com.example.savethefood.shared.utils.StorageType
 import com.example.savethefood.ui.compose.pantry.FoodItem
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 
@@ -87,13 +89,30 @@ fun NavGraphBuilder.addHomeGraph(
         val data by rememberSaveable {
             mutableStateOf(
                 listOf(
-                    FoodDomain(title = "Test 1"),
-                    FoodDomain(title = "Test 2"),
-                    FoodDomain(title = "Test 3"),
-                    FoodDomain(title = "Test 4"),
-                    FoodDomain(title = "Test 5"),
-                    FoodDomain(title = "Test 6"),
-                    FoodDomain(title = "Test 7")
+                    FoodDomain(
+                        title = "Test 1",
+                        img = FoodImage.ASPARAGUS,
+                        storageType = StorageType.FRIDGE,
+                        bestBefore = 1635542008818
+                    ),
+                    FoodDomain(
+                        title = "Test 2",
+                        img = FoodImage.BANANA,
+                        storageType = StorageType.DRY,
+                        bestBefore = 1634788800000
+                    ),
+                    FoodDomain(
+                        title = "Test 3",
+                        img = FoodImage.BEER,
+                        storageType = StorageType.FREEZER,
+                        bestBefore = 1637470800000
+                    ),
+                    FoodDomain(
+                        title = "Test 4",
+                        img = FoodImage.HAMBURGER,
+                        storageType = StorageType.FREEZER,
+                        bestBefore = 1632196800000
+                    )
                 )
             )
         }

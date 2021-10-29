@@ -29,6 +29,7 @@ private val LightColorPalette = SaveTheFoodColors(
     gradient2_2 = listOf(Ocean3, Shadow3),
     gradient2_3 = listOf(Lavender3, Rose2),
     tornado1 = listOf(Shadow4, Ocean3),
+    warning = WarningOrange,
     isDark = false
 )
 
@@ -56,6 +57,7 @@ private val DarkColorPalette = SaveTheFoodColors(
     gradient2_2 = listOf(Ocean4, Shadow2),
     gradient2_3 = listOf(Lavender3, Rose3),
     tornado1 = listOf(Shadow4, Ocean3),
+    warning = WarningOrange,
     isDark = true
 )
 
@@ -122,6 +124,7 @@ class SaveTheFoodColors(
     iconInteractiveInactive: Color,
     error: Color,
     notificationBadge: Color = error,
+    warning: Color,
     isDark: Boolean
 ) {
     var gradient6_1 by mutableStateOf(gradient6_1)
@@ -178,6 +181,9 @@ class SaveTheFoodColors(
         private set
     var notificationBadge by mutableStateOf(notificationBadge)
         private set
+    var warning by mutableStateOf(warning)
+        private set
+
     var isDark by mutableStateOf(isDark)
         private set
 
@@ -209,6 +215,7 @@ class SaveTheFoodColors(
         iconInteractiveInactive = other.iconInteractiveInactive
         error = other.error
         notificationBadge = other.notificationBadge
+        warning = other.warning
         isDark = other.isDark
     }
 
@@ -240,6 +247,7 @@ class SaveTheFoodColors(
         iconInteractiveInactive = iconInteractiveInactive,
         error = error,
         notificationBadge = notificationBadge,
+        warning = warning,
         isDark = isDark,
     )
 }
