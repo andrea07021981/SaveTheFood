@@ -11,6 +11,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -24,9 +25,9 @@ import com.example.savethefood.ui.theme.SaveTheFoodTheme
 fun <T> SaveTheFoodCard(
     modifier: Modifier = Modifier,
     shape: Shape = RoundedCornerShape(20.dp),
-    color: Color = SaveTheFoodTheme.colors.uiBackground,
-    contentColor: Color = SaveTheFoodTheme.colors.textPrimary,
-    border: BorderStroke? = null,
+    color: Color = SaveTheFoodTheme.colors.brand,
+    contentColor: Color = SaveTheFoodTheme.colors.uiBorder,
+    border: BorderStroke? = BorderStroke(2.dp, SaveTheFoodTheme.colors.uiBorder),
     elevation: Dp = 16.dp,
     item: T,
     onItemClick: (T) -> Unit,
@@ -36,6 +37,11 @@ fun <T> SaveTheFoodCard(
         modifier = modifier
             .padding(8.dp)
             .fillMaxWidth()
+            .shadow(
+                elevation = 8.dp,
+                shape = RoundedCornerShape(22.dp),
+                clip = true
+            )
             .clickable { onItemClick(item) },
         shape = shape,
         backgroundColor = color,
