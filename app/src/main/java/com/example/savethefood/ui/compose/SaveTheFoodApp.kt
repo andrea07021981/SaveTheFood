@@ -73,16 +73,6 @@ fun MainApp() {
                     modifier = Modifier.systemBarsPadding(),
                     contentColor = SaveTheFoodTheme.colors.textPrimary,
                     bottomBar = { MainBottomNav(navController = navController, tabs = tabs) },
-                    floatingActionButton = {
-                        FloatingActionButton(
-                            shape = CircleShape,
-                            onClick = { /*TODO*/ }
-                        ) {
-                            Icon(imageVector = Icons.Default.Add, contentDescription = "add")
-                        }
-                    },
-                    isFloatingActionButtonDocked = true,
-                    floatingActionButtonPosition = FabPosition.Center,
                     scaffoldState = scaffoldState,
                 ) { innerPaddingModifier ->
                     MainNavGraph(

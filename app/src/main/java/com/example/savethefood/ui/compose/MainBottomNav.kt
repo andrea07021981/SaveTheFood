@@ -30,7 +30,6 @@ fun MainBottomNav(
 ) {
     // TODO Difference with BottomNavigation?? Is it correct from UI/UX side? Can we manage the add food fab differently?
     BottomAppBar(
-        cutoutShape = CircleShape, // TODO change this for the shape? Create a custom bottom nav?
         backgroundColor = color,
         contentColor = contentColor
     ) {
@@ -62,16 +61,6 @@ fun MainBottomNav(
                         }
                     }
                 }
-            )
-        }
-
-        // TODO, maybe remove the fab and change the UI style?
-        if (currentRoute == HomeSections.FOOD.route) {
-            BottomNavigationItem(
-                icon = { },
-                label = {  },
-                onClick = { },
-                selected = false
             )
         }
     }

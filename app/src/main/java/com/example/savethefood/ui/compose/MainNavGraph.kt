@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,9 +23,14 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.utils.FoodImage
+import com.example.savethefood.shared.utils.QuantityType
 import com.example.savethefood.shared.utils.StorageType
+import com.example.savethefood.shared.viewmodel.HomeViewModel
 import com.example.savethefood.ui.compose.pantry.FoodItem
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
+import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 // TODO follow this for the tabrow (the old TabLayout) https://proandroiddev.com/how-to-use-tabs-in-jetpack-compose-41491be61c39
 
@@ -67,13 +73,24 @@ fun NavGraphBuilder.addHomeGraph(
     modifier: Modifier = Modifier
 ) {
     composable(HomeSections.FOOD.route) { from ->
-        // TODO test purpose, remove it
-        // TODO add vm here and in every composable
-        Food(
-            onFoodSelected = { onSelected(it, from) },
-            modifier = modifier
-        ) {
-            Text(text = HomeSections.FOOD.name)
+        // TODO test purpose, every compose home view will be in a separated file and it will have vm in params
+        val viewModel = getViewModel<HomeViewModel>() // Koin
+
+        val foods by viewModel.foodList.observeAsState()
+
+        LazyColumn(modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth())
+        {
+            items(items = foods ?: listOf()) {
+                Column(modifier = Modifier.fillParentMaxWidth()) {
+                    FoodItem(
+                        foodDomain = it,
+                        onFoodClick = {
+                            Log.d("TEST", it.toString())
+                        })
+                }
+            }
         }
     }
     composable(HomeSections.RECIPE.route) { from ->
@@ -85,52 +102,7 @@ fun NavGraphBuilder.addHomeGraph(
         }
     }
     composable(HomeSections.BAG.route) { from ->
-        // TODO TEst for list, I will remove it
-        val data by rememberSaveable {
-            mutableStateOf(
-                listOf(
-                    FoodDomain(
-                        title = "Test 1",
-                        img = FoodImage.ASPARAGUS,
-                        storageType = StorageType.FRIDGE,
-                        bestBefore = 1635542008818
-                    ),
-                    FoodDomain(
-                        title = "Test 2",
-                        img = FoodImage.BANANA,
-                        storageType = StorageType.DRY,
-                        bestBefore = 1634788800000
-                    ),
-                    FoodDomain(
-                        title = "Test 3",
-                        img = FoodImage.BEER,
-                        storageType = StorageType.FREEZER,
-                        bestBefore = 1637470800000
-                    ),
-                    FoodDomain(
-                        title = "Test 4",
-                        img = FoodImage.HAMBURGER,
-                        storageType = StorageType.FREEZER,
-                        bestBefore = 1632196800000
-                    )
-                )
-            )
-        }
-
-        LazyColumn(modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth())
-        {
-            items(data) {
-                Column(modifier = Modifier.fillParentMaxWidth()) {
-                    FoodItem(
-                        foodDomain = it,
-                        onFoodClick = {
-                            Log.d("TEST", it.toString())
-                        })
-                }
-            }
-        }
+        Text(text = HomeSections.BAG.name)
     }
     composable(HomeSections.PLAN.route) { from ->
         Text(text = HomeSections.PLAN.name)

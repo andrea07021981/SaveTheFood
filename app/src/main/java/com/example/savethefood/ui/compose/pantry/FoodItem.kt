@@ -23,6 +23,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.ui.compose.component.SaveTheFoodCard
 import com.example.savethefood.ui.compose.extention.bindExpireDate
+import com.example.savethefood.ui.compose.extention.formatQuantityByType
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import com.example.savethefood.util.getResourceByName
 
@@ -34,8 +35,7 @@ fun FoodItem(
 ) {
     val context =  LocalContext.current
     SaveTheFoodCard(
-        modifier = modifier
-            .defaultMinSize(minHeight = 100.dp),
+        modifier = modifier,
         item = foodDomain,
         onItemClick = onFoodClick
     ) {
@@ -67,12 +67,14 @@ fun FoodItem(
             ) {
                 Text(
                     modifier = Modifier.weight(1F),
+                    style = MaterialTheme.typography.h6,
                     text = it.title,
                     textAlign = TextAlign.Start
                 )
                 Text(
                     modifier = Modifier.weight(1F),
-                    text = it.quantity.toString(),
+                    style = MaterialTheme.typography.h6,
+                    text = it.formatQuantityByType(context),
                     textAlign = TextAlign.End
                 )
             }
@@ -94,7 +96,6 @@ fun FoodItem(
                 Text(
                     modifier = Modifier.weight(.3F),
                     text = it.storageType.type,
-                    color = SaveTheFoodTheme.colors.uiBorder,
                     textAlign = TextAlign.End
                 )
             }

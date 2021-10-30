@@ -26,7 +26,7 @@ fun <T> SaveTheFoodCard(
     modifier: Modifier = Modifier,
     shape: Shape = RoundedCornerShape(20.dp),
     color: Color = SaveTheFoodTheme.colors.brand,
-    contentColor: Color = SaveTheFoodTheme.colors.uiBorder,
+    contentColor: Color = SaveTheFoodTheme.colors.textPrimary,
     border: BorderStroke? = BorderStroke(2.dp, SaveTheFoodTheme.colors.uiBorder),
     elevation: Dp = 16.dp,
     item: T,

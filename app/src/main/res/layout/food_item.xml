@@ -112,8 +112,8 @@
                     android:gravity="end"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    bind:unit="@{foodDomain.quantityType}"
                     bind:formatQuantity="@{foodDomain.quantity}"
+                    bind:unit="@{foodDomain.quantityType}"
                     tools:text="300 g" />
 
                 <TextView

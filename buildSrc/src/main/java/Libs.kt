@@ -156,6 +156,7 @@ object Libs {
 
     const val koinAndroid = "io.insert-koin:koin-android:${Versions.koin}"
     const val koinNative = "io.insert-koin:koin-core:${Versions.koin}"
+    const val koinCompose = "io.insert-koin:koin-androidx-compose:${Versions.koin}"
 
     const val ktorNative = "io.ktor:ktor-client-core:${Versions.ktorVersion}"
     const val ktorAndroid = "io.ktor:ktor-client-android:${Versions.ktorVersion}"

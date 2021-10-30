@@ -342,6 +342,7 @@ dependencies {
     implementation(Libs.shimmer)
 
     implementation(Libs.koinAndroid)
+    implementation(Libs.koinCompose)
 
     // Compose
     implementation(Compose.runtime)
