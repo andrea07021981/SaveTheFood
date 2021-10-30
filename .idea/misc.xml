@@ -28,15 +28,20 @@
         <entry key="../../../../../layout/compose-model-1635516807071.xml" value="0.5" />
         <entry key="../../../../../layout/compose-model-1635516807072.xml" value="0.35462962962962963" />
         <entry key="../../../../../layout/compose-model-1635525054210.xml" value="0.35462962962962963" />
-        <entry key="../../../../../layout/compose-model-1635529484266.xml" value="1.0" />
+        <entry key="../../../../../layout/compose-model-1635529484266.xml" value="0.55" />
         <entry key="../../../../../layout/compose-model-1635543252543.xml" value="0.337037037037037" />
+        <entry key="../../../../../layout/compose-model-1635610201415.xml" value="0.3416666666666667" />
+        <entry key="../../../../../layout/compose-model-1635611483733.xml" value="0.3416666666666667" />
+        <entry key="../../../../../layout/compose-model-1635624346793.xml" value="0.23055555555555557" />
+        <entry key="../../../../../layout/compose-model-1635625976206.xml" value="0.21832770270270271" />
+        <entry key="../../../../../layout/compose-model-1635627099811.xml" value="0.1" />
         <entry key="../../../../../layout/custom_preview.xml" value="0.234375" />
         <entry key="app/src/main/res/drawable-anydpi/ic_food_add.xml" value="0.23645833333333333" />
         <entry key="app/src/main/res/drawable/empty.xml" value="0.19166666666666668" />
         <entry key="app/src/main/res/drawable/ic_food.xml" value="0.23645833333333333" />
         <entry key="app/src/main/res/drawable/tab_background.xml" value="0.23645833333333333" />
         <entry key="app/src/main/res/drawable/tab_text.xml" value="0.23645833333333333" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.39711934156378603" />
         <entry key="app/src/main/res/layout/bag_item.xml" value="0.1887031408308004" />
         <entry key="app/src/main/res/layout/custom_tab_layout.xml" value="0.12409420289855072" />
         <entry key="app/src/main/res/layout/date_picker_layout.xml" value="0.10309017223910841" />

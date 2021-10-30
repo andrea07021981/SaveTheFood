@@ -56,14 +56,14 @@ object Versions {
     const val mavenAnt = "2.1.3"
     const val stepper = "2.4.1"
     const val shimmer = "0.5.0"
-    const val koin = "3.1.2"
+    const val koin = "3.1.3"
     const val ktorVersion = "1.6.2"
     const val serializationVersion = "1.0.0-RC"
     const val sqlDelightVersion = "1.5.1"
     const val lifecycleVersion = "2.4.0-alpha02"
     const val logbackVersion = "1.2.3"
     const val mokoMvvmVersion = "0.11.0"
-    const val koinVersion = "3.1.2"
+    const val koinVersion = "3.1.3"
 
     // Compose
     const val compose = "1.0.4"

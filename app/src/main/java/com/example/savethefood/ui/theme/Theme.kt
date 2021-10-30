@@ -8,11 +8,12 @@ import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val LightColorPalette = SaveTheFoodColors(
-    brand = Ocean0,
+    brand = Neutral0,
     brandSecondary = Ocean3,
     uiBackground = Ocean9,
     uiBorder = Neutral4,
     uiFloated = FunctionalGrey,
+    textPrimary = Neutral8,
     textSecondary = Neutral7,
     textHelp = Neutral6,
     textInteractive = Neutral0,
@@ -39,7 +40,7 @@ private val DarkColorPalette = SaveTheFoodColors(
     uiBackground = Neutral8,
     uiBorder = Neutral3,
     uiFloated = FunctionalDarkGrey,
-    textPrimary = Shadow1,
+    textPrimary = Ocean0,
     textSecondary = Neutral0,
     textHelp = Neutral1,
     textInteractive = Neutral7,
