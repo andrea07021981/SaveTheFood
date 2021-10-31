@@ -71,4 +71,5 @@ val FunctionalGrey = Color(0xfff6f6f6)
 val FunctionalDarkGrey = Color(0xff2e2e2e)
 val WarningOrange = Color(0xFFFFBB33)
 
+const val AlphaHalf = 0.5F
 const val AlphaNearOpaque = 0.95f

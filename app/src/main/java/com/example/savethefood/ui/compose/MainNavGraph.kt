@@ -62,7 +62,17 @@ fun MainNavGraph(
                 modifier = modifier
             )
         }
-        // TODO add the other views here lik eedit food, add recipe, etc
+        composable(
+            route = MainDestinations.LOGIN_ROUTE
+        ) {
+            Text(text = "Login page")
+            // Add the login here (or a nested graph like addLoginGraph??)
+            //  Login(
+            //    logged: Boolean,
+            //    onLogChanged { navigate to MainDestinations.HOME}
+            //  )
+            // TODO login success, navigate to MainDestinations.HOME
+        }
     }
 }
 
@@ -73,6 +83,8 @@ fun NavGraphBuilder.addHomeGraph(
     onSelected: (Long, NavBackStackEntry) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    // TODO Add nested graphs like addFoodGraph() where we have food and food detail. Inside use FOOD route and the FOOD route/foodId
+    // TODO the add button will be declared inside pantry, use state hoisting to open the new food
     composable(HomeSections.FOOD.route) { from ->
         Pantry(onFoodSelected = { onSelected(it, from) })
     }

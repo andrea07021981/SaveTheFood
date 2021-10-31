@@ -69,6 +69,7 @@ fun SaveTheFoodTheme(
 ) {
     val colors = if (darkTheme) DarkColorPalette else LightColorPalette
 
+    // TODO remove it?
     val sysUiController = rememberSystemUiController()
     SideEffect {
         sysUiController.setSystemBarsColor(
