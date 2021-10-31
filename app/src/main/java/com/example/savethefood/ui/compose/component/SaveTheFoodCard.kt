@@ -25,7 +25,7 @@ import com.example.savethefood.ui.theme.SaveTheFoodTheme
 fun <T> SaveTheFoodCard(
     modifier: Modifier = Modifier,
     shape: Shape = RoundedCornerShape(20.dp),
-    color: Color = SaveTheFoodTheme.colors.brand,
+    color: Color = SaveTheFoodTheme.colors.brandSecondary,
     contentColor: Color = SaveTheFoodTheme.colors.textPrimary,
     border: BorderStroke? = BorderStroke(2.dp, SaveTheFoodTheme.colors.uiBorder),
     elevation: Dp = 16.dp,

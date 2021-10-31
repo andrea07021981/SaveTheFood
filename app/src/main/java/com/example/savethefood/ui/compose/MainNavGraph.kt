@@ -27,6 +27,7 @@ import com.example.savethefood.shared.utils.QuantityType
 import com.example.savethefood.shared.utils.StorageType
 import com.example.savethefood.shared.viewmodel.HomeViewModel
 import com.example.savethefood.ui.compose.pantry.FoodItem
+import com.example.savethefood.ui.compose.pantry.Pantry
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import org.koin.androidx.compose.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -73,25 +74,7 @@ fun NavGraphBuilder.addHomeGraph(
     modifier: Modifier = Modifier
 ) {
     composable(HomeSections.FOOD.route) { from ->
-        // TODO test purpose, every compose home view will be in a separated file and it will have vm in params
-        val viewModel = getViewModel<HomeViewModel>() // Koin
-
-        val foods by viewModel.foodList.observeAsState()
-
-        LazyColumn(modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth())
-        {
-            items(items = foods ?: listOf()) {
-                Column(modifier = Modifier.fillParentMaxWidth()) {
-                    FoodItem(
-                        foodDomain = it,
-                        onFoodClick = {
-                            Log.d("TEST", it.toString())
-                        })
-                }
-            }
-        }
+        Pantry(onFoodSelected = { onSelected(it, from) })
     }
     composable(HomeSections.RECIPE.route) { from ->
         Food(
