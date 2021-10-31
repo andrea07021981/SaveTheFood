@@ -1,6 +1,8 @@
 package com.example.savethefood.ui.compose
 
 object MainDestinations {
+    const val LOGIN_ROUTE = "login"
+    const val SIGNUP_ROUTE = "signup"
     const val HOME_ROUTE = "home"
     const val FOOD_ROUTE = "food"
     const val RECIPE_ROUTE = "recipe"

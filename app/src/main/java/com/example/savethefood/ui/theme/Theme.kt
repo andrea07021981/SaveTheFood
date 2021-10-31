@@ -9,8 +9,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val LightColorPalette = SaveTheFoodColors(
     brand = Neutral0,
-    brandSecondary = Ocean3,
-    uiBackground = Ocean9,
+    brandSecondary = Neutral0,
+    uiBackground = Rose8,
     uiBorder = Neutral4,
     uiFloated = FunctionalGrey,
     textPrimary = Neutral8,
@@ -35,8 +35,8 @@ private val LightColorPalette = SaveTheFoodColors(
 )
 
 private val DarkColorPalette = SaveTheFoodColors(
-    brand = Shadow1,
-    brandSecondary = Ocean2,
+    brand = Neutral8,
+    brandSecondary = Neutral4,
     uiBackground = Neutral8,
     uiBorder = Neutral3,
     uiFloated = FunctionalDarkGrey,
@@ -69,6 +69,7 @@ fun SaveTheFoodTheme(
 ) {
     val colors = if (darkTheme) DarkColorPalette else LightColorPalette
 
+    // TODO remove it?
     val sysUiController = rememberSystemUiController()
     SideEffect {
         sysUiController.setSystemBarsColor(
