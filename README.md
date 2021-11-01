@@ -57,6 +57,6 @@ Cook                                                |
 
 Login                                                     |  Recipes.                                                     | 
 :--------------------------------------------------------:|:-------------------------------------------------------------:|
-<img width="250" height="500" src="images/ComposeLogin.png">|<img width="250" height="500" src="images/ComposePantry.png">|
+<img width="250" height="500" src="images/ComposeSplash.png">|<img width="250" height="500" src="images/ComposePantry.png">|
 
 
