@@ -54,12 +54,4 @@ Main branches
 <img align="left" width="250" height="500" src="images/cook.png">
 
 
-//*************************
-
-// New compose layout (DEV)
-
-//*************************
-<img align="left" width="250" height="500" src="images/ComposeLogin.png">
-<img align="left" width="250" height="500" src="images/ComposePantry.png">
-
 
