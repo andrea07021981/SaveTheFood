@@ -8,19 +8,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.savethefood.shared.viewmodel.HomeViewModel
 import com.example.savethefood.ui.compose.SaveTheFoodApp
+import com.example.savethefood.ui.compose.component.BasicList
 import com.example.savethefood.ui.compose.foodList
 import org.koin.androidx.compose.getViewModel
 
-
+/**
+ * This is the main screen where we build all the main components
+ */
 @Composable
-fun Pantry(
+fun PantryScreen(
     modifier: Modifier = Modifier,
     onFoodSelected: (Long) -> Unit,
     viewModel: HomeViewModel = getViewModel() // Koin
 ) {
     val foods by viewModel.foodList.observeAsState()
     // TODO pass the filters jetsnak
-    FoodList(modifier, foods, onFoodSelected)
+    // TODO add here all the Slots api for toolbar, filters, etc
+    BasicList(modifier, foods) {
+        FoodCard(
+            foodDomain = it,
+            onFoodClick = onFoodSelected
+        )
+    }
 }
 
 
@@ -29,9 +38,13 @@ fun Pantry(
 @Composable
 fun PreviewPantryScreen() {
     SaveTheFoodApp {
-        FoodList(
-            foods = foodList,
-            onFoodSelected = {},
-        )
+        BasicList(
+            foods = foodList
+        ) {
+            FoodCard(
+                foodDomain = it,
+                onFoodClick = {  }
+            )
+        }
     }
 }
