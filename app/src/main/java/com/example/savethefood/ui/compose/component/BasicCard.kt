@@ -7,12 +7,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,7 +20,7 @@ import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 
 @Composable
-fun <T> SaveTheFoodCard(
+fun <T> BasicCard(
     modifier: Modifier = Modifier,
     shape: Shape = RoundedCornerShape(20.dp),
     color: Color = SaveTheFoodTheme.colors.brandSecondary,
@@ -30,10 +28,8 @@ fun <T> SaveTheFoodCard(
     border: BorderStroke? = BorderStroke(2.dp, SaveTheFoodTheme.colors.uiBorder),
     elevation: Dp = 16.dp,
     item: T,
-    onItemClick: (T) -> Unit,
     content: @Composable (T) -> Unit
-) {
-    Card(
+) = Card(
         modifier = modifier
             .padding(8.dp)
             .fillMaxWidth()
@@ -41,8 +37,8 @@ fun <T> SaveTheFoodCard(
                 elevation = 8.dp,
                 shape = RoundedCornerShape(22.dp),
                 clip = true
-            )
-            .clickable { onItemClick(item) },
+            ),
+            //.clickable { onItemClick(item) },
         shape = shape,
         backgroundColor = color,
         contentColor = contentColor,
@@ -51,16 +47,14 @@ fun <T> SaveTheFoodCard(
     ) {
         content(item)
     }
-}
 
 @Preview("default")
 @Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewFoodItem() {
     SaveTheFoodTheme {
-        SaveTheFoodCard(
-            item = FoodDomain(title = "test"),
-            onItemClick = {}
+        BasicCard(
+            item = FoodDomain(title = "test")
         ) {
             Text(text = it.title, modifier = Modifier.padding(16.dp))
         }

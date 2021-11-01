@@ -1,16 +1,9 @@
 package com.example.savethefood.ui.compose
 
 import android.util.Log
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.Lifecycle
@@ -21,17 +14,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.example.savethefood.shared.data.domain.FoodDomain
-import com.example.savethefood.shared.utils.FoodImage
-import com.example.savethefood.shared.utils.QuantityType
-import com.example.savethefood.shared.utils.StorageType
-import com.example.savethefood.shared.viewmodel.HomeViewModel
-import com.example.savethefood.ui.compose.pantry.FoodItem
-import com.example.savethefood.ui.compose.pantry.Pantry
+import com.example.savethefood.ui.compose.pantry.PantryScreen
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
-import org.koin.androidx.compose.getViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 // TODO follow this for the tabrow (the old TabLayout) https://proandroiddev.com/how-to-use-tabs-in-jetpack-compose-41491be61c39
 
@@ -57,6 +41,7 @@ fun MainNavGraph(
                     // In order to discard duplicated navigation events, we check the Lifecycle
                     if (from.lifecycleIsResumed()) {
                         // navigate to the specific edit page
+                        Log.d("Navigation Id selected", id.toString())
                     }
                 },
                 modifier = modifier
@@ -66,7 +51,7 @@ fun MainNavGraph(
             route = MainDestinations.LOGIN_ROUTE
         ) {
             Text(text = "Login page")
-            // Add the login here (or a nested graph like addLoginGraph??)
+            // Add the login here (or a nested graph like navigation(.....) { addLoginGraph?? })
             //  Login(
             //    logged: Boolean,
             //    onLogChanged { navigate to MainDestinations.HOME}
@@ -85,8 +70,14 @@ fun NavGraphBuilder.addHomeGraph(
 ) {
     // TODO Add nested graphs like addFoodGraph() where we have food and food detail. Inside use FOOD route and the FOOD route/foodId
     // TODO the add button will be declared inside pantry, use state hoisting to open the new food
+    // Here we must keep only the events, all the logics, slot apis, etc inside the xScreen
     composable(HomeSections.FOOD.route) { from ->
-        Pantry(onFoodSelected = { onSelected(it, from) })
+        PantryScreen(
+            onFoodSelected = {
+                onSelected(it, from)
+                // Here wee probably need to navigate inside the future nested graph
+            }
+        )
     }
     composable(HomeSections.RECIPE.route) { from ->
         Food(
