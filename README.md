@@ -55,7 +55,7 @@ Cook                                                |
 #       Compose
 #######################
 
-Login                                                     |  Recipes.                                                     | 
+Splash                                                    |  Pantry                                                       | 
 :--------------------------------------------------------:|:-------------------------------------------------------------:|
 <img width="250" height="500" src="images/ComposeSplash.png">|<img width="250" height="500" src="images/ComposePantry.png">|
 
