@@ -35,31 +35,28 @@ Main branches
 
 3 - sharedmodulekmm -> Project with KMM shared module (Koin, KTOR, SQLDelight)
 
+Login                                                |  Sign up                                             |  Home
+:---------------------------------------------------:|:----------------------------------------------------:|:-------------------------------------------------------:
+<img width="250" height="500" src="images/login.png">|<img width="250" height="500" src="images/signUp.png">|<img width="250" height="500" src="images/home.png">
 
-<img align="left" width="250" height="500" src="images/login.png">
-<img align="left" width="250" height="500" src="images/signUp.png">
-<img align="left" width="250" height="500" src="images/home.png">
-<img align="left" width="250" height="500" src="images/fooddetail.png">
+Food Detail                                               |  Add Food                                            |  Search
+:--------------------------------------------------------:|:----------------------------------------------------:|:-------------------------------------------------------:
+<img width="250" height="500" src="images/fooddetail.png">|<img width="250" height="500" src="images/addFood.png">|<img width="250" height="500" src="images/search.png">
 
-<img align="left" width="250" height="500" src="images/addFood.png">
+Food Found                                                |  Recipes.                                            |  Recipe detail
+:--------------------------------------------------------:|:----------------------------------------------------:|:-------------------------------------------------------:
+<img width="250" height="500" src="images/found.png">|<img width="250" height="500" src="images/recipes.png">|<img width="250" height="500" src="images/recipedetail.png">
 
-<img align="left" width="250" height="500" src="images/search.png">
+Cook                                                |
+:--------------------------------------------------------:|
+<img width="250" height="500" src="images/cook.png">.    |
 
-<img align="left" width="250" height="500" src="images/found.png">
+#######################
+#       Compose
+#######################
 
-<img align="left" width="250" height="500" src="images/recipes.png">
-
-<img align="left" width="250" height="500" src="images/recipedetail.png">
-
-<img align="left" width="250" height="500" src="images/cook.png">
-
-
-//*************************
-
-// New compose layout (DEV)
-
-//*************************
-<img align="left" width="250" height="500" src="images/ComposeLogin.png">
-<img align="left" width="250" height="500" src="images/ComposePantry.png">
+Splash                                                    |  Pantry                                                       | 
+:--------------------------------------------------------:|:-------------------------------------------------------------:|
+<img width="250" height="500" src="images/ComposeSplash.png">|<img width="250" height="500" src="images/ComposePantry.png">|
 
 
