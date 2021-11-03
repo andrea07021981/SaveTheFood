@@ -1,9 +1,10 @@
 # SaveTheFood (Under development)
-App for keeping trace of food in the fridge and for searching recipes based either on general filters or on saved foods.
-I've build one activity app with some navigation levels. I worked with Jetpack components like Room, Databinding, Livedata, Nagivation, Viewmodel, Workmanager. The pattern used is the MVVM.
+App for keeping trace of the food at home and for searching recipes based either on general filters or on saved foods.
+It is a single activity app that used the navigation library. I worked with Jetpack components like Room, Data Binding, Binding adapters, Livedata, Flow, Coroutines, Navigation, ViewModel, Workmanager, etc. The pattern used is the MVVM.
 IMPORTANT: Create a free api key here and change it in file ApiKey ----> https://spoonacular.com/food-api
 
 UNDER DEVELOPMENT: Porting of the business logic into the shared KMM module. Steps:
+
 1 - Migrate room to sqldelight (DONE)
 
 2 - Migrate Retrofit to KTOR (DONE)

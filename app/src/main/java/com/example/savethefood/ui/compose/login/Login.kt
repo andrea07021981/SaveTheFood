@@ -28,6 +28,7 @@ import com.example.savethefood.R
 import com.example.savethefood.ui.compose.SaveTheFoodApp
 import com.example.savethefood.ui.compose.component.UserInputTextfield
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
+import com.google.accompanist.insets.imePadding
 import kotlinx.coroutines.launch
 
 @Composable
@@ -43,7 +44,8 @@ fun Login(
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .fillMaxHeight(),
+            .fillMaxHeight()
+            .imePadding(), // This move the view up while the keyboard is opened
         shape = RectangleShape,
         color = SaveTheFoodTheme.colors.uiBackground,
         contentColor = SaveTheFoodTheme.colors.textSecondary,
@@ -64,6 +66,7 @@ fun Login(
             )
             Spacer(modifier = Modifier.height(170.dp))
             UserInputTextfield(
+                modifier = Modifier.fillMaxWidth(.8F),
                 res = R.drawable.email_white_24dp,
                 label = "User",
                 text = name,
@@ -71,6 +74,7 @@ fun Login(
             )
             Spacer(modifier = Modifier.height(16.dp))
             UserInputTextfield(
+                modifier = Modifier.fillMaxWidth(.8F),
                 label = "Password",
                 res = R.drawable.email_white_24dp,
                 isPasswordField = true,
@@ -83,13 +87,13 @@ fun Login(
             )
             Spacer(modifier = Modifier.height(64.dp))
             Button(
-                shape = MaterialTheme.shapes.large,
+                modifier = Modifier.fillMaxWidth(.8F).height(60.dp),
+                shape = MaterialTheme.shapes.medium,
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = White,
                     contentColor = Black
                 ),
                 onClick = {
-                
                     
                 }) {
                     Text(
