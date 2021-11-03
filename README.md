@@ -1,6 +1,8 @@
 # SaveTheFood (Under development)
 App for keeping trace of the food at home and for searching recipes based either on general filters or on saved foods.
 It is a single activity app that used the navigation library. I worked with Jetpack components like Room, Data Binding, Binding adapters, Livedata, Flow, Coroutines, Navigation, ViewModel, Workmanager, etc. The pattern used is the MVVM.
+There is also a jenkins pipeline to build and run all the different build variants and a docker file to configure a Jenkins container.
+
 IMPORTANT: Create a free api key here and change it in file ApiKey ----> https://spoonacular.com/food-api
 
 UNDER DEVELOPMENT: Porting of the business logic into the shared KMM module. Steps:
