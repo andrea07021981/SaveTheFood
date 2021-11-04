@@ -5,18 +5,13 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.Modifier
 import androidx.compose.material.*
-import androidx.compose.material.FabPosition
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.savethefood.ui.compose.login.Login
+import com.example.savethefood.ui.compose.extention.hasBottomNav
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
@@ -43,6 +38,7 @@ fun SaveTheFoodApp(content: @Composable () -> Unit) {
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainApp() {
     // A surface container using the 'color' color from the theme
@@ -66,6 +62,8 @@ fun MainApp() {
                 // TODO Use custom state as state holders as source of truth https://developer.android.com/jetpack/compose/state#types-of-state-and-logic
                 val tabs = remember { HomeSections.values() }
                 val navController = rememberNavController()
+                // Manage the visibility of bottom nav
+                val currentBackStackEntry by navController.currentBackStackEntryAsState()
                 val scaffoldState = rememberScaffoldState()
                 SaveTheFoodScaffold(
                     // This add the space of the status bar since have enabled setDecorFitsSystemWindows
@@ -73,7 +71,14 @@ fun MainApp() {
                     // TODO here https://medium.com/mobile-app-development-publication/android-jetpack-compose-inset-padding-made-easy-5f156a790979
                     modifier = Modifier.systemBarsPadding(),
                     contentColor = SaveTheFoodTheme.colors.textPrimary,
-                    bottomBar = { MainBottomNav(navController = navController, tabs = tabs) },
+                    bottomBar = {
+                        if (currentBackStackEntry?.destination?.route?.hasBottomNav == true) {
+                            MainBottomNav(
+                                navController = navController,
+                                tabs = tabs
+                            )
+                        }
+                    },
                     scaffoldState = scaffoldState,
                 ) { innerPaddingModifier ->
                     MainNavGraph(

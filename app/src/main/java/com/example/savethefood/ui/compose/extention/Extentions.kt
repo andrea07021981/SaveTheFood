@@ -63,3 +63,7 @@ private fun getDiff(foodDate: Long): Long {
         (today.time - foodDate) / (24 * 60 * 60 * 1000)
     }
 }
+
+// TODO TEMPORARY, review it. Create a Sealed class for all the sections (Home, Auth, etc) and add the property
+val String?.hasBottomNav: Boolean
+    get() = this?.startsWith("home") ?: false

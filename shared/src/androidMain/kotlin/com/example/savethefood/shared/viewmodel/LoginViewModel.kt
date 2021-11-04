@@ -8,7 +8,6 @@ import com.example.savethefood.shared.utils.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
-@ExperimentalCoroutinesApi
 actual class LoginViewModel actual constructor(
     val userDataRepository: UserRepository
 ) : ViewModel() {
