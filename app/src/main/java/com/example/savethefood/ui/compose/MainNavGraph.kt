@@ -59,7 +59,12 @@ fun MainNavGraph(
             addAuthGraph(
                 onUserLogged = { user, from ->
                     if (from.lifecycleIsResumed()) {
-                        Log.d("Auth", "User ${user.userName} logged")
+                        if (from.destination.route == AuthSections.LOGIN.route &&
+                                user == null
+                        ) {
+                           navController.navigate(AuthSections.SIGNUP.route)
+                        }
+                        Log.d("Auth", "User ${user?.userName} logged")
                     }
                 }
             )
@@ -71,12 +76,15 @@ fun MainNavGraph(
  * Login nested graph
  */
 fun NavGraphBuilder.addAuthGraph(
-    onUserLogged: (UserDomain, NavBackStackEntry) -> Unit,
+    onUserLogged: (UserDomain?, NavBackStackEntry) -> Unit,
     modifier: Modifier = Modifier
 ) {
     composable(AuthSections.LOGIN.route) { from ->
         LoginScreen(
-            modifier = modifier
+            modifier = modifier,
+            onUserLogged = {
+                onUserLogged(it, from)
+            }
         )
     }
 

@@ -14,7 +14,9 @@ import com.example.savethefood.constants.Constants
 import com.example.savethefood.constants.FoodOrder
 import com.example.savethefood.shared.data.domain.BagDomain
 import com.example.savethefood.shared.data.domain.FoodDomain
+import com.example.savethefood.shared.utils.LoginStateValue
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -34,7 +36,7 @@ fun MenuItem.configSearchView(activity: Activity, hint: String = "Type Value", b
 
         //Manage search view
         //making the searchview consume all the toolbar when open
-        let { it ->
+        let {
             it.maxWidth= Int.MAX_VALUE
             it.queryHint = hint
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {

@@ -4,11 +4,13 @@ import android.content.res.Configuration
 import androidx.compose.animation.*
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Modifier
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.savethefood.ui.compose.extention.hasBottomNav
@@ -83,7 +85,7 @@ fun MainApp() {
                 ) { innerPaddingModifier ->
                     MainNavGraph(
                         navController = navController,
-                        modifier = Modifier.padding(innerPaddingModifier)
+                        modifier = Modifier.padding(innerPaddingModifier).fillMaxSize()
                     )
                 }
             }

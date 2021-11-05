@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.RectangleShape
@@ -18,8 +20,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.savethefood.R
+import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.viewmodel.LoginViewModel
-import com.example.savethefood.ui.compose.component.UserInputTextfield
+import com.example.savethefood.ui.compose.component.BasicInputTextfield
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import com.google.accompanist.insets.imePadding
 import org.koin.androidx.compose.getViewModel
@@ -27,6 +30,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
+    onUserLogged: (UserDomain?) -> Unit,
     viewModel: LoginViewModel = getViewModel()
 ) {
     // TODO test, remove it and use the Viewmodel
@@ -34,6 +38,8 @@ fun LoginScreen(
         mutableStateOf("")
     }
     var passwordVisibility by rememberSaveable { mutableStateOf(true) }
+    val userName = viewModel.email
+    val userNameStatus by userName.valueStatus.observeAsState()
 
     Surface(
         modifier = modifier
@@ -59,15 +65,23 @@ fun LoginScreen(
                 contentDescription = "Logo"
             )
             Spacer(modifier = Modifier.height(170.dp))
-            UserInputTextfield(
-                modifier = Modifier.fillMaxWidth(.8F),
+            BasicInputTextfield(
+                modifier = Modifier
+                    .fillMaxWidth(.8F)
+                    .onFocusChanged {
+                        userName.onFocusChanged(userName.value)
+                    },
                 res = R.drawable.email_white_24dp,
                 label = "User",
-                text = name,
-                onTextChanged = setName
+                text = userName.value,
+                isError = userNameStatus?.message?.isNotEmpty() ?: false,
+                errorMessage = userNameStatus?.message ?: "",
+                onTextChanged = {
+                    userName.value = it
+                }
             )
             Spacer(modifier = Modifier.height(16.dp))
-            UserInputTextfield(
+            BasicInputTextfield(
                 modifier = Modifier.fillMaxWidth(.8F),
                 label = "Password",
                 res = R.drawable.email_white_24dp,
@@ -90,7 +104,6 @@ fun LoginScreen(
                     contentColor = Black
                 ),
                 onClick = {
-
                 }) {
                     Text(
                         text = "Log In",
@@ -109,7 +122,7 @@ fun LoginScreen(
                     contentColor = Black
                 ),
                 onClick = {
-
+                    onUserLogged(null)
                 }) {
                 Text(
                     text = "Sign Up",
@@ -126,6 +139,8 @@ fun LoginScreen(
 @Composable
 fun PreviewPantryScreen() {
     SaveTheFoodTheme {
-        LoginScreen()
+        LoginScreen(
+            onUserLogged = {}
+        )
     }
 }
