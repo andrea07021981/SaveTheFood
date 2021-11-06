@@ -4,25 +4,25 @@ import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color.Companion.Black
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.savethefood.R
+import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.viewmodel.LoginViewModel
+import com.example.savethefood.ui.compose.component.BasicButton
 import com.example.savethefood.ui.compose.component.BasicInputTextfield
+import com.example.savethefood.ui.compose.extention.hasLoginError
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import com.google.accompanist.insets.imePadding
 import org.koin.androidx.compose.getViewModel
@@ -33,13 +33,23 @@ fun LoginScreen(
     onUserLogged: (UserDomain?) -> Unit,
     viewModel: LoginViewModel = getViewModel()
 ) {
-    // TODO test, remove it and use the Viewmodel
-    val (name, setName) = rememberSaveable {
+    val context =  LocalContext.current
+    // TODO temporary use of composable state. Remember does not work with the anonymous objects like username and password
+    // TODO add a state holder for the login
+    val (email, setEmail) = rememberSaveable {
         mutableStateOf("")
     }
+    var emailHasFocus by remember { mutableStateOf(false)}
+    val (psw, setPsw) = rememberSaveable {
+        mutableStateOf("")
+    }
+    var pswHasFocus by remember { mutableStateOf(false)}
+
     var passwordVisibility by rememberSaveable { mutableStateOf(true) }
-    val userName = viewModel.email
-    val userNameStatus by userName.valueStatus.observeAsState()
+    val userEmail by remember { mutableStateOf(viewModel.email) }
+    val userNameStatus by userEmail.valueStatus.observeAsState()
+    val userPsw by remember { mutableStateOf(viewModel.password) }
+    val userPswStatus by userPsw.valueStatus.observeAsState()
 
     Surface(
         modifier = modifier
@@ -69,66 +79,68 @@ fun LoginScreen(
                 modifier = Modifier
                     .fillMaxWidth(.8F)
                     .onFocusChanged {
-                        userName.onFocusChanged(userName.value)
+                        emailHasFocus = it.run {
+                            if (isFocused.not() && emailHasFocus) {
+                                userEmail.value = email
+                                userEmail.onFocusChanged(userEmail.value)
+                            }
+                            isFocused
+                        }
                     },
                 res = R.drawable.email_white_24dp,
-                label = "User",
-                text = userName.value,
-                isError = userNameStatus?.message?.isNotEmpty() ?: false,
+                label = context.resources.getString(R.string.username),
+                text = email,
+                isError = userNameStatus?.hasLoginError() == true,
                 errorMessage = userNameStatus?.message ?: "",
-                onTextChanged = {
-                    userName.value = it
-                }
+                imeAction = ImeAction.Next,
+                onTextChanged = setEmail
             )
             Spacer(modifier = Modifier.height(16.dp))
             BasicInputTextfield(
-                modifier = Modifier.fillMaxWidth(.8F),
-                label = "Password",
+                modifier = Modifier
+                    .fillMaxWidth(.8F)
+                    .onFocusChanged {
+                        pswHasFocus = it.run {
+                            if (it.isFocused.not() && pswHasFocus) {
+                                userPsw.value = psw
+                                userPsw.onFocusChanged(userPsw.value)
+                            }
+                            isFocused
+                        }
+                    },
+                label = context.resources.getString(R.string.password),
                 res = R.drawable.email_white_24dp,
                 isPasswordField = true,
                 passwordVisibility = passwordVisibility,
                 onPasswordVisibilityChanged = {
-                  passwordVisibility = !passwordVisibility
+                    passwordVisibility = !it
                 },
-                text = name,
-                onTextChanged = setName
+                text = psw,
+                isError = userPswStatus?.hasLoginError() == true,
+                errorMessage = userPswStatus?.message ?: "",
+                onTextChanged = setPsw,
+                onImeAction = viewModel::onSignInClick // Create a submit func that calls vm and clear the values?
             )
             Spacer(modifier = Modifier.height(64.dp))
-            Button(
+            BasicButton(
                 modifier = Modifier
                     .fillMaxWidth(.8F)
                     .height(60.dp),
-                shape = MaterialTheme.shapes.medium,
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = White,
-                    contentColor = Black
-                ),
+                text = R.string.log_in,
                 onClick = {
-                }) {
-                    Text(
-                        text = "Log In",
-                        style = MaterialTheme.typography.button
-                    )
-            }
-
+                    // Call the Vm to log in
+                }
+            )
             Spacer(modifier = Modifier.height(32.dp))
-            Button(
+            BasicButton(
                 modifier = Modifier
                     .fillMaxWidth(.8F)
                     .height(60.dp),
-                shape = MaterialTheme.shapes.medium,
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = White,
-                    contentColor = Black
-                ),
+                text = R.string.sign_up,
                 onClick = {
                     onUserLogged(null)
-                }) {
-                Text(
-                    text = "Sign Up",
-                    style = MaterialTheme.typography.button
-                )
-            }
+                }
+            )
         }
     }
 }

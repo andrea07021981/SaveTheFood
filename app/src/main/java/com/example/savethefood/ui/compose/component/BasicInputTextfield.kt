@@ -3,15 +3,22 @@ package com.example.savethefood.ui.compose.component
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,6 +27,7 @@ import com.example.savethefood.R
 import com.example.savethefood.ui.theme.AlphaHalf
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun BasicInputTextfield(
     modifier: Modifier = Modifier,
@@ -31,8 +39,13 @@ fun BasicInputTextfield(
     text: String,
     isError: Boolean = false,
     errorMessage: String = "",
-    onTextChanged: (String) -> Unit
+    singleLine: Boolean = true,
+    imeAction: ImeAction = ImeAction.Done,
+    onTextChanged: (String) -> Unit,
+    onImeAction: () -> Unit = {}
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
     Column {
         OutlinedTextField(
             modifier = modifier,
@@ -51,7 +64,7 @@ fun BasicInputTextfield(
                     Icon(
                         imageVector = Icons.Filled.Error,
                         contentDescription = "error",
-                        tint = SaveTheFoodTheme.colors.error
+                        tint = SaveTheFoodTheme.colors.warning
                     )
                 } else {
                     if (isPasswordField) {
@@ -74,6 +87,7 @@ fun BasicInputTextfield(
                 }
             },
             isError = isError,
+            singleLine = singleLine,
             shape = MaterialTheme.shapes.medium,
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 textColor = SaveTheFoodTheme.colors.textSecondary,
@@ -84,17 +98,27 @@ fun BasicInputTextfield(
                 backgroundColor = Color.Transparent,
                 cursorColor = SaveTheFoodTheme.colors.textLink,
                 disabledLabelColor = SaveTheFoodTheme.colors.textLink,
-                errorCursorColor = SaveTheFoodTheme.colors.error,
-                errorLabelColor = SaveTheFoodTheme.colors.error,
-                errorBorderColor = SaveTheFoodTheme.colors.error
+                errorCursorColor = SaveTheFoodTheme.colors.warning,
+                errorLabelColor = SaveTheFoodTheme.colors.warning,
+                errorBorderColor = SaveTheFoodTheme.colors.warning
             ),
-            visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation()
+            visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    onImeAction()
+                    keyboardController?.hide() // it closes the keyboard
+                },
+                onNext = {
+                    focusManager.moveFocus(FocusDirection.Down)
+                }
+            ),
         )
         // Display the error message
         if (isError) {
             Text(
                 text = errorMessage,
-                color = SaveTheFoodTheme.colors.error,
+                color = SaveTheFoodTheme.colors.warning,
                 style = MaterialTheme.typography.caption,
                 modifier = Modifier.padding(start = 16.dp)
             )

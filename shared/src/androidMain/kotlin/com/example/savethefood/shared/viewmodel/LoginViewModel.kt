@@ -56,10 +56,10 @@ actual class LoginViewModel actual constructor(
 
         init {
             // TODO Dev phase
-            value = "a@a.com"
+            /*value = "a@a.com"
             with(checkStatus(value)) {
                 errMessage = message
-            }
+            }*/
         }
     }
 

@@ -7,8 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.FoodDomain
+import com.example.savethefood.shared.utils.LoginStateValue
 import com.example.savethefood.shared.utils.QuantityType
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
+import com.google.android.material.textfield.TextInputLayout
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
@@ -67,3 +69,11 @@ private fun getDiff(foodDate: Long): Long {
 // TODO TEMPORARY, review it. Create a Sealed class for all the sections (Home, Auth, etc) and add the property
 val String?.hasBottomNav: Boolean
     get() = this?.startsWith("home") ?: false
+
+fun LoginStateValue?.hasLoginError(): Boolean {
+    return when (this) {
+        LoginStateValue.INVALID_FORMAT,
+        LoginStateValue.INVALID_LENGTH -> true
+        else -> false
+    }
+}
