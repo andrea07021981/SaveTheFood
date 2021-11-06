@@ -1,9 +1,11 @@
 package com.example.savethefood.ui.compose
 
 import android.util.Log
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.Lifecycle
@@ -14,6 +16,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.example.savethefood.shared.data.domain.UserDomain
+import com.example.savethefood.ui.compose.login.LoginScreen
 import com.example.savethefood.ui.compose.pantry.PantryScreen
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 
@@ -23,7 +27,7 @@ import com.example.savethefood.ui.theme.SaveTheFoodTheme
 fun MainNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = MainDestinations.HOME_ROUTE,
+    startDestination: String = MainDestinations.AUTH_ROUTE,
 ) {
     NavHost(
         navController = navController,
@@ -42,22 +46,50 @@ fun MainNavGraph(
                     if (from.lifecycleIsResumed()) {
                         // navigate to the specific edit page
                         Log.d("Navigation Id selected", id.toString())
+                        navController.navigate(AuthSections.LOGIN.route)
                     }
                 },
                 modifier = modifier
             )
         }
-        composable(
-            route = MainDestinations.LOGIN_ROUTE
+        navigation(
+            route = MainDestinations.AUTH_ROUTE,
+            startDestination = AuthSections.LOGIN.route
         ) {
-            Text(text = "Login page")
-            // Add the login here (or a nested graph like navigation(.....) { addLoginGraph?? })
-            //  Login(
-            //    logged: Boolean,
-            //    onLogChanged { navigate to MainDestinations.HOME}
-            //  )
-            // TODO login success, navigate to MainDestinations.HOME
+            addAuthGraph(
+                onUserLogged = { user, from ->
+                    if (from.lifecycleIsResumed()) {
+                        if (from.destination.route == AuthSections.LOGIN.route &&
+                                user == null
+                        ) {
+                           navController.navigate(AuthSections.SIGNUP.route)
+                        }
+                        Log.d("Auth", "User ${user?.userName} logged")
+                    }
+                }
+            )
         }
+    }
+}
+
+/**
+ * Login nested graph
+ */
+fun NavGraphBuilder.addAuthGraph(
+    onUserLogged: (UserDomain?, NavBackStackEntry) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    composable(AuthSections.LOGIN.route) { from ->
+        LoginScreen(
+            modifier = modifier,
+            onUserLogged = {
+                onUserLogged(it, from)
+            }
+        )
+    }
+
+    composable(AuthSections.SIGNUP.route) { from ->
+
     }
 }
 

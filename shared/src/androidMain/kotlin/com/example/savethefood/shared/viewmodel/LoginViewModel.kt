@@ -8,7 +8,6 @@ import com.example.savethefood.shared.utils.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
-@ExperimentalCoroutinesApi
 actual class LoginViewModel actual constructor(
     val userDataRepository: UserRepository
 ) : ViewModel() {
@@ -57,10 +56,10 @@ actual class LoginViewModel actual constructor(
 
         init {
             // TODO Dev phase
-            value = "a@a.com"
+            /*value = "a@a.com"
             with(checkStatus(value)) {
                 errMessage = message
-            }
+            }*/
         }
     }
 
