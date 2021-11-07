@@ -27,8 +27,9 @@ import com.example.savethefood.ui.theme.SaveTheFoodTheme
 fun MainNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = MainDestinations.HOME_ROUTE,
+    startDestination: String = MainDestinations.AUTH_ROUTE,
 ) {
+    // TODO create a state like AppState for every main screen
     NavHost(
         navController = navController,
         startDestination = startDestination,
