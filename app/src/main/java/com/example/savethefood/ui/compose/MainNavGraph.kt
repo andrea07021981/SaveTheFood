@@ -27,7 +27,7 @@ import com.example.savethefood.ui.theme.SaveTheFoodTheme
 fun MainNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = MainDestinations.AUTH_ROUTE,
+    startDestination: String = MainDestinations.HOME_ROUTE,
 ) {
     NavHost(
         navController = navController,

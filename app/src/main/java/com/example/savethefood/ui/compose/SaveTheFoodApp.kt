@@ -1,19 +1,18 @@
 package com.example.savethefood.ui.compose
 
 import android.content.res.Configuration
-import androidx.compose.animation.*
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.*
-import androidx.compose.ui.Modifier
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Surface
 import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.example.savethefood.ui.compose.extention.hasBottomNav
+import androidx.navigation.NavDestination.Companion.hierarchy
+import com.example.savethefood.ui.compose.extention.isSectionSelected
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.systemBarsPadding
@@ -62,11 +61,12 @@ fun MainApp() {
                 SplashScreen(onTimeOut = { showSplashScreen = false })
             } else {
                 // TODO Use custom state as state holders as source of truth https://developer.android.com/jetpack/compose/state#types-of-state-and-logic
-                val tabs = remember { HomeSections.values() }
-                val navController = rememberNavController()
+                //val tabs = remember { HomeSections.values() }
+                val appState = rememberAppState()
+                //val navController = rememberNavController()
                 // Manage the visibility of bottom nav
-                val currentBackStackEntry by navController.currentBackStackEntryAsState()
-                val scaffoldState = rememberScaffoldState()
+                //val currentBackStackEntry by navController.currentBackStackEntryAsState()
+                //val scaffoldState = rememberScaffoldState()
                 SaveTheFoodScaffold(
                     // This add the space of the status bar since have enabled setDecorFitsSystemWindows
                     // TODO now we use statusBarsPadding for top padding, MOVE IT INTO NAVGRAPH? WE CAN USE systemBarsPadding FOR BOTH TOP AND BOTTOM NAV
@@ -74,18 +74,27 @@ fun MainApp() {
                     modifier = Modifier.systemBarsPadding(),
                     contentColor = SaveTheFoodTheme.colors.textPrimary,
                     bottomBar = {
-                        if (currentBackStackEntry?.destination?.route?.hasBottomNav == true) {
+                        if (appState.hasBottomNav) {
                             MainBottomNav(
-                                navController = navController,
-                                tabs = tabs
+                                //navController = appState.navController,
+                                tabs = appState.tabs,
+                                navBackStackEntry = appState.navBackStackEntry,
+                                selected = { dest, section ->
+                                    dest?.isSectionSelected(section) ?: false
+                                },
+                                navigateTo = { section, currentRoute ->
+                                    appState.navigateToDestination(section, currentRoute)
+                                }
                             )
                         }
                     },
-                    scaffoldState = scaffoldState,
+                    scaffoldState = appState.scaffoldState,
                 ) { innerPaddingModifier ->
                     MainNavGraph(
-                        navController = navController,
-                        modifier = Modifier.padding(innerPaddingModifier).fillMaxSize()
+                        navController = appState.navController,
+                        modifier = Modifier
+                            .padding(innerPaddingModifier)
+                            .fillMaxSize()
                     )
                 }
             }
