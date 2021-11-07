@@ -5,10 +5,13 @@ import android.os.Build
 import android.widget.TextView
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
 import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.utils.LoginStateValue
 import com.example.savethefood.shared.utils.QuantityType
+import com.example.savethefood.ui.compose.HomeSections
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import com.google.android.material.textfield.TextInputLayout
 import java.time.LocalDate
@@ -67,8 +70,12 @@ private fun getDiff(foodDate: Long): Long {
 }
 
 // TODO TEMPORARY, review it. Create a Sealed class for all the sections (Home, Auth, etc) and add the property
-val String?.hasBottomNav: Boolean
+val String?.isHomeSection: Boolean
     get() = this?.startsWith("home") ?: false
+
+fun NavDestination?.isSectionSelected(home: HomeSections): Boolean {
+    return this?.hierarchy?.any { it.route == home.route } == true
+}
 
 fun LoginStateValue?.hasLoginError(): Boolean {
     return when (this) {

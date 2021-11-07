@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -23,30 +24,35 @@ import com.example.savethefood.ui.theme.SaveTheFoodTheme
 // TODO create custom BottomAppBar for Cradle shade
 @Composable
 fun MainBottomNav(
-    navController: NavController,
+    //navController: NavController,
     tabs: Array<HomeSections>,
+    navBackStackEntry: NavBackStackEntry?,
+    selected: (NavDestination?, HomeSections) -> Boolean,
     color: Color = SaveTheFoodTheme.colors.uiBackground,
-    contentColor: Color = SaveTheFoodTheme.colors.iconInteractive
+    contentColor: Color = SaveTheFoodTheme.colors.iconInteractive,
+    navigateTo: (HomeSections, String?) -> Unit
 ) {
     // TODO Difference with BottomNavigation?? Is it correct from UI/UX side? Can we manage the add food fab differently?
     BottomAppBar(
         backgroundColor = color,
         contentColor = contentColor
     ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentDestination = navBackStackEntry?.destination
-        val currentRoute = navBackStackEntry?.destination?.route
+        //val navBackStackEntry by navController.currentBackStackEntryAsState()
+        /*val currentDestination = navBackStackEntry?.destination
+        val currentRoute = currentDestination?.route*/
 
-        //does not work, create a custom bottom like jet
+        //does not work as expected, create a custom bottom like jet
         tabs.forEach { section ->
             BottomNavigationItem(
                 icon = { Icon(section.icon, contentDescription = null) },
                 label = { Text(stringResource(section.title)) },
-                selected = currentDestination?.hierarchy?.any { it.route == section.route } == true,
+                selected = selected(navBackStackEntry?.destination, section),
                 onClick = {
-                    // Check avoid reload same page
+                    navigateTo(section, navBackStackEntry?.destination?.route)
+                    /*// Check avoid reload same page
                     if (section.route != currentRoute) {
-                        navController.navigate(section.route) {
+                        navigateTo(section, currentRoute)
+                        *//*navController.navigate(section.route) {
                             // Pop up to the start destination of the graph to
                             // avoid building up a large stack of destinations
                             // on the back stack as users select items
@@ -58,8 +64,8 @@ fun MainBottomNav(
                             launchSingleTop = true
                             // Restore state when reselecting a previously selected item
                             restoreState = true
-                        }
-                    }
+                        }*//*
+                    }*/
                 }
             )
         }

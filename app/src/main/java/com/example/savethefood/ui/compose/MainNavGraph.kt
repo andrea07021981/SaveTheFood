@@ -29,6 +29,7 @@ fun MainNavGraph(
     navController: NavHostController = rememberNavController(),
     startDestination: String = MainDestinations.AUTH_ROUTE,
 ) {
+    // TODO create a state like AppState for every main screen
     NavHost(
         navController = navController,
         startDestination = startDestination,
