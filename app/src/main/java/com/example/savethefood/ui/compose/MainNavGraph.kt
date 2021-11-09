@@ -17,6 +17,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.savethefood.shared.data.domain.UserDomain
+import com.example.savethefood.ui.compose.extention.lifecycleIsResumed
+import com.example.savethefood.ui.compose.extention.navigateSafe
 import com.example.savethefood.ui.compose.login.LoginScreen
 import com.example.savethefood.ui.compose.pantry.PantryScreen
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
@@ -44,11 +46,11 @@ fun MainNavGraph(
             addHomeGraph(
                 onSelected = { id: Long, from: NavBackStackEntry ->
                     // In order to discard duplicated navigation events, we check the Lifecycle
-                    if (from.lifecycleIsResumed()) {
+                    //if (from.lifecycleIsResumed()) {
                         // navigate to the specific edit page
                         Log.d("Navigation Id selected", id.toString())
-                        navController.navigate(AuthSections.LOGIN.route)
-                    }
+                        navController.navigateSafe(route = AuthSections.LOGIN.route, from = from)
+                    //}
                 },
                 modifier = modifier
             )
@@ -64,6 +66,9 @@ fun MainNavGraph(
                                 user == null
                         ) {
                            navController.navigate(AuthSections.SIGNUP.route)
+                        } else {
+                            // Navigate to the nested home graph
+                            navController.navigate(MainDestinations.HOME_ROUTE)
                         }
                         Log.d("Auth", "User ${user?.userName} logged")
                     }
@@ -81,6 +86,7 @@ fun NavGraphBuilder.addAuthGraph(
     modifier: Modifier = Modifier
 ) {
     composable(AuthSections.LOGIN.route) { from ->
+        // TODO move here the vm and state holder (separated) from inside the LoginScreen and make it stateless using hoisting
         LoginScreen(
             modifier = modifier,
             onUserLogged = {
@@ -139,11 +145,3 @@ fun Food(
     // This allows to propagate the content color for all the children through the tree
     CompositionLocalProvider(LocalContentColor provides contentColor, content = content)
 }
-
-/**
- * If the lifecycle is not resumed it means this NavBackStackEntry already processed a nav event.
- *
- * This is used to de-duplicate navigation events.
- */
-private fun NavBackStackEntry.lifecycleIsResumed() =
-    this.lifecycle.currentState == Lifecycle.State.RESUMED
