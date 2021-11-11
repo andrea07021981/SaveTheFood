@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.data.domain.UserDomain
+import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.shared.viewmodel.LoginViewModel
 import com.example.savethefood.ui.compose.component.BasicButton
 import com.example.savethefood.ui.compose.component.BasicInputTextfield
@@ -50,6 +51,12 @@ fun LoginScreen(
     val userNameStatus by userEmail.valueStatus.observeAsState()
     val userPsw by remember { mutableStateOf(viewModel.password) }
     val userPswStatus by userPsw.valueStatus.observeAsState()
+
+    // TODO temp until I remove all up with auth state
+    val loginState = viewModel.loginAuthenticationState.observeAsState().value
+    if (loginState is LoginAuthenticationStates.Authenticated) {
+        onUserLogged(loginState.user)
+    }
 
     Surface(
         modifier = modifier
@@ -127,9 +134,7 @@ fun LoginScreen(
                     .fillMaxWidth(.8F)
                     .height(60.dp),
                 text = R.string.log_in,
-                onClick = {
-                    // Call the Vm to log in
-                }
+                onClick = viewModel::onSignInClick
             )
             Spacer(modifier = Modifier.height(32.dp))
             BasicButton(
