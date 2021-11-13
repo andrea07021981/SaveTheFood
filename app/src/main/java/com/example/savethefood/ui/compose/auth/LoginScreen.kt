@@ -1,4 +1,4 @@
-package com.example.savethefood.ui.compose.login
+package com.example.savethefood.ui.compose.auth
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -11,13 +11,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.savethefood.R
-import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.shared.viewmodel.LoginViewModel
@@ -32,30 +30,26 @@ import org.koin.androidx.compose.getViewModel
 fun LoginScreen(
     modifier: Modifier = Modifier,
     onUserLogged: (UserDomain?) -> Unit,
+    authStatus: AuthState = rememberAuthState(
+        email = "a@a.com",
+        emailFocus = false,
+        password = "aaaaaaaa",
+        passwordFocus = false
+    ),
     viewModel: LoginViewModel = getViewModel()
 ) {
-    val context =  LocalContext.current
-    // TODO temporary use of composable state. Remember does not work with the anonymous objects like username and password
-    // TODO add a state holder for the login
-    val (email, setEmail) = rememberSaveable {
-        mutableStateOf("")
-    }
-    var emailHasFocus by remember { mutableStateOf(false)}
-    val (psw, setPsw) = rememberSaveable {
-        mutableStateOf("")
-    }
-    var pswHasFocus by remember { mutableStateOf(false)}
 
-    var passwordVisibility by rememberSaveable { mutableStateOf(true) }
+
     val userEmail by remember { mutableStateOf(viewModel.email) }
     val userNameStatus by userEmail.valueStatus.observeAsState()
     val userPsw by remember { mutableStateOf(viewModel.password) }
     val userPswStatus by userPsw.valueStatus.observeAsState()
 
-    // TODO temp until I remove all up with auth state
+    // TODO temp until I move all up with auth state
     val loginState = viewModel.loginAuthenticationState.observeAsState().value
     if (loginState is LoginAuthenticationStates.Authenticated) {
         onUserLogged(loginState.user)
+        viewModel.resetState()
     }
 
     Surface(
@@ -86,46 +80,46 @@ fun LoginScreen(
                 modifier = Modifier
                     .fillMaxWidth(.8F)
                     .onFocusChanged {
-                        emailHasFocus = it.run {
-                            if (isFocused.not() && emailHasFocus) {
-                                userEmail.value = email
+                        authStatus.emailHasFocus = it.run {
+                            if (isFocused.not() && authStatus.emailHasFocus) {
+                                userEmail.value = authStatus.email
                                 userEmail.onFocusChanged(userEmail.value)
                             }
                             isFocused
                         }
                     },
                 res = R.drawable.email_white_24dp,
-                label = context.resources.getString(R.string.username),
-                text = email,
+                label = authStatus.context.resources.getString(R.string.username),
+                text = authStatus.email,
                 isError = userNameStatus?.hasLoginError() == true,
                 errorMessage = userNameStatus?.message ?: "",
                 imeAction = ImeAction.Next,
-                onTextChanged = setEmail
+                onTextChanged = authStatus.setEmail
             )
             Spacer(modifier = Modifier.height(16.dp))
             BasicInputTextfield(
                 modifier = Modifier
                     .fillMaxWidth(.8F)
                     .onFocusChanged {
-                        pswHasFocus = it.run {
-                            if (it.isFocused.not() && pswHasFocus) {
-                                userPsw.value = psw
+                        authStatus.passwordHasFocus = it.run {
+                            if (it.isFocused.not() && authStatus.passwordHasFocus) {
+                                userPsw.value = authStatus.password
                                 userPsw.onFocusChanged(userPsw.value)
                             }
                             isFocused
                         }
                     },
-                label = context.resources.getString(R.string.password),
+                label = authStatus.context.resources.getString(R.string.password),
                 res = R.drawable.email_white_24dp,
                 isPasswordField = true,
-                passwordVisibility = passwordVisibility,
+                passwordVisibility = authStatus.passwordVisibility,
                 onPasswordVisibilityChanged = {
-                    passwordVisibility = !it
+                    authStatus.passwordVisibility = !it
                 },
-                text = psw,
+                text = authStatus.password,
                 isError = userPswStatus?.hasLoginError() == true,
                 errorMessage = userPswStatus?.message ?: "",
-                onTextChanged = setPsw,
+                onTextChanged = authStatus.setPassword,
                 onImeAction = viewModel::onSignInClick // Create a submit func that calls vm and clear the values?
             )
             Spacer(modifier = Modifier.height(64.dp))
@@ -154,7 +148,7 @@ fun LoginScreen(
 @Preview
 @Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun PreviewPantryScreen() {
+fun PreviewLoginScreen() {
     SaveTheFoodTheme {
         LoginScreen(
             onUserLogged = {}
