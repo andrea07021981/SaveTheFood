@@ -56,10 +56,10 @@ actual class LoginViewModel actual constructor(
 
         init {
             // TODO Dev phase
-            /*value = "a@a.com"
+            value = "a@a.com"
             with(checkStatus(value)) {
                 errMessage = message
-            }*/
+            }
         }
     }
 
@@ -92,7 +92,7 @@ actual class LoginViewModel actual constructor(
     val navigateToSignUpFragment: LiveData<Event<Unit>>
         get() = _navigateToSignUpFragment
 
-    fun onSignInClick(){
+    fun onSignInClick() {
         val errorMessages = checkErrors()
         if (errorMessages.isEmpty()) {
             doLogin {
@@ -100,7 +100,8 @@ actual class LoginViewModel actual constructor(
                     UserDomain(
                         userName = email.value,
                         email = email.value,
-                        password = password.value)
+                        password = password.value
+                    )
                 )
             }
         } else {
@@ -127,14 +128,17 @@ actual class LoginViewModel actual constructor(
         }
     }
 
-    fun onSignUpClick(){
+    fun onSignUpClick() {
         val errorMessages = checkErrors(true)
         if (errorMessages.isEmpty()) {
             viewModelScope.launch {
-                val newUserId = userDataRepository.saveNewUser(UserDomain(
-                    userName = userName.value,
-                    email = email.value,
-                    password = password.value))
+                val newUserId = userDataRepository.saveNewUser(
+                    UserDomain(
+                        userName = userName.value,
+                        email = email.value,
+                        password = password.value
+                    )
+                )
                 _signUpEvent.value = Event(newUserId)
             }
         } else {

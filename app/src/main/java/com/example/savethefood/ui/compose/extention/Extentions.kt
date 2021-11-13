@@ -2,15 +2,18 @@ package com.example.savethefood.ui.compose.extention
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.widget.TextView
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavDestination
+import androidx.lifecycle.Lifecycle
+import androidx.navigation.*
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.utils.LoginStateValue
 import com.example.savethefood.shared.utils.QuantityType
+import com.example.savethefood.ui.compose.AuthSections
 import com.example.savethefood.ui.compose.HomeSections
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import com.google.android.material.textfield.TextInputLayout
@@ -76,6 +79,26 @@ val String?.isHomeSection: Boolean
 fun NavDestination?.isSectionSelected(home: HomeSections): Boolean {
     return this?.hierarchy?.any { it.route == home.route } == true
 }
+
+fun NavHostController.navigateSafe(
+    route: String,
+    from: NavBackStackEntry,
+    navOptions: NavOptions? = null,
+    navigatorExtras: Navigator.Extras? = null
+) {
+    // In order to discard duplicated navigation events, we check the Lifecycle
+    if (from.lifecycleIsResumed()) {
+        // navigate to the specific page
+        navigate(route = route, navOptions, navigatorExtras)
+    }
+}
+/**
+ * If the lifecycle is not resumed it means this NavBackStackEntry already processed a nav event.
+ *
+ * This is used to de-duplicate navigation events.
+ */
+fun NavBackStackEntry.lifecycleIsResumed() =
+    this.lifecycle.currentState == Lifecycle.State.RESUMED
 
 fun LoginStateValue?.hasLoginError(): Boolean {
     return when (this) {
