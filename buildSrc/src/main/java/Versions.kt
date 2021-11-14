@@ -1,6 +1,6 @@
 object Versions {
     const val core = "1.3.2"
-    const val coroutine = "1.5.0-native-mt"
+    const val coroutine = "1.5.2"
     const val navigationArgs = "2.3.5"
     const val navigation = "2.3.3"
     const val constraintLayout = "2.0.4"

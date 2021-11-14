@@ -11,7 +11,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import br.com.simplepass.loadingbutton.animatedDrawables.ProgressType
@@ -57,7 +56,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
 
 
     override fun activateObservers() {
-        viewModel.navigateToSignUpFragment.observe(this.viewLifecycleOwner, EventObserver {
+        viewModel.navigateToSignUp.observe(this.viewLifecycleOwner, EventObserver {
             it.let {
                 findNavController()
                     .navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
