@@ -1,13 +1,22 @@
 package com.example.savethefood.shared.viewmodel
 
-import androidx.databinding.library.BuildConfig
 import androidx.lifecycle.*
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.data.source.repository.UserRepository
 import com.example.savethefood.shared.utils.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
+data class LoginState(
+    val userName: LoginViewModel.LoginStatus,
+    val email: LoginViewModel.LoginStatus,
+    val password: LoginViewModel.LoginStatus,
+    val authState: LoginAuthenticationStates
+) {
+
+}
+// TODO move livedata to MutableStateFlow like jetenews and private set
 actual class LoginViewModel actual constructor(
     val userDataRepository: UserRepository
 ) : ViewModel() {
@@ -80,6 +89,18 @@ actual class LoginViewModel actual constructor(
         }
     }
 
+    // TODO prepared for the next step livedata -> StateFLow (use _uiState.update { it.copy(authState....)
+    var _uiState = MutableStateFlow(
+        LoginState(
+            userName,
+            email,
+            password,
+            LoginAuthenticationStates.Idle
+        )
+    )
+    private set
+    val uiState: StateFlow<LoginState> = _uiState
+
     private val _signUpEvent = MutableLiveData<Event<Long>>()
     val signUpEvent: LiveData<Event<Long>>
         get() = _signUpEvent
@@ -88,9 +109,9 @@ actual class LoginViewModel actual constructor(
     val loginAuthenticationState: LiveData<LoginAuthenticationStates>
         get() = _loginAuthenticationState
 
-    private val _navigateToSignUpFragment = MutableLiveData<Event<Unit>>()
-    val navigateToSignUpFragment: LiveData<Event<Unit>>
-        get() = _navigateToSignUpFragment
+    private val _navigateToSignUp = MutableLiveData<Event<Unit>>()
+    val navigateToSignUp: LiveData<Event<Unit>>
+        get() = _navigateToSignUp
 
     fun onSignInClick() {
         val errorMessages = checkErrors()
@@ -165,6 +186,6 @@ actual class LoginViewModel actual constructor(
     }
 
     fun moveToSignUp() {
-        _navigateToSignUpFragment.value = Event(Unit)
+        _navigateToSignUp.value = Event(Unit)
     }
 }

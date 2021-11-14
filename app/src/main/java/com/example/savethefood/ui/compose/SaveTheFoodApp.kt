@@ -92,6 +92,7 @@ fun MainApp() {
                     },
                     scaffoldState = appState.scaffoldState,
                 ) { innerPaddingModifier ->
+                    // TODO add topbar common here? Otherwise every screen that needs it add scaffold like Jetnews
                     MainNavGraph(
                         navController = appState.navController,
                         modifier = Modifier

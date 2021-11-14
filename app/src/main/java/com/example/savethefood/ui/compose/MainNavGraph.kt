@@ -14,10 +14,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.savethefood.shared.data.domain.UserDomain
+import com.example.savethefood.shared.viewmodel.LoginViewModel
 import com.example.savethefood.ui.compose.extention.navigateSafe
 import com.example.savethefood.ui.compose.auth.LoginScreen
 import com.example.savethefood.ui.compose.pantry.PantryScreen
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
+import org.koin.androidx.compose.getViewModel
 
 // TODO follow this for the tabrow (the old TabLayout) https://proandroiddev.com/how-to-use-tabs-in-jetpack-compose-41491be61c39
 
@@ -81,13 +83,16 @@ fun NavGraphBuilder.addAuthGraph(
     onUserLogged: (UserDomain?, NavBackStackEntry) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     composable(AuthSections.LOGIN.route) { from ->
         // TODO move here the vm and state holder (separated) from inside the LoginScreen and make it stateless using hoisting
+        val viewModel: LoginViewModel = getViewModel()
         LoginScreen(
             modifier = modifier,
             onUserLogged = {
                 onUserLogged(it, from)
-            }
+            },
+            viewModel = viewModel
         )
     }
 
