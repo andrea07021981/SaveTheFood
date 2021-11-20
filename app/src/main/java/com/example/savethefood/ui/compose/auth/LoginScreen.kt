@@ -43,13 +43,11 @@ fun LoginScreen(
     val userPsw by remember { mutableStateOf(viewModel.password) }
     val userPswState by userPsw.valueStatus.observeAsState()
 
-    // TODO temp until I move all up with auth state
     val loginState = viewModel.loginAuthenticationState.observeAsState().value
     if (loginState is LoginAuthenticationStates.Authenticated) {
         onUserLogged(loginState.user)
         viewModel.resetState()
     }
-    // TODO temp until I move all up with auth state. We do not need the single events from VM anymore
     val navToSignUp by viewModel.navigateToSignUp.observeAsState()
     LaunchedEffect(navToSignUp) {
         if (navToSignUp?.hasBeenHandled == false) {

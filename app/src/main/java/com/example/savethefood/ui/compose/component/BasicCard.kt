@@ -51,7 +51,7 @@ fun <T> BasicCard(
 @Preview("default")
 @Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun PreviewFoodItem() {
+fun PreviewBasicCard() {
     SaveTheFoodTheme {
         BasicCard(
             item = FoodDomain(title = "test")

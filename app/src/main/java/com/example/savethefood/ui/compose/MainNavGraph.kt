@@ -17,6 +17,7 @@ import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.viewmodel.LoginViewModel
 import com.example.savethefood.ui.compose.extention.navigateSafe
 import com.example.savethefood.ui.compose.auth.LoginScreen
+import com.example.savethefood.ui.compose.auth.SignUpScreen
 import com.example.savethefood.ui.compose.pantry.PantryScreen
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import org.koin.androidx.compose.getViewModel
@@ -26,7 +27,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun MainNavGraph(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController(),
+    navController: NavHostController,
     startDestination: String = MainDestinations.AUTH_ROUTE,
 ) {
     // TODO create a state like AppState for every main screen
@@ -70,7 +71,8 @@ fun MainNavGraph(
                         },
                         from = from
                     )
-                }
+                },
+                onBack = navController::navigateUp
             )
         }
     }
@@ -81,6 +83,7 @@ fun MainNavGraph(
  */
 fun NavGraphBuilder.addAuthGraph(
     onUserLogged: (UserDomain?, NavBackStackEntry) -> Unit,
+    onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -97,7 +100,15 @@ fun NavGraphBuilder.addAuthGraph(
     }
 
     composable(AuthSections.SIGNUP.route) { from ->
-
+        val viewModel: LoginViewModel = getViewModel()
+        SignUpScreen(
+            modifier = modifier,
+            onUserLogged = {
+                onUserLogged(it, from)
+            },
+            onBack = onBack,
+            viewModel = viewModel
+        )
     }
 }
 
