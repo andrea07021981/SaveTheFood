@@ -23,7 +23,7 @@ fun PantryScreen(
 ) {
     val foods by viewModel.foodList.observeAsState()
     // TODO pass the filters jetsnak
-    // TODO add here all the Slots api for toolbar, filters, etc
+    // TODO add here all the Slots api for toolbar, filters, etc. User Scaffold wito top bar!
     BasicList(modifier, foods) {
         FoodCard(
             foodDomain = it,

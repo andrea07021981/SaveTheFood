@@ -1,5 +1,6 @@
 package com.example.savethefood.ui.compose.pantry
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,12 +13,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.ui.compose.component.FoodExpiringStatusText
 import com.example.savethefood.ui.compose.extention.formatQuantityByType
+import com.example.savethefood.ui.compose.foodList
+import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import com.example.savethefood.util.getResourceByName
 
 @Composable
@@ -88,5 +92,16 @@ internal fun FoodItem(
                 textAlign = TextAlign.End
             )
         }
+    }
+}
+
+@Preview
+@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun PreviewFoodItem() {
+    SaveTheFoodTheme {
+        FoodItem(
+            food = foodList.first()
+        )
     }
 }

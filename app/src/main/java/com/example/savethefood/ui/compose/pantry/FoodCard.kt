@@ -44,7 +44,7 @@ fun FoodCard(
 @Preview
 @Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun PreviewFoodItem() {
+fun PreviewFoodCard() {
     SaveTheFoodTheme {
         FoodCard(
             foodDomain = FoodDomain(title = "Food test"),
