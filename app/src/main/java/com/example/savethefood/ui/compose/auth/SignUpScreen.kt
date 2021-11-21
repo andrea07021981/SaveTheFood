@@ -19,11 +19,13 @@ import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.viewmodel.LoginViewModel
 import com.example.savethefood.ui.compose.SaveTheFoodScaffold
+import com.example.savethefood.ui.compose.component.BasicTopAppBar
 import com.example.savethefood.ui.compose.component.BasicVerticalSurface
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import com.google.accompanist.insets.imePadding
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
+import com.google.accompanist.insets.systemBarsPadding
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -34,43 +36,35 @@ fun SignUpScreen(
     viewModel: LoginViewModel = getViewModel()
 ) {
     SaveTheFoodScaffold(
+        backgroundColor = SaveTheFoodTheme.colors.uiBackground,
+        contentColor = contentColorFor(backgroundColor = SaveTheFoodTheme.colors.uiBackground),
         topBar = {
-            Surface(
-                color = MaterialTheme.colors.primarySurface,
-                elevation = 4.dp,
-                modifier = modifier
-            ) {
-                TopAppBar(
-                    title = {},
-                    navigationIcon = {
-                        IconButton(onClick = onBack) {
-                            Icon(
-                                imageVector = Icons.Filled.ArrowBack,
-                                contentDescription = "Back",
-                                tint = MaterialTheme.colors.primary
-                            )
-                        }
-                    },
-                    actions = {  },
-                    backgroundColor = Color.Transparent,
-                    contentColor = contentColorFor(MaterialTheme.colors.primarySurface),
-                    elevation = 0.dp,
-                    modifier = Modifier
-                        .statusBarsPadding()
-                        .navigationBarsPadding(bottom = false)
-                )
-            }
+            BasicTopAppBar(
+                title = {},
+                homeButton = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = SaveTheFoodTheme.colors.brand
+                        )
+                    }
+                },
+                actions = { /*TODO*/ },
+                elevation = 8.dp
+            )
         }
     ) {
-        /*BasicVerticalSurface{
-            Image(
-                modifier = Modifier.size(100.dp),
-                alignment = Alignment.TopCenter,
-                painter = painterResource(id = R.drawable.ic_food),
-                contentDescription = "Logo"
+        BasicVerticalSurface(
+            modifier = modifier
+        ){
+            Text(
+                text = "Let's get started!",
+                style = MaterialTheme.typography.h5
             )
             Spacer(modifier = Modifier.height(170.dp))
-        }*/
+
+        }
     }
 }
 
