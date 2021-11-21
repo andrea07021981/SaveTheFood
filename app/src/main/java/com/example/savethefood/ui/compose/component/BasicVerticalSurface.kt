@@ -20,6 +20,8 @@ fun BasicVerticalSurface(
     background: Color = SaveTheFoodTheme.colors.uiBackground,
     contentColor: Color = SaveTheFoodTheme.colors.textSecondary,
     elevation: Dp = 20.dp,
+    verticalArrangement:  Arrangement.Vertical = Arrangement.Center,
+    horizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
     content: @Composable (ColumnScope.() -> Unit)
 ) {
     Surface(
@@ -35,8 +37,8 @@ fun BasicVerticalSurface(
             modifier = modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = verticalArrangement,
+            horizontalAlignment = horizontalAlignment,
             content = content
         )
     }

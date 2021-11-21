@@ -55,15 +55,16 @@ fun SignUpScreen(
             )
         }
     ) {
-        /*BasicVerticalSurface{
-            Image(
-                modifier = Modifier.size(100.dp),
-                alignment = Alignment.TopCenter,
-                painter = painterResource(id = R.drawable.ic_food),
-                contentDescription = "Logo"
+        BasicVerticalSurface(
+            modifier = modifier
+        ){
+            Text(
+                text = "Let's get started!",
+                style = MaterialTheme.typography.h5
             )
             Spacer(modifier = Modifier.height(170.dp))
-        }*/
+
+        }
     }
 }
 
