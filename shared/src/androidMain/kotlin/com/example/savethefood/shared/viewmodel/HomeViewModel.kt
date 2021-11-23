@@ -14,6 +14,10 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.HashMap
 
+/**
+ * TODO use like jetnews for repository to mutablestateflow. Also check jetpackcomposelayout - advance viewmodel
+ * TODO TThen Can use flatMapLatest instead of switchmap as in jetpackcomposelayout - advance viewmodel
+ */
 actual class HomeViewModel actual constructor(
     private val foodDataRepository: FoodRepository
 ) : ViewModel() {

@@ -6,6 +6,7 @@ import com.example.savethefood.shared.data.source.repository.UserRepository
 import com.example.savethefood.shared.utils.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class LoginState(
@@ -89,7 +90,8 @@ actual class LoginViewModel actual constructor(
         }
     }
 
-    // TODO prepared for the next step livedata -> StateFLow (use _uiState.update { it.copy(authState....)
+    // TODO prepared like jetnews for the next step livedata -> StateFLow (use _uiState.update { it.copy(authState....)
+    // TODO replace XML with uistate
     var _uiState = MutableStateFlow(
         LoginState(
             userName,
@@ -133,18 +135,32 @@ actual class LoginViewModel actual constructor(
     private inline fun doLogin(crossinline block: suspend () -> com.example.savethefood.shared.data.Result<UserDomain>) {
         viewModelScope.launch {
             _loginAuthenticationState.value = LoginAuthenticationStates.Authenticating()
+            _uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticating()) }
             when (val result = block()) {
                 is com.example.savethefood.shared.data.Result.Success -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.Authenticated(user = result.data)
+                    _uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticated(user = result.data)) }
                 }
-                is com.example.savethefood.shared.data.Result.Error -> _loginAuthenticationState.value =
-                    LoginAuthenticationStates.InvalidAuthentication(result.message)
-                is com.example.savethefood.shared.data.Result.ExError -> _loginAuthenticationState.value =
-                    LoginAuthenticationStates.InvalidAuthentication(result.exception.toString())
-                is com.example.savethefood.shared.data.Result.Loading -> _loginAuthenticationState.value =
-                    LoginAuthenticationStates.Authenticating()
-                else -> LoginAuthenticationStates.Idle
+                is com.example.savethefood.shared.data.Result.Error -> {
+                    _loginAuthenticationState.value =
+                        LoginAuthenticationStates.InvalidAuthentication(result.message)
+                    _uiState.update { it.copy(authState = LoginAuthenticationStates.InvalidAuthentication(result.message)) }
+                }
+                is com.example.savethefood.shared.data.Result.ExError -> {
+                    _loginAuthenticationState.value =
+                        LoginAuthenticationStates.InvalidAuthentication(result.exception.toString())
+                    _uiState.update { it.copy(authState = LoginAuthenticationStates.InvalidAuthentication(result.exception.toString())) }
+                }
+                is com.example.savethefood.shared.data.Result.Loading -> {
+                    _loginAuthenticationState.value =
+                        LoginAuthenticationStates.Authenticating()
+                    _uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticating()) }
+                }
+                else -> {
+                    LoginAuthenticationStates.Idle
+                    _uiState.update { it.copy(authState = LoginAuthenticationStates.Idle) }
+                }
             }
         }
     }
@@ -183,6 +199,7 @@ actual class LoginViewModel actual constructor(
 
     fun resetState() {
         _loginAuthenticationState.value = LoginAuthenticationStates.Idle
+        _uiState.update { it.copy(authState = LoginAuthenticationStates.Idle) }
     }
 
     fun moveToSignUp() {
