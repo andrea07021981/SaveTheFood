@@ -38,12 +38,14 @@ fun LoginScreen(
         password = "aaaaaaaa",
         passwordFocus = false
     )
-    val userEmail by remember { mutableStateOf(viewModel.email) }
+    /*val userEmail by remember { mutableStateOf(viewModel.email) }
     val userEmailState by userEmail.valueStatus.observeAsState()
     val userPsw by remember { mutableStateOf(viewModel.password) }
-    val userPswState by userPsw.valueStatus.observeAsState()
+    val userPswState by userPsw.valueStatus.observeAsState()*/
 
-    val loginState = viewModel.loginAuthenticationState.observeAsState().value
+    val uiState by viewModel.uiState.collectAsState()
+
+    val loginState = uiState.authState
     if (loginState is LoginAuthenticationStates.Authenticated) {
         onUserLogged(loginState.user)
         viewModel.resetState()
@@ -60,10 +62,10 @@ fun LoginScreen(
     LoginScreen(
         modifier = modifier,
         authStatus = authStatus,
-        email = userEmail,
-        emailState = userEmailState,
-        password = userPsw,
-        passwordState = userPswState,
+        email = uiState.email,
+        emailState = uiState.email.valueStatus.observeAsState().value,
+        password = uiState.password,
+        passwordState = uiState.password.valueStatus.observeAsState().value,
         signIn = viewModel::onSignInClick,
         signUp = viewModel::moveToSignUp
     )
