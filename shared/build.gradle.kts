@@ -63,6 +63,8 @@ kotlin {
                 implementation(Libs.ktorAndroid)
                 implementation(Libs.sqlDelightAndroid)
                 implementation(Libs.koinAndroid)
+                implementation(Compose.runtime)
+                implementation(Compose.runtimeLiveData)
             }
         }
 

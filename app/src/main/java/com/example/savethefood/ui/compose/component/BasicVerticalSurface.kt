@@ -25,8 +25,8 @@ fun BasicVerticalSurface(
     content: @Composable (ColumnScope.() -> Unit)
 ) {
     Surface(
-        modifier = modifier.fillMaxWidth()
-            .fillMaxHeight()
+        modifier = modifier
+            .fillMaxSize()
             .imePadding(), // This move the view up while the keyboard is opened,
         shape = shape,
         color = background,
@@ -34,9 +34,6 @@ fun BasicVerticalSurface(
         elevation = elevation,
     ) {
         Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
             verticalArrangement = verticalArrangement,
             horizontalAlignment = horizontalAlignment,
             content = content

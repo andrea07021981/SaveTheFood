@@ -38,10 +38,6 @@ fun LoginScreen(
         password = "aaaaaaaa",
         passwordFocus = false
     )
-    /*val userEmail by remember { mutableStateOf(viewModel.email) }
-    val userEmailState by userEmail.valueStatus.observeAsState()
-    val userPsw by remember { mutableStateOf(viewModel.password) }
-    val userPswState by userPsw.valueStatus.observeAsState()*/
 
     val uiState by viewModel.uiState.collectAsState()
 
@@ -157,12 +153,32 @@ fun LoginScreen(
     }
 }
 @Preview
-@Preview("dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview("Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewLoginScreen() {
+    val authStatus: AuthState = rememberAuthState(
+        email = "a@a.com",
+        emailFocus = false,
+        password = "aaaaaaaa",
+        passwordFocus = false
+    )
     SaveTheFoodTheme {
         LoginScreen(
-            onUserLogged = {}
+            authStatus = authStatus,
+            email = object : LoginViewModel.LoginStatus("asd") {
+                override val checkStatus: (String) -> LoginStateValue = {
+                    LoginStateValue.NONE
+                }
+            },
+            emailState = LoginStateValue.NONE,
+            password = object : LoginViewModel.LoginStatus("asd") {
+                override val checkStatus: (String) -> LoginStateValue = {
+                    LoginStateValue.NONE
+                }
+            },
+            passwordState = LoginStateValue.NONE,
+            signIn = {},
+            signUp = {}
         )
     }
 }
