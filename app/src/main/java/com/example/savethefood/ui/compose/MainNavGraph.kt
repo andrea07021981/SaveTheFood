@@ -1,6 +1,8 @@
 package com.example.savethefood.ui.compose
 
 import android.util.Log
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -72,7 +74,8 @@ fun MainNavGraph(
                         from = from
                     )
                 },
-                onBack = navController::navigateUp
+                onBack = navController::navigateUp,
+                modifier = modifier
             )
         }
     }
