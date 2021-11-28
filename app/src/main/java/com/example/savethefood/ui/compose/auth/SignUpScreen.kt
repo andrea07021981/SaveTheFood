@@ -11,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.style.TextAlign
@@ -93,9 +94,9 @@ fun SignUpScreen(
             isAnimated = true
         }
 
-        BasicVerticalSurface(
-            modifier = modifier,
-        ){
+        Box(Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
             Text(
                 modifier = modifier.offset(offSet.x.dp, offSet.y.dp),
                 textAlign = TextAlign.Center,
@@ -105,13 +106,27 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(120.dp))
             AnimatedVisibility(
                 visible = isAnimated,
-                enter = fadeIn(initialAlpha = .1F, animationSpec = tween(durationMillis = 3000)),
+                enter = fadeIn(initialAlpha = .2F, animationSpec = tween(durationMillis = 3000)),
             ) {
-                Text(
-                    textAlign = TextAlign.Center,
-                    text = "Info",
-                    style = MaterialTheme.typography.h5
-                )
+                BasicVerticalSurface(
+                    modifier = modifier,
+                ){
+                    Text(
+                        textAlign = TextAlign.Center,
+                        text = "Info",
+                        style = MaterialTheme.typography.h5
+                    )
+                    Text(
+                        textAlign = TextAlign.Center,
+                        text = "Info",
+                        style = MaterialTheme.typography.h5
+                    )
+                    Text(
+                        textAlign = TextAlign.Center,
+                        text = "Info",
+                        style = MaterialTheme.typography.h5
+                    )
+                }
             }
         }
     }
