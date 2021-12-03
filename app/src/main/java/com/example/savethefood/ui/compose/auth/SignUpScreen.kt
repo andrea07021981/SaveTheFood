@@ -81,56 +81,39 @@ fun SignUpScreen(
         },
         modifier = modifier
     ) {
-        var isAnimated by remember { mutableStateOf(false) }
-        val centerOffset = IntOffset(0, LocalConfiguration.current.screenHeightDp / 2)
-        val topOffset = IntOffset(0, LocalConfiguration.current.screenHeightDp / 10)
-        val offSet by animateIntOffsetAsState(
-            targetValue = if (isAnimated) topOffset else centerOffset,
-            animationSpec = tween(3000)
-        )
-
-        // TODO probably not correct, it restarts every re composition
-        LaunchedEffect(Unit) {
-            isAnimated = true
-        }
-
-        Box(Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
+        CompositionLocalProvider(
+            LocalContentColor provides SaveTheFoodTheme.colors.textSecondary
         ) {
             Text(
-                modifier = modifier.offset(offSet.x.dp, offSet.y.dp),
+                modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 text = "Let's get started!",
-                style = MaterialTheme.typography.h5
+                style = MaterialTheme.typography.h3
             )
             Spacer(modifier = Modifier.height(120.dp))
-            AnimatedVisibility(
-                visible = isAnimated,
-                enter = fadeIn(initialAlpha = .2F, animationSpec = tween(durationMillis = 3000)),
-            ) {
-                BasicVerticalSurface(
-                    modifier = modifier,
-                ){
-                    Text(
-                        textAlign = TextAlign.Center,
-                        text = "Info",
-                        style = MaterialTheme.typography.h5
-                    )
-                    Text(
-                        textAlign = TextAlign.Center,
-                        text = "Info",
-                        style = MaterialTheme.typography.h5
-                    )
-                    Text(
-                        textAlign = TextAlign.Center,
-                        text = "Info",
-                        style = MaterialTheme.typography.h5
-                    )
-                }
+            BasicVerticalSurface(
+                modifier = modifier,
+            ){
+                Text(
+                    textAlign = TextAlign.Center,
+                    text = "Info",
+                    style = MaterialTheme.typography.h5
+                )
+                Text(
+                    textAlign = TextAlign.Center,
+                    text = "Info",
+                    style = MaterialTheme.typography.h5
+                )
+                Text(
+                    textAlign = TextAlign.Center,
+                    text = "Info",
+                    style = MaterialTheme.typography.h5
+                )
             }
         }
     }
 }
+
 @Preview
 @Preview("Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
