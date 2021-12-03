@@ -33,6 +33,8 @@ fun LoginScreen(
 ) {
 
     val authStatus: AuthState = rememberAuthState(
+        userName = "Name",
+        userNameFocus = false,
         email = "a@a.com",
         emailFocus = false,
         password = "aaaaaaaa",
@@ -157,6 +159,8 @@ fun LoginScreen(
 @Composable
 fun PreviewLoginScreen() {
     val authStatus: AuthState = rememberAuthState(
+        userName = "Name",
+        userNameFocus = false,
         email = "a@a.com",
         emailFocus = false,
         password = "aaaaaaaa",

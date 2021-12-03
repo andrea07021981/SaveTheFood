@@ -8,6 +8,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
+/**
+ * Basic generic list using the SLOT api
+ */
 @Composable
 internal fun <T> BasicList(
     modifier: Modifier = Modifier,
