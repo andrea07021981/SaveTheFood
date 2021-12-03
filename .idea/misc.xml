@@ -118,6 +118,12 @@
         <entry key="../../../../../layout/compose-model-1638133290971.xml" value="0.125" />
         <entry key="../../../../../layout/compose-model-1638133973615.xml" value="0.16638795986622074" />
         <entry key="../../../../../layout/compose-model-1638198165152.xml" value="0.165" />
+        <entry key="../../../../../layout/compose-model-1638564342285.xml" value="0.10890468227424749" />
+        <entry key="../../../../../layout/compose-model-1638564396511.xml" value="0.3277777777777778" />
+        <entry key="../../../../../layout/compose-model-1638564416099.xml" value="0.10890468227424749" />
+        <entry key="../../../../../layout/compose-model-1638566426821.xml" value="0.16638795986622074" />
+        <entry key="../../../../../layout/compose-model-1638566777367.xml" value="0.45584415584415583" />
+        <entry key="../../../../../layout/compose-model-1638567361424.xml" value="0.16576086956521738" />
         <entry key="../../../../../layout/custom_preview.xml" value="0.234375" />
         <entry key="app/src/main/res/drawable-anydpi/ic_food_add.xml" value="0.23645833333333333" />
         <entry key="app/src/main/res/drawable/empty.xml" value="0.19166666666666668" />
@@ -144,7 +150,7 @@
         <entry key="app/src/main/res/layout/fragment_recipe_cook.xml" value="0.1574074074074074" />
         <entry key="app/src/main/res/layout/fragment_recipe_detail.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_searchable.xml" value="0.10309017223910841" />
-        <entry key="app/src/main/res/layout/fragment_signup.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_signup.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/pair_item.xml" value="0.12487335359675786" />
         <entry key="app/src/main/res/layout/step_cook_item.xml" value="0.10309017223910841" />

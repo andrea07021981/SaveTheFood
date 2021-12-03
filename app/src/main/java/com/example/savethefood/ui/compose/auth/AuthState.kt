@@ -7,6 +7,8 @@ import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun rememberAuthState(
+    userName: String,
+    userNameFocus: Boolean,
     email: String,
     emailFocus: Boolean,
     password: String,
@@ -14,6 +16,8 @@ fun rememberAuthState(
     context: Context = LocalContext.current,
 ) = remember {
     AuthState(
+        initUserName = userName,
+        initUserNameHasFocus = userNameFocus,
         initEmail = email,
         initEmailHasFocus = emailFocus,
         initPassword = password,
@@ -23,12 +27,20 @@ fun rememberAuthState(
 }
 
 class AuthState(
+    initUserName: String,
+    initUserNameHasFocus: Boolean,
     initEmail: String,
     initEmailHasFocus: Boolean,
     initPassword: String,
     initPasswordHasFocus: Boolean,
     var context: Context
 ) {
+
+    var userName by mutableStateOf(initUserName)
+    val setUserName: (String) -> Unit = {
+        userName = it
+    }
+    var userNameHasFocus by mutableStateOf(initUserNameHasFocus)
 
     var email by mutableStateOf(initEmail)
     val setEmail: (String) -> Unit = {

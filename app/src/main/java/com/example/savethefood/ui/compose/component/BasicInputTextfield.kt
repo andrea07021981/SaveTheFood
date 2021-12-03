@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,6 +41,7 @@ fun BasicInputTextfield(
     isError: Boolean = false,
     errorMessage: String = "",
     singleLine: Boolean = true,
+    keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Done,
     onTextChanged: (String) -> Unit,
     onImeAction: () -> Unit = {}
@@ -103,7 +105,10 @@ fun BasicInputTextfield(
                 errorBorderColor = SaveTheFoodTheme.colors.warning
             ),
             visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions.Default.copy(imeAction = imeAction),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            ),
             keyboardActions = KeyboardActions(
                 onDone = {
                     onImeAction()
