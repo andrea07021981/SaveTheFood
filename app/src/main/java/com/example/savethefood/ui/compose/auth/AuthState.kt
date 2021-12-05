@@ -5,14 +5,17 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 
+/**
+ * Authentication state holder, default values are for testing purpose
+ */
 @Composable
 fun rememberAuthState(
-    userName: String,
-    userNameFocus: Boolean,
-    email: String,
-    emailFocus: Boolean,
-    password: String,
-    passwordFocus: Boolean,
+    userName: String = "Name",
+    userNameFocus: Boolean = false,
+    email: String = "a@a.com",
+    emailFocus: Boolean = false,
+    password: String = "aaaaaaaa",
+    passwordFocus: Boolean = false,
     context: Context = LocalContext.current,
 ) = remember {
     AuthState(

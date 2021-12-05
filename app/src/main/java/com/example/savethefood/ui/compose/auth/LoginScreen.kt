@@ -7,9 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.savethefood.R
@@ -18,28 +16,17 @@ import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.shared.utils.LoginStateValue
 import com.example.savethefood.shared.viewmodel.LoginViewModel
 import com.example.savethefood.ui.compose.component.BasicButton
-import com.example.savethefood.ui.compose.component.BasicInputTextfield
 import com.example.savethefood.ui.compose.component.BasicVerticalSurface
-import com.example.savethefood.ui.compose.extention.hasLoginError
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
-import org.jetbrains.annotations.NotNull
 import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
     onUserLogged: (UserDomain?) -> Unit,
-    viewModel: LoginViewModel = getViewModel()
+    viewModel: LoginViewModel = getViewModel(),
+    authState: AuthState = rememberAuthState()
 ) {
-
-    val authStatus: AuthState = rememberAuthState(
-        userName = "Name",
-        userNameFocus = false,
-        email = "a@a.com",
-        emailFocus = false,
-        password = "aaaaaaaa",
-        passwordFocus = false
-    )
 
     val uiState by viewModel.uiState.collectAsState()
 
@@ -59,7 +46,9 @@ fun LoginScreen(
 
     LoginScreen(
         modifier = modifier,
-        authStatus = authStatus,
+        authStatus = authState,
+        userName = uiState.userName,
+        userNameState = uiState.userName.valueStatus.observeAsState().value,
         email = uiState.email,
         emailState = uiState.email.valueStatus.observeAsState().value,
         password = uiState.password,
@@ -73,6 +62,8 @@ fun LoginScreen(
 fun LoginScreen(
     modifier: Modifier = Modifier,
     authStatus: AuthState,
+    userName: LoginViewModel.LoginStatus,
+    userNameState: LoginStateValue?,
     email: LoginViewModel.LoginStatus,
     emailState: LoginStateValue?,
     password: LoginViewModel.LoginStatus,
@@ -90,51 +81,15 @@ fun LoginScreen(
             contentDescription = "Logo"
         )
         Spacer(modifier = Modifier.height(170.dp))
-        BasicInputTextfield(
-            modifier = Modifier
-                .fillMaxWidth(.8F)
-                .onFocusChanged {
-                    authStatus.emailHasFocus = it.run {
-                        if (isFocused.not() && authStatus.emailHasFocus) {
-                            email.value = authStatus.email
-                            email.onFocusChanged(email.value)
-                        }
-                        isFocused
-                    }
-                },
-            res = R.drawable.email_white_24dp,
-            label = authStatus.context.resources.getString(R.string.username),
-            text = authStatus.email,
-            isError = emailState?.hasLoginError() == true,
-            errorMessage = emailState?.message ?: "",
-            imeAction = ImeAction.Next,
-            onTextChanged = authStatus.setEmail
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        BasicInputTextfield(
-            modifier = Modifier
-                .fillMaxWidth(.8F)
-                .onFocusChanged {
-                    authStatus.passwordHasFocus = it.run {
-                        if (it.isFocused.not() && authStatus.passwordHasFocus) {
-                            password.value = authStatus.password
-                            password.onFocusChanged(password.value)
-                        }
-                        isFocused
-                    }
-                },
-            label = authStatus.context.resources.getString(R.string.password),
-            res = R.drawable.email_white_24dp,
-            isPasswordField = true,
-            passwordVisibility = authStatus.passwordVisibility,
-            onPasswordVisibilityChanged = {
-                authStatus.passwordVisibility = !it
-            },
-            text = authStatus.password,
-            isError = passwordState?.hasLoginError() == true,
-            errorMessage = passwordState?.message ?: "",
-            onTextChanged = authStatus.setPassword,
-            onImeAction = signIn
+        AuthForm(
+            authStatus = authStatus,
+            userName = userName,
+            userNameState = userNameState,
+            email = email,
+            emailState = emailState,
+            password = password,
+            passwordState = passwordState,
+            signIn = signIn
         )
         Spacer(modifier = Modifier.height(64.dp))
         BasicButton(
@@ -158,17 +113,16 @@ fun LoginScreen(
 @Preview("Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewLoginScreen() {
-    val authStatus: AuthState = rememberAuthState(
-        userName = "Name",
-        userNameFocus = false,
-        email = "a@a.com",
-        emailFocus = false,
-        password = "aaaaaaaa",
-        passwordFocus = false
-    )
+    val authStatus: AuthState = rememberAuthState()
     SaveTheFoodTheme {
         LoginScreen(
             authStatus = authStatus,
+            userName = object : LoginViewModel.LoginStatus("Name") {
+                override val checkStatus: (String) -> LoginStateValue = {
+                    LoginStateValue.NONE
+                }
+            },
+            userNameState = LoginStateValue.NONE,
             email = object : LoginViewModel.LoginStatus("asd") {
                 override val checkStatus: (String) -> LoginStateValue = {
                     LoginStateValue.NONE
