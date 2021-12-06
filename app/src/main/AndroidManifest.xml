@@ -29,26 +29,27 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
+        <!--<activity
             android:name=".MainActivity"
+            android:exported="false"
             android:windowSoftInputMode="adjustPan">
-            <!--<intent-filter>
+            &lt;!&ndash;<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>&ndash;&gt;
 
-            <!--Deep link-->
+            &lt;!&ndash;Deep link&ndash;&gt;
             <nav-graph android:value="@navigation/main_graph" />
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
-        </activity>
+        </activity>-->
 
         <activity
             android:name=".MainActivityCompose"
+            android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.SaveTheFood"
-            android:exported="true">
+            android:theme="@style/Theme.SaveTheFood" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -21,7 +21,7 @@ import com.example.savethefood.ui.theme.SaveTheFoodTheme
 @Composable
 fun AuthForm(
     modifier: Modifier = Modifier,
-    isLoginIn: Boolean = false,
+    isLoginIn: Boolean = true,
     authStatus: AuthState,
     userName: LoginViewModel.LoginStatus,
     userNameState: LoginStateValue?,
@@ -31,27 +31,29 @@ fun AuthForm(
     passwordState: LoginStateValue?,
     signIn: () -> Unit
 ) {
-    BasicInputTextfield(
-        modifier = Modifier
-            .fillMaxWidth(.8F),
-        res = R.drawable.person_outline_24,
-        label = authStatus.context.resources.getString(R.string.username),
-        text = authStatus.userName,
-        isError = userNameState?.hasLoginError() == true,
-        errorMessage = userNameState?.message ?: "",
-        onFocusChanged = {
-            authStatus.userNameHasFocus = it.run {
-                if (isFocused.not() && authStatus.userNameHasFocus) {
-                    userName.value = authStatus.userName
-                    userName.onFocusChanged(userName.value)
+    if (isLoginIn.not()) {
+        BasicInputTextfield(
+            modifier = Modifier
+                .fillMaxWidth(.8F),
+            res = R.drawable.person_outline_24,
+            label = authStatus.context.resources.getString(R.string.username),
+            text = authStatus.userName,
+            isError = userNameState?.hasLoginError() == true,
+            errorMessage = userNameState?.message ?: "",
+            onFocusChanged = {
+                authStatus.userNameHasFocus = it.run {
+                    if (isFocused.not() && authStatus.userNameHasFocus) {
+                        userName.value = authStatus.userName
+                        userName.onFocusChanged(userName.value)
+                    }
+                    isFocused
                 }
-                isFocused
-            }
-        },
-        imeAction = ImeAction.Next,
-        onTextChanged = authStatus.setUserName
-    )
-    Spacer(modifier = Modifier.height(16.dp))
+            },
+            imeAction = ImeAction.Next,
+            onTextChanged = authStatus.setUserName
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+    }
     BasicInputTextfield(
         modifier = modifier
             .fillMaxWidth(.8F),
@@ -77,7 +79,7 @@ fun AuthForm(
         modifier = modifier
             .fillMaxWidth(.8F),
         label = authStatus.context.resources.getString(R.string.password),
-        res = R.drawable.email_white_24dp,
+        res = R.drawable.lock_white_24dp,
         isPasswordField = true,
         passwordVisibility = authStatus.passwordVisibility,
         onPasswordVisibilityChanged = {
@@ -96,8 +98,36 @@ fun AuthForm(
             }
         },
         onTextChanged = authStatus.setPassword,
-        onImeAction = signIn
+        onImeAction = { if (isLoginIn) signIn() else ImeAction.Next }
     )
+    if (isLoginIn.not()) {
+        Spacer(modifier = Modifier.height(16.dp))
+        BasicInputTextfield(
+            modifier = modifier
+                .fillMaxWidth(.8F),
+            label = authStatus.context.resources.getString(R.string.confirm_password),
+            res = R.drawable.lock_white_24dp,
+            isPasswordField = true,
+            passwordVisibility = authStatus.passwordVisibility,
+            onPasswordVisibilityChanged = {
+                authStatus.passwordVisibility = !it
+            },
+            text = authStatus.password,
+            isError = passwordState?.hasLoginError() == true,
+            errorMessage = passwordState?.message ?: "",
+            onFocusChanged = {
+                authStatus.passwordHasFocus = it.run {
+                    if (it.isFocused.not() && authStatus.passwordHasFocus) {
+                        password.value = authStatus.password
+                        password.onFocusChanged(password.value)
+                    }
+                    isFocused
+                }
+            },
+            onTextChanged = authStatus.setPassword,
+            onImeAction = signIn
+        )
+    }
 }
 
 @Preview

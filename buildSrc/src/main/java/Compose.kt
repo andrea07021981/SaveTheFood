@@ -18,4 +18,5 @@ object Compose {
     const val constraintCompose = "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintCompose}"
     const val coilCompose = "io.coil-kt:coil-compose:${Versions.coilCompose}"
     const val uiTest = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
+    const val splashScreen = "androidx.core:core-splashscreen:${Versions.splashScreen}"
 }

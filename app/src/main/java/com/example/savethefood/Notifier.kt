@@ -50,18 +50,24 @@ object Notifier {
     }
 
     fun postNotification(id: Long, context: Context, intent: PendingIntent) {
-        val builder = NotificationCompat.Builder(context, channelId)
-        builder.setContentTitle(context.getString(R.string.deepLinkNotificationTitle))
-            .setSmallIcon(R.drawable.food_added)
-        val text = context.getString(R.string.addFoodInfo)
-        val notification = builder.setContentText(text)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(intent)
-            .setAutoCancel(true)
-            .build()
-        val notificationManager = NotificationManagerCompat.from(context)
-        // Remove prior notifications; only allow one at a time to edit the latest item
-        notificationManager.cancelAll()
-        notificationManager.notify(id.toInt(), notification)
+        NotificationCompat.Builder(context, channelId).run {
+            // Object initialization
+            setContentTitle(context.getString(R.string.deepLinkNotificationTitle))
+                .setSmallIcon(R.drawable.food_added)
+            val text = context.getString(R.string.addFoodInfo)
+            setContentText(text)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(intent)
+                .setAutoCancel(true)
+
+            // Object computation
+            build()
+        }.also {
+            with(NotificationManagerCompat.from(context)) {
+                // Remove prior notifications; only allow one at a time to edit the latest item
+                cancelAll()
+                notify(id.toInt(), it)
+            }
+        }
     }
 }

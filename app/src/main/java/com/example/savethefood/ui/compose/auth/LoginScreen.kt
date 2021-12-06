@@ -20,6 +20,7 @@ import com.example.savethefood.ui.compose.component.BasicVerticalSurface
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import org.koin.androidx.compose.getViewModel
 
+// TODO Handle the login error here or state hoisting and let the base Scaffold to use the Snackbar host
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,

@@ -24,6 +24,9 @@ import com.example.savethefood.ui.compose.foodList
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import com.example.savethefood.util.getResourceByName
 
+/**
+ * TODO add the placeholder here (same in recipes) from https://google.github.io/accompanist/placeholder/#shimmer
+ */
 @Composable
 internal fun FoodItem(
     modifier: Modifier = Modifier,

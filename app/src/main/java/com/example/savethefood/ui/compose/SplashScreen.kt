@@ -16,6 +16,10 @@ import kotlinx.coroutines.delay
 
 private const val SplashWaitTime: Long = 2000
 
+/**
+ * TODO migrate to SplashApi from https://developer.android.com/guide/topics/ui/splash-screen/migrate#best-practices
+ * TODO do wee need to keep it and check the current api version >30 in the SaveTheFoodApp?
+ */
 @Composable
 fun SplashScreen(
     modifier: Modifier = Modifier,
