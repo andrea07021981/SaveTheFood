@@ -72,4 +72,5 @@ object Versions {
     const val viewModelCompose = "1.0.0-alpha07"
     const val navigationCompose = "2.4.0-alpha06"
     const val coilCompose = "1.3.0"
+    const val splashScreen = "1.0.0-alpha01"
 }

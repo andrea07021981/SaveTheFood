@@ -14,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusState
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -43,6 +45,7 @@ fun BasicInputTextfield(
     singleLine: Boolean = true,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Done,
+    onFocusChanged: (FocusState) -> Unit = {},
     onTextChanged: (String) -> Unit,
     onImeAction: () -> Unit = {}
 ) {
@@ -50,7 +53,7 @@ fun BasicInputTextfield(
     val focusManager = LocalFocusManager.current
     Column {
         OutlinedTextField(
-            modifier = modifier,
+            modifier = modifier.onFocusChanged { onFocusChanged(it) },
             value = text,
             onValueChange = onTextChanged,
             label = { Text(label) },

@@ -1,37 +1,24 @@
 package com.example.savethefood.ui.compose.auth
 
 import android.content.res.Configuration
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.animateIntOffsetAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.shared.utils.LoginStateValue
 import com.example.savethefood.shared.viewmodel.LoginViewModel
 import com.example.savethefood.ui.compose.SaveTheFoodScaffold
-import com.example.savethefood.ui.compose.component.BasicInputTextfield
 import com.example.savethefood.ui.compose.component.BasicTopAppBar
 import com.example.savethefood.ui.compose.component.BasicVerticalSurface
-import com.example.savethefood.ui.compose.extention.hasLoginError
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import org.koin.androidx.compose.getViewModel
 
@@ -40,18 +27,9 @@ fun SignUpScreen(
     modifier: Modifier = Modifier,
     onUserLogged: (UserDomain?) -> Unit,
     onBack: () -> Unit,
-    viewModel: LoginViewModel = getViewModel()
+    viewModel: LoginViewModel = getViewModel(),
+    authState: AuthState = rememberAuthState()
 ) {
-
-    // FIXME create all in one view called AuthScreen, too much redundant code
-    val authStatus: AuthState = rememberAuthState(
-        userName = "Name",
-        userNameFocus = false,
-        email = "a@a.com",
-        emailFocus = false,
-        password = "aaaaaaaa",
-        passwordFocus = false
-    )
 
     val uiState by viewModel.uiState.collectAsState()
 
@@ -63,7 +41,7 @@ fun SignUpScreen(
 
     SignUpScreen(
         modifier = modifier,
-        authStatus = authStatus,
+        authStatus = authState,
         userName = uiState.userName,
         userNameState = uiState.userName.valueStatus.observeAsState().value,
         email = uiState.email,
@@ -129,47 +107,15 @@ fun SignUpScreen(
                 style = MaterialTheme.typography.h5
             )
             Spacer(modifier = Modifier.height(64.dp).fillMaxWidth())
-            BasicInputTextfield(
-                modifier = Modifier
-                    .fillMaxWidth(.8F)
-                    .onFocusChanged {
-                        authStatus.userNameHasFocus = it.run {
-                            if (isFocused.not() && authStatus.userNameHasFocus) {
-                                userName.value = authStatus.userName
-                                userName.onFocusChanged(userName.value)
-                            }
-                            isFocused
-                        }
-                    },
-                res = R.drawable.person_outline_24,
-                label = authStatus.context.resources.getString(R.string.username),
-                text = authStatus.userName,
-                isError = userNameState?.hasLoginError() == true,
-                errorMessage = userNameState?.message ?: "",
-                imeAction = ImeAction.Next,
-                onTextChanged = authStatus.setUserName
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            BasicInputTextfield(
-                modifier = Modifier
-                    .fillMaxWidth(.8F)
-                    .onFocusChanged {
-                        authStatus.emailHasFocus = it.run {
-                            if (isFocused.not() && authStatus.emailHasFocus) {
-                                email.value = authStatus.email
-                                email.onFocusChanged(email.value)
-                            }
-                            isFocused
-                        }
-                    },
-                res = R.drawable.email_white_24dp,
-                label = authStatus.context.resources.getString(R.string.username),
-                text = authStatus.email,
-                isError = emailState?.hasLoginError() == true,
-                errorMessage = emailState?.message ?: "",
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Next,
-                onTextChanged = authStatus.setEmail
+            AuthForm(
+                authStatus = authStatus,
+                userName = userName,
+                userNameState = userNameState,
+                email = email,
+                emailState = emailState,
+                password = password,
+                passwordState = passwordState,
+                signIn = signIn
             )
             Spacer(modifier = Modifier.height(16.dp))
         }
@@ -180,14 +126,7 @@ fun SignUpScreen(
 @Preview("Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 fun PreviewSignUpScreen() {
-    val authStatus: AuthState = rememberAuthState(
-        userName = "Name",
-        userNameFocus = false,
-        email = "a@a.com",
-        emailFocus = false,
-        password = "aaaaaaaa",
-        passwordFocus = false
-    )
+    val authStatus: AuthState = rememberAuthState()
     SaveTheFoodTheme {
         SignUpScreen(
             authStatus = authStatus,

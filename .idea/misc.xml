@@ -123,7 +123,22 @@
         <entry key="../../../../../layout/compose-model-1638564416099.xml" value="0.10890468227424749" />
         <entry key="../../../../../layout/compose-model-1638566426821.xml" value="0.16638795986622074" />
         <entry key="../../../../../layout/compose-model-1638566777367.xml" value="0.45584415584415583" />
+        <entry key="../../../../../layout/compose-model-1638567361402.xml" value="0.335" />
         <entry key="../../../../../layout/compose-model-1638567361424.xml" value="0.16576086956521738" />
+        <entry key="../../../../../layout/compose-model-1638741997193.xml" value="0.6347197106690777" />
+        <entry key="../../../../../layout/compose-model-1638742028840.xml" value="0.335" />
+        <entry key="../../../../../layout/compose-model-1638742791301.xml" value="0.16617892976588627" />
+        <entry key="../../../../../layout/compose-model-1638800568709.xml" value="0.16617892976588627" />
+        <entry key="../../../../../layout/compose-model-1638822251732.xml" value="0.16638795986622074" />
+        <entry key="../../../../../layout/compose-model-1638823726145.xml" value="0.16638795986622074" />
+        <entry key="../../../../../layout/compose-model-1638827090839.xml" value="0.16638795986622074" />
+        <entry key="../../../../../layout/compose-model-1638827266136.xml" value="0.3138888888888889" />
+        <entry key="../../../../../layout/compose-model-1638829734137.xml" value="0.3138888888888889" />
+        <entry key="../../../../../layout/compose-model-1638829790087.xml" value="0.3138888888888889" />
+        <entry key="../../../../../layout/compose-model-1638829798606.xml" value="0.10890468227424749" />
+        <entry key="../../../../../layout/compose-model-1638830346218.xml" value="0.10890468227424749" />
+        <entry key="../../../../../layout/compose-model-1638831300619.xml" value="0.2204391891891892" />
+        <entry key="../../../../../layout/compose-model-1638833618842.xml" value="0.1" />
         <entry key="../../../../../layout/custom_preview.xml" value="0.234375" />
         <entry key="app/src/main/res/drawable-anydpi/ic_food_add.xml" value="0.23645833333333333" />
         <entry key="app/src/main/res/drawable/empty.xml" value="0.19166666666666668" />
@@ -154,6 +169,8 @@
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/pair_item.xml" value="0.12487335359675786" />
         <entry key="app/src/main/res/layout/step_cook_item.xml" value="0.10309017223910841" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3138888888888889" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3138888888888889" />
       </map>
     </option>
   </component>

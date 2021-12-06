@@ -22,12 +22,12 @@ configurations {
     }
 }
 android {
-    compileSdkVersion(Application.compileSdk)
-    buildToolsVersion(Application.buildTools)
+    compileSdk = Application.compileSdk
+    buildToolsVersion = Application.buildTools
     defaultConfig {
         applicationId = Application.appId
-        minSdkVersion(Application.minSdk)
-        targetSdkVersion(Application.targetSdk)
+        minSdk = Application.minSdk
+        targetSdk = Application.targetSdk
         versionCode  = Application.versionCode
         versionName = Application.versionName
         testInstrumentationRunner = "com.example.savethefood.CustomTestRunner"
@@ -361,9 +361,11 @@ dependencies {
     implementation(Compose.constraintCompose)
     implementation(Compose.coilCompose)
     implementation(Compose.uiTest)
+    //implementation(Compose.splashScreen) TODO use after upgrade to SDK 31
     implementation(Accompanist.insets)
     implementation(Accompanist.systemuicontroller)
     implementation(Accompanist.flowlayouts)
+    implementation(Accompanist.placeHolder)
 
     // KMM module
     implementation(project(path = ":shared"))
