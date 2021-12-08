@@ -361,7 +361,7 @@ dependencies {
     implementation(Compose.constraintCompose)
     implementation(Compose.coilCompose)
     implementation(Compose.uiTest)
-    //implementation(Compose.splashScreen) TODO use after upgrade to SDK 31
+    implementation(Compose.splashScreen)
     implementation(Accompanist.insets)
     implementation(Accompanist.systemuicontroller)
     implementation(Accompanist.flowlayouts)

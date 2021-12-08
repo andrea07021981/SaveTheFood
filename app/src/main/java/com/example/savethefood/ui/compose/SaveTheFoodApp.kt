@@ -45,62 +45,47 @@ fun SaveTheFoodApp(content: @Composable () -> Unit) {
 @Composable
 fun MainApp() {
     // A surface container using the 'color' color from the theme
-    // TODO maybe remove and pass the colors for the Splash
     Surface(
         contentColor = SaveTheFoodTheme.colors.textPrimary,
         color = SaveTheFoodTheme.colors.uiBackground,
     ) {
-        var showSplashScreen by remember {
-            mutableStateOf(true)
-        }
-
-        // Show the splash screen first
-        Crossfade(
-            targetState = showSplashScreen,
-            animationSpec = tween(durationMillis = 3000, easing = FastOutSlowInEasing)
-        ) { isSplash ->
-            if (isSplash) {
-                SplashScreen(onTimeOut = { showSplashScreen = false })
-            } else {
-                // TODO Use custom state as state holders as source of truth https://developer.android.com/jetpack/compose/state#types-of-state-and-logic
-                //val tabs = remember { HomeSections.values() }
-                val appState = rememberAppState()
-                //val navController = rememberNavController()
-                // Manage the visibility of bottom nav
-                //val currentBackStackEntry by navController.currentBackStackEntryAsState()
-                //val scaffoldState = rememberScaffoldState()
-                SaveTheFoodScaffold(
-                    // This add the space of the status bar since have enabled setDecorFitsSystemWindows
-                    // TODO now we use statusBarsPadding for top padding, MOVE IT INTO NAVGRAPH? WE CAN USE systemBarsPadding FOR BOTH TOP AND BOTTOM NAV
-                    // TODO here https://medium.com/mobile-app-development-publication/android-jetpack-compose-inset-padding-made-easy-5f156a790979
-                    modifier = Modifier.systemBarsPadding(),
-                    contentColor = SaveTheFoodTheme.colors.textPrimary,
-                    bottomBar = {
-                        if (appState.hasBottomNav) {
-                            MainBottomNav(
-                                //navController = appState.navController,
-                                tabs = appState.tabs,
-                                navBackStackEntry = appState.navBackStackEntry,
-                                selected = { dest, section ->
-                                    dest?.isSectionSelected(section) ?: false
-                                },
-                                navigateTo = { section, currentRoute ->
-                                    appState.navigateToDestination(section, currentRoute)
-                                }
-                            )
+        // DONE Use custom state as state holders as source of truth https://developer.android.com/jetpack/compose/state#types-of-state-and-logic
+        //val tabs = remember { HomeSections.values() }
+        val appState = rememberAppState()
+        //val navController = rememberNavController()
+        // Manage the visibility of bottom nav
+        //val currentBackStackEntry by navController.currentBackStackEntryAsState()
+        //val scaffoldState = rememberScaffoldState()
+        SaveTheFoodScaffold(
+            // This add the space of the status bar since have enabled setDecorFitsSystemWindows
+            // TODO now we use statusBarsPadding for top padding, MOVE IT INTO NAVGRAPH? WE CAN USE systemBarsPadding FOR BOTH TOP AND BOTTOM NAV
+            // TODO here https://medium.com/mobile-app-development-publication/android-jetpack-compose-inset-padding-made-easy-5f156a790979
+            modifier = Modifier.systemBarsPadding(),
+            contentColor = SaveTheFoodTheme.colors.textPrimary,
+            bottomBar = {
+                if (appState.hasBottomNav) {
+                    MainBottomNav(
+                        //navController = appState.navController,
+                        tabs = appState.tabs,
+                        navBackStackEntry = appState.navBackStackEntry,
+                        selected = { dest, section ->
+                            dest?.isSectionSelected(section) ?: false
+                        },
+                        navigateTo = { section, currentRoute ->
+                            appState.navigateToDestination(section, currentRoute)
                         }
-                    },
-                    scaffoldState = appState.scaffoldState,
-                ) { innerPaddingModifier ->
-                    // TODO add topbar common here? Otherwise every screen that needs it add scaffold like Jetnews
-                    MainNavGraph(
-                        navController = appState.navController,
-                        modifier = Modifier
-                            .padding(innerPaddingModifier)
-                            .fillMaxSize()
                     )
                 }
-            }
+            },
+            scaffoldState = appState.scaffoldState,
+        ) { innerPaddingModifier ->
+            // TODO add topbar common here? Otherwise every screen that needs it add scaffold like Jetnews
+            MainNavGraph(
+                navController = appState.navController,
+                modifier = Modifier
+                    .padding(innerPaddingModifier)
+                    .fillMaxSize()
+            )
         }
     }
 }

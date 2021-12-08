@@ -3,10 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.savethefood">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
 
     <application
         android:name=".SaveTheFoodApplication"
@@ -15,15 +13,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SaveTheFood"
+        android:theme="@style/Theme.SaveTheFoodSplash"
         android:usesCleartextTraffic="true">
 
         <provider
-            android:name="androidx.work.impl.WorkManagerInitializer"
-            android:authorities="your-packagename.workmanager-init"
-            android:enabled="false"
-            tools:replace="android:authorities"
-            android:exported="false" />
+            android:name="androidx.startup.InitializationProvider"
+            android:exported="false"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -49,12 +46,45 @@
             android:name=".MainActivityCompose"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.SaveTheFood" >
+            android:theme="@style/Theme.SaveTheFoodSplash" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Dialog" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:exported="true"
+            android:clearTaskOnLaunch="true"
+            android:screenOrientation="sensorLandscape"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>
