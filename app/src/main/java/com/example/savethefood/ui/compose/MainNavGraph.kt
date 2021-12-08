@@ -50,6 +50,7 @@ fun MainNavGraph(
                     //if (from.lifecycleIsResumed()) {
                         // navigate to the specific edit page
                         Log.d("Navigation Id selected", id.toString())
+                        //TODO use Crossfade to navigate to the details
                         //navController.navigateSafe(route = AuthSections.LOGIN.route, from = from)
                     //}
                 },

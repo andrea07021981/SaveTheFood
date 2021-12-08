@@ -10,7 +10,7 @@ object Versions {
     const val lifecycleExtensions = "2.2.0"
     const val archLifecycle = "2.4.0-alpha03"
     const val room = "2.3.0"
-    const val appcompat = "1.2.0"
+    const val appcompat = "1.4.0"
     const val fragment = "1.3.0-rc01"
     const val junit = "4.12"
     const val junitTest = "1.1.1"

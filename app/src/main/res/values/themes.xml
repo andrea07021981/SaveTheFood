@@ -9,6 +9,13 @@
         <item name="android:dialogTheme">@style/Theme.DialogFullScreen</item>
     </style>
 
+    <style name="Theme.SaveTheFoodSplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#FFC30060</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenAnimationDuration">200</item>
+        <item name="postSplashScreenTheme">@style/Theme.SaveTheFood</item>
+    </style>
+
     <style name="Theme.Material.DayNight.NoActionBar" parent="@android:style/Theme.Material.Light.NoActionBar" />
 
     <style name="Theme.DialogFullScreen" parent="Theme.Material.DayNight.NoActionBar">
