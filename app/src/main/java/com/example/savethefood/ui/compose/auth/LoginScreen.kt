@@ -14,6 +14,7 @@ import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.shared.utils.LoginStateValue
+import com.example.savethefood.shared.viewmodel.LoginState
 import com.example.savethefood.shared.viewmodel.LoginViewModel
 import com.example.savethefood.ui.compose.component.BasicButton
 import com.example.savethefood.ui.compose.component.BasicVerticalSurface
@@ -30,12 +31,7 @@ fun LoginScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
-
-    val loginState = uiState.authState
-    if (loginState is LoginAuthenticationStates.Authenticated) {
-        onUserLogged(loginState.user)
-        viewModel.resetState()
-    }
+    // TODO Do we still need to use the one shot event of VM to navigate? add a toSignUp even in LoginScreen above and call it
     val navToSignUp by viewModel.navigateToSignUp.observeAsState()
     LaunchedEffect(navToSignUp) {
         if (navToSignUp?.hasBeenHandled == false) {
@@ -47,16 +43,52 @@ fun LoginScreen(
 
     LoginScreen(
         modifier = modifier,
-        authStatus = authState,
-        userName = uiState.userName,
-        userNameState = uiState.userName.valueStatus.observeAsState().value,
-        email = uiState.email,
-        emailState = uiState.email.valueStatus.observeAsState().value,
-        password = uiState.password,
-        passwordState = uiState.password.valueStatus.observeAsState().value,
+        authState = authState,
+        uiState = uiState,
         signIn = viewModel::onSignInClick,
-        signUp = viewModel::moveToSignUp
+        signUp = viewModel::moveToSignUp,
+        onUserLogged = onUserLogged,
+        resetState = viewModel::resetState
     )
+}
+
+/**
+ * TODO add the other states:
+ * Loading -> Recomposition occurs when the uiState changes, so create a loadeer beetween image and email
+ * Failed -> User a scaffold with simple top app bar and snackbar for errors
+ * Success -> call the onUserLogged as above
+ *
+ */
+
+@Composable
+fun LoginScreen(
+    modifier: Modifier,
+    authState: AuthState,
+    uiState: LoginState,
+    signIn: () -> Unit,
+    signUp: () -> Unit,
+    onUserLogged: (UserDomain?) -> Unit,
+    resetState: () -> Unit
+) {
+    val loginState = uiState.authState
+    if (loginState is LoginAuthenticationStates.Authenticated) {
+        onUserLogged(loginState.user)
+        resetState()
+    } else {
+        // Manage here the other states
+        LoginScreen(
+            modifier = modifier,
+            authStatus = authState,
+            userName = uiState.userName,
+            userNameState = uiState.userName.valueStatus.observeAsState().value,
+            email = uiState.email,
+            emailState = uiState.email.valueStatus.observeAsState().value,
+            password = uiState.password,
+            passwordState = uiState.password.valueStatus.observeAsState().value,
+            signIn = signIn,
+            signUp = signUp
+        )
+    }
 }
 
 @Composable

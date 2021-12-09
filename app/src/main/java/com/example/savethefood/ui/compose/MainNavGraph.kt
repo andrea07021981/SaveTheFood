@@ -126,6 +126,23 @@ fun NavGraphBuilder.addHomeGraph(
     // TODO Add nested graphs like addFoodGraph() where we have food and food detail. Inside use FOOD route and the FOOD route/foodId
     // TODO the add button will be declared inside pantry, use state hoisting to open the new food
     // Here we must keep only the events, all the logics, slot apis, etc inside the xScreen
+    /**
+     * Example for second level nested graph
+     * navigation(
+    route = HomeSections.FOOD.route,
+    startDestination = HomeSections.FOODLIST.route
+    ) {
+    composable(HomeSections.FOOD.route) { from ->
+    PantryScreen(
+    onFoodSelected = {
+    onSelected(it, from)
+    // Here wee probably need to navigate inside the future nested graph
+    }
+    )
+    }
+    // TODO Here add the route to the food detail
+    }
+     */
     composable(HomeSections.FOOD.route) { from ->
         PantryScreen(
             onFoodSelected = {

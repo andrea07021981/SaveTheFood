@@ -38,7 +38,7 @@ fun SignUpScreen(
         onUserLogged(loginState.user)
         viewModel.resetState()
     }
-
+    // TODO do like login, add another level SignUpScreen with only the states
     SignUpScreen(
         modifier = modifier,
         authStatus = authState,
