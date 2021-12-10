@@ -3,13 +3,16 @@ package com.example.savethefood.ui.compose
 object MainDestinations {
     const val AUTH_ROUTE = "auth"
     const val HOME_ROUTE = "home"
-    const val FOOD_ROUTE = "food"
+    /*const val FOOD_ROUTE = "food"
     const val RECIPE_ROUTE = "recipe"
-    const val COOKING_ROUTE = "cooking"
+    const val COOKING_ROUTE = "cooking"*/
 }
-
+// TODO Use sealed like https://github.com/stevdza-san/NestedNavigationDemo/blob/master/app/src/main/java/com/example/nestednavigationdemo/navigation/Screen.kt
+// Then navigation manager like https://joebirch.co/android/modular-navigation-with-jetpack-compose/
 // TODO use same as Rally screen but inside body add everything. Need to add navcontroller in constructor line 56
 // TODO we should use sealed class, we can pass data through constructors dynamically (ENUM is static)
+
+// The path will be root/home/pantry/foods/{id} for example
 /*
 /*
  * Copyright 2021 The Android Open Source Project

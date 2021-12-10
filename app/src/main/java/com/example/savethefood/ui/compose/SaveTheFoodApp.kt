@@ -80,6 +80,9 @@ fun MainApp() {
             scaffoldState = appState.scaffoldState,
         ) { innerPaddingModifier ->
             // TODO add topbar common here? Otherwise every screen that needs it add scaffold like Jetnews
+            // TODO consider the conditional navigation, Splash and login should never be a start destination as shown here
+            // TODO https://developer.android.com/guide/navigation/navigation-conditional
+            // TODO AND https://developer.android.com/guide/navigation/navigation-principles#fixed_start_destination
             MainNavGraph(
                 navController = appState.navController,
                 modifier = Modifier

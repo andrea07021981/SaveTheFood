@@ -1,8 +1,6 @@
 package com.example.savethefood.ui.compose
 
 import android.util.Log
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -13,7 +11,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.viewmodel.LoginViewModel
@@ -25,7 +22,7 @@ import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import org.koin.androidx.compose.getViewModel
 
 // TODO follow this for the tabrow (the old TabLayout) https://proandroiddev.com/how-to-use-tabs-in-jetpack-compose-41491be61c39
-
+// TODO move into new folder navigation where wee will also have the sealed classes and the navigation manager
 @Composable
 fun MainNavGraph(
     modifier: Modifier = Modifier,
@@ -57,62 +54,56 @@ fun MainNavGraph(
                 modifier = modifier
             )
         }
-        navigation(
-            route = MainDestinations.AUTH_ROUTE,
-            startDestination = AuthSections.LOGIN.route
-        ) {
-            addAuthGraph(
-                onUserLogged = { user, from ->
-                    navController.navigateSafe(
-                        route = if (from.destination.route == AuthSections.LOGIN.route &&
-                            user == null
-                        ) {
-                            AuthSections.SIGNUP.route
-                        } else {
-                            // Navigate to the nested home graph
-                            MainDestinations.HOME_ROUTE
-                        },
-                        from = from
-                    )
-                },
-                onBack = navController::navigateUp,
-                modifier = modifier
-            )
-        }
+
+        addAuthGraph(
+            modifier = modifier,
+            navController = navController
+        )
     }
 }
 
 /**
- * Login nested graph
+ * Authentication nested graph
  */
 fun NavGraphBuilder.addAuthGraph(
-    onUserLogged: (UserDomain?, NavBackStackEntry) -> Unit,
-    onBack: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavHostController
 ) {
+    navigation(
+        route = MainDestinations.AUTH_ROUTE,
+        startDestination = AuthSections.LOGIN.route
+    ) {
+        composable(AuthSections.LOGIN.route) { from ->
+            val viewModel: LoginViewModel = getViewModel()
+            LoginScreen(
+                modifier = modifier,
+                onUserLogged = {
+                    navController.navigateSafe(
+                        route = MainDestinations.HOME_ROUTE,
+                        from = from
+                    )
+                },
+                onSignUp = {
+                    navController.navigateSafe(AuthSections.SIGNUP.route, from)
+                },
+                viewModel = viewModel
+            )
+        }
 
-    composable(AuthSections.LOGIN.route) { from ->
-        // TODO move here the vm and state holder (separated) from inside the LoginScreen and make it stateless using hoisting
-        val viewModel: LoginViewModel = getViewModel()
-        LoginScreen(
-            modifier = modifier,
-            onUserLogged = {
-                onUserLogged(it, from)
-            },
-            viewModel = viewModel
-        )
-    }
-
-    composable(AuthSections.SIGNUP.route) { from ->
-        val viewModel: LoginViewModel = getViewModel()
-        SignUpScreen(
-            modifier = modifier,
-            onUserLogged = {
-                onUserLogged(it, from)
-            },
-            onBack = onBack,
-            viewModel = viewModel
-        )
+        composable(AuthSections.SIGNUP.route) { from ->
+            val viewModel: LoginViewModel = getViewModel()
+            SignUpScreen(
+                modifier = modifier,
+                onUserLogged = {
+                    navController.navigateSafe(
+                        route = MainDestinations.HOME_ROUTE,
+                        from = from
+                    )
+                },
+                onBack = navController::navigateUp,
+                viewModel = viewModel
+            )
+        }
     }
 }
 
@@ -126,6 +117,23 @@ fun NavGraphBuilder.addHomeGraph(
     // TODO Add nested graphs like addFoodGraph() where we have food and food detail. Inside use FOOD route and the FOOD route/foodId
     // TODO the add button will be declared inside pantry, use state hoisting to open the new food
     // Here we must keep only the events, all the logics, slot apis, etc inside the xScreen
+    /**
+     * Example for second level nested graph
+     * navigation(
+    route = HomeSections.FOOD.route,
+    startDestination = HomeSections.FOODLIST.route
+    ) {
+    composable(HomeSections.FOOD.route) { from ->
+    PantryScreen(
+    onFoodSelected = {
+    onSelected(it, from)
+    // Here wee probably need to navigate inside the future nested graph
+    }
+    )
+    }
+    // TODO Here add the route to the food detail
+    }
+     */
     composable(HomeSections.FOOD.route) { from ->
         PantryScreen(
             onFoodSelected = {

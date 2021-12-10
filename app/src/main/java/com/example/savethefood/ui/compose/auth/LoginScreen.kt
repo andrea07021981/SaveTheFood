@@ -14,6 +14,7 @@ import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.shared.utils.LoginStateValue
+import com.example.savethefood.shared.viewmodel.LoginState
 import com.example.savethefood.shared.viewmodel.LoginViewModel
 import com.example.savethefood.ui.compose.component.BasicButton
 import com.example.savethefood.ui.compose.component.BasicVerticalSurface
@@ -25,38 +26,60 @@ import org.koin.androidx.compose.getViewModel
 fun LoginScreen(
     modifier: Modifier = Modifier,
     onUserLogged: (UserDomain?) -> Unit,
+    onSignUp: () -> Unit,
     viewModel: LoginViewModel = getViewModel(),
     authState: AuthState = rememberAuthState()
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
+    LoginScreen(
+        modifier = modifier,
+        authState = authState,
+        uiState = uiState,
+        signIn = viewModel::onSignInClick,
+        signUp = onSignUp,
+        onUserLogged = onUserLogged,
+        resetState = viewModel::resetState
+    )
+}
 
+/**
+ * TODO add the other states:
+ * Loading -> Recomposition occurs when the uiState changes, so create a loadeer beetween image and email
+ * Failed -> User a scaffold with simple top app bar and snackbar for errors
+ * Success -> call the onUserLogged as above
+ *
+ */
+
+@Composable
+fun LoginScreen(
+    modifier: Modifier,
+    authState: AuthState,
+    uiState: LoginState,
+    signIn: () -> Unit,
+    signUp: () -> Unit,
+    onUserLogged: (UserDomain?) -> Unit,
+    resetState: () -> Unit
+) {
     val loginState = uiState.authState
     if (loginState is LoginAuthenticationStates.Authenticated) {
         onUserLogged(loginState.user)
-        viewModel.resetState()
+        resetState()
+    } else {
+        // Manage here the other states
+        LoginScreen(
+            modifier = modifier,
+            authStatus = authState,
+            userName = uiState.userName,
+            userNameState = uiState.userName.valueStatus.observeAsState().value,
+            email = uiState.email,
+            emailState = uiState.email.valueStatus.observeAsState().value,
+            password = uiState.password,
+            passwordState = uiState.password.valueStatus.observeAsState().value,
+            signIn = signIn,
+            signUp = signUp
+        )
     }
-    val navToSignUp by viewModel.navigateToSignUp.observeAsState()
-    LaunchedEffect(navToSignUp) {
-        if (navToSignUp?.hasBeenHandled == false) {
-            when (navToSignUp?.peekContent()) {
-                is Unit -> onUserLogged(null)
-            }
-        }
-    }
-
-    LoginScreen(
-        modifier = modifier,
-        authStatus = authState,
-        userName = uiState.userName,
-        userNameState = uiState.userName.valueStatus.observeAsState().value,
-        email = uiState.email,
-        emailState = uiState.email.valueStatus.observeAsState().value,
-        password = uiState.password,
-        passwordState = uiState.password.valueStatus.observeAsState().value,
-        signIn = viewModel::onSignInClick,
-        signUp = viewModel::moveToSignUp
-    )
 }
 
 @Composable

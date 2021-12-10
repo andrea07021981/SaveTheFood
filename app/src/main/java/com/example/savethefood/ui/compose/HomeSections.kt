@@ -15,7 +15,7 @@ enum class HomeSections(
     val icon: ImageVector,
     val route: String
 ) {
-    FOOD(R.string.food, Icons.Outlined.FoodBank, "home/food"),
+    FOOD(R.string.food, Icons.Outlined.FoodBank, "home/food"), // TODO replace with pantry, so wee will have home/pantry/foods and home/pantry/foods/{id} for details
     RECIPE(R.string.recipes, Icons.Outlined.Search, "home/recipe"),
     BAG(R.string.bag, Icons.Outlined.ShoppingCart, "home/bag"),
     PLAN(R.string.plan, Icons.Outlined.AccountCircle, "home/plan")
