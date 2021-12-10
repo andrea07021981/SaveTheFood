@@ -12,11 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.shared.utils.LoginStateValue
+import com.example.savethefood.shared.viewmodel.LoginState
 import com.example.savethefood.shared.viewmodel.LoginViewModel
 import com.example.savethefood.ui.compose.SaveTheFoodScaffold
+import com.example.savethefood.ui.compose.component.BasicButton
 import com.example.savethefood.ui.compose.component.BasicTopAppBar
 import com.example.savethefood.ui.compose.component.BasicVerticalSurface
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
@@ -32,25 +35,45 @@ fun SignUpScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
+    SignUpScreen(
+        modifier = modifier,
+        authState = authState,
+        uiState = uiState,
+        signIn = viewModel::onSignInClick,
+        onBack = onBack,
+        onUserLogged = onUserLogged,
+        resetState = viewModel::resetState
+    )
+}
 
+@Composable
+fun SignUpScreen(
+    modifier: Modifier,
+    authState: AuthState,
+    uiState: LoginState,
+    signIn: () -> Unit,
+    onBack: () -> Unit,
+    onUserLogged: (UserDomain?) -> Unit,
+    resetState: () -> Unit
+) {
     val loginState = uiState.authState
     if (loginState is LoginAuthenticationStates.Authenticated) {
         onUserLogged(loginState.user)
-        viewModel.resetState()
+        resetState()
+    } else {
+        SignUpScreen(
+            modifier = modifier,
+            authStatus = authState,
+            userName = uiState.userName,
+            userNameState = uiState.userName.valueStatus.observeAsState().value,
+            email = uiState.email,
+            emailState = uiState.email.valueStatus.observeAsState().value,
+            password = uiState.password,
+            passwordState = uiState.password.valueStatus.observeAsState().value,
+            onBack = onBack,
+            signIn = signIn
+        )
     }
-    // TODO do like login, add another level SignUpScreen with only the states
-    SignUpScreen(
-        modifier = modifier,
-        authStatus = authState,
-        userName = uiState.userName,
-        userNameState = uiState.userName.valueStatus.observeAsState().value,
-        email = uiState.email,
-        emailState = uiState.email.valueStatus.observeAsState().value,
-        password = uiState.password,
-        passwordState = uiState.password.valueStatus.observeAsState().value,
-        onBack = onBack,
-        signIn = viewModel::onSignInClick
-    )
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -90,7 +113,7 @@ fun SignUpScreen(
     ) { paddingValues ->
         BasicVerticalSurface(
             modifier = modifier.padding(paddingValues = paddingValues),
-            verticalArrangement = Arrangement.Top
+            verticalArrangement = Arrangement.Center
         ){
             Text(
                 modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
@@ -108,6 +131,7 @@ fun SignUpScreen(
             )
             Spacer(modifier = Modifier.height(64.dp).fillMaxWidth())
             AuthForm(
+                isLoginIn = false,
                 authStatus = authStatus,
                 userName = userName,
                 userNameState = userNameState,
@@ -117,7 +141,14 @@ fun SignUpScreen(
                 passwordState = passwordState,
                 signIn = signIn
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(64.dp))
+            BasicButton(
+                modifier = Modifier
+                    .fillMaxWidth(.8F)
+                    .height(60.dp),
+                text = R.string.log_in,
+                onClick = signIn
+            )
         }
     }
 }

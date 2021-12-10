@@ -26,27 +26,18 @@ import org.koin.androidx.compose.getViewModel
 fun LoginScreen(
     modifier: Modifier = Modifier,
     onUserLogged: (UserDomain?) -> Unit,
+    onSignUp: () -> Unit,
     viewModel: LoginViewModel = getViewModel(),
     authState: AuthState = rememberAuthState()
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
-    // TODO Do we still need to use the one shot event of VM to navigate? add a toSignUp even in LoginScreen above and call it
-    val navToSignUp by viewModel.navigateToSignUp.observeAsState()
-    LaunchedEffect(navToSignUp) {
-        if (navToSignUp?.hasBeenHandled == false) {
-            when (navToSignUp?.peekContent()) {
-                is Unit -> onUserLogged(null)
-            }
-        }
-    }
-
     LoginScreen(
         modifier = modifier,
         authState = authState,
         uiState = uiState,
         signIn = viewModel::onSignInClick,
-        signUp = viewModel::moveToSignUp,
+        signUp = onSignUp,
         onUserLogged = onUserLogged,
         resetState = viewModel::resetState
     )
