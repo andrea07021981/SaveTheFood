@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 @Composable
 internal fun <T> BasicList(
     modifier: Modifier = Modifier,
-    foods: List<T>?,
+    items: List<T>?,
     row: @Composable (T) -> Unit
 ) {
     LazyColumn(
@@ -22,7 +22,7 @@ internal fun <T> BasicList(
             .fillMaxHeight()
             .fillMaxWidth()
     ) {
-        items(items = foods ?: listOf()) {
+        items(items = items ?: listOf()) {
             Column(modifier = Modifier.fillParentMaxWidth()) {
                 row(it)
             }

@@ -4,17 +4,18 @@ import android.content.Context
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
+import com.example.savethefood.BuildConfig
 
 /**
  * Authentication state holder, default values are for testing purpose
  */
 @Composable
 fun rememberAuthState(
-    userName: String = "Name",
+    userName: String = "",
     userNameFocus: Boolean = false,
-    email: String = "a@a.com",
+    email: String = "",
     emailFocus: Boolean = false,
-    password: String = "aaaaaaaa",
+    password: String = "",
     passwordFocus: Boolean = false,
     context: Context = LocalContext.current,
 ) = remember {
@@ -30,14 +31,22 @@ fun rememberAuthState(
 }
 
 class AuthState(
-    initUserName: String,
+    var initUserName: String,
     initUserNameHasFocus: Boolean,
-    initEmail: String,
+    var initEmail: String,
     initEmailHasFocus: Boolean,
-    initPassword: String,
+    var initPassword: String,
     initPasswordHasFocus: Boolean,
     var context: Context
 ) {
+
+    init {
+        if (BuildConfig.DEBUG) {
+            initUserName = "Name"
+            initEmail = "a@a.com"
+            initPassword = "aaaaaaaa"
+        }
+    }
 
     var userName by mutableStateOf(initUserName)
     val setUserName: (String) -> Unit = {

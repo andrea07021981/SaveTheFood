@@ -1,6 +1,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="log_in">LOG IN</string>
     <string name="sign_up">SIGN UP</string>
+    <string name="register">REGISTER</string>
     <string name="user_login_not_found">User not found</string>
     <string name="sign_up_lower">Sign Up!</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
