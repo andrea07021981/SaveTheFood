@@ -112,8 +112,7 @@ fun SignUpScreen(
         modifier = modifier
     ) { paddingValues ->
         BasicVerticalSurface(
-            modifier = modifier.padding(paddingValues = paddingValues),
-            verticalArrangement = Arrangement.Center
+            modifier = modifier.padding(paddingValues = paddingValues)
         ){
             Text(
                 modifier = Modifier.fillMaxWidth().padding(top = 16.dp),

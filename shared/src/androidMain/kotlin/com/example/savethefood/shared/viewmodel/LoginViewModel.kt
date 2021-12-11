@@ -151,7 +151,7 @@ actual class LoginViewModel actual constructor(
                 is com.example.savethefood.shared.data.Result.ExError -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.InvalidAuthentication(result.exception.toString())
-                    _uiState.update { it.copy(authState = LoginAuthenticationStates.InvalidAuthentication(result.exception.toString())) }
+                    _uiState.update { it.copy(authState = LoginAuthenticationStates.InvalidAuthentication("User not found")) }
                 }
                 is com.example.savethefood.shared.data.Result.Loading -> {
                     _loginAuthenticationState.value =

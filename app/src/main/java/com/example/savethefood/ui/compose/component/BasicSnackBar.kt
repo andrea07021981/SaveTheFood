@@ -19,9 +19,9 @@ fun BasicSnackBar(
     snackbarData: SnackbarData,
     modifier: Modifier = Modifier,
     actionOnNewLine: Boolean = false,
-    shape: Shape = MaterialTheme.shapes.small,
-    backgroundColor: Color = SaveTheFoodTheme.colors.uiBackground,
-    contentColor: Color = SaveTheFoodTheme.colors.textSecondary,
+    shape: Shape = MaterialTheme.shapes.medium,
+    backgroundColor: Color = SaveTheFoodTheme.colors.warning,
+    contentColor: Color = SaveTheFoodTheme.colors.textPrimary,
     actionColor: Color = SaveTheFoodTheme.colors.brand,
     elevation: Dp = 6.dp
 ) {
