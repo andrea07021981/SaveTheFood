@@ -139,15 +139,7 @@ fun SignUpScreen(
                 emailState = emailState,
                 password = password,
                 passwordState = passwordState,
-                signIn = signIn
-            )
-            Spacer(modifier = Modifier.height(64.dp))
-            BasicButton(
-                modifier = Modifier
-                    .fillMaxWidth(.8F)
-                    .height(60.dp),
-                text = R.string.log_in,
-                onClick = signIn
+                signIn = signIn,
             )
         }
     }

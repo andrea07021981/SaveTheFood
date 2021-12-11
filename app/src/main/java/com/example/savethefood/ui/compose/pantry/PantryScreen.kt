@@ -39,7 +39,7 @@ fun PantryScreen(
 fun PreviewPantryScreen() {
     SaveTheFoodApp {
         BasicList(
-            foods = foodList
+            items = foodList
         ) {
             FoodCard(
                 foodDomain = it,

@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.example.savethefood.R
 import com.example.savethefood.shared.utils.LoginStateValue
 import com.example.savethefood.shared.viewmodel.LoginViewModel
+import com.example.savethefood.ui.compose.component.BasicButton
 import com.example.savethefood.ui.compose.component.BasicInputTextfield
 import com.example.savethefood.ui.compose.component.BasicVerticalSurface
 import com.example.savethefood.ui.compose.extention.hasLoginError
@@ -29,7 +30,8 @@ fun AuthForm(
     emailState: LoginStateValue?,
     password: LoginViewModel.LoginStatus,
     passwordState: LoginStateValue?,
-    signIn: () -> Unit
+    signIn: () -> Unit,
+    signUp: () -> Unit = {}
 ) {
     if (isLoginIn.not()) {
         BasicInputTextfield(
@@ -126,6 +128,31 @@ fun AuthForm(
             },
             onTextChanged = authStatus.setPassword,
             onImeAction = signIn
+        )
+        Spacer(modifier = Modifier.height(64.dp))
+        BasicButton(
+            modifier = Modifier
+                .fillMaxWidth(.8F)
+                .height(60.dp),
+            text = R.string.register,
+            onClick = signIn
+        )
+    } else {
+        Spacer(modifier = Modifier.height(72.dp))
+        BasicButton(
+            modifier = Modifier
+                .fillMaxWidth(.8F)
+                .height(60.dp),
+            text = R.string.log_in,
+            onClick = signIn
+        )
+        Spacer(modifier = Modifier.height(32.dp))
+        BasicButton(
+            modifier = Modifier
+                .fillMaxWidth(.8F)
+                .height(60.dp),
+            text = R.string.sign_up,
+            onClick = signUp
         )
     }
 }

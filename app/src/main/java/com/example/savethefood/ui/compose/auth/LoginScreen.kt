@@ -3,6 +3,12 @@ package com.example.savethefood.ui.compose.auth
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.contentColorFor
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -16,9 +22,13 @@ import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.shared.utils.LoginStateValue
 import com.example.savethefood.shared.viewmodel.LoginState
 import com.example.savethefood.shared.viewmodel.LoginViewModel
+import com.example.savethefood.ui.compose.SaveTheFoodScaffold
 import com.example.savethefood.ui.compose.component.BasicButton
+import com.example.savethefood.ui.compose.component.BasicSnackBar
+import com.example.savethefood.ui.compose.component.BasicTopAppBar
 import com.example.savethefood.ui.compose.component.BasicVerticalSurface
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
+import com.google.accompanist.insets.systemBarsPadding
 import org.koin.androidx.compose.getViewModel
 
 // TODO Handle the login error here or state hoisting and let the base Scaffold to use the Snackbar host
@@ -95,42 +105,49 @@ fun LoginScreen(
     signIn: () -> Unit,
     signUp: () -> Unit
 ) {
-    BasicVerticalSurface(
+    SaveTheFoodScaffold(
+        backgroundColor = SaveTheFoodTheme.colors.uiBackground,
+        contentColor = contentColorFor(backgroundColor = SaveTheFoodTheme.colors.uiBackground),
+        topBar = {
+            BasicTopAppBar(
+                title = {},
+                homeButton = {},
+                actions = {},
+                elevation = 8.dp
+            )
+        },
+        snackbarHost = {
+            SnackbarHost(
+                hostState = it,
+                modifier = Modifier.systemBarsPadding(),
+                snackbar = { data -> BasicSnackBar(data) }
+            )
+        },
         modifier = modifier
-    ) {
-        Image(
-            modifier = Modifier.size(100.dp),
-            alignment = Alignment.TopCenter,
-            painter = painterResource(id = R.drawable.ic_food),
-            contentDescription = "Logo"
-        )
-        Spacer(modifier = Modifier.height(170.dp))
-        AuthForm(
-            authStatus = authStatus,
-            userName = userName,
-            userNameState = userNameState,
-            email = email,
-            emailState = emailState,
-            password = password,
-            passwordState = passwordState,
-            signIn = signIn
-        )
-        Spacer(modifier = Modifier.height(64.dp))
-        BasicButton(
-            modifier = Modifier
-                .fillMaxWidth(.8F)
-                .height(60.dp),
-            text = R.string.log_in,
-            onClick = signIn
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-        BasicButton(
-            modifier = Modifier
-                .fillMaxWidth(.8F)
-                .height(60.dp),
-            text = R.string.sign_up,
-            onClick = signUp
-        )
+    ) { paddingValues ->
+        // TODO add launcheffect with status error for snackbar
+        BasicVerticalSurface(
+            modifier = modifier.padding(paddingValues = paddingValues)
+        ) {
+            Image(
+                modifier = Modifier.size(100.dp),
+                alignment = Alignment.TopCenter,
+                painter = painterResource(id = R.drawable.ic_food),
+                contentDescription = "Logo"
+            )
+            Spacer(modifier = Modifier.height(160.dp))
+            AuthForm(
+                authStatus = authStatus,
+                userName = userName,
+                userNameState = userNameState,
+                email = email,
+                emailState = emailState,
+                password = password,
+                passwordState = passwordState,
+                signIn = signIn,
+                signUp = signUp
+            )
+        }
     }
 }
 @Preview
