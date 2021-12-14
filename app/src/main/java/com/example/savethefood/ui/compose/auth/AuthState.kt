@@ -30,6 +30,11 @@ fun rememberAuthState(
     )
 }
 
+/**
+ * TODO Remove these properties (user, email and pass). Now we need them because we cannot directly change the uiState in VM.
+ * TODO we need to replace the anonymous objects user, email and pass with data classes and use the copy to update the uiState
+ * TODO Then we can replace these values with the ones from the uiState in the compose component
+ */
 class AuthState(
     var initUserName: String,
     initUserNameHasFocus: Boolean,

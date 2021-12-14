@@ -119,4 +119,7 @@
     <string name="yes">Yes</string>
     <string name="pick_up_the_best_pairing">Pick up the best pairing</string>
     <string name="title_activity_main_compose">MainActivityCompose</string>
+    <string name="get_started">Let\'s get started!</string>
+    <string name="back">Back</string>
+    <string name="create_new_accout">Create a new account</string>
 </resources>

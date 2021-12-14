@@ -13,10 +13,8 @@ import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.utils.LoginStateValue
 import com.example.savethefood.shared.utils.QuantityType
-import com.example.savethefood.ui.compose.AuthSections
-import com.example.savethefood.ui.compose.HomeSections
+import com.example.savethefood.ui.compose.navigation.Screen
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
-import com.google.android.material.textfield.TextInputLayout
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
@@ -76,7 +74,7 @@ private fun getDiff(foodDate: Long): Long {
 val String?.isHomeSection: Boolean
     get() = this?.startsWith("home") ?: false
 
-fun NavDestination?.isSectionSelected(home: HomeSections): Boolean {
+fun NavDestination?.isSectionSelected(home: Screen.Home): Boolean {
     return this?.hierarchy?.any { it.route == home.route } == true
 }
 

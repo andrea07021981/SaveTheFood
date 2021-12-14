@@ -1,18 +1,13 @@
 package com.example.savethefood.ui.compose.auth
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.UserDomain
@@ -21,15 +16,12 @@ import com.example.savethefood.shared.utils.LoginStateValue
 import com.example.savethefood.shared.viewmodel.LoginState
 import com.example.savethefood.shared.viewmodel.LoginViewModel
 import com.example.savethefood.ui.compose.SaveTheFoodScaffold
-import com.example.savethefood.ui.compose.component.BasicButton
-import com.example.savethefood.ui.compose.component.BasicSnackBar
-import com.example.savethefood.ui.compose.component.BasicTopAppBar
-import com.example.savethefood.ui.compose.component.BasicVerticalSurface
+import com.example.savethefood.ui.compose.component.*
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import com.google.accompanist.insets.systemBarsPadding
 import org.koin.androidx.compose.getViewModel
 
-// TODO Handle the login error here or state hoisting and let the base Scaffold to use the Snackbar host
+// TODO merge the login and signup, they are similar
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
@@ -162,6 +154,7 @@ fun LoginScreen(
     }
 }
 
+/*
 @Preview
 @Preview("Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
@@ -192,4 +185,4 @@ fun PreviewLoginScreen() {
             signUp = {}
         )
     }
-}
+}*/

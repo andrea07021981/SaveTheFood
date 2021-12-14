@@ -1,19 +1,13 @@
 package com.example.savethefood.ui.compose
 
 import android.content.res.Configuration
-import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavDestination.Companion.hierarchy
 import com.example.savethefood.ui.compose.extention.isSectionSelected
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -70,11 +64,10 @@ fun MainApp() {
                         navBackStackEntry = appState.navBackStackEntry,
                         selected = { dest, section ->
                             dest?.isSectionSelected(section) ?: false
-                        },
-                        navigateTo = { section, currentRoute ->
-                            appState.navigateToDestination(section, currentRoute)
                         }
-                    )
+                    ) { section, currentRoute ->
+                        appState.navigateToDestination(section, currentRoute)
+                    }
                 }
             },
             scaffoldState = appState.scaffoldState,

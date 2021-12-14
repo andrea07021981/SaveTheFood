@@ -6,17 +6,19 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavBackStackEntry
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.viewmodel.LoginViewModel
 import com.example.savethefood.ui.compose.extention.navigateSafe
 import com.example.savethefood.ui.compose.auth.LoginScreen
 import com.example.savethefood.ui.compose.auth.SignUpScreen
+import com.example.savethefood.ui.compose.navigation.MainNodeDestination
+import com.example.savethefood.ui.compose.navigation.MainNodeDestination.ROOT
+import com.example.savethefood.ui.compose.navigation.Screen
 import com.example.savethefood.ui.compose.pantry.PantryScreen
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
 import org.koin.androidx.compose.getViewModel
@@ -27,33 +29,19 @@ import org.koin.androidx.compose.getViewModel
 fun MainNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = MainDestinations.AUTH_ROUTE,
+    startDestination: String = MainNodeDestination.AUTH_ROUTE,
 ) {
     // TODO create a state like AppState for every main screen
     NavHost(
+        modifier = modifier,
         navController = navController,
         startDestination = startDestination,
-        modifier = modifier
+        route = ROOT
     ) {
-        navigation(
-            route = MainDestinations.HOME_ROUTE,
-            startDestination = HomeSections.FOOD.route
-        ) {
-            // TODO Use generic func AccountsCard Rally (Use for list of foods as well with generic adapter)
-            // TODO we need a generic since th onSeleected could be fooddomain, recipeDomain, etc.. We ecan make onSelected generic and use when is
-            addHomeGraph(
-                onSelected = { id: Long, from: NavBackStackEntry ->
-                    // In order to discard duplicated navigation events, we check the Lifecycle
-                    //if (from.lifecycleIsResumed()) {
-                        // navigate to the specific edit page
-                        Log.d("Navigation Id selected", id.toString())
-                        //TODO use Crossfade to navigate to the details
-                        //navController.navigateSafe(route = AuthSections.LOGIN.route, from = from)
-                    //}
-                },
-                modifier = modifier
-            )
-        }
+        addHomeGraph(
+            modifier = modifier,
+            navController = navController
+        )
 
         addAuthGraph(
             modifier = modifier,
@@ -70,33 +58,33 @@ fun NavGraphBuilder.addAuthGraph(
     navController: NavHostController
 ) {
     navigation(
-        route = MainDestinations.AUTH_ROUTE,
-        startDestination = AuthSections.LOGIN.route
+        route = MainNodeDestination.AUTH_ROUTE,
+        startDestination = Screen.Auth.Login.route
     ) {
-        composable(AuthSections.LOGIN.route) { from ->
+        composable(Screen.Auth.Login.route) { from ->
             val viewModel: LoginViewModel = getViewModel()
             LoginScreen(
                 modifier = modifier,
                 onUserLogged = {
                     navController.navigateSafe(
-                        route = MainDestinations.HOME_ROUTE,
+                        route = MainNodeDestination.HOME_ROUTE,
                         from = from
                     )
                 },
                 onSignUp = {
-                    navController.navigateSafe(AuthSections.SIGNUP.route, from)
+                    navController.navigateSafe(Screen.Auth.SignUp.route, from)
                 },
                 viewModel = viewModel
             )
         }
 
-        composable(AuthSections.SIGNUP.route) { from ->
+        composable(Screen.Auth.SignUp.route) { from ->
             val viewModel: LoginViewModel = getViewModel()
             SignUpScreen(
                 modifier = modifier,
                 onUserLogged = {
                     navController.navigateSafe(
-                        route = MainDestinations.HOME_ROUTE,
+                        route = MainNodeDestination.HOME_ROUTE,
                         from = from
                     )
                 },
@@ -111,8 +99,8 @@ fun NavGraphBuilder.addAuthGraph(
  * Add only the composable root navigation for the bottom nav
  */
 fun NavGraphBuilder.addHomeGraph(
-    onSelected: (Long, NavBackStackEntry) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavHostController
 ) {
     // TODO Add nested graphs like addFoodGraph() where we have food and food detail. Inside use FOOD route and the FOOD route/foodId
     // TODO the add button will be declared inside pantry, use state hoisting to open the new food
@@ -134,27 +122,42 @@ fun NavGraphBuilder.addHomeGraph(
     // TODO Here add the route to the food detail
     }
      */
-    composable(HomeSections.FOOD.route) { from ->
-        PantryScreen(
-            onFoodSelected = {
-                onSelected(it, from)
-                // Here wee probably need to navigate inside the future nested graph
-            }
-        )
-    }
-    composable(HomeSections.RECIPE.route) { from ->
-        Food(
-            onFoodSelected = { onSelected(it, from) },
-            modifier = modifier
-        ) {
-            Text(text = HomeSections.RECIPE.name)
+    navigation(
+        route = MainNodeDestination.HOME_ROUTE,
+        startDestination = Screen.Home.Food.route
+    ) {
+        // TODO Use generic func AccountsCard Rally (Use for list of foods as well with generic adapter)
+        // TODO we need a generic since th onSeleected could be fooddomain, recipeDomain, etc.. We ecan make onSelected generic and use when is
+        composable(Screen.Home.Food.route) { from ->
+            PantryScreen(
+                onFoodSelected = {
+                    // In order to discard duplicated navigation events, we check the Lifecycle
+                    //if (from.lifecycleIsResumed()) {
+                    // navigate to the specific edit page
+                    Log.d("nav", navController.graph.toString())
+                    Log.d("Navigation Id selected", id.toString())
+                    //TODO use Crossfade to navigate to the details
+                    //navController.navigateSafe(route = AuthSections.LOGIN.route, from = from)
+                    //}
+                }
+            )
         }
-    }
-    composable(HomeSections.BAG.route) { from ->
-        Text(text = HomeSections.BAG.name)
-    }
-    composable(HomeSections.PLAN.route) { from ->
-        Text(text = HomeSections.PLAN.name)
+        composable(Screen.Home.Recipe.route) { from ->
+            Food(
+                onFoodSelected = {
+
+                },
+                modifier = modifier
+            ) {
+                Text(text = stringResource(Screen.Home.Recipe.title))
+            }
+        }
+        composable(Screen.Home.Bag.route) { from ->
+            Text(text = stringResource(Screen.Home.Bag.title))
+        }
+        composable(Screen.Home.Plan.route) { from ->
+            Text(text = stringResource(Screen.Home.Plan.title))
+        }
     }
 }
 

@@ -16,6 +16,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.savethefood.ui.compose.extention.isHomeSection
+import com.example.savethefood.ui.compose.navigation.Screen
 
 /**
  * Define the state of the main app with the main components
@@ -38,7 +39,9 @@ class AppState(
     val navController: NavHostController,
     private val resources: Resources
 ) {
-    val tabs by mutableStateOf(HomeSections.values())
+    val tabs by mutableStateOf(
+        Screen.Home::class.sealedSubclasses.map { it.objectInstance }.toTypedArray()
+    )
 
     private val currentBackStackEntry: NavBackStackEntry?
         @Composable get() = navController.currentBackStackEntryAsState().value
@@ -54,7 +57,7 @@ class AppState(
     /**
      * Navigate to a specific destination
      */
-    fun navigateToDestination(section: HomeSections, currentRoute: String?) {
+    fun navigateToDestination(section: Screen.Home, currentRoute: String?) {
         // Check avoid reload same page
         if (section.route != currentRoute) {
             navController.navigate(section.route) {

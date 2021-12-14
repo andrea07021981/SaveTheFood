@@ -1,11 +1,9 @@
-package com.example.savethefood.ui.compose
+package com.example.savethefood.ui.compose.navigation
 
-object MainDestinations {
+object MainNodeDestination {
+    const val ROOT = "root"
     const val AUTH_ROUTE = "auth"
     const val HOME_ROUTE = "home"
-    /*const val FOOD_ROUTE = "food"
-    const val RECIPE_ROUTE = "recipe"
-    const val COOKING_ROUTE = "cooking"*/
 }
 // TODO Use sealed like https://github.com/stevdza-san/NestedNavigationDemo/blob/master/app/src/main/java/com/example/nestednavigationdemo/navigation/Screen.kt
 // Then navigation manager like https://joebirch.co/android/modular-navigation-with-jetpack-compose/

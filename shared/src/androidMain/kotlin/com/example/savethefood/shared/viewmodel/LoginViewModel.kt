@@ -4,17 +4,15 @@ import androidx.lifecycle.*
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.data.source.repository.UserRepository
 import com.example.savethefood.shared.utils.*
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class LoginState(
-    val userName: LoginViewModel.LoginStatus,
-    val email: LoginViewModel.LoginStatus,
-    val password: LoginViewModel.LoginStatus,
-    val authState: LoginAuthenticationStates
+    var userName: LoginViewModel.LoginStatus,
+    var email: LoginViewModel.LoginStatus,
+    var password: LoginViewModel.LoginStatus,
+    var authState: LoginAuthenticationStates
 ) {
 
 }
@@ -92,8 +90,8 @@ actual class LoginViewModel actual constructor(
     }
 
     // TODO prepared like jetnews for the next step livedata -> StateFLow (use _uiState.update { it.copy(authState....)
-    // TODO replace XML with uistate
-    var _uiState = MutableStateFlow(
+    // TODO replace XML with uistate. We do not need the backing field, use private set
+    var uiState = MutableStateFlow(
         LoginState(
             userName,
             email,
@@ -102,7 +100,6 @@ actual class LoginViewModel actual constructor(
         )
     )
     private set
-    val uiState: StateFlow<LoginState> = _uiState
 
     private val _signUpEvent = MutableLiveData<Event<Long>>()
     val signUpEvent: LiveData<Event<Long>>
@@ -122,7 +119,7 @@ actual class LoginViewModel actual constructor(
             doLogin {
                 userDataRepository.getUser(
                     UserDomain(
-                        userName = email.value,
+                        userName = userName.value,
                         email = email.value,
                         password = password.value
                     )
@@ -136,31 +133,31 @@ actual class LoginViewModel actual constructor(
     private inline fun doLogin(crossinline block: suspend () -> com.example.savethefood.shared.data.Result<UserDomain>) {
         viewModelScope.launch {
             _loginAuthenticationState.value = LoginAuthenticationStates.Authenticating()
-            _uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticating()) }
+            uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticating()) }
             when (val result = block()) {
                 is com.example.savethefood.shared.data.Result.Success -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.Authenticated(user = result.data)
-                    _uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticated(user = result.data)) }
+                    uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticated(user = result.data)) }
                 }
                 is com.example.savethefood.shared.data.Result.Error -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.InvalidAuthentication(result.message)
-                    _uiState.update { it.copy(authState = LoginAuthenticationStates.InvalidAuthentication(result.message)) }
+                    uiState.update { it.copy(authState = LoginAuthenticationStates.InvalidAuthentication(result.message)) }
                 }
                 is com.example.savethefood.shared.data.Result.ExError -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.InvalidAuthentication(result.exception.toString())
-                    _uiState.update { it.copy(authState = LoginAuthenticationStates.InvalidAuthentication("User not found")) }
+                    uiState.update { it.copy(authState = LoginAuthenticationStates.InvalidAuthentication("User not found")) }
                 }
                 is com.example.savethefood.shared.data.Result.Loading -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.Authenticating()
-                    _uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticating()) }
+                    uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticating()) }
                 }
                 else -> {
                     LoginAuthenticationStates.Idle
-                    _uiState.update { it.copy(authState = LoginAuthenticationStates.Idle) }
+                    uiState.update { it.copy(authState = LoginAuthenticationStates.Idle) }
                 }
             }
         }
@@ -200,7 +197,7 @@ actual class LoginViewModel actual constructor(
 
     fun resetState() {
         _loginAuthenticationState.value = LoginAuthenticationStates.Idle
-        _uiState.update { it.copy(authState = LoginAuthenticationStates.Idle) }
+        uiState.update { it.copy(authState = LoginAuthenticationStates.Idle) }
     }
 
     fun moveToSignUp() {
