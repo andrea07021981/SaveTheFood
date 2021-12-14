@@ -1,36 +1,28 @@
 package com.example.savethefood.ui.compose
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.savethefood.ui.compose.navigation.Screen
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
+import kotlin.reflect.KClass
 
 // TODO create custom BottomAppBar for Cradle shade
 @Composable
 fun MainBottomNav(
     //navController: NavController,
-    tabs: Array<HomeSections>,
+    tabs: Array<Screen.Home?>,
     navBackStackEntry: NavBackStackEntry?,
-    selected: (NavDestination?, HomeSections) -> Boolean,
+    selected: (NavDestination?, Screen.Home) -> Boolean,
     color: Color = SaveTheFoodTheme.colors.uiBackground,
     contentColor: Color = SaveTheFoodTheme.colors.iconInteractive,
-    navigateTo: (HomeSections, String?) -> Unit
+    navigateTo: (Screen.Home, String?) -> Unit
 ) {
     // TODO Difference with BottomNavigation?? Is it correct from UI/UX side? Can we manage the add food fab differently?
     BottomAppBar(
@@ -42,17 +34,18 @@ fun MainBottomNav(
         val currentRoute = currentDestination?.route*/
 
         //does not work as expected, create a custom bottom like jet
-        tabs.forEach { section ->
-            BottomNavigationItem(
-                icon = { Icon(section.icon, contentDescription = null) },
-                label = { Text(stringResource(section.title)) },
-                selected = selected(navBackStackEntry?.destination, section),
-                onClick = {
-                    navigateTo(section, navBackStackEntry?.destination?.route)
-                    /*// Check avoid reload same page
-                    if (section.route != currentRoute) {
-                        navigateTo(section, currentRoute)
-                        *//*navController.navigate(section.route) {
+        tabs.forEach { tab ->
+            tab?.let { section ->
+                BottomNavigationItem(
+                    icon = { Icon(section.icon, contentDescription = null) },
+                    label = { Text(stringResource(section.title)) },
+                    selected = selected(navBackStackEntry?.destination, section),
+                    onClick = {
+                        navigateTo(section, navBackStackEntry?.destination?.route)
+                        /*// Check avoid reload same page
+                        if (section.route != currentRoute) {
+                            navigateTo(section, currentRoute)
+                            *//*navController.navigate(section.route) {
                             // Pop up to the start destination of the graph to
                             // avoid building up a large stack of destinations
                             // on the back stack as users select items
@@ -66,8 +59,9 @@ fun MainBottomNav(
                             restoreState = true
                         }*//*
                     }*/
-                }
-            )
+                    }
+                )
+            }
         }
     }
 }

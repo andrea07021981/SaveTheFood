@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.FoodDomain
 
+/*
 // TODO use same as Rally screen but inside body add everything. Need to add navcontroller in constructor line 56
 // TODO we should use sealed class, we can pass data through constructors dynamically (ENUM is static)
 enum class HomeSections(
@@ -19,4 +20,4 @@ enum class HomeSections(
     RECIPE(R.string.recipes, Icons.Outlined.Search, "home/recipe"),
     BAG(R.string.bag, Icons.Outlined.ShoppingCart, "home/bag"),
     PLAN(R.string.plan, Icons.Outlined.AccountCircle, "home/plan")
-}
+}*/
