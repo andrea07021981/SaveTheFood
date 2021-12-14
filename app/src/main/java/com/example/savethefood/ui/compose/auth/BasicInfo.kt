@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,7 +39,7 @@ fun AuthForm(
             modifier = Modifier
                 .fillMaxWidth(.8F),
             res = R.drawable.person_outline_24,
-            label = authStatus.context.resources.getString(R.string.username),
+            label = stringResource(R.string.username),
             text = authStatus.userName,
             isError = userNameState?.hasLoginError() == true,
             errorMessage = userNameState?.message ?: "",
@@ -60,7 +61,7 @@ fun AuthForm(
         modifier = modifier
             .fillMaxWidth(.8F),
         res = R.drawable.email_white_24dp,
-        label = authStatus.context.resources.getString(R.string.email),
+        label = stringResource(R.string.email),
         text = authStatus.email,
         isError = emailState?.hasLoginError() == true,
         errorMessage = emailState?.message ?: "",
@@ -80,7 +81,7 @@ fun AuthForm(
     BasicInputTextfield(
         modifier = modifier
             .fillMaxWidth(.8F),
-        label = authStatus.context.resources.getString(R.string.password),
+        label = stringResource(R.string.password),
         res = R.drawable.lock_white_24dp,
         isPasswordField = true,
         passwordVisibility = authStatus.passwordVisibility,
@@ -107,7 +108,7 @@ fun AuthForm(
         BasicInputTextfield(
             modifier = modifier
                 .fillMaxWidth(.8F),
-            label = authStatus.context.resources.getString(R.string.confirm_password),
+            label = stringResource(R.string.confirm_password),
             res = R.drawable.lock_white_24dp,
             isPasswordField = true,
             passwordVisibility = authStatus.passwordVisibility,

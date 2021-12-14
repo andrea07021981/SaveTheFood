@@ -9,9 +9,11 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.shared.utils.LoginStateValue
@@ -99,7 +101,7 @@ fun SignUpScreen(
                     IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription = stringResource(R.string.back),
                             tint = SaveTheFoodTheme.colors.brand
                         )
                     }
@@ -117,14 +119,14 @@ fun SignUpScreen(
                 modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
                 color = SaveTheFoodTheme.colors.textSecondary,
                 textAlign = TextAlign.Center,
-                text = "Let's get started!",
+                text = stringResource(R.string.get_started),
                 style = MaterialTheme.typography.h4
             )
             Text(
                 modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
                 color = SaveTheFoodTheme.colors.textSecondary,
                 textAlign = TextAlign.Center,
-                text = "Create a new account",
+                text = stringResource(R.string.create_new_accout),
                 style = MaterialTheme.typography.h5
             )
             Spacer(modifier = Modifier.height(64.dp).fillMaxWidth())

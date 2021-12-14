@@ -9,6 +9,10 @@ fun Double?.isValidDouble(): Boolean {
 
 fun String.isValidPassword(): Boolean = this.length in 8..16
 
+fun String.passwordsMatch(psw: String, confirm: String): Boolean =
+    psw.isNotEmpty() && confirm.isNotEmpty() && psw == confirm
+
+
 // TODO find a way to create a generic ext and avoid the repetition of sortedBy
 fun List<FoodDomain>.customSortBy(order: FoodOrder): List<FoodDomain> {
     return when (order) {
