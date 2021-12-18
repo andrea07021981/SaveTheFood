@@ -32,14 +32,12 @@ import org.koin.androidx.compose.getViewModel
 fun MainNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = MainNodeDestination.AUTH_ROUTE,
+    startDestination: String = MainNodeDestination.AUTH_ROUTE, // TODO this should be related to the actual user login status
 ) {
-    // TODO create a state like AppState for every main screen
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = startDestination,
-        route = ROOT
+        startDestination = startDestination
     ) {
         addHomeGraph(
             modifier = modifier,
@@ -120,7 +118,6 @@ fun NavGraphBuilder.addHomeGraph(
                     // In order to discard duplicated navigation events, we check the Lifecycle
                     //if (from.lifecycleIsResumed()) {
                     // navigate to the specific edit page
-                    Log.d("nav", navController.graph.toString())
                     Log.d("Navigation Id selected", id.toString())
                     //TODO use Crossfade to navigate to the details
                     //navController.navigateSafe(route = AuthSections.LOGIN.route, from = from)

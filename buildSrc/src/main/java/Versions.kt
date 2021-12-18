@@ -70,7 +70,7 @@ object Versions {
     const val accompanist = "0.18.0"
     const val constraintCompose = "1.0.0-rc01"
     const val viewModelCompose = "1.0.0-alpha07"
-    const val navigationCompose = "2.4.0-alpha06"
+    const val navigationCompose = "2.4.0-alpha09"
     const val coilCompose = "1.3.0"
     const val splashScreen = "1.0.0-alpha01"
 }

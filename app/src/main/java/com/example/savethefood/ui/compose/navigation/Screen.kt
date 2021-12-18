@@ -8,7 +8,7 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
-import androidx.navigation.compose.navArgument
+import androidx.navigation.navArgument
 import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.ui.compose.navigation.MainNodeDestination.AUTH_ROUTE

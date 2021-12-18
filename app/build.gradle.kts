@@ -358,6 +358,7 @@ dependencies {
     implementation(Compose.activityCompose)
     implementation(Compose.viewModelCompose)
     implementation(Compose.navigationCompose)
+    implementation(Compose.navigationCommon)
     implementation(Compose.constraintCompose)
     implementation(Compose.coilCompose)
     implementation(Compose.uiTest)
