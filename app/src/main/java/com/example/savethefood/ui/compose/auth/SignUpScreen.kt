@@ -39,7 +39,7 @@ fun SignUpScreen(
         modifier = modifier,
         authState = authState,
         uiState = uiState,
-        signIn = viewModel::onSignInClick,
+        signIn = viewModel::onSignUpClickState,
         onBack = onBack,
         onUserLogged = onUserLogged,
         resetState = viewModel::resetState

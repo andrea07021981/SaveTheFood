@@ -26,5 +26,10 @@ sealed class LoginAuthenticationStates {
         val message: String = "Authentication error"
     ) : LoginAuthenticationStates()
 
+    // User Creation failed
+    data class ErrorNewAuthentication(
+        val message: String = "New user error"
+    ) : LoginAuthenticationStates()
+
     object Idle : LoginAuthenticationStates()
 }

@@ -1,11 +1,14 @@
 package com.example.savethefood.shared.viewmodel
 
 import androidx.lifecycle.*
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.data.source.repository.UserRepository
 import com.example.savethefood.shared.utils.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -131,27 +134,30 @@ actual class LoginViewModel actual constructor(
         }
     }
 
-    private inline fun doLogin(crossinline block: suspend () -> com.example.savethefood.shared.data.Result<UserDomain>) {
-        viewModelScope.launch {
+    private inline fun doLogin(
+        scope: CoroutineScope = viewModelScope,
+        crossinline block: suspend () -> Result<UserDomain>
+    ) {
+        scope.launch {
             _loginAuthenticationState.value = LoginAuthenticationStates.Authenticating()
             uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticating()) }
             when (val result = block()) {
-                is com.example.savethefood.shared.data.Result.Success -> {
+                is Result.Success -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.Authenticated(user = result.data)
                     uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticated(user = result.data)) }
                 }
-                is com.example.savethefood.shared.data.Result.Error -> {
+                is Result.Error -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.InvalidAuthentication(result.message)
                     uiState.update { it.copy(authState = LoginAuthenticationStates.InvalidAuthentication(result.message)) }
                 }
-                is com.example.savethefood.shared.data.Result.ExError -> {
+                is Result.ExError -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.InvalidAuthentication(result.exception.toString())
                     uiState.update { it.copy(authState = LoginAuthenticationStates.InvalidAuthentication("User not found")) }
                 }
-                is com.example.savethefood.shared.data.Result.Loading -> {
+                is Result.Loading -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.Authenticating()
                     uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticating()) }
@@ -179,6 +185,57 @@ actual class LoginViewModel actual constructor(
             }
         } else {
             _genericError.value = errorMessages
+        }
+    }
+
+    /**
+     * Sign up with the Auth State
+     */
+    fun onSignUpClickState() {
+        uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticating()) }
+        checkErrors(true).also { errorMessages ->
+            if (errorMessages.isEmpty()) {
+                viewModelScope.launch {
+                    val userId = coroutineScope {
+                        userDataRepository.saveNewUser(
+                            UserDomain(
+                                userName = userName.value,
+                                email = email.value,
+                                password = password.value
+                            )
+                        )
+                    }
+
+                    coroutineScope {
+                        if (userId > 0) {
+                            doLogin(this) {
+                                userDataRepository.getUser(
+                                    UserDomain(
+                                        userName = userName.value,
+                                        email = email.value,
+                                        password = password.value
+                                    )
+                                )
+                            }
+                        } else {
+                            uiState.update {
+                                it.copy(
+                                    authState = LoginAuthenticationStates.ErrorNewAuthentication(
+                                        "Error creating the new user"
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+            } else {
+                uiState.update {
+                    it.copy(
+                        authState = LoginAuthenticationStates.ErrorNewAuthentication(
+                            errorMessages.joinToString(separator = "\n"))
+                    )
+                }
+            }
         }
     }
 
