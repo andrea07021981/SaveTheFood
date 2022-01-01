@@ -40,7 +40,7 @@ sealed class Screen(
     ) : Screen(title, route) {
 
         object Food : Home(title = R.string.food, icon = Icons.Outlined.FoodBank, route = "$HOME_ROUTE/food")
-        object FoodDetail : Home(title = R.string.food, icon = Icons.Outlined.FoodBank, route = "$HOME_ROUTE/food_detail/{$ID}") {
+        class FoodDetail : Home(title = R.string.food, icon = Icons.Outlined.FoodBank, route = "$HOME_ROUTE/food_detail/{$ID}") {
             val navArguments = listOf(
                 navArgument(ID) {
                     type = NavType.LongType

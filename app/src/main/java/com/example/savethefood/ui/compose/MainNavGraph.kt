@@ -123,7 +123,7 @@ fun NavGraphBuilder.addHomeGraph(
                     //navController.navigateSafe(route = AuthSections.LOGIN.route, from = from)
                     //}
                     navController.navigateSafe(
-                        route = Screen.Home.FoodDetail.navigateToDetail(it),
+                        route = Screen.Home.FoodDetail().navigateToDetail(it),
                         from = from,
                         navOptions = NavOptions.Builder().setEnterAnim(android.R.anim.fade_in).build()
                     )
@@ -131,8 +131,8 @@ fun NavGraphBuilder.addHomeGraph(
             )
         }
         composable(
-            route = Screen.Home.FoodDetail.route,
-            arguments = Screen.Home.FoodDetail.navArguments
+            route = Screen.Home.FoodDetail().route,
+            arguments = Screen.Home.FoodDetail().navArguments
         ) {
             val id = it.arguments?.getLong(ID)
             Text(text = "The id is $id")

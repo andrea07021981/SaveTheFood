@@ -210,6 +210,7 @@ dependencies {
     implementation(Libs.serviceLocation)
     implementation(Libs.lifecycleExt)
     implementation(Libs.liveData)
+    implementation(Libs.lifecycleRuntime)
 
     // Coroutines
     implementation(Libs.coroutineCore)
