@@ -135,11 +135,12 @@ fun String.getResourceByName(context: Context): Int =
  * boilerplate code
  */
 @OptIn(InternalCoroutinesApi::class)
-inline fun <T> Flow<T>.collectWhenStarted(
+inline fun <T> Flow<T>.collectWhen(
     lifecycleOwner: LifecycleOwner,
+    state: Lifecycle.State = Lifecycle.State.STARTED,
     crossinline action: suspend (value: T) -> Unit
 ) {
-    lifecycleOwner.addRepeatingJob(Lifecycle.State.STARTED) {
+    lifecycleOwner.addRepeatingJob(state) {
         collect(action)
     }
 }

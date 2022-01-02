@@ -24,6 +24,7 @@ import com.example.savethefood.shared.utils.EventObserver
 import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.shared.utils.LoginAuthenticationStates.*
 import com.example.savethefood.shared.viewmodel.LoginViewModel
+import com.example.savethefood.util.collectWhen
 import com.example.savethefood.util.collectWhenStarted
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -80,7 +81,7 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
         }
 
         // Example of observing a State, this ext is lifecycle aware
-        /*viewModel.uiState.collectWhenStarted(this) {
+/*        viewModel.uiState.collectWhen(this) {
 
         }*/
     }
