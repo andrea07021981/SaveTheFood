@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import br.com.simplepass.loadingbutton.animatedDrawables.ProgressType
 import br.com.simplepass.loadingbutton.customViews.ProgressButton
@@ -23,8 +24,10 @@ import com.example.savethefood.shared.utils.EventObserver
 import com.example.savethefood.shared.utils.LoginAuthenticationStates
 import com.example.savethefood.shared.utils.LoginAuthenticationStates.*
 import com.example.savethefood.shared.viewmodel.LoginViewModel
+import com.example.savethefood.util.collectWhenStarted
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -75,6 +78,11 @@ class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>() {
             // TODO temporary, need to add the error in textfield
             Toast.makeText(context, it.joinToString(separator = "\n"), Toast.LENGTH_SHORT).show()
         }
+
+        // Example of observing a State, this ext is lifecycle aware
+        /*viewModel.uiState.collectWhenStarted(this) {
+
+        }*/
     }
 
     private fun ProgressButton.morphDoneAndRevert(

@@ -106,6 +106,7 @@ actual class LoginViewModel actual constructor(
     )
     private set
 
+    // TODO All the Single Events can be replaced with MutableShareFlow (Not state flow), since it has the replay default value 0
     private val _signUpEvent = MutableLiveData<Event<Long>>()
     val signUpEvent: LiveData<Event<Long>>
         get() = _signUpEvent

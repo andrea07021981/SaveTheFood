@@ -1,6 +1,6 @@
 object Versions {
     const val core = "1.3.2"
-    const val coroutine = "1.5.2"
+    const val coroutine = "1.6.0"
     const val navigationArgs = "2.3.5"
     const val navigation = "2.3.3"
     const val constraintLayout = "2.0.4"
@@ -8,7 +8,7 @@ object Versions {
     const val kotlin = "1.5.31"
     const val sqlDelight = "1.5.1"
     const val lifecycleExtensions = "2.2.0"
-    const val archLifecycle = "2.4.0"
+    const val archLifecycle = "2.4.0-alpha01"
     const val room = "2.3.0"
     const val appcompat = "1.4.0"
     const val fragment = "1.3.0-rc01"
