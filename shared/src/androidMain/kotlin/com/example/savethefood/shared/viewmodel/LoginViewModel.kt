@@ -21,6 +21,7 @@ data class LoginState(
 
 }
 // TODO move livedata to MutableStateFlow like jetenews and private set
+// TODO use stateIn to expose the flows directly such as the food list in home
 actual class LoginViewModel actual constructor(
     val userDataRepository: UserRepository
 ) : ViewModel() {

@@ -40,6 +40,7 @@ sealed class Screen(
     ) : Screen(title, route) {
 
         object Food : Home(title = R.string.food, icon = Icons.Outlined.FoodBank, route = "$HOME_ROUTE/food")
+        test is (changed from obj to class). Is it better to move the details pages into a diffeerent sealedclass instead of home??
         class FoodDetail : Home(title = R.string.food, icon = Icons.Outlined.FoodBank, route = "$HOME_ROUTE/food_detail/{$ID}") {
             val navArguments = listOf(
                 navArgument(ID) {
