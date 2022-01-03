@@ -242,17 +242,18 @@ actual class LoginViewModel actual constructor(
     }
 
     private fun checkErrors(isSignUp: Boolean = false): ArrayList<String> {
-        val errorMessages = arrayListOf<String>()
-        if (userName.errMessage.isNotEmpty() && isSignUp) {
-            errorMessages.add("Username ${userName.errMessage}")
+        return arrayListOf<String>().run {
+            if (userName.errMessage.isNotEmpty() && isSignUp) {
+                add("Username ${userName.errMessage}")
+            }
+            if (email.errMessage.isNotEmpty()) {
+                add("Email ${email.errMessage}")
+            }
+            if (password.errMessage.isNotEmpty()) {
+                add("Password ${password.errMessage}")
+            }
+            this
         }
-        if (email.errMessage.isNotEmpty()) {
-            errorMessages.add("Email ${email.errMessage}")
-        }
-        if (password.errMessage.isNotEmpty()) {
-            errorMessages.add("Password ${password.errMessage}")
-        }
-        return errorMessages
     }
 
     fun resetState() {

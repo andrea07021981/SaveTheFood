@@ -5,7 +5,7 @@ object Versions {
     const val navigation = "2.3.3"
     const val constraintLayout = "2.0.4"
     const val gradle = "4.1.0"
-    const val kotlin = "1.5.31"
+    const val kotlin = "1.6.10"
     const val sqlDelight = "1.5.1"
     const val lifecycleExtensions = "2.2.0"
     const val archLifecycle = "2.4.0-alpha01"

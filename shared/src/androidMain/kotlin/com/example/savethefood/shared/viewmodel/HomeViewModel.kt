@@ -108,16 +108,14 @@ actual class HomeViewModel actual constructor(
      * Observer for the storagetype and numbers of each.
      * Creates a map for all types if the list is empty
      */
-    val listByStorageType: LiveData<Map<StorageType, Int>?> = _foodList.map { result ->
-        if (result?.size != 0) {
-            result?.groupingBy(FoodDomain::storageType)?.eachCount()?.toMutableMap().also {
-                it?.set(StorageType.ALL, result?.count() ?: 0)
+    val listByStorageType: LiveData<Map<StorageType, Int>> = _foodList.map { result ->
+        result?.let {
+            it.groupingBy(FoodDomain::storageType).eachCount().toMutableMap().also { map ->
+                map[StorageType.ALL] = it.count()
             }
-        } else {
-            StorageType.values().map {
-                it to 0
-            }.toMap()
-        }
+        } ?: StorageType.values().map { type ->
+            type to 0
+        }.toMap()
     }
 
     /**
