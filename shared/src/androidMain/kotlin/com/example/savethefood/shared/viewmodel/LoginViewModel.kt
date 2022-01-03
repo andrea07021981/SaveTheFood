@@ -1,9 +1,13 @@
 package com.example.savethefood.shared.viewmodel
 
 import androidx.lifecycle.*
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.UserDomain
 import com.example.savethefood.shared.data.source.repository.UserRepository
 import com.example.savethefood.shared.utils.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -17,6 +21,7 @@ data class LoginState(
 
 }
 // TODO move livedata to MutableStateFlow like jetenews and private set
+// TODO use stateIn to expose the flows directly such as the food list in home
 actual class LoginViewModel actual constructor(
     val userDataRepository: UserRepository
 ) : ViewModel() {
@@ -101,6 +106,7 @@ actual class LoginViewModel actual constructor(
     )
     private set
 
+    // TODO All the Single Events can be replaced with MutableShareFlow (Not state flow), since it has the replay default value 0
     private val _signUpEvent = MutableLiveData<Event<Long>>()
     val signUpEvent: LiveData<Event<Long>>
         get() = _signUpEvent
@@ -130,27 +136,30 @@ actual class LoginViewModel actual constructor(
         }
     }
 
-    private inline fun doLogin(crossinline block: suspend () -> com.example.savethefood.shared.data.Result<UserDomain>) {
-        viewModelScope.launch {
+    private inline fun doLogin(
+        scope: CoroutineScope = viewModelScope,
+        crossinline block: suspend () -> Result<UserDomain>
+    ) {
+        scope.launch {
             _loginAuthenticationState.value = LoginAuthenticationStates.Authenticating()
             uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticating()) }
             when (val result = block()) {
-                is com.example.savethefood.shared.data.Result.Success -> {
+                is Result.Success -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.Authenticated(user = result.data)
                     uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticated(user = result.data)) }
                 }
-                is com.example.savethefood.shared.data.Result.Error -> {
+                is Result.Error -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.InvalidAuthentication(result.message)
                     uiState.update { it.copy(authState = LoginAuthenticationStates.InvalidAuthentication(result.message)) }
                 }
-                is com.example.savethefood.shared.data.Result.ExError -> {
+                is Result.ExError -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.InvalidAuthentication(result.exception.toString())
                     uiState.update { it.copy(authState = LoginAuthenticationStates.InvalidAuthentication("User not found")) }
                 }
-                is com.example.savethefood.shared.data.Result.Loading -> {
+                is Result.Loading -> {
                     _loginAuthenticationState.value =
                         LoginAuthenticationStates.Authenticating()
                     uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticating()) }
@@ -181,18 +190,70 @@ actual class LoginViewModel actual constructor(
         }
     }
 
+    /**
+     * Sign up with the Auth State
+     */
+    fun onSignUpClickState() {
+        uiState.update { it.copy(authState = LoginAuthenticationStates.Authenticating()) }
+        checkErrors(true).also { errorMessages ->
+            if (errorMessages.isEmpty()) {
+                viewModelScope.launch {
+                    val userId = coroutineScope {
+                        userDataRepository.saveNewUser(
+                            UserDomain(
+                                userName = userName.value,
+                                email = email.value,
+                                password = password.value
+                            )
+                        )
+                    }
+
+                    coroutineScope {
+                        if (userId > 0) {
+                            doLogin(this) {
+                                userDataRepository.getUser(
+                                    UserDomain(
+                                        userName = userName.value,
+                                        email = email.value,
+                                        password = password.value
+                                    )
+                                )
+                            }
+                        } else {
+                            uiState.update {
+                                it.copy(
+                                    authState = LoginAuthenticationStates.ErrorNewAuthentication(
+                                        "Error creating the new user"
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+            } else {
+                uiState.update {
+                    it.copy(
+                        authState = LoginAuthenticationStates.ErrorNewAuthentication(
+                            errorMessages.joinToString(separator = "\n"))
+                    )
+                }
+            }
+        }
+    }
+
     private fun checkErrors(isSignUp: Boolean = false): ArrayList<String> {
-        val errorMessages = arrayListOf<String>()
-        if (userName.errMessage.isNotEmpty() && isSignUp) {
-            errorMessages.add("Username ${userName.errMessage}")
+        return arrayListOf<String>().run {
+            if (userName.errMessage.isNotEmpty() && isSignUp) {
+                add("Username ${userName.errMessage}")
+            }
+            if (email.errMessage.isNotEmpty()) {
+                add("Email ${email.errMessage}")
+            }
+            if (password.errMessage.isNotEmpty()) {
+                add("Password ${password.errMessage}")
+            }
+            this
         }
-        if (email.errMessage.isNotEmpty()) {
-            errorMessages.add("Email ${email.errMessage}")
-        }
-        if (password.errMessage.isNotEmpty()) {
-            errorMessages.add("Password ${password.errMessage}")
-        }
-        return errorMessages
     }
 
     fun resetState() {

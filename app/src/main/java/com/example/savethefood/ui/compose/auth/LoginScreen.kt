@@ -1,5 +1,6 @@
 package com.example.savethefood.ui.compose.auth
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -8,6 +9,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.savethefood.R
 import com.example.savethefood.shared.data.domain.UserDomain
@@ -97,8 +99,8 @@ fun LoginScreen(
 ) {
     val loginState = uiState.authState
     if (loginState is LoginAuthenticationStates.Authenticated) {
-        onUserLogged(loginState.user)
         resetState()
+        onUserLogged(loginState.user)
     } else {
         // Manage here the other states
         LoginScreen(
@@ -154,7 +156,7 @@ fun LoginScreen(
     }
 }
 
-/*
+
 @Preview
 @Preview("Dark theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
@@ -185,4 +187,4 @@ fun PreviewLoginScreen() {
             signUp = {}
         )
     }
-}*/
+}

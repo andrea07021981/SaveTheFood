@@ -20,7 +20,6 @@ import com.example.savethefood.shared.utils.LoginStateValue
 import com.example.savethefood.shared.viewmodel.LoginState
 import com.example.savethefood.shared.viewmodel.LoginViewModel
 import com.example.savethefood.ui.compose.SaveTheFoodScaffold
-import com.example.savethefood.ui.compose.component.BasicButton
 import com.example.savethefood.ui.compose.component.BasicTopAppBar
 import com.example.savethefood.ui.compose.component.BasicVerticalSurface
 import com.example.savethefood.ui.theme.SaveTheFoodTheme
@@ -40,7 +39,7 @@ fun SignUpScreen(
         modifier = modifier,
         authState = authState,
         uiState = uiState,
-        signIn = viewModel::onSignInClick,
+        signIn = viewModel::onSignUpClickState,
         onBack = onBack,
         onUserLogged = onUserLogged,
         resetState = viewModel::resetState

@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SaveTheFoodSplash"
+        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
         <provider
@@ -26,23 +26,23 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <!--<activity
+        <activity
             android:name=".MainActivity"
-            android:exported="false"
+            android:exported="true"
             android:windowSoftInputMode="adjustPan">
-            &lt;!&ndash;<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>&ndash;&gt;
+            </intent-filter>
 
-            &lt;!&ndash;Deep link&ndash;&gt;
+            <!--Deep link-->
             <nav-graph android:value="@navigation/main_graph" />
             <meta-data android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
-        </activity>-->
+        </activity>
 
-        <activity
+       <!-- <activity
             android:name=".MainActivityCompose"
             android:exported="true"
             android:label="@string/app_name"
@@ -51,7 +51,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>-->
 
         <activity
             android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"

@@ -15,6 +15,7 @@ object Compose {
     const val activityCompose = "androidx.activity:activity-compose:${Versions.compose}"
     const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.viewModelCompose}"
     const val navigationCompose = "androidx.navigation:navigation-compose:${Versions.navigationCompose}"
+    const val navigationCommon = "androidx.navigation:navigation-common:${Versions.navigationCompose}"
     const val constraintCompose = "androidx.constraintlayout:constraintlayout-compose:${Versions.constraintCompose}"
     const val coilCompose = "io.coil-kt:coil-compose:${Versions.coilCompose}"
     const val uiTest = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"

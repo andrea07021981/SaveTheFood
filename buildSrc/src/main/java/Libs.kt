@@ -25,6 +25,7 @@ object Libs {
     const val serviceLocation = "com.google.android.gms:play-services-location:${Versions.serviceLocation}"
     const val lifecycleExt = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycleExtensions}"
     const val liveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.archLifecycle}"
+    const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.archLifecycle}"
 
     // Coroutines
     const val coroutineCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutine}"

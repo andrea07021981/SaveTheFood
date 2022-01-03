@@ -53,13 +53,11 @@ class HomeFragmentContainer : BaseFragment<HomeViewModel, FragmentHomeContainerB
 
     override fun activateObservers() {
         viewModel.listByStorageType.observe(viewLifecycleOwner) {
-            if (it != null) {
-                for ((index, value) in it) {
-                    val linearLayout = dataBinding.tabLayout.getTabAt(index.ordinal)
-                        ?.customView as LinearLayout
-                    CustomTabLayoutBinding.bind(linearLayout).countTextView.text =
-                        value.toString()
-                }
+            for ((index, value) in it) {
+                val linearLayout = dataBinding.tabLayout.getTabAt(index.ordinal)
+                    ?.customView as LinearLayout
+                CustomTabLayoutBinding.bind(linearLayout).countTextView.text =
+                    value.toString()
             }
         }
 

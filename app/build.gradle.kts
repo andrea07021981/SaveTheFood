@@ -210,6 +210,7 @@ dependencies {
     implementation(Libs.serviceLocation)
     implementation(Libs.lifecycleExt)
     implementation(Libs.liveData)
+    implementation(Libs.lifecycleRuntime)
 
     // Coroutines
     implementation(Libs.coroutineCore)
@@ -358,6 +359,7 @@ dependencies {
     implementation(Compose.activityCompose)
     implementation(Compose.viewModelCompose)
     implementation(Compose.navigationCompose)
+    implementation(Compose.navigationCommon)
     implementation(Compose.constraintCompose)
     implementation(Compose.coilCompose)
     implementation(Compose.uiTest)

@@ -7,9 +7,7 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.savethefood.constants.Constants
 import com.example.savethefood.constants.FoodOrder
 import com.example.savethefood.shared.data.domain.BagDomain
@@ -17,7 +15,10 @@ import com.example.savethefood.shared.data.domain.FoodDomain
 import com.example.savethefood.shared.utils.LoginStateValue
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 /**
@@ -127,3 +128,19 @@ fun <T> List<T>?.getResult(): com.example.savethefood.shared.data.Result<List<T>
 
 fun String.getResourceByName(context: Context): Int =
     context.resources.getIdentifier(this, "drawable", context.packageName)
+
+
+/**
+ * Extension function to observe StateFlow like Livedata easily in Fragment/Activity with no
+ * boilerplate code
+ */
+@OptIn(InternalCoroutinesApi::class)
+inline fun <T> Flow<T>.collectWhen(
+    lifecycleOwner: LifecycleOwner,
+    state: Lifecycle.State = Lifecycle.State.STARTED,
+    crossinline action: suspend (value: T) -> Unit
+) {
+    lifecycleOwner.addRepeatingJob(state) {
+        collect(action)
+    }
+}

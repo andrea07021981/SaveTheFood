@@ -3,19 +3,22 @@ package com.example.savethefood.ui.compose
 import android.util.Log
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.savethefood.shared.viewmodel.LoginViewModel
-import com.example.savethefood.ui.compose.extention.navigateSafe
 import com.example.savethefood.ui.compose.auth.LoginScreen
 import com.example.savethefood.ui.compose.auth.SignUpScreen
+import com.example.savethefood.ui.compose.extention.navigateSafe
+import com.example.savethefood.ui.compose.navigation.ID
 import com.example.savethefood.ui.compose.navigation.MainNodeDestination
 import com.example.savethefood.ui.compose.navigation.MainNodeDestination.ROOT
 import com.example.savethefood.ui.compose.navigation.Screen
@@ -29,14 +32,12 @@ import org.koin.androidx.compose.getViewModel
 fun MainNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = MainNodeDestination.AUTH_ROUTE,
+    startDestination: String = MainNodeDestination.AUTH_ROUTE, // TODO this should be related to the actual user login status
 ) {
-    // TODO create a state like AppState for every main screen
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = startDestination,
-        route = ROOT
+        startDestination = startDestination
     ) {
         addHomeGraph(
             modifier = modifier,
@@ -105,23 +106,6 @@ fun NavGraphBuilder.addHomeGraph(
     // TODO Add nested graphs like addFoodGraph() where we have food and food detail. Inside use FOOD route and the FOOD route/foodId
     // TODO the add button will be declared inside pantry, use state hoisting to open the new food
     // Here we must keep only the events, all the logics, slot apis, etc inside the xScreen
-    /**
-     * Example for second level nested graph
-     * navigation(
-    route = HomeSections.FOOD.route,
-    startDestination = HomeSections.FOODLIST.route
-    ) {
-    composable(HomeSections.FOOD.route) { from ->
-    PantryScreen(
-    onFoodSelected = {
-    onSelected(it, from)
-    // Here wee probably need to navigate inside the future nested graph
-    }
-    )
-    }
-    // TODO Here add the route to the food detail
-    }
-     */
     navigation(
         route = MainNodeDestination.HOME_ROUTE,
         startDestination = Screen.Home.Food.route
@@ -134,14 +118,26 @@ fun NavGraphBuilder.addHomeGraph(
                     // In order to discard duplicated navigation events, we check the Lifecycle
                     //if (from.lifecycleIsResumed()) {
                     // navigate to the specific edit page
-                    Log.d("nav", navController.graph.toString())
                     Log.d("Navigation Id selected", id.toString())
                     //TODO use Crossfade to navigate to the details
                     //navController.navigateSafe(route = AuthSections.LOGIN.route, from = from)
                     //}
+                    navController.navigateSafe(
+                        route = Screen.Home.FoodDetail().navigateToDetail(it),
+                        from = from,
+                        navOptions = NavOptions.Builder().setEnterAnim(android.R.anim.fade_in).build()
+                    )
                 }
             )
         }
+        composable(
+            route = Screen.Home.FoodDetail().route,
+            arguments = Screen.Home.FoodDetail().navArguments
+        ) {
+            val id = it.arguments?.getLong(ID)
+            Text(text = "The id is $id")
+        }
+
         composable(Screen.Home.Recipe.route) { from ->
             Food(
                 onFoodSelected = {
