@@ -141,6 +141,7 @@ inline fun <T> Flow<T>.collectWhen(
     crossinline action: suspend (value: T) -> Unit
 ) {
     lifecycleOwner.addRepeatingJob(state) {
-        collect(action)
+        // FIXME not working
+        //collect(action)
     }
 }
