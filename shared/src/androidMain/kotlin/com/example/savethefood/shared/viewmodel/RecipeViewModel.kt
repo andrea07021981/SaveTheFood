@@ -1,7 +1,9 @@
 package com.example.savethefood.shared.viewmodel
 
+import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.domain.RecipeResult
 import com.example.savethefood.shared.data.source.repository.RecipeRepository
 import com.example.savethefood.shared.utils.ApiCallStatus
@@ -12,6 +14,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.launch
 import java.util.*
 
 // TODO use paging library, too many recipes
@@ -115,5 +118,28 @@ actual class RecipeViewModel actual constructor(
 
     fun reloadList() {
         // TODO Reload using a variable and _reload.switchMap {..} search online android flow reload data
+    }
+
+    fun observeStreamRecipes() {
+        viewModelScope.launch {
+            recipeDataRepository.initSession().also {
+                when (it) {
+                    is Result.Success -> {
+                        recipeDataRepository.observeStreamRecipes()
+                    }
+                    is Result.Error -> Log.d("Error socket", it.message)
+                    else -> {
+
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.launch {
+            recipeDataRepository.closeSession()
+        }
     }
 }

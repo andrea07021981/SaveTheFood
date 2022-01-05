@@ -29,7 +29,7 @@ class RecipeRemoteDataSource(
      * Create the socket, we can call it in VM before start listening
      */
     override suspend fun initSession(url: String) =
-        client.initSocketSession()
+        client.initSocketSession(url)
 
     override suspend fun closeSession() =
         client.closeSession()
