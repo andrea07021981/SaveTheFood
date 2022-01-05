@@ -32,4 +32,10 @@ interface RecipeDataSource {
 
     @Throws(Exception::class)
     suspend fun deleteRecipe(recipeId: RecipeIngredients): Long?
+
+    suspend fun initSession(url: String): Any
+
+    suspend fun closeSession()
+
+    suspend fun observeRecipesStream(): Flow<RecipeDomain>
 }

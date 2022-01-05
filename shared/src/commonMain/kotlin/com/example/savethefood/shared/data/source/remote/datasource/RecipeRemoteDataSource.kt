@@ -9,15 +9,30 @@ import com.example.savethefood.shared.data.source.remote.datatransferobject.asDo
 import com.example.savethefood.shared.data.source.remote.service.FoodServiceApi
 import com.example.savethefood.shared.utils.Logger
 import com.example.savethefood.shared.utils.isListOfNulls
+import io.ktor.http.cio.websocket.*
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 
 class RecipeRemoteDataSource(
     private var client: FoodServiceApi = FoodServiceApi()
 ) : RecipeDataSource {
+
+    /**
+     * Create the socket, we can call it in VM before start listening
+     */
+    override suspend fun initSession(url: String) =
+        client.initSocketSession()
+
+    override suspend fun closeSession() =
+        client.closeSession()
 
     @Throws(Exception::class)
     override fun getRecipes(): Flow<RecipeDomain?> = flow {
@@ -83,5 +98,18 @@ class RecipeRemoteDataSource(
 
     override suspend fun deleteRecipe(recipeId: RecipeIngredients): Long? {
         return null
+    }
+
+    @OptIn(ExperimentalSerializationApi::class)
+    override suspend fun observeRecipesStream(): Flow<RecipeDomain> {
+        return try {
+            client.socket?.incoming?.receiveAsFlow()?.map {
+                val json = (it as? Frame.Text)?.readText() ?: ""
+                Json.decodeFromString(json)
+            } ?: flow {  }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            flow {  }
+        }
     }
 }

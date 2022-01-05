@@ -1,8 +1,12 @@
 package com.example.savethefood.shared.data.source.remote.service
 
+import com.example.savethefood.shared.data.Result
 import com.example.savethefood.shared.data.source.remote.datatransferobject.*
 import io.ktor.client.*
+import io.ktor.client.features.websocket.*
 import io.ktor.client.request.*
+import io.ktor.http.cio.websocket.*
+import kotlinx.coroutines.isActive
 import kotlin.jvm.Volatile
 import kotlin.native.concurrent.ThreadLocal
 
@@ -16,6 +20,8 @@ class FoodServiceApi(
 
     private val baseUrl: String = "https://api.spoonacular.com/"
     private val apiKey = "dc03ecff1b4e4630b92c6cf4d7412449"
+    // TODO change it, we do not need to expose itt directly
+    var socket: WebSocketSession? = null
 
     @ThreadLocal
     companion object {
@@ -28,7 +34,6 @@ class FoodServiceApi(
 
         }
     }
-
 
     // DSL generic to build the request
     /**
@@ -75,6 +80,8 @@ class FoodServiceApi(
         }
     }
 
+    // TODO we need a websocket to keep listening AND STREAM DATA
+    // https://github.com/philipplackner/KtorAndroidChat/blob/app/app/src/main/java/com/plcoding/ktorandroidchat/data/remote/ChatSocketServiceImpl.kt
     suspend fun getRecipes(limit: Int = 100): NetworkRecipe {
         return client.apiGet {
             url("$baseUrl/recipes/search")
@@ -102,4 +109,27 @@ class FoodServiceApi(
             url("$baseUrl/recipes/$id/information")
         }
     }
+
+
+    /**
+     * Call this method to open a socket at a specific url
+     */
+    suspend fun initSocketSession(url: String = "$baseUrl/recipes/search"): Result<Unit> {
+        return try {
+            socket = client.webSocketSession {
+                url(url)
+            }
+            if(socket?.isActive == true) {
+                Result.Success(Unit)
+            } else Result.Error("Couldn't establish a connection.")
+        } catch(e: Exception) {
+            e.printStackTrace()
+            Result.Error(e.message ?: "Unknown error")
+        }
+    }
+
+    suspend fun closeSession() {
+        socket?.close()
+    }
+
 }
