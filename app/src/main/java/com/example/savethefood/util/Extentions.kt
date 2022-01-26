@@ -133,7 +133,9 @@ fun String.getResourceByName(context: Context): Int =
 /**
  * Extension function to observe StateFlow like Livedata easily in Fragment/Activity with no
  * boilerplate code
+ * FIXME read here https://medium.com/androiddevelopers/repeatonlifecycle-api-design-story-8670d1a7d333
  */
+/*
 @OptIn(InternalCoroutinesApi::class)
 inline fun <T> Flow<T>.collectWhen(
     lifecycleOwner: LifecycleOwner,
@@ -145,4 +147,4 @@ inline fun <T> Flow<T>.collectWhen(
             action(it)
         }
     }
-}
+}*/

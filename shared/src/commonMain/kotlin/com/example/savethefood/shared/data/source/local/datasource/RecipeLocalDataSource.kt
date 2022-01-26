@@ -84,4 +84,16 @@ class RecipeLocalDataSource(
             }
         }
     }
+
+    override suspend fun initSession(url: String): Result<Unit> {
+        return Result.Idle
+    }
+
+    override suspend fun closeSession() {
+
+    }
+
+    override suspend fun observeRecipesStream(): Flow<RecipeDomain> {
+        return flowOf()
+    }
 }
