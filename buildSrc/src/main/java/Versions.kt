@@ -66,7 +66,7 @@ object Versions {
     const val koinVersion = "3.1.3"
 
     // Compose
-    const val compose = "1.0.4"
+    const val compose = "1.0.5"
     const val accompanist = "0.18.0"
     const val constraintCompose = "1.0.0-rc01"
     const val viewModelCompose = "1.0.0-alpha07"
