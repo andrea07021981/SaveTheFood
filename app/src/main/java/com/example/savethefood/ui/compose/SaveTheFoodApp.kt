@@ -54,7 +54,7 @@ fun MainApp() {
             // This add the space of the status bar since have enabled setDecorFitsSystemWindows
             // TODO now we use statusBarsPadding for top padding, MOVE IT INTO NAVGRAPH? WE CAN USE systemBarsPadding FOR BOTH TOP AND BOTTOM NAV
             // TODO here https://medium.com/mobile-app-development-publication/android-jetpack-compose-inset-padding-made-easy-5f156a790979
-            modifier = Modifier.systemBarsPadding(),
+            modifier = Modifier.systemBarsPadding(), // Add paddings for both bottomnav and top
             contentColor = SaveTheFoodTheme.colors.textPrimary,
             bottomBar = {
                 if (appState.hasBottomNav) {

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-@Deprecated("The nested class in not correct, it always instantiate the base")
+@Deprecated("The nested class in not correct, it always instantiate the base, need to be changed like base adapter")
 abstract class BaseListAdapter<T, DB: ViewDataBinding>(
     private val clickListener: BaseAdapterClickListener<T>
 ) : ListAdapter<T, BaseListAdapter.BaseViewHolder<T, DB>>(BaseDiffCallback<T>()) {

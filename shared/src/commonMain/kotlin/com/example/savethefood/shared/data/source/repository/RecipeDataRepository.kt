@@ -120,6 +120,20 @@ class RecipeDataRepository(
         }
     }
 
+    override suspend fun initSession(url: String) =
+        recipeRemoteDataSource.initSession(url)
+
+    override suspend fun closeSession() =
+        recipeRemoteDataSource.closeSession()
+
+    override suspend fun observeStreamRecipes(): Flow<Result<RecipeDomain>> {
+        return recipeRemoteDataSource.observeRecipesStream()
+            .map {
+                // Testing, no need to check values
+                Result.Success(it)
+            }
+    }
+
     /**
      * Calculate the result and order the list based on the total ingredients matched
      */
