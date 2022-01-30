@@ -229,7 +229,7 @@ dependencies {
     // Viewpager2
     implementation(Libs.viewPager)
 
-    // Moshi
+    // Moshi (Allow to avoit using Call and Response in retrofit, it maps to dataclass directly)
     implementation(Libs.moshi)
     implementation(Libs.moshiKotlin)
 
