@@ -12,6 +12,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+/**
+ * TODO moving to stateflow we will need to collect in fragments as shown here https://medium.com/androiddevelopers/a-safer-way-to-collect-flows-from-android-uis-23080b1f8bda
+ * until we change the UI to compose
+ */
 data class LoginState(
     var userName: LoginViewModel.LoginStatus,
     var email: LoginViewModel.LoginStatus,
