@@ -14,6 +14,8 @@ import org.koin.androidx.compose.getViewModel
 
 /**
  * This is the main screen where we build all the main components
+ * TODO like in Jetcaster app, use combine (see JJetcaster homeviewmodel) for the recipes.
+ * TODO also from Jetcaster use appState.isOnline (see JetcasterApp) to check if we are online or offline
  */
 @Composable
 fun PantryScreen(
