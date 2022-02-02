@@ -50,6 +50,9 @@ fun MainApp() {
         // Manage the visibility of bottom nav
         //val currentBackStackEntry by navController.currentBackStackEntryAsState()
         //val scaffoldState = rememberScaffoldState()
+
+        // TODO also from Jetcaster use appState.isOnline (see JetcasterApp) to check if we are online or offline
+        //TODO if (appState.isOnline) { do this otherwise create an offline screen like JetCaster
         SaveTheFoodScaffold(
             // This add the space of the status bar since have enabled setDecorFitsSystemWindows
             // TODO now we use statusBarsPadding for top padding, MOVE IT INTO NAVGRAPH? WE CAN USE systemBarsPadding FOR BOTH TOP AND BOTTOM NAV
