@@ -14,6 +14,7 @@ import org.koin.androidx.compose.getViewModel
 
 /**
  * This is the main screen where we build all the main components
+ * TODO like in Jetcaster app, use combine (see JJetcaster homeviewmodel) for the recipes.
  */
 @Composable
 fun PantryScreen(
