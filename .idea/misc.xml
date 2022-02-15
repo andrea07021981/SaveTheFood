@@ -194,7 +194,7 @@
         <entry key="app/src/main/res/layout/bag_item.xml" value="0.1887031408308004" />
         <entry key="app/src/main/res/layout/custom_tab_layout.xml" value="0.45" />
         <entry key="app/src/main/res/layout/date_picker_layout.xml" value="0.10309017223910841" />
-        <entry key="app/src/main/res/layout/food_item.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/food_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/food_type_item.xml" value="0.12681159420289856" />
         <entry key="app/src/main/res/layout/fragment_add_food.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_bag.xml" value="0.10309017223910841" />
@@ -202,9 +202,11 @@
         <entry key="app/src/main/res/layout/fragment_filter.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_food_detail.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_food_type.xml" value="0.17028985507246377" />
+        <entry key="app/src/main/res/layout/fragment_fridge.xml" value="0.11499493414387031" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_home_container.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_pantry.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_receipe.xml" value="0.1527777777777778" />
         <entry key="app/src/main/res/layout/fragment_recipe_container.xml" value="0.10309017223910841" />
         <entry key="app/src/main/res/layout/fragment_recipe_cook.xml" value="0.1574074074074074" />
@@ -224,5 +226,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1" />
+      </ProjectState>
+    </option>
   </component>
 </project>

@@ -27,6 +27,7 @@ class RecipeDataRepository(
         return recipeRemoteDataSource.getRecipes()
             .combine(localRecipes) { remote, local ->
                 //local?.union(remote ?: listOf())
+                // TODO we might use intersect and return a set
                 remote?.results?.toMutableList().applyRemoteResultRecipes(local)
             }
             .map {
