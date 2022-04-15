@@ -24,6 +24,7 @@ import com.example.savethefood.shared.data.source.repository.*
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,12 +38,62 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
 
+/**
+ * Important @Bind vs @Provides
+ */
+/**
+interface AnalyticsService {
+    fun analyticsMethods()
+}
+
+// Constructor-injected, because Hilt needs to know how to
+// provide instances of AnalyticsServiceImpl, too.
+class AnalyticsServiceImpl @Inject constructor(
+) : AnalyticsService {
+    override fun analyticsMethods() {
+        TODO("Not yet implemented")
+    }
+}
+
+// If AnalyticsService is an interface you can use Bind
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class AnalyticsModuleSingleton {
+
+    @Singleton
+    @Binds
+    abstract fun bindAnalyticsService(
+        analyticsServiceImpl: AnalyticsServiceImpl
+    ): AnalyticsService
+}
+
+// If you don't own AnalyticsService or you must create it with builder, user Provides
+// https://developer.android.com/training/dependency-injection/hilt-android#inject-provides
+@Module
+@InstallIn(SingletonComponent::class)
+object AnalyticsModule {
+
+    @Singleton
+    @Provides
+    fun provideAnalyticsService(): AnalyticsService {
+        return Retrofit.Builder()
+            .baseUrl("https://example.com")
+            .build()
+            .create(AnalyticsService::class.java)
+    }
+}
+*/
 @ExperimentalCoroutinesApi
 @Module
 @InstallIn(SingletonComponent::class)
+/**
+ * Most of the InstallIn could be ViewmodelComponent since we inject them in VM
+ * https://developer.android.com/training/dependency-injection/hilt-android#generated-components
+ */
 object BaseModule {
 
     /**
